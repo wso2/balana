@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC187:policy"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Description>
+        Policy for Conformance Test IIC187.
+    </Description>
+    <Target/>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC187:rule"
+          Effect="Permit">
+        <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:double-at-least-one-member-of">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:double-bag">
+                <AttributeValue
+                      DataType="http://www.w3.org/2001/XMLSchema#double">-5.55</AttributeValue>
+                <AttributeValue
+                      DataType="http://www.w3.org/2001/XMLSchema#double">5.5</AttributeValue>
+            </Apply>
+            <SubjectAttributeDesignator
+                  AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:test-attr"
+                  DataType="http://www.w3.org/2001/XMLSchema#double"/>
+        
+</Apply></Condition>
+    </Rule>
+</Policy>

@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PolicySet
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicySetId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policyset"
+      PolicyCombiningAlgId="urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:only-one-applicable">
+    <Description>
+        PolicySet for Conformance Test IIIA027.
+    </Description>
+    <Target/>
+    <Policy
+          PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy1"
+          RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable">
+        <Description>
+            Policy1 for Conformance Test IIIA027.  NOT APPLICABLE.
+        </Description>
+        <Target>
+            <Subjects>
+                <Subject>
+                    <SubjectMatch
+                          MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue
+                              DataType="http://www.w3.org/2001/XMLSchema#string">J. Hibbert</AttributeValue>
+                        <SubjectAttributeDesignator
+                              AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+                              DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                    </SubjectMatch>
+                </Subject>
+            </Subjects>
+
+
+        </Target>
+        <Rule
+              RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:rule1"
+              Effect="Deny">
+            <Description>
+                A subject whose name is J. Hibbert may not
+                perform any action on any resource.  NOT
+                APPLICABLE
+            </Description>
+            <Target>
+                <Subjects>
+                    <Subject>
+                        <SubjectMatch
+                              MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                            <AttributeValue
+                                  DataType="http://www.w3.org/2001/XMLSchema#string">J. Hibbert</AttributeValue>
+                            <SubjectAttributeDesignator
+                                  AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+                                  DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                        </SubjectMatch>
+                    </Subject>
+                </Subjects>
+
+
+            </Target>
+        </Rule>
+
+    <Obligations>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy1:obligation-1"
+            FulfillOn="Permit">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy1:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy1:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy1:obligation-2"
+            FulfillOn="Permit">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy1:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy1:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy1:obligation-3"
+            FulfillOn="Deny">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy1:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy1:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy1:obligation-4"
+            FulfillOn="Deny">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy1:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy1:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+    </Obligations>
+
+    </Policy>
+    <Policy
+          PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy2"
+          RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable">
+        <Description>
+            Policy2 for Conformance Test IIIA027.  NOT APPLICABLE.
+        </Description>
+        <Target>
+            <Subjects>
+                <Subject>
+                    <SubjectMatch
+                          MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue
+                              DataType="http://www.w3.org/2001/XMLSchema#string">J. Hibbert</AttributeValue>
+                        <SubjectAttributeDesignator
+                              AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+                              DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                    </SubjectMatch>
+                </Subject>
+            </Subjects>
+
+
+        </Target>
+        <Rule
+              RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:rule2"
+              Effect="Deny">
+            <Description>
+                A subject whose name is Julius Hibbert may not
+                perform any action on any resource.  DENY.
+            </Description>
+            <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+                    <SubjectAttributeDesignator
+                          AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+                          DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                </Apply>
+                <AttributeValue
+                      DataType="http://www.w3.org/2001/XMLSchema#string">Julius Hibbert</AttributeValue>
+            
+</Apply></Condition>
+        </Rule>
+
+    <Obligations>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy2:obligation-1"
+            FulfillOn="Permit">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy2:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy2:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy2:obligation-2"
+            FulfillOn="Permit">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy2:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy2:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy2:obligation-3"
+            FulfillOn="Deny">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy2:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy2:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy2:obligation-4"
+            FulfillOn="Deny">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy2:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy2:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+    </Obligations>
+
+    </Policy>
+    <Policy
+          PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy3"
+          RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable">
+        <Description>
+            Policy3 for Conformance Test IIIA027.  NOT APPLICABLE.
+        </Description>
+        <Target>
+            <Subjects>
+                <Subject>
+                    <SubjectMatch
+                          MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue
+                              DataType="http://www.w3.org/2001/XMLSchema#string">Zaphod Beeblebrox</AttributeValue>
+                        <SubjectAttributeDesignator
+                              AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-tests:bogus"
+                              DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                    </SubjectMatch>
+                </Subject>
+            </Subjects>
+
+
+        </Target>
+        <Rule
+              RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:rule3"
+              Effect="Permit">
+            <Description>
+                A subject whose "bogus" attribute is "Zaphod Beeblebrox"
+                may perform any action on any resource.  NOT APPLICABLE.
+            </Description>
+            <Target>
+                <Subjects>
+                    <Subject>
+                        <SubjectMatch
+                              MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                            <AttributeValue
+                                  DataType="http://www.w3.org/2001/XMLSchema#string">Zaphod Beeblebrox</AttributeValue>
+                            <SubjectAttributeDesignator
+                                  AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-tests:bogus"
+                                  DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                        </SubjectMatch>
+                    </Subject>
+                </Subjects>
+
+
+            </Target>
+        </Rule>
+
+    <Obligations>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy3:obligation-1"
+            FulfillOn="Permit">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy3:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy3:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy3:obligation-2"
+            FulfillOn="Permit">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy3:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy3:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy3:obligation-3"
+            FulfillOn="Deny">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy3:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy3:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy3:obligation-4"
+            FulfillOn="Deny">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy3:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy3:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+    </Obligations>
+
+    </Policy>
+    <Policy
+          PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy4"
+          RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable">
+        <Description>
+            Policy4 for Conformance Test IIIA027.  NOT APPLICABLE.
+        </Description>
+        <Target>
+            <Subjects>
+                <Subject>
+                    <SubjectMatch
+                          MatchId="urn:oasis:names:tc:xacml:1.0:function:integer-less-than-or-equal">
+                        <AttributeValue
+                              DataType="http://www.w3.org/2001/XMLSchema#integer">100</AttributeValue>
+                        <SubjectAttributeDesignator
+                              AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:age"
+                              DataType="http://www.w3.org/2001/XMLSchema#integer"/>
+                    </SubjectMatch>
+                </Subject>
+            </Subjects>
+
+
+        </Target>
+        <Rule
+              RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:rule4"
+              Effect="Permit">
+            <Description>
+                A subject who is at least 100 years older than Bart
+                Simpson may perform any action on any
+                resource. NOT APPLICABLE.
+            </Description>
+            <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-greater-than-or-equal">
+                <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-subtract">
+                    <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only">
+                        <SubjectAttributeDesignator
+                              AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:age"
+                              DataType="http://www.w3.org/2001/XMLSchema#integer"/>
+                    </Apply>
+                    <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only">
+                        <EnvironmentAttributeDesignator
+                              AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:bart-simpson-age"
+                              DataType="http://www.w3.org/2001/XMLSchema#integer"/>
+                    </Apply>
+                </Apply>
+                <AttributeValue
+                      DataType="http://www.w3.org/2001/XMLSchema#integer">100</AttributeValue>
+            
+</Apply></Condition>
+        </Rule>
+
+    <Obligations>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy4:obligation-1"
+            FulfillOn="Permit">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy4:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy4:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy4:obligation-2"
+            FulfillOn="Permit">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy4:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy4:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy4:obligation-3"
+            FulfillOn="Deny">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy4:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy4:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy4:obligation-4"
+            FulfillOn="Deny">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy4:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policy4:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+    </Obligations>
+
+    </Policy>
+
+    <Obligations>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policyset:obligation-1"
+            FulfillOn="Permit">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policyset:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policyset:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policyset:obligation-2"
+            FulfillOn="Permit">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policyset:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policyset:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policyset:obligation-3"
+            FulfillOn="Deny">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policyset:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policyset:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+        <Obligation
+            ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policyset:obligation-4"
+            FulfillOn="Deny">
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policyset:assignment1"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+            <AttributeAssignment
+                AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA027:policyset:assignment2"
+                DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+        </Obligation>
+    </Obligations>
+
+</PolicySet>

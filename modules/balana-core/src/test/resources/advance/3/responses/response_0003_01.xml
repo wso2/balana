@@ -1,0 +1,14 @@
+<Response>
+    <Result><Decision>Deny</Decision><Status><StatusCode Value="urn:oasis:names:tc:xacml:1.0:status:ok"/></Status></Result>
+    <Result><Decision>Permit</Decision><Status><StatusCode Value="urn:oasis:names:tc:xacml:1.0:status:ok"/></Status>
+        <AssociatedAdvice><Advice AdviceId="patientId" >
+            <AttributeAssignment  AttributeId="urn:oasis:names:tc:xacml:2.0:example:attribute:text" DataType="http://www.w3.org/2001/XMLSchema#string">p111</AttributeAssignment>
+        </Advice></AssociatedAdvice>
+    </Result>
+    <Result><Decision>Deny</Decision><Status><StatusCode Value="urn:oasis:names:tc:xacml:1.0:status:ok"/></Status></Result>
+    <Result><Decision>Permit</Decision><Status><StatusCode Value="urn:oasis:names:tc:xacml:1.0:status:ok"/></Status>
+        <AssociatedAdvice><Advice AdviceId="patientId" >
+            <AttributeAssignment  AttributeId="urn:oasis:names:tc:xacml:2.0:example:attribute:text" DataType="http://www.w3.org/2001/XMLSchema#string">p444</AttributeAssignment>
+        </Advice></AssociatedAdvice>
+    </Result>
+</Response>

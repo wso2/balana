@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC044:policy"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Description>
+        Policy for Conformance Test IIC044.
+    </Description>
+    <Target/>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC044:rule"
+          Effect="Permit">
+        <Description>
+            A subject who started work at 8:23:47 may perform any
+            action on any resource.
+        </Description>
+        <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-equal">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
+                <SubjectAttributeDesignator
+                      AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:started-work"
+                      DataType="http://www.w3.org/2001/XMLSchema#time"/>
+            </Apply>
+            <AttributeValue
+                  DataType="http://www.w3.org/2001/XMLSchema#time">08:23:47-05:00</AttributeValue>
+        
+</Apply></Condition>
+    </Rule>
+</Policy>

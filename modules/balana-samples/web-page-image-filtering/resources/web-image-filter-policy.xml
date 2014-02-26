@@ -1,0 +1,100 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="Web_Filter_Policy_1" RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable" Version="1.0">
+   <Target>
+      <AnyOf>
+         <AllOf>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">index.jsp</AttributeValue>
+               <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+            </Match>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">view</AttributeValue>
+               <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+            </Match>
+         </AllOf>
+      </AnyOf>
+   </Target>
+   <Rule Effect="Permit" RuleId="Rule_for_all_groups">
+      <Target>
+         <AnyOf>
+            <AllOf>
+               <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">publicUsers</AttributeValue>
+                  <AttributeDesignator AttributeId="http://wso2.org/attribute/roleNames" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+               </Match>
+            </AllOf>
+            <AllOf>
+               <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">internalUsers</AttributeValue>
+                  <AttributeDesignator AttributeId="http://wso2.org/attribute/roleNames" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+               </Match>
+            </AllOf>
+            <AllOf>
+               <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">adminUsers</AttributeValue>
+                  <AttributeDesignator AttributeId="http://wso2.org/attribute/roleNames" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+               </Match>
+            </AllOf>
+         </AnyOf>
+      </Target>
+      <Condition>
+         <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">view.gif</AttributeValue>
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">help.gif</AttributeValue>
+            </Apply>
+            <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:image" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+         </Apply>
+      </Condition>
+   </Rule>
+   <Rule Effect="Permit" RuleId="Rule_for_all_internal_user_group">
+      <Target>
+         <AnyOf>
+            <AllOf>
+               <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">internalUsers</AttributeValue>
+                  <AttributeDesignator AttributeId="http://wso2.org/attribute/roleNames" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+               </Match>
+            </AllOf>
+            <AllOf>
+               <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">adminUsers</AttributeValue>
+                  <AttributeDesignator AttributeId="http://wso2.org/attribute/roleNames" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+               </Match>
+            </AllOf>
+         </AnyOf>
+      </Target>
+      <Condition>
+         <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">copy.gif</AttributeValue>
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">move.gif</AttributeValue>
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">cancel.gif</AttributeValue>
+            </Apply>
+            <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:image" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+         </Apply>
+      </Condition>
+   </Rule>
+   <Rule Effect="Permit" RuleId="Rule_for_all_admin_user_group">
+      <Target>
+         <AnyOf>
+            <AllOf>
+               <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">adminUsers</AttributeValue>
+                  <AttributeDesignator AttributeId="http://wso2.org/attribute/roleNames" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+               </Match>
+            </AllOf>
+         </AnyOf>
+      </Target>
+      <Condition>
+         <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">add.gif</AttributeValue>
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">edit.gif</AttributeValue>
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">delete.gif</AttributeValue>
+            </Apply>
+            <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:image" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+         </Apply>
+      </Condition>
+   </Rule>
+   <Rule Effect="Deny" RuleId="Rule_deny_all"/>
+</Policy>        

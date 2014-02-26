@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PolicySet
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicySetId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIE003:policyset"
+      PolicyCombiningAlgId="urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:first-applicable">
+    <Description>
+        PolicySet for Conformance Test IIE003.  policy2 is not
+        valid, but since, by first-applicable, only policy1 should be evaluated, the
+        response depends only on policy1.
+    </Description>
+    <Target/>
+    <PolicyIdReference>urn:oasis:names:tc:xacml:2.0:conformance-test:IIE003:policy1</PolicyIdReference>
+    <PolicyIdReference>urn:oasis:names:tc:xacml:2.0:conformance-test:IIE003:policy2</PolicyIdReference>
+</PolicySet>

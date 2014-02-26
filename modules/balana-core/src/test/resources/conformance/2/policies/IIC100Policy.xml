@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC100:policy"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Description>
+        Policy for Conformance Test IIC100.
+    </Description>
+    <Target/>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC100:rule"
+          Effect="Permit">
+        <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-normalize-space">
+                <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+                    <SubjectAttributeDesignator
+                          AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:test-attr"
+                          DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                </Apply>
+            </Apply>
+            <AttributeValue
+                  DataType="http://www.w3.org/2001/XMLSchema#string">This  is IT!</AttributeValue>
+        
+</Apply></Condition>
+    </Rule>
+</Policy>

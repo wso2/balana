@@ -1,0 +1,35 @@
+<Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ReturnPolicyIdList="false" CombinedDecision="false">
+   <Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" >
+     <Attribute IncludeInResult="false" AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">p111</AttributeValue>
+	</Attribute>
+  </Attributes>
+  <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+  <Content>
+    <record>
+      <patient>
+        <patientId>p111</patientId>
+        <patientName>
+          <first>Bob</first>
+          <last>Allan</last>
+        </patientName>
+        <patientContact>
+          <street>51 Main road</street>
+          <city>Gampaha</city>
+          <state>Western</state>
+          <zip>11730</zip>
+          <phone>94332189873</phone>
+          <email>bob@gmail.com</email>
+        </patientContact>
+        <patientDoB>1991-05-11</patientDoB>
+        <patientGender>male</patientGender>
+      </patient>
+    </record>
+  </Content>
+  </Attributes>
+  <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+    <Attribute IncludeInResult="false" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+    </Attribute>
+  </Attributes>
+</Request>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Request
+      xmlns="urn:oasis:names:tc:xacml:2.0:context:schema:os"
+      xmlns:md="http://www.medico.com/schemas/record"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:context:schema:os
+        access_control-xacml-2.0-context-schema-os.xsd">
+    <Subject>
+        <Attribute
+              AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+              DataType="http://www.w3.org/2001/XMLSchema#string">
+            <AttributeValue>Julius Hibbert</AttributeValue>
+        </Attribute>
+        <Attribute
+              AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:some-attribute"
+              DataType="http://www.w3.org/2001/XMLSchema#string">
+            <AttributeValue>riddle me this</AttributeValue>
+        </Attribute>
+    </Subject>
+    <Resource>
+        <ResourceContent>
+            <md:record>
+                <md:patient_info>
+                    <md:name>Bart Simpson</md:name>
+                    <md:age>60</md:age>
+                    <md:sex>male</md:sex>
+                    <md:health_insurance>123456</md:health_insurance>
+                </md:patient_info>
+                <md:diagnosis_info>
+                    <md:diagnosis>
+                        <md:item type="primary">Gastric Cancer</md:item>
+                        <md:item type="secondary">Hyper tension</md:item>
+                    </md:diagnosis>
+                    <md:pathological_diagnosis>
+                        <md:diagnosis>
+                            <md:item type="primary">Well differentiated adeno carcinoma</md:item>
+                        </md:diagnosis>
+                        <md:date>2000-10-05</md:date>
+                        <md:malignancy type="yes"/>
+                    </md:pathological_diagnosis>
+                </md:diagnosis_info>                
+            </md:record>
+        </ResourceContent>
+        <Attribute
+              AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+              DataType="http://www.w3.org/2001/XMLSchema#anyURI">
+            <AttributeValue>http://medico.com/record/patient/BartSimpson</AttributeValue>
+        </Attribute>
+    </Resource>
+    <Action>
+        <Attribute
+              AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+              DataType="http://www.w3.org/2001/XMLSchema#string">
+            <AttributeValue>read</AttributeValue>
+        </Attribute>
+    </Action><Environment/></Request>

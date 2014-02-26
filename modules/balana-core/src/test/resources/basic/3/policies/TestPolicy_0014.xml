@@ -1,0 +1,95 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+        xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="TestPolicy0001"
+        RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
+        Version="1.0">
+    <Description>Test policy 0001 - Sample Policy.  The bar1 action can be done by bob on resource foo/foo1
+        and The bar2 action can be done by alice on resource foo/foo2</Description>
+    <Target>
+        <AnyOf>
+            <AllOf>
+                <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+                    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">foo</AttributeValue>
+                    <AttributeDesignator MustBePresent="false"
+                                         Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                                         AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+                                         DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                </Match>
+            </AllOf>
+        </AnyOf>
+    </Target>
+    <Rule RuleId="rule1" Effect="Permit">
+        <Description>Test rule1 : The bar1 action can be done by bob on resource foo/foo1</Description>
+        <Target>
+            <AnyOf>
+                <AllOf>
+                    <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">foo/foo1</AttributeValue>
+                        <AttributeDesignator MustBePresent="false"
+                                             Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                                             AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+                                             DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                    </Match>
+                </AllOf>
+            </AnyOf>
+            <AnyOf>
+                <AllOf>
+                     <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue
+                                DataType="http://www.w3.org/2001/XMLSchema#string">bar1</AttributeValue>
+                        <AttributeDesignator MustBePresent="false"
+                                             Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+                                             AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+                                             DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                    </Match>
+                </AllOf>
+            </AnyOf>
+        </Target>
+        <Condition>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:any-of">
+                <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal"/>
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">bob</AttributeValue>
+                <AttributeDesignator
+                        Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+                        AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+                        DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
+            </Apply>
+        </Condition>
+    </Rule>
+    <Rule RuleId="rule2" Effect="Permit">
+        <Description>Test rule2 : The bar2 action can be done by alice on resource foo/foo2</Description>
+        <Target>
+            <AnyOf>
+                <AllOf>
+                    <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">foo/foo2</AttributeValue>
+                        <AttributeDesignator MustBePresent="false"
+                                             Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                                             AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+                                             DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                    </Match>
+                     <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue
+                                DataType="http://www.w3.org/2001/XMLSchema#string">bar2</AttributeValue>
+                        <AttributeDesignator MustBePresent="false"
+                                             Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+                                             AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+                                             DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                    </Match>
+                </AllOf>
+            </AnyOf>
+        </Target>
+        <Condition>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:any-of">
+                <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal"/>
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">alice</AttributeValue>
+                <AttributeDesignator
+                        Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+                        AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+                        DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
+            </Apply>
+        </Condition>
+    </Rule>
+    <Rule RuleId="rule3" Effect="Deny">
+        <Description>Test rule3 : All other requests are denied</Description>
+    </Rule>
+</Policy>

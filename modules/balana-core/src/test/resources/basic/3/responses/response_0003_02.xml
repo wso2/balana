@@ -1,0 +1,18 @@
+<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17">
+<Result>
+<Decision>Deny</Decision>
+<Status>
+<StatusCode Value="urn:oasis:names:tc:xacml:1.0:status:ok"/>
+</Status>
+<Obligations>
+<Obligation ObligationId="denyRule3Obligation">
+<AttributeAssignment  AttributeId="urn:oasis:names:tc:xacml:2.0:example:attribute:text" DataType="http://www.w3.org/2001/XMLSchema#string">denyRule3</AttributeAssignment>
+</Obligation>
+<Obligation ObligationId="denyPolicyObligation">
+<AttributeAssignment  AttributeId="urn:oasis:names:tc:xacml:2.0:example:attribute:text" DataType="http://www.w3.org/2001/XMLSchema#string">denyObligation</AttributeAssignment>
+</Obligation>
+</Obligations>
+</Result>
+</Response>
+
+        

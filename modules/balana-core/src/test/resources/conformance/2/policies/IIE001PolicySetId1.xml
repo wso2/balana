@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PolicySet
+        xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+        PolicySetId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIE001:policyset1"
+        PolicyCombiningAlgId="urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:deny-overrides">
+    <Description>
+        PolicySet1 for Conformance Test IIE001.
+    </Description>
+    <Target/>
+    <Policy
+            PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIE001:policy2"
+            RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+        <Description>
+            Policy2 for Conformance Test IIE001.
+        </Description>
+        <Target/>
+        <Rule
+                RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIE001:rule2"
+                Effect="Permit">
+            <Description>
+                A subject who is at least 5 years older than Bart
+                Simpson may read Bart Simpson's medical record. PERMIT.
+            </Description>
+            <Condition>
+                <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-greater-than-or-equal">
+                    <Apply
+                            FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-subtract">
+                        <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only">
+                            <SubjectAttributeDesignator
+                                    AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:age"
+                                    DataType="http://www.w3.org/2001/XMLSchema#integer"/>
+                        </Apply>
+                        <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only">
+                            <EnvironmentAttributeDesignator
+                                    AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:bart-simpson-age"
+                                    DataType="http://www.w3.org/2001/XMLSchema#integer"/>
+                        </Apply>
+                    </Apply>
+                    <AttributeValue
+                            DataType="http://www.w3.org/2001/XMLSchema#integer">5</AttributeValue>
+                </Apply>
+            </Condition>
+        </Rule>
+    </Policy>
+</PolicySet>

@@ -1,0 +1,86 @@
+<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17">
+<Result>
+<Decision>Permit</Decision>
+<Status>
+<StatusCode Value="urn:oasis:names:tc:xacml:1.0:status:ok"/>
+</Status>
+<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+ IncludeInResult="true"><AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">bar1</AttributeValue>
+</Attribute>
+</Attributes>
+<Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+ IncludeInResult="true"><AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">bob</AttributeValue>
+</Attribute>
+</Attributes>
+<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+ IncludeInResult="true"><AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">foo/foo1</AttributeValue>
+</Attribute>
+</Attributes>
+</Result>
+<Result>
+<Decision>Deny</Decision>
+<Status>
+<StatusCode Value="urn:oasis:names:tc:xacml:1.0:status:ok"/>
+</Status>
+<Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+ IncludeInResult="true"><AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">bob</AttributeValue>
+</Attribute>
+</Attributes>
+<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+ IncludeInResult="true"><AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">bar1</AttributeValue>
+</Attribute>
+</Attributes>
+<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+ IncludeInResult="true"><AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">foo/foo2</AttributeValue>
+</Attribute>
+</Attributes>
+</Result>
+<Result>
+<Decision>Deny</Decision>
+<Status>
+<StatusCode Value="urn:oasis:names:tc:xacml:1.0:status:ok"/>
+</Status>
+<Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+ IncludeInResult="true"><AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">bob</AttributeValue>
+</Attribute>
+</Attributes>
+<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+ IncludeInResult="true"><AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">foo/foo1</AttributeValue>
+</Attribute>
+</Attributes>
+<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+ IncludeInResult="true"><AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">bar2</AttributeValue>
+</Attribute>
+</Attributes>
+</Result>
+<Result>
+<Decision>Permit</Decision>
+<Status>
+<StatusCode Value="urn:oasis:names:tc:xacml:1.0:status:ok"/>
+</Status>
+<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+ IncludeInResult="true"><AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">foo/foo2</AttributeValue>
+</Attribute>
+</Attributes>
+<Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+ IncludeInResult="true"><AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">alice</AttributeValue>
+</Attribute>
+</Attributes>
+<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+ IncludeInResult="true"><AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">bar2</AttributeValue>
+</Attribute>
+</Attributes>
+</Result>
+</Response>

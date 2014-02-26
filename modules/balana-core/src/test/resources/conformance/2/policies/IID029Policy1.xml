@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+    access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IID029:policy1"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable">
+    <Description>
+        One of two policies for Conformance Test IID029.  NOT APPLICABLE.
+    </Description>
+    <Target>
+
+
+        <Actions>
+            <Action>
+                <ActionMatch
+                      MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <AttributeValue
+                          DataType="http://www.w3.org/2001/XMLSchema#string">write</AttributeValue>
+                    <ActionAttributeDesignator
+                          AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+                          DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                </ActionMatch>
+            </Action>
+        </Actions>
+    </Target>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IID029:rule1"
+          Effect="Deny">
+        <Description>
+            A subject whose name is Julius Hibbert may not
+            perform any action on any resource.  DENY.
+        </Description>
+        <Target>
+            <Subjects>
+                <Subject>
+                    <SubjectMatch
+                          MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue
+                              DataType="http://www.w3.org/2001/XMLSchema#string">Julius Hibbert</AttributeValue>
+                        <SubjectAttributeDesignator
+                              AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+                              DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                    </SubjectMatch>
+                </Subject>
+            </Subjects>
+
+
+        </Target>
+    </Rule>
+</Policy>

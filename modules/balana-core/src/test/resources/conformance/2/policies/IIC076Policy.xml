@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC076:policy"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Description>
+        Policy for Conformance Test IIC076.
+    </Description>
+    <Target/>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC076:rule"
+          Effect="Permit">
+        <Description>
+            A subject licensed on or after 2002-03-22 may perform any
+            action on any resource.
+        </Description>
+        <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:date-greater-than-or-equal">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:date-one-and-only">
+                <SubjectAttributeDesignator
+                      AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:licensed-on"
+                      DataType="http://www.w3.org/2001/XMLSchema#date"/>
+            </Apply>
+            <AttributeValue
+                  DataType="http://www.w3.org/2001/XMLSchema#date">2002-03-22</AttributeValue>
+        
+</Apply></Condition>
+    </Rule>
+</Policy>

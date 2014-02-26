@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC075:policy"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Description>
+        Policy for Conformance Test IIC075.
+    </Description>
+    <Target/>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC075:rule"
+          Effect="Permit">
+        <Description>
+            A subject whose name is alphabetically greater than
+            or equal to Marge Simpson's may perform any action on
+            any resource.
+        </Description>
+        <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-greater-than-or-equal">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+                <SubjectAttributeDesignator
+                      AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+                      DataType="http://www.w3.org/2001/XMLSchema#string"/>
+            </Apply>
+            <AttributeValue
+                  DataType="http://www.w3.org/2001/XMLSchema#string">Marge Simpson</AttributeValue>
+        
+</Apply></Condition>
+    </Rule>
+</Policy>

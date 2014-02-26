@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC090:policy"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Description>
+        Policy for Conformance Test IIC090.
+    </Description>
+    <Target/>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC090:rule"
+          Effect="Permit">
+        <Description>
+            A subject who is from Medico Corp or is at least 40 years old
+            Simpson may read Bart Simpson's medical record.
+        </Description>
+        <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:or">
+    <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+        <AttributeValue
+              DataType="http://www.w3.org/2001/XMLSchema#string">Julius Hibbert</AttributeValue>
+        <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+            <SubjectAttributeDesignator
+                  AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+                  DataType="http://www.w3.org/2001/XMLSchema#string"/>
+        </Apply>
+    </Apply>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-greater-than-or-equal">
+                <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only">
+                    <SubjectAttributeDesignator
+                          AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:age"
+                          DataType="http://www.w3.org/2001/XMLSchema#integer"/>
+                </Apply>
+                <AttributeValue
+                      DataType="http://www.w3.org/2001/XMLSchema#integer">40</AttributeValue>
+            </Apply>
+        
+</Apply></Condition>
+    </Rule>
+</Policy>

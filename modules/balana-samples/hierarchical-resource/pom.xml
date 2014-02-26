@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.wso2.balana</groupId>
+        <artifactId>balana-samples</artifactId>
+  	<version>1.0.0-wso2v7</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <groupId>org.wso2.balana</groupId>
+    <artifactId>org.wso2.balana.samples.hierarchical.resource</artifactId>
+    <version>1.0.0-wso2v7</version>
+    <packaging>jar</packaging>
+    <name>WSO2 Balana Sample Filtering Static Resources</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.wso2.balana</groupId>
+            <artifactId>org.wso2.balana</artifactId>
+            <version>1.0.0-wso2v7</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+       </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>wso2-maven2-repository</id>
+            <url>http://dist.wso2.org/maven2</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>tlc</id>
+            <name>TLC Repository</name>
+
+            <url>http://commons.ucalgary.ca/pub/m2</url>
+        </pluginRepository>
+
+        <pluginRepository>
+            <id>wso2-maven2-repository</id>
+            <url>http://dist.wso2.org/maven2</url>
+        </pluginRepository>
+    </pluginRepositories>
+    
+</project>

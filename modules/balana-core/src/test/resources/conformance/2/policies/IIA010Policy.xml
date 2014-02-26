@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIA1:policy"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Description>
+        Policy for Conformance Test IIA010.
+    </Description>
+    <Target/>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIA1:rule"
+          Effect="Permit">
+        <Description>
+            Anyone who is 45 integer years old may perform any
+            action on any resource.
+        </Description>
+        <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-equal">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only">
+                <SubjectAttributeDesignator
+                      AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:age"
+                      DataType="http://www.w3.org/2001/XMLSchema#integer"/>
+            </Apply>
+            <AttributeValue
+                  DataType="http://www.w3.org/2001/XMLSchema#integer">45</AttributeValue>
+        
+</Apply></Condition>
+    </Rule>
+</Policy>

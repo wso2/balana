@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Request
+      xmlns="urn:oasis:names:tc:xacml:2.0:context:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:context:schema:os
+        access_control-xacml-2.0-context-schema-os.xsd">
+    <Subject>
+        <Attribute
+              AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+              DataType="http://www.w3.org/2001/XMLSchema#string">
+            <AttributeValue>Julius Hibbert</AttributeValue>
+        </Attribute>
+        <Attribute
+              AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:test-attr"
+              DataType="urn:oasis:names:tc:xacml:1.0:data-type:x500Name">
+            <AttributeValue
+                  DataType="urn:oasis:names:tc:xacml:1.0:data-type:x500Name">  cn=Anne,OU=Sun Labs, o=Sun, c=US</AttributeValue>
+        </Attribute>
+    </Subject>
+    <Resource>
+        <Attribute
+              AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+              DataType="http://www.w3.org/2001/XMLSchema#anyURI">
+            <AttributeValue>http://medico.com/record/patient/BartSimpson</AttributeValue>
+        </Attribute>
+    </Resource>
+    <Action>
+        <Attribute
+              AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+              DataType="http://www.w3.org/2001/XMLSchema#string">
+            <AttributeValue>read</AttributeValue>
+        </Attribute>
+    </Action><Environment/></Request>

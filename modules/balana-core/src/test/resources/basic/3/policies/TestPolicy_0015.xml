@@ -1,0 +1,33 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+        xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="TestPolicy0006"
+        RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
+        Version="1.0">
+    <Description>Test Policy 0015 : string-equal-ignore-case test</Description>
+    <Target>
+        <AnyOf>
+            <AllOf>
+                <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+                    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">foo</AttributeValue>
+                    <AttributeDesignator MustBePresent="false"
+                                         Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                                         AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+                                         DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                </Match>
+            </AllOf>
+        </AnyOf>
+    </Target>
+    <Rule RuleId="rule1" Effect="Permit">
+        <Condition>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:string-equal-ignore-case">
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Admin</AttributeValue>
+                <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+                    <AttributeDesignator
+                            Category="urn:oasis:names:tc:xacml:1.0:attribute-category:subject"
+                            AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+                            DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
+                </Apply>
+            </Apply>
+        </Condition>
+    </Rule>
+    <Rule RuleId="rule2" Effect="Deny"/>
+</Policy>

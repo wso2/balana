@@ -1,0 +1,92 @@
+<Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ReturnPolicyIdList="false" CombinedDecision="false">
+   <Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" >
+     <Attribute IncludeInResult="false" AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">asela@asela.com</AttributeValue>
+	</Attribute>
+  </Attributes>
+  <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+  <Content>
+    <ak:record xmlns:ak="http://akpower.org">
+      <ak:patient>
+        <ak:patientId>p111</ak:patientId>
+        <ak:patientName>
+          <ak:first>Bob</ak:first>
+          <ak:last>Allan</ak:last>
+        </ak:patientName>
+        <ak:patientContact>
+          <ak:street>51 Main road</ak:street>
+          <ak:city>Gampaha</ak:city>
+          <ak:state>Western</ak:state>
+          <ak:zip>11730</ak:zip>
+          <ak:phone>94332189873</ak:phone>
+          <ak:email>bob@asela.com</ak:email>
+        </ak:patientContact>
+        <ak:patientDoB>1991-05-11</ak:patientDoB>
+        <ak:patientGender>male</ak:patientGender>
+      </ak:patient>
+        <ak:patient>
+            <ak:patientId>p222</ak:patientId>
+            <ak:patientName>
+                <ak:first>Joe</ak:first>
+                <ak:last>Allan</ak:last>
+            </ak:patientName>
+            <ak:patientContact>
+                <ak:street>51 Main road</ak:street>
+                <ak:city>Gampaha</ak:city>
+                <ak:state>Western</ak:state>
+                <ak:zip>11730</ak:zip>
+                <ak:phone>94332189873</ak:phone>
+                <ak:email>joe@xacmlinfo.com</ak:email>
+            </ak:patientContact>
+            <ak:patientDoB>1991-05-11</ak:patientDoB>
+            <ak:patientGender>male</ak:patientGender>
+        </ak:patient>
+        <ak:patient>
+            <ak:patientId>p333</ak:patientId>
+            <ak:patientName>
+                <ak:first>Peter</ak:first>
+                <ak:last>Allan</ak:last>
+            </ak:patientName>
+            <ak:patientContact>
+                <ak:street>51 Main road</ak:street>
+                <ak:city>Gampaha</ak:city>
+                <ak:state>Western</ak:state>
+                <ak:zip>11730</ak:zip>
+                <ak:phone>94332189873</ak:phone>
+                <ak:email>peter@xacmlinfo.com</ak:email>
+            </ak:patientContact>
+            <ak:patientDoB>1991-05-11</ak:patientDoB>
+            <ak:patientGender>male</ak:patientGender>
+        </ak:patient>
+        <ak:patient>
+            <ak:patientId>p444</ak:patientId>
+            <ak:patientName>
+                <ak:first>Alice</ak:first>
+                <ak:last>Allan</ak:last>
+            </ak:patientName>
+            <ak:patientContact>
+                <ak:street>51 Main road</ak:street>
+                <ak:city>Gampaha</ak:city>
+                <ak:state>Western</ak:state>
+                <ak:zip>11730</ak:zip>
+                <ak:phone>94332189873</ak:phone>
+                <ak:email>alice@asela.com</ak:email>
+            </ak:patientContact>
+            <ak:patientDoB>1991-05-11</ak:patientDoB>
+            <ak:patientGender>male</ak:patientGender>
+        </ak:patient>
+    </ak:record>
+  </Content>
+      <Attribute IncludeInResult="false"
+          AttributeId="urn:oasis:names:tc:xacml:3.0:profile:multiple:content-selector">
+        <AttributeValue
+          XPathCategory="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+          DataType="urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression">/ak:record/ak:patient</AttributeValue>
+      </Attribute>
+  </Attributes>
+  <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+    <Attribute IncludeInResult="false" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+    </Attribute>
+  </Attributes>
+</Request>

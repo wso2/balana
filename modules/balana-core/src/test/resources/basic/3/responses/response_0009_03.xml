@@ -1,0 +1,9 @@
+<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17">
+<Result>
+<Decision>Indeterminate</Decision>
+<Status>
+<StatusCode Value="urn:oasis:names:tc:xacml:1.0:status:syntax-error"/>
+<StatusMessage>No node is found from context selector id evaluation</StatusMessage>
+</Status>
+</Result>
+</Response>

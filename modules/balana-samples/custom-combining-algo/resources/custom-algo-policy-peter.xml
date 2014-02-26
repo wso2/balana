@@ -1,0 +1,32 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="denyPolicyForPeter" RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:highest-effect" Version="1.0">
+   <Target>
+      <AnyOf>
+         <AllOf>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">foo</AttributeValue>
+               <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+            </Match>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">peter</AttributeValue>
+               <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+            </Match>
+         </AllOf>
+      </AnyOf>
+   </Target>
+   <Rule Effect="Deny" RuleId="deny1"/>   
+   <Rule Effect="Deny" RuleId="deny2"/>  
+   <Rule Effect="Permit" RuleId="permit1"/> 
+   <Rule Effect="Permit" RuleId="permit2"/> 
+   <Rule Effect="Permit" RuleId="notApplicable">
+   <Target>
+      <AnyOf>
+	 <AllOf>
+	    <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	       <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">foo123</AttributeValue>
+	       <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+	    </Match>
+	 </AllOf>
+      </AnyOf>
+   </Target>
+   </Rule>
+</Policy>

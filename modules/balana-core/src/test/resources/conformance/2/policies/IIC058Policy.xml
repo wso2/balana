@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC058:policy"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Description>
+        Policy for Conformance Test IIC058.
+    </Description>
+    <Target/>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC058:rule"
+          Effect="Permit">
+        <Description>
+            A subject who is more than 34 years older than Bart
+            Simpson may read Bart Simpson's medical record.
+        </Description>
+        <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-greater-than">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-subtract">
+                <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only">
+                    <SubjectAttributeDesignator
+                          AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:age"
+                          DataType="http://www.w3.org/2001/XMLSchema#integer"/>
+                </Apply>
+                <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only">
+                    <EnvironmentAttributeDesignator
+                          AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:bart-simpson-age"
+                          DataType="http://www.w3.org/2001/XMLSchema#integer"/>
+                </Apply>
+            </Apply>
+            <AttributeValue
+                  DataType="http://www.w3.org/2001/XMLSchema#integer">34</AttributeValue>
+        
+</Apply></Condition>
+    </Rule>
+</Policy>

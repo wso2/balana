@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC107:policy"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Description>
+        Policy for Conformance Test IIC107.
+    </Description>
+    <Target/>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC107:rule"
+          Effect="Permit">
+        <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:date-equal">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:date-subtract-yearMonthDuration">
+                <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:date-one-and-only">
+                    <SubjectAttributeDesignator
+                          AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:test-attr"
+                          DataType="http://www.w3.org/2001/XMLSchema#date"/>
+                </Apply>
+                <AttributeValue
+                      DataType="http://www.w3.org/TR/2002/WD-xquery-operators-20020816#yearMonthDuration">-P1Y2M</AttributeValue>
+            </Apply>
+            <AttributeValue
+                  DataType="http://www.w3.org/2001/XMLSchema#date">2003-05-22</AttributeValue>
+        
+</Apply></Condition>
+    </Rule>
+</Policy>

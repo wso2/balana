@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC202:policy"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Description>
+        Policy for Conformance Test IIC202.
+    </Description>
+    <Target/>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC202:rule"
+          Effect="Permit">
+        <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:dateTime-at-least-one-member-of">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:dateTime-bag">
+                <AttributeValue
+                      DataType="http://www.w3.org/2001/XMLSchema#dateTime">2002-04-22T09:23:47-05:01</AttributeValue>
+                <AttributeValue
+                      DataType="http://www.w3.org/2001/XMLSchema#dateTime">2002-03-22T08:23:47-05:00</AttributeValue>
+            </Apply>
+            <SubjectAttributeDesignator
+                  AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:test-attr"
+                  DataType="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        
+</Apply></Condition>
+    </Rule>
+</Policy>

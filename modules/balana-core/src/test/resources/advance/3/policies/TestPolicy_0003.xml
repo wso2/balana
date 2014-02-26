@@ -1,0 +1,72 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="TestPolicy0001"
+        RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
+        Version="1.0">
+    <Description>Advance Test policy 0003. This has been written for jira COMMONS-97.
+        Use case : Users who is from asela.com can only see read patient data whose registered email is
+        from asela.com domain.  Advice is returned with patient id of the permitted patient data.
+        First XPath evaluation is done with respect to multiple:content-selector. This would creates
+        the multiple XACML request. Then each XACML request is evaluated with Attribute selector.
+        Here content element has been bounded with custom namespace and prefix
+    </Description>
+    <PolicyDefaults>
+        <XPathVersion>http://www.w3.org/TR/1999/REC-xpath-19991116</XPathVersion>
+    </PolicyDefaults>
+    <Target>
+        <AnyOf>
+            <AllOf>
+                <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+                    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+                    <AttributeDesignator MustBePresent="false"
+                                         Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+                                         AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+                                         DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                </Match>
+            </AllOf>
+        </AnyOf>
+    </Target>
+    <Rule RuleId="rule1" Effect="Permit">
+    <Description>Rule to match value in content element using XPath</Description>
+        <Target>
+            <AnyOf>
+                <AllOf>
+                    <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">@asela.com</AttributeValue>
+                        <AttributeSelector MustBePresent="false"
+                                           ContextSelectorId="urn:oasis:names:tc:xacml:3.0:content-selector"
+                                           Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                                           Path="//ak:email/text()"
+                                           DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                    </Match>
+                </AllOf>
+            </AnyOf>
+        </Target>
+        <Condition>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">@asela.com</AttributeValue>
+                <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+                    <AttributeSelector MustBePresent="false"
+                            ContextSelectorId="urn:oasis:names:tc:xacml:3.0:content-selector"
+                            Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                            Path="/ak:patient/ak:patientContact/ak:email/text()"
+                            DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                </Apply>
+            </Apply>
+        </Condition>
+        <AdviceExpressions>
+            <AdviceExpression AdviceId="patientId" AppliesTo="Permit">
+                <AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xacml:2.0:example:attribute:text">
+                    <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+                        <AttributeSelector MustBePresent="false"
+                                           ContextSelectorId="urn:oasis:names:tc:xacml:3.0:content-selector"
+                                           Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                                           Path="/ak:patient/ak:patientId/text()"
+                                           DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                    </Apply>
+                </AttributeAssignmentExpression>
+            </AdviceExpression>
+        </AdviceExpressions>
+    </Rule>
+    <Rule RuleId="rule2" Effect="Deny">
+        <Description>Deny rule</Description>
+    </Rule>
+</Policy>

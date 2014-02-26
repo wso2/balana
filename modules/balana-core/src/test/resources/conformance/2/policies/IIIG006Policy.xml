@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xacml-context="urn:oasis:names:tc:xacml:2.0:context:schema:os"
+      xmlns:md="http://www.medico.com/schemas/record"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIG006:policy"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Description>
+        Policy for Conformance Test IIIG006.
+    </Description>
+    <PolicyDefaults>
+        <XPathVersion>http://www.w3.org/TR/1999/Rec-xpath-19991116</XPathVersion>
+    </PolicyDefaults>
+    <Target/>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIG006:rule"
+          Effect="Permit">
+        <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-equal">
+                <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:xpath-node-count">
+                <AttributeValue
+                  DataType="http://www.w3.org/2001/XMLSchema#string">./xacml-context:Resource/xacml-context:ResourceContent/md:record//md:name</AttributeValue>
+                </Apply>
+                <AttributeValue
+                      DataType="http://www.w3.org/2001/XMLSchema#integer">2</AttributeValue>
+            </Apply>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:xpath-node-equal">
+                <AttributeValue
+                      DataType="http://www.w3.org/2001/XMLSchema#string">./xacml-context:Resource/xacml-context:ResourceContent/md:record</AttributeValue>
+                <AttributeValue
+                      DataType="http://www.w3.org/2001/XMLSchema#string">//md:record</AttributeValue>
+            </Apply>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:xpath-node-match">
+                <AttributeValue
+                      DataType="http://www.w3.org/2001/XMLSchema#string">.</AttributeValue>
+                <AttributeValue
+                  DataType="http://www.w3.org/2001/XMLSchema#string">./xacml-context:Resource/xacml-context:ResourceContent/md:record</AttributeValue>
+            </Apply>
+        
+</Apply></Condition>
+    </Rule>
+</Policy>

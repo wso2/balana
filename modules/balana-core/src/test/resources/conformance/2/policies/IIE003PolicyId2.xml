@@ -1,0 +1,38 @@
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIE003:policy2"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Description>
+        Policy2 for Conformance Test IIE003.  This policy is
+        not valid, since the datatype supplied to the
+        string-equal function is not a string.
+    </Description>
+    <Target/>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIE003:rule1"
+          Effect="Deny">
+        <Description>
+            A subject whose subject-id is 45 may not
+            perform any action on any resource.  INVALID SYNTAX.
+        </Description>
+        <Target>
+            <Subjects>
+                <Subject>
+                    <SubjectMatch
+                          MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue
+                              DataType="http://www.w3.org/2001/XMLSchema#integer">45</AttributeValue>
+                        <SubjectAttributeDesignator
+                              AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+                              DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                    </SubjectMatch>
+                </Subject>
+            </Subjects>
+
+
+        </Target>
+    </Rule>
+</Policy>

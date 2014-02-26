@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC161:policy"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Description>
+        Policy for Conformance Test IIC161.
+    </Description>
+    <Target/>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC161:rule"
+          Effect="Permit">
+        <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-equal">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:rfc822Name-bag-size">
+                <SubjectAttributeDesignator
+                      AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:test-attr"
+                      DataType="urn:oasis:names:tc:xacml:1.0:data-type:rfc822Name"/>
+            </Apply>
+            <AttributeValue
+                  DataType="http://www.w3.org/2001/XMLSchema#integer">2</AttributeValue>
+        
+</Apply></Condition>
+    </Rule>
+</Policy>

@@ -1,0 +1,13 @@
+<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17">
+<Result>
+<Decision>Permit</Decision>
+<Status>
+<StatusCode Value="urn:oasis:names:tc:xacml:1.0:status:ok"/>
+</Status>
+<AssociatedAdvice>
+<Advice AdviceId="permitPolicyAdvice" >
+<AttributeAssignment  AttributeId="urn:oasis:names:tc:xacml:2.0:example:attribute:text" DataType="http://www.w3.org/2001/XMLSchema#string">PermitAdvice</AttributeAssignment>
+</Advice>
+</AssociatedAdvice>
+</Result>
+</Response>

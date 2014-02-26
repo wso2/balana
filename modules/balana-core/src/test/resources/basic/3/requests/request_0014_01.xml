@@ -1,0 +1,54 @@
+<Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ReturnPolicyIdList="true" CombinedDecision="false">
+   <Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" id="subjectBob">
+     <Attribute IncludeInResult="true" AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">bob</AttributeValue>
+	</Attribute>
+  </Attributes>
+   <Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" id="subjectAlice">
+     <Attribute IncludeInResult="true" AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">alice</AttributeValue>
+	</Attribute>
+  </Attributes>
+  <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" id="resource1">
+    <Attribute IncludeInResult="true" AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">foo/foo1</AttributeValue>
+    </Attribute>
+  </Attributes>
+  <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" id="resource2">
+    <Attribute IncludeInResult="true" AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">foo/foo2</AttributeValue>
+    </Attribute>
+  </Attributes>
+  <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" id="action1">
+    <Attribute IncludeInResult="true" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">bar1</AttributeValue>
+    </Attribute>
+  </Attributes>
+  <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" id="action2">
+    <Attribute IncludeInResult="true" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">bar2</AttributeValue>
+    </Attribute>
+  </Attributes>
+   <MultiRequests>
+        <RequestReference>
+            <AttributesReference ReferenceId="subjectBob"/>
+            <AttributesReference ReferenceId="resource1"/>
+            <AttributesReference ReferenceId="action1"/>
+        </RequestReference>
+        <RequestReference>
+            <AttributesReference ReferenceId="subjectAlice"/>
+            <AttributesReference ReferenceId="resource2"/>
+            <AttributesReference ReferenceId="action2"/>
+        </RequestReference>
+        <RequestReference>
+            <AttributesReference ReferenceId="subjectBob"/>
+            <AttributesReference ReferenceId="resource1"/>
+            <AttributesReference ReferenceId="action2"/>
+        </RequestReference>
+        <RequestReference>
+            <AttributesReference ReferenceId="subjectBob"/>
+            <AttributesReference ReferenceId="resource2"/>
+            <AttributesReference ReferenceId="action1"/>
+        </RequestReference>
+   </MultiRequests>         
+</Request>

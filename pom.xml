@@ -1,0 +1,68 @@
+<!--
+/*
+*  Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*
+*  WSO2 Inc. licenses this file to you under the Apache License,
+*  Version 2.0 (the "License"); you may not use this file except
+*  in compliance with the License.
+*  You may obtain a copy of the License at
+*
+*    http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.wso2.balana</groupId>
+    <artifactId>balana</artifactId>
+    <packaging>pom</packaging>
+    <name>WSO2 Balana Open source XACML implementation of WSO2</name>
+    <version>1.0.0-wso2v7</version>
+    <description>
+    This is the pom file that defines the build process  for the WSO2 Balana. Balana is XACML
+    open source project which is based on the sunxacml http://sunxacml.sourceforge.net/ under the license 
+    http://sunxacml.sourceforge.net/license.txt. But future development is released under Apache2 license
+    http://www.apache.org/licenses/LICENSE-2.0
+    </description>
+    <url>http://wso2.org</url>
+
+    <modules>
+        <module>modules/balana-core</module>
+	<module>modules/balana-utils</module>
+        <module>modules/balana-samples</module>
+        <module>modules/balana-documentation</module>
+        <module>modules/balana-distribution</module>
+    </modules>
+  <distributionManagement>
+        <repository>
+            <id>wso2-maven2-repository</id>
+            <name>WSO2 Maven2 Repository</name>
+            <url>scp://dist.wso2.org/home/httpd/dist.wso2.org/maven2/</url>
+        </repository>
+<!--
+        <snapshotRepository>
+            <id>wso2-maven2-snapshot-repository</id>
+            <name>WSO2 Maven2 Snapshot Repository</name>
+            <url>scp://dist.wso2.org/home/httpd/dist.wso2.org/snapshots/maven2/</url>
+        </snapshotRepository>
+-->
+   </distributionManagement>
+<build>
+    <extensions>
+        <extension>
+            <groupId>org.apache.maven.wagon</groupId>
+	    <artifactId>wagon-ssh</artifactId>
+            <version>2.1</version>
+        </extension>
+    </extensions>
+</build>
+</project>

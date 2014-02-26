@@ -1,0 +1,12 @@
+<Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ReturnPolicyIdList="false" CombinedDecision="false">
+   <Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" >
+     <Attribute IncludeInResult="false" AttributeId="axa-winterthur:names:1.0:subject:role">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">doctor</AttributeValue>
+	</Attribute>
+  </Attributes>
+  <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+    <Attribute IncludeInResult="false" AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-type">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">medical-record</AttributeValue>
+    </Attribute>
+  </Attributes>
+</Request>

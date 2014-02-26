@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC232:policy"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Description>
+        Policy for Conformance Test IIC232.
+    </Description>
+    <Target/>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIC232:rule"
+          Effect="Permit">
+        <Description>
+            A subject with an auth-duration attribute value of
+            -P4Y1M may perform any action on any resource.
+        </Description>
+        <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:yearMonthDuration-equal">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:yearMonthDuration-one-and-only">
+                <SubjectAttributeDesignator
+                      AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:auth-duration"
+                      DataType="http://www.w3.org/TR/2002/WD-xquery-operators-20020816#yearMonthDuration"/>
+            </Apply>
+            <AttributeValue
+                  DataType="http://www.w3.org/TR/2002/WD-xquery-operators-20020816#yearMonthDuration">-P4Y1M</AttributeValue>
+        
+</Apply></Condition>
+    </Rule>
+</Policy>

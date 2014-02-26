@@ -1,0 +1,8 @@
+<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17">
+<Result>
+<Decision>Indeterminate</Decision>
+<Status>
+<StatusCode Value="urn:oasis:names:tc:xacml:1.0:status:processing-error"/>
+</Status>
+</Result>
+</Response>

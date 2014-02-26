@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy
+      xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
+        access_control-xacml-2.0-policy-schema-os.xsd"
+      PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIG004:policy"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Description>
+        Policy for Conformance Test IIIG004.
+    </Description>
+    <PolicyDefaults>
+        <XPathVersion>http://www.w3.org/TR/1999/Rec-xpath-19991116</XPathVersion>
+    </PolicyDefaults>
+    <Target/>
+    <Rule
+          RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIG004:rule"
+          Effect="Permit">
+        <Condition>
+<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:xpath-node-match">
+            <AttributeValue
+                  DataType="http://www.w3.org/2001/XMLSchema#string">/</AttributeValue>
+            <AttributeValue
+                  DataType="http://www.w3.org/2001/XMLSchema#string">//*[local-name()='Subject'][namespace-uri()='urn:oasis:names:tc:xacml:2.0:context:schema:os']/*[local-name()='Attribute'][namespace-uri()='urn:oasis:names:tc:xacml:2.0:context:schema:os']</AttributeValue>
+        
+</Apply></Condition>
+    </Rule>
+</Policy>

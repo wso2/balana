@@ -1,0 +1,19 @@
+<body>
+  Support for Conditions is in this package. This contains all of the
+  function code, including base types, implementations of all of the
+  standard functions, and a factory for getting functions and adding new
+  ones to the system. There is also support for the Condition and Apply
+  XML types.
+  <p>
+  Note that prior to the 1.2 release, most of the function
+  implementations in this package were package private, mostly because
+  there is no reason to interact with these classes directly. With the
+  1.2 release all classes were exposed, in part to make all the standard
+  identifier strings easily available. If you need a function instance,
+  however, you should still use the factory interface. You should not
+  ever need to instantiate one of the standard function classes
+  directly. Note also that in the next major release some of the
+  function impementations may change their interfaces, which is another
+  reason to interact with the standard functions only through the
+  factory interface.
+</body>

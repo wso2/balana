@@ -1,0 +1,16 @@
+<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17">
+<Result>
+<Decision>Permit</Decision>
+<Status>
+<StatusCode Value="urn:oasis:names:tc:xacml:1.0:status:ok"/>
+</Status>
+<Obligations>
+<Obligation ObligationId="permitRule1Obligation">
+<AttributeAssignment  AttributeId="urn:oasis:names:tc:xacml:2.0:example:attribute:text" DataType="http://www.w3.org/2001/XMLSchema#string">permitRule1</AttributeAssignment>
+</Obligation>
+<Obligation ObligationId="permitPolicyObligation">
+<AttributeAssignment  AttributeId="urn:oasis:names:tc:xacml:2.0:example:attribute:text" DataType="http://www.w3.org/2001/XMLSchema#string">permitObligation</AttributeAssignment>
+</Obligation>
+</Obligations>
+</Result>
+</Response>

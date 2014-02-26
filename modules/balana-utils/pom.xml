@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>org.wso2.balana</groupId>
+        <artifactId>balana</artifactId>
+        <version>1.0.0-wso2v7</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.wso2.balana</groupId>
+    <artifactId>org.wso2.balana.utils</artifactId>
+    <version>1.0.0-wso2v7</version>
+    <packaging>bundle</packaging>
+    <name>WSO2 Balana Utils</name>
+    <description>
+        This is the pom file that defines the build process for the WSO2 Balana Core. Balana is XACML
+        open source project which is based on the sunxacml http://sunxacml.sourceforge.net/ under the license
+        http://sunxacml.sourceforge.net/license.txt. But future development is released under Apache2 license
+        http://www.apache.org/licenses/LICENSE-2.0
+    </description>
+    <url>http://wso2.org</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jvnet.maven.incrementalbuild</groupId>
+                <artifactId>incremental-build-plugin</artifactId>
+                <version>1.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>incremental-build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>1.4.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Name>${pom.artifactId}</Bundle-Name>
+                        <Export-Package>
+                            org.wso2.balana.utils*,
+                        </Export-Package>
+                        <Import-Package>
+                            !javax.xml.namespace,
+                            javax.xml.namespace; version=0.0.0,
+                            *;resolution:=optional,
+                        </Import-Package>
+                        <DynamicImport-Package>*</DynamicImport-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Maven Repository Switchboard</name>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>repository.dev.java.net-maven2</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2/</url>
+            <layout>default</layout>
+        </pluginRepository>
+    </pluginRepositories>
+</project>

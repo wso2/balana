@@ -1,0 +1,44 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="TestPolicy0010"
+        RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
+        Version="1.0">
+    <Description>Test policy 0010. XPath evaluation is done with respect to content element
+        and check for a matching value. Here content element has been bounded with custom namespace and prefix.
+        This is same as Test policy 0010, But here XPath has been defined to selects from the root node
+    </Description>
+    <PolicyDefaults>
+        <XPathVersion>http://www.w3.org/TR/1999/REC-xpath-19991116</XPathVersion>
+    </PolicyDefaults>
+    <Target>
+        <AnyOf>
+            <AllOf>
+                <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+                    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+                    <AttributeDesignator MustBePresent="false"
+                                         Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+                                         AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+                                         DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                </Match>
+            </AllOf>
+        </AnyOf>
+    </Target>
+    <Rule RuleId="rule1" Effect="Permit">
+        <Description>Rule to match value in content element using XPath</Description>
+        <Condition>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-is-in">
+                <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+                    <AttributeDesignator
+                            Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+                            AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+                            DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
+                </Apply>
+                <AttributeSelector MustBePresent="false"
+                                   Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                                   Path="/ak:record/ak:patient/ak:patientId/text()"
+                                   DataType="http://www.w3.org/2001/XMLSchema#string"/>
+            </Apply>
+        </Condition>
+    </Rule>
+    <Rule RuleId="rule2" Effect="Deny">
+        <Description>Deny rule</Description>
+    </Rule>
+</Policy>

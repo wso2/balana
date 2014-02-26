@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Policy xsi:schemaLocation="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 http://docs.oasis-open.org/xacml/3.0/xacml-core-v3-schema-wd-17.xsd" PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:policy" RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable" Version="1.0" xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Description>
+        Policy for Conformance Test IIIA011.
+    </Description>
+  <Target />
+  <Rule RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:rule1" Effect="Deny">
+    <Description>
+            A subject whose name is J. Hibbert may not
+            read Bart Simpson's medical record.  NOTAPPLICABLE
+        </Description>
+    <Target>
+      <AnyOf>
+        <AllOf>
+          <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">J. Hibbert</AttributeValue>
+            <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" />
+          </Match>
+        </AllOf>
+      </AnyOf>
+    </Target>
+  </Rule>
+  <Rule RuleId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:rule2" Effect="Permit">
+    <Description>
+            A subject who is at least 55 years older than Bart
+            Simpson may read Bart Simpson's medical record. NOT-APPLICABLE.
+        </Description>
+    <Condition>
+      <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-greater-than-or-equal">
+        <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-subtract">
+          <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only">
+            <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:age" DataType="http://www.w3.org/2001/XMLSchema#integer" MustBePresent="false" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" />
+          </Apply>
+          <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only">
+            <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:bart-simpson-age" DataType="http://www.w3.org/2001/XMLSchema#integer" MustBePresent="false" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment" />
+          </Apply>
+        </Apply>
+        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">55</AttributeValue>
+      </Apply>
+    </Condition>
+  </Rule>
+  <ObligationExpressions>
+    <ObligationExpression ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:obligation-1" FulfillOn="Permit">
+      <AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment1">
+        <AttributeValue AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment1" DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeValue>
+      </AttributeAssignmentExpression>
+      <AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment2">
+        <AttributeValue AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment2" DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeValue>
+      </AttributeAssignmentExpression>
+    </ObligationExpression>
+    <ObligationExpression ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:obligation-2" FulfillOn="Permit">
+      <AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment1">
+        <AttributeValue AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment1" DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeValue>
+      </AttributeAssignmentExpression>
+      <AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment2">
+        <AttributeValue AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment2" DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeValue>
+      </AttributeAssignmentExpression>
+    </ObligationExpression>
+    <ObligationExpression ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:obligation-3" FulfillOn="Deny">
+      <AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment1">
+        <AttributeValue AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment1" DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeValue>
+      </AttributeAssignmentExpression>
+      <AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment2">
+        <AttributeValue AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment2" DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeValue>
+      </AttributeAssignmentExpression>
+    </ObligationExpression>
+    <ObligationExpression ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:obligation-4" FulfillOn="Deny">
+      <AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment1">
+        <AttributeValue AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment1" DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeValue>
+      </AttributeAssignmentExpression>
+      <AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment2">
+        <AttributeValue AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA011:assignment2" DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeValue>
+      </AttributeAssignmentExpression>
+    </ObligationExpression>
+  </ObligationExpressions>
+</Policy>

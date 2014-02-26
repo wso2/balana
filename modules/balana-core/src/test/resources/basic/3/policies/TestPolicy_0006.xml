@@ -1,0 +1,35 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+        xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="TestPolicy0006"
+        RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
+        Version="1.0">
+    <Description>Test POlicy 0006 : boolean-from-string function test</Description>
+    <Target>
+        <AnyOf>
+            <AllOf>
+                <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-regexp-match">
+                    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">foo</AttributeValue>
+                    <AttributeDesignator MustBePresent="false"
+                                         Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                                         AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+                                         DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                </Match>
+            </AllOf>
+        </AnyOf>
+    </Target>
+    <Rule RuleId="rule1" Effect="Permit">
+        <Condition>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:boolean-equal">
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#boolean">true</AttributeValue>
+                <Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:boolean-from-string">
+                    <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+                        <AttributeDesignator
+                                Category="skip-authorization"
+                                AttributeId="skip-authorization:value"
+                                DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
+                    </Apply>
+                </Apply>
+            </Apply>
+        </Condition>
+    </Rule>
+    <Rule RuleId="rule2" Effect="Deny"/>
+</Policy>
