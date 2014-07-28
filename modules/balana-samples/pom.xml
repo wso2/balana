@@ -24,16 +24,14 @@
     <parent>
         <groupId>org.wso2.balana</groupId>
         <artifactId>balana</artifactId>
-  	<version>1.0.0-wso2v7</version>
+        <version>1.0.0.wso2v7-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.wso2.balana</groupId>
     <artifactId>balana-samples</artifactId>
     <packaging>pom</packaging>
     <name>WSO2 Balana Samples</name>
-    <version>1.0.0-wso2v7</version>
     <description>
     This is the pom file that defines the build process  for the WSO2 Balana Samples. Balana is XACML
     open source project which is based on the sunxacml http://sunxacml.sourceforge.net/ under the license 

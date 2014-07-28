@@ -25,13 +25,11 @@
     <parent>
         <groupId>org.wso2.balana</groupId>
         <artifactId>balana</artifactId>
-  	<version>1.0.0-wso2v7</version>
+  	    <version>1.0.0.wso2v7-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <groupId>org.wso2.balana</groupId>
     <artifactId>balana-distribution</artifactId>
     <name>WSO2 Balana Distribution</name>
-    <version>1.0.0-wso2v7</version>
     <description>
     This is the pom file that defines the build process for the WSO2 Balana Distribution Pack. Balana is XACML
     open source project which is based on the sunxacml http://sunxacml.sourceforge.net/ under the license 
