@@ -7,13 +7,10 @@
     <parent>
         <groupId>org.wso2.balana</groupId>
         <artifactId>balana-samples</artifactId>
-        <version>1.0.0-wso2v7</version>
+        <version>1.0.0.wso2v8-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
-    <groupId>org.wso2.balana</groupId>
     <artifactId>org.wso2.balana.samples.custom.algo</artifactId>
-    <version>1.0.0-wso2v7</version>
     <packaging>jar</packaging>
     <name>WSO2 Balana Custom Function Sample</name>
 
@@ -22,7 +19,7 @@
         <dependency>
             <groupId>org.wso2.balana</groupId>
             <artifactId>org.wso2.balana</artifactId>
-            <version>1.0.0-wso2v7</version>
+            <version>1.0.0.wso2v8-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

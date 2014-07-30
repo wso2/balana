@@ -7,13 +7,11 @@
     <parent>
         <groupId>org.wso2.balana</groupId>
         <artifactId>balana-samples</artifactId>
-  	<version>1.0.0-wso2v7</version>
+        <version>1.0.0.wso2v8-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>org.wso2.balana</groupId>
     <artifactId>org.wso2.balana.samples.kmarket.trading</artifactId>
-    <version>1.0.0-wso2v7</version>
     <packaging>jar</packaging>
     <name>WSO2 Balana Sample Online Trading</name>
 
@@ -22,7 +20,7 @@
         <dependency>
             <groupId>org.wso2.balana</groupId>
             <artifactId>org.wso2.balana</artifactId>
-            <version>1.0.0-wso2v7</version>
+            <version>1.0.0.wso2v8-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -47,13 +45,6 @@
     </repositories>
 
     <pluginRepositories>
-        <pluginRepository>
-            <id>tlc</id>
-            <name>TLC Repository</name>
-
-            <url>http://commons.ucalgary.ca/pub/m2</url>
-        </pluginRepository>
-
         <pluginRepository>
             <id>wso2-maven2-repository</id>
             <url>http://dist.wso2.org/maven2</url>
