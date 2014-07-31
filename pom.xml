@@ -26,43 +26,43 @@
     <artifactId>balana</artifactId>
     <packaging>pom</packaging>
     <name>WSO2 Balana Open source XACML implementation of WSO2</name>
-    <version>1.0.0-wso2v7</version>
+    <version>1.0.0.wso2v8-SNAPSHOT</version>
     <description>
-    This is the pom file that defines the build process  for the WSO2 Balana. Balana is XACML
-    open source project which is based on the sunxacml http://sunxacml.sourceforge.net/ under the license 
-    http://sunxacml.sourceforge.net/license.txt. But future development is released under Apache2 license
-    http://www.apache.org/licenses/LICENSE-2.0
+        This is the pom file that defines the build process for the WSO2 Balana. Balana is XACML
+        open source project which is based on the sunxacml http://sunxacml.sourceforge.net/ under the license
+        http://sunxacml.sourceforge.net/license.txt. But future development is released under Apache2 license
+        http://www.apache.org/licenses/LICENSE-2.0
     </description>
     <url>http://wso2.org</url>
 
     <modules>
         <module>modules/balana-core</module>
-	<module>modules/balana-utils</module>
+        <module>modules/balana-utils</module>
         <module>modules/balana-samples</module>
         <module>modules/balana-documentation</module>
         <module>modules/balana-distribution</module>
     </modules>
-  <distributionManagement>
+    <distributionManagement>
         <repository>
             <id>wso2-maven2-repository</id>
             <name>WSO2 Maven2 Repository</name>
             <url>scp://dist.wso2.org/home/httpd/dist.wso2.org/maven2/</url>
         </repository>
-<!--
-        <snapshotRepository>
-            <id>wso2-maven2-snapshot-repository</id>
-            <name>WSO2 Maven2 Snapshot Repository</name>
-            <url>scp://dist.wso2.org/home/httpd/dist.wso2.org/snapshots/maven2/</url>
-        </snapshotRepository>
--->
-   </distributionManagement>
-<build>
-    <extensions>
-        <extension>
-            <groupId>org.apache.maven.wagon</groupId>
-	    <artifactId>wagon-ssh</artifactId>
-            <version>2.1</version>
-        </extension>
-    </extensions>
-</build>
+        <!--
+                <snapshotRepository>
+                    <id>wso2-maven2-snapshot-repository</id>
+                    <name>WSO2 Maven2 Snapshot Repository</name>
+                    <url>scp://dist.wso2.org/home/httpd/dist.wso2.org/snapshots/maven2/</url>
+                </snapshotRepository>
+        -->
+    </distributionManagement>
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>2.1</version>
+            </extension>
+        </extensions>
+    </build>
 </project>
