@@ -76,5 +76,28 @@
                 <version>2.1</version>
             </extension>
         </extensions>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <preparationGoals>clean install</preparationGoals>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
+
+    <scm>
+        <url>https://github.com/wso2/balana.git</url>
+        <developerConnection>scm:git:https://github.com/wso2/balana.git</developerConnection>
+        <connection>scm:git:https://github.com/wso2/balana.git</connection>
+        <tag>HEAD</tag>
+    </scm>
+
 </project>
