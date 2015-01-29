@@ -43,7 +43,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.8.2</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>        
         <dependency>
@@ -101,9 +101,9 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
- 			<Bundle-Name>${pom.artifactId}</Bundle-Name>
+ 			            <Bundle-Name>${pom.artifactId}</Bundle-Name>
                         <Export-Package>
-                            org.wso2.balana.*,
+                            org.wso2.balana.*;version=${exp.pkg.version.balana}
                         </Export-Package>
                         <Import-Package>
                             !javax.xml.namespace,
