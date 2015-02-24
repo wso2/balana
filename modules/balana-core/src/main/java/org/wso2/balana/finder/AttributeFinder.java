@@ -154,7 +154,7 @@ public class AttributeFinder {
 
             // if there was an error, we stop right away
             if (result.indeterminate()) {
-                logger.info("Error while trying to resolve values: "
+                logger.error("Error while trying to resolve values: "
                         + result.getStatus().getMessage());
                 return result;
             }
@@ -168,7 +168,9 @@ public class AttributeFinder {
 
         // if we got here then there were no errors but there were also no
         // matches, so we have to return an empty bag
-        logger.info("Failed to resolve any values for " + attributeId.toString());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Failed to resolve any values for " + attributeId.toString());
+        }
 
         return new EvaluationResult(BagAttribute.createEmptyBag(attributeType));
     }
@@ -199,7 +201,7 @@ public class AttributeFinder {
 
             // if there was an error, we stop right away
             if (result.indeterminate()) {
-                logger.info("Error while trying to resolve values: "
+                logger.error("Error while trying to resolve values: "
                         + result.getStatus().getMessage());
                 return result;
             }
@@ -212,7 +214,9 @@ public class AttributeFinder {
 
         // if we got here then there were no errors but there were also no
         // matches, so we have to return an empty bag
-        logger.info("Failed to resolve any values for " + contextPath);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Failed to resolve any values for " + contextPath);
+        }
 
         return new EvaluationResult(BagAttribute.createEmptyBag(attributeType));
     }
@@ -246,7 +250,7 @@ public class AttributeFinder {
 
             // if there was an error, we stop right away
             if (result.indeterminate()) {
-                logger.info("Error while trying to resolve values: "
+                logger.error("Error while trying to resolve values: "
                         + result.getStatus().getMessage());
                 return result;
             }
@@ -259,8 +263,9 @@ public class AttributeFinder {
 
         // if we got here then there were no errors but there were also no
         // matches, so we have to return an empty bag
-        logger.info("Failed to resolve any values for " + contextPath);
-
+        if (logger.isDebugEnabled()) {
+            logger.debug("Failed to resolve any values for " + contextPath);
+        }
         return new EvaluationResult(BagAttribute.createEmptyBag(attributeType));
     }
 
