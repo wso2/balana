@@ -28,7 +28,7 @@
     </parent>
     <artifactId>balana-documentation</artifactId>
     <packaging>pom</packaging>
-    <name>WSO2 Balana Doucumentation</name>
+    <name>WSO2 Balana Documentation</name>
     <description>
     This is the pom file that defines the build process  for the WSO2 Balana Samples. Balana is XACML
     open source project which is based on the sunxacml http://sunxacml.sourceforge.net/ under the license 
