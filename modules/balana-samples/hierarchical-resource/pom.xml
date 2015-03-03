@@ -7,13 +7,13 @@
     <parent>
         <groupId>org.wso2.balana</groupId>
         <artifactId>balana-samples</artifactId>
-        <version>1.0.0.wso2v8-SNAPSHOT</version>
+        <version>1.0.0.wso2v9-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>org.wso2.balana.samples.hierarchical.resource</artifactId>
     <packaging>jar</packaging>
-    <name>WSO2 Balana Sample Filtering Static Resources</name>
+    <name>WSO2 Balana Sample Hierarchical Resources</name>
 
     <dependencies>
         <dependency>
