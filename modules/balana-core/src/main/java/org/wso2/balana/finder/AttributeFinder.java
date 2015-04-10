@@ -156,6 +156,7 @@ public class AttributeFinder {
                 continue;
             }
 
+
             // see if the module can find an attribute value
             EvaluationResult result = module.findAttribute(attributeType, attributeId, issuer,
                     category, context);
