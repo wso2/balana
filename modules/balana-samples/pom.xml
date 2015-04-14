@@ -42,5 +42,6 @@
         <module>kmarket-trading-sample</module>
         <module>web-page-image-filtering</module>
         <module>custom-combining-algo</module>
+	<module>hierarchical-resource</module>
     </modules>
 </project>
