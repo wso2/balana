@@ -68,7 +68,7 @@ import org.w3c.dom.Node;
 public class BaseFunctionFactory extends FunctionFactory {
 
     // the backing maps for the Function objects
-    private HashMap functionMap = null;
+    private static HashMap functionMap = new HashMap();
 
     // the superset factory chained to this factory
     private FunctionFactory superset = null;
@@ -89,7 +89,6 @@ public class BaseFunctionFactory extends FunctionFactory {
      * @param superset the superset factory or null
      */
     public BaseFunctionFactory(FunctionFactory superset) {
-        functionMap = new HashMap();
 
         this.superset = superset;
     }
