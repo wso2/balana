@@ -329,7 +329,7 @@ public class PDP {
                 for(CombinerElement element : elements){
                     PolicyTreeElement treeElement = element.getElement();
                     if(treeElement instanceof AbstractPolicy){
-                        processPolicyReferences(policy, references);
+                        processPolicyReferences((AbstractPolicy) treeElement, references);
                     } else {
                         references.add(new PolicyReference(policy.getId(),
                                             PolicyReference.POLICYSET_REFERENCE, null, null));
