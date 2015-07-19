@@ -146,6 +146,8 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
 
         // add condition function TimeInRange
         conditionFunctions.add(new TimeInRangeFunction());
+        // add condition function IPInRange
+        conditionFunctions.add(new IPInRangeFunction());        
         // add condition functions from BagFunction
         conditionFunctions.addAll((new ConditionBagFunctionCluster()).getSupportedFunctions());
         // add condition functions from SetFunction

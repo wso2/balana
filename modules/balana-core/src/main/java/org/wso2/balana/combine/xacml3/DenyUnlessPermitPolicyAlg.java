@@ -19,6 +19,7 @@
 package org.wso2.balana.combine.xacml3;
 
 import org.wso2.balana.AbstractPolicy;
+import org.wso2.balana.MatchResult;
 import org.wso2.balana.ObligationResult;
 import org.wso2.balana.ctx.ResultFactory;
 import org.wso2.balana.combine.PolicyCombinerElement;
@@ -82,16 +83,18 @@ public class DenyUnlessPermitPolicyAlg extends PolicyCombiningAlgorithm{
 
         for (Object policyElement : policyElements) {
             AbstractPolicy policy = ((PolicyCombinerElement) (policyElement)).getPolicy();
-            AbstractResult result = policy.evaluate(context);
-            int value = result.getDecision();
-
-            // if there was a value of PERMIT, then regardless of what else
-            // we've seen, we always return PERMIT
-            if (value == AbstractResult.DECISION_PERMIT) {
-                return result;
-            } else if(value == AbstractResult.DECISION_DENY){
-                denyObligations.addAll(result.getObligations());
-                denyAdvices.addAll(result.getAdvices());
+            MatchResult match = policy.match(context);
+            if (match.getResult() == MatchResult.MATCH) {
+                AbstractResult result = policy.evaluate(context);
+                int value = result.getDecision();
+                // if there was a value of PERMIT, then regardless of what else
+                // we've seen, we always return PERMIT
+                if (value == AbstractResult.DECISION_PERMIT) {
+                    return result;
+                } else if(value == AbstractResult.DECISION_DENY){
+                    denyObligations.addAll(result.getObligations());
+                    denyAdvices.addAll(result.getAdvices());
+                }
             }
         }
 
