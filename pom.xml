@@ -30,7 +30,7 @@
     <artifactId>balana</artifactId>
     <packaging>pom</packaging>
     <name>WSO2 Balana Open source XACML implementation of WSO2</name>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
     <description>
         This is the pom file that defines the build process for the WSO2 Balana. Balana is XACML
         open source project which is based on the sunxacml http://sunxacml.sourceforge.net/ under the license
@@ -62,7 +62,7 @@
     </dependencyManagement>
 
     <properties>
-        <balana.version>1.0.2-SNAPSHOT</balana.version>
+        <balana.version>1.0.3-SNAPSHOT</balana.version>
         <commons.logging.version>1.1.1</commons.logging.version>
         <junit.version>4.8.2</junit.version>
         <imp.pkg.version.javax.xml>0.0.0</imp.pkg.version.javax.xml>
