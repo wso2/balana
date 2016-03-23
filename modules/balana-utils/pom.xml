@@ -32,7 +32,6 @@
             <plugin>
                 <groupId>org.jvnet.maven.incrementalbuild</groupId>
                 <artifactId>incremental-build-plugin</artifactId>
-                <version>1.3</version>
                 <executions>
                     <execution>
                         <goals>
@@ -44,11 +43,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.0</version>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.felix</groupId>
@@ -65,29 +59,16 @@
                         <Import-Package>
                             !javax.xml.namespace,
                             javax.xml.namespace; version=${imp.pkg.version.javax.xml},
-                            *;resolution:=optional
+                            javax.xml.parsers; version="${imp.pkg.version.javax.xml.parsers}",
+                            javax.xml.transform; version="${imp.pkg.version.javax.xml}",
+                            javax.xml.transform.dom; version="${imp.pkg.version.javax.xml}",
+                            javax.xml.transform.stream; version="${imp.pkg.version.javax.xml}",
+                            org.apache.commons.logging; version="${commons-logging.osgi.version.range}",
+                            org.w3c.dom
                         </Import-Package>
-                        <DynamicImport-Package>*</DynamicImport-Package>
                     </instructions>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
-    <repositories>
-        <repository>
-            <id>central</id>
-            <name>Maven Repository Switchboard</name>
-            <url>http://repo1.maven.org/maven2</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>repository.dev.java.net-maven2</id>
-            <name>Java.net Repository for Maven</name>
-            <url>http://download.java.net/maven/2/</url>
-            <layout>default</layout>
-        </pluginRepository>
-    </pluginRepositories>
 </project>

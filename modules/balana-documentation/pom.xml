@@ -17,23 +17,24 @@
 * under the License.
 */
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.wso2.balana</groupId>
         <artifactId>balana</artifactId>
-  	    <version>1.0.3-SNAPSHOT</version>
+        <version>1.0.3-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <artifactId>balana-documentation</artifactId>
     <packaging>pom</packaging>
     <name>WSO2 Balana Documentation</name>
     <description>
-    This is the pom file that defines the build process  for the WSO2 Balana Samples. Balana is XACML
-    open source project which is based on the sunxacml http://sunxacml.sourceforge.net/ under the license 
-    http://sunxacml.sourceforge.net/license.txt. But future development is released under Apache2 license
-    http://www.apache.org/licenses/LICENSE-2.0
+        This is the pom file that defines the build process for the WSO2 Balana Samples. Balana is XACML
+        open source project which is based on the sunxacml http://sunxacml.sourceforge.net/ under the license
+        http://sunxacml.sourceforge.net/license.txt. But future development is released under Apache2 license
+        http://www.apache.org/licenses/LICENSE-2.0
     </description>
     <url>http://wso2.org</url>
 
