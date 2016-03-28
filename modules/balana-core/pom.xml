@@ -17,7 +17,8 @@
 * under the License.
 */
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -30,10 +31,10 @@
     <packaging>bundle</packaging>
     <name>WSO2 Balana Core</name>
     <description>
-    This is the pom file that defines the build process for the WSO2 Balana Core. Balana is XACML
-    open source project which is based on the sunxacml http://sunxacml.sourceforge.net/ under the license 
-    http://sunxacml.sourceforge.net/license.txt. But future development is released under Apache2 license
-    http://www.apache.org/licenses/LICENSE-2.0
+        This is the pom file that defines the build process for the WSO2 Balana Core. Balana is XACML
+        open source project which is based on the sunxacml http://sunxacml.sourceforge.net/ under the license
+        http://sunxacml.sourceforge.net/license.txt. But future development is released under Apache2 license
+        http://www.apache.org/licenses/LICENSE-2.0
     </description>
     <url>http://wso2.org</url>
 
@@ -41,9 +42,8 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
@@ -70,25 +70,25 @@
 
     <build>
         <plugins>
-	    <plugin> 
-		<groupId>org.jvnet.maven.incrementalbuild</groupId> 
-		<artifactId>incremental-build-plugin</artifactId>
-		<version>1.3</version>
-		<executions> 
-		    <execution> 
-		        <goals> 
-			    <goal>incremental-build</goal>
-			</goals>
-		    </execution> 
-		</executions> 
-	    </plugin>
+            <plugin>
+                <groupId>org.jvnet.maven.incrementalbuild</groupId>
+                <artifactId>incremental-build-plugin</artifactId>
+                <version>1.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>incremental-build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.0</version>
+                <version>2.3.1</version>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -99,14 +99,22 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
- 			            <Bundle-Name>${pom.artifactId}</Bundle-Name>
+                        <Bundle-Name>${pom.artifactId}</Bundle-Name>
                         <Export-Package>
                             org.wso2.balana.*;version=${exp.pkg.version.balana}
                         </Export-Package>
                         <Import-Package>
                             !javax.xml.namespace,
                             javax.xml.namespace; version=${imp.pkg.version.javax.xml},
-                            *;resolution:=optional,
+                            javax.security.auth.x500,
+                            javax.xml.parsers; version="${imp.pkg.version.javax.xml.parsers}",
+                            javax.xml.transform; version="${imp.pkg.version.javax.xml}",
+                            javax.xml.transform.dom; version="${imp.pkg.version.javax.xml}",
+                            javax.xml.transform.stream; version="${imp.pkg.version.javax.xml}",
+                            javax.xml.xpath; version="${imp.pkg.version.javax.xml}",
+                            org.apache.commons.logging.*; version="${commons-logging.osgi.version.range}",
+                            org.w3c.dom,
+                            org.xml.sax
                         </Import-Package>
                         <DynamicImport-Package>*</DynamicImport-Package>
                     </instructions>
@@ -123,21 +131,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <repositories>
-        <repository>
-            <id>central</id>
-            <name>Maven Repository Switchboard</name>
-            <url>http://repo1.maven.org/maven2</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-	<pluginRepository> 
-            <id>repository.dev.java.net-maven2</id>
-	    <name>Java.net Repository for Maven</name> 
-	    <url>http://download.java.net/maven/2/</url> 
-	    <layout>default</layout> 
-	</pluginRepository>
-    </pluginRepositories> 
 </project>
