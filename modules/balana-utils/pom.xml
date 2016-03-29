@@ -57,7 +57,7 @@
                         </Export-Package>
                         <Import-Package>
                             !javax.xml.namespace,
-                            javax.xml.namespace; version=${imp.pkg.version.javax.xml},
+                            javax.xml.namespace; version="${imp.pkg.version.javax.xml}",
                             javax.xml.parsers; version="${imp.pkg.version.javax.xml.parsers}",
                             javax.xml.transform; version="${imp.pkg.version.javax.xml}",
                             javax.xml.transform.dom; version="${imp.pkg.version.javax.xml}",
