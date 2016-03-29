@@ -47,7 +47,6 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                <version>1.4.0</version>
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
@@ -58,7 +57,7 @@
                         </Export-Package>
                         <Import-Package>
                             !javax.xml.namespace,
-                            javax.xml.namespace; version=${imp.pkg.version.javax.xml},
+                            javax.xml.namespace; version="${imp.pkg.version.javax.xml}",
                             javax.xml.parsers; version="${imp.pkg.version.javax.xml.parsers}",
                             javax.xml.transform; version="${imp.pkg.version.javax.xml}",
                             javax.xml.transform.dom; version="${imp.pkg.version.javax.xml}",
