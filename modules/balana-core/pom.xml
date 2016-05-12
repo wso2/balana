@@ -66,8 +66,8 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>xerces.wso2</groupId>
-            <artifactId>xercesImpl</artifactId>
+            <groupId>org.wso2.balana</groupId>
+            <artifactId>org.wso2.balana.utils</artifactId>
         </dependency>
     </dependencies>
 
@@ -109,6 +109,7 @@
                             javax.xml.transform.stream; version="${imp.pkg.version.javax.xml}",
                             javax.xml.xpath; version="${imp.pkg.version.javax.xml}",
                             org.apache.commons.logging.*; version="${commons-logging.osgi.version.range}",
+                            org.wso2.balana.utils;version="${imp.pkg.version.balana}",
                             org.w3c.dom,
                             org.xml.sax
                         </Import-Package>

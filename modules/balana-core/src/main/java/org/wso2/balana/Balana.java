@@ -32,6 +32,7 @@ import org.wso2.balana.finder.PolicyFinderModule;
 import org.wso2.balana.finder.impl.CurrentEnvModule;
 import org.wso2.balana.finder.impl.FileBasedPolicyFinderModule;
 import org.wso2.balana.finder.impl.SelectorModule;
+import org.wso2.balana.utils.Utils;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -96,11 +97,6 @@ public class Balana {
      * Logger instance
      */
     private static Log logger = LogFactory.getLog(Balana.class);
-
-    /**
-     * Defines XML Entity Expansion Limit
-     */
-    private static final int ENTITY_EXPANSION_LIMIT = 0;
 
     /**
      * This constructor creates the Balana engine instance. First, it loads all configuration
@@ -219,7 +215,7 @@ public class Balana {
         }
 
         // init builder
-        this.builder = getSecuredDocumentBuilder();
+        this.builder = Utils.getSecuredDocumentBuilder();
     }
 
     /**
@@ -332,28 +328,5 @@ public class Balana {
 
     public DocumentBuilderFactory getBuilder() {
         return builder;
-    }
-
-    private DocumentBuilderFactory getSecuredDocumentBuilder() {
-
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        dbf.setNamespaceAware(true);
-        dbf.setXIncludeAware(false);
-        dbf.setExpandEntityReferences(false);
-        try {
-            dbf.setFeature(Constants.SAX_FEATURE_PREFIX + Constants.EXTERNAL_GENERAL_ENTITIES_FEATURE, false);
-            dbf.setFeature(Constants.SAX_FEATURE_PREFIX + Constants.EXTERNAL_PARAMETER_ENTITIES_FEATURE, false);
-            dbf.setFeature(Constants.XERCES_FEATURE_PREFIX + Constants.LOAD_EXTERNAL_DTD_FEATURE, false);
-        } catch (ParserConfigurationException e) {
-            logger.error(
-                    "Failed to load XML Processor Feature " + Constants.EXTERNAL_GENERAL_ENTITIES_FEATURE + " or " +
-                    Constants.EXTERNAL_PARAMETER_ENTITIES_FEATURE + " or " + Constants.LOAD_EXTERNAL_DTD_FEATURE);
-        }
-
-        SecurityManager securityManager = new SecurityManager();
-        securityManager.setEntityExpansionLimit(ENTITY_EXPANSION_LIMIT);
-        dbf.setAttribute(Constants.XERCES_PROPERTY_PREFIX + Constants.SECURITY_MANAGER_PROPERTY, securityManager);
-
-        return dbf;
     }
 }

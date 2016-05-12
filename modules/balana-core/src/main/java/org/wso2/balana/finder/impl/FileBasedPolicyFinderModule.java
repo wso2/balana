@@ -28,6 +28,7 @@ import org.wso2.balana.ctx.Status;
 import org.wso2.balana.finder.PolicyFinder;
 import org.wso2.balana.finder.PolicyFinderModule;
 import org.wso2.balana.finder.PolicyFinderResult;
+import org.wso2.balana.utils.Utils;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -209,7 +210,7 @@ public class FileBasedPolicyFinderModule extends PolicyFinderModule{
 
         try {
             // create the factory
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory factory = Utils.getSecuredDocumentBuilder();
             factory.setIgnoringComments(true);
             factory.setNamespaceAware(true);
             factory.setValidating(false);

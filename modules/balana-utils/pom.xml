@@ -25,6 +25,10 @@
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
         </dependency>
+        <dependency>
+            <groupId>xerces.wso2</groupId>
+            <artifactId>xercesImpl</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -63,6 +67,8 @@
                             javax.xml.transform.dom; version="${imp.pkg.version.javax.xml}",
                             javax.xml.transform.stream; version="${imp.pkg.version.javax.xml}",
                             org.apache.commons.logging; version="${commons-logging.osgi.version.range}",
+                            org.apache.xerces.impl;
+                            org.apache.xerces.util;
                             org.w3c.dom
                         </Import-Package>
                     </instructions>
