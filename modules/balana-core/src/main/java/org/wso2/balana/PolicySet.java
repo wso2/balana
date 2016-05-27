@@ -65,7 +65,9 @@ import org.w3c.dom.NodeList;
  */
 public class PolicySet extends AbstractPolicy {
 
-    /**
+    private String namespaceUri = "urn:oasis:names:tc:xacml:3.0:core:schema:wd-17";
+
+	/**
      * Creates a new <code>PolicySet</code> with only the required elements.
      * 
      * @param id the policy set identifier
@@ -229,7 +231,7 @@ public class PolicySet extends AbstractPolicy {
     private PolicySet(Node root, PolicyFinder finder) throws ParsingException {
         
         super(root, "PolicySet", "PolicyCombiningAlgId");
-
+        this.namespaceUri = root.getNamespaceURI();
         List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
         HashMap<String, List<CombinerParameter>> policyParameters =
                                                 new HashMap<String, List<CombinerParameter>>();
@@ -370,7 +372,6 @@ public class PolicySet extends AbstractPolicy {
             throw new ParsingException("Cannot create PolicySet from root of" + " type "
                     + DOMHelper.getLocalName(root));
         }
-
         return new PolicySet(root, finder);
     }
 
@@ -393,7 +394,7 @@ public class PolicySet extends AbstractPolicy {
      */
     public void encode(StringBuilder builder) {
 
-        builder.append("<PolicySet PolicySetId=\"").append(getId().toString()).
+        builder.append("<PolicySet xmlns=\"" + this.namespaceUri + "\" PolicySetId=\"").append(getId().toString()).
                 append("\" PolicyCombiningAlgId=\"").
                 append(getCombiningAlg().getIdentifier().toString()).append("\">\n");
 
