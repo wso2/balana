@@ -49,6 +49,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import org.wso2.balana.utils.Utils;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -114,7 +115,7 @@ public class InputParser implements ErrorHandler {
         NodeList nodes = null;
 
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory factory = Utils.getSecuredDocumentBuilder();
             factory.setIgnoringComments(true);
 
             DocumentBuilder builder = null;

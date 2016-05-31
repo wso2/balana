@@ -86,6 +86,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.wso2.balana.utils.Utils;
 import org.xml.sax.SAXException;
 
 import org.w3c.dom.Document;
@@ -306,7 +307,7 @@ public class ConfigurationStore {
      * Private helper that parses the file and sets up the DOM tree.
      */
     private Node getRootNode(File configFile) throws ParsingException {
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilderFactory dbFactory = Utils.getSecuredDocumentBuilder();
 
         dbFactory.setIgnoringComments(true);
         dbFactory.setNamespaceAware(false);
