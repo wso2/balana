@@ -67,8 +67,8 @@
                             javax.xml.transform.dom; version="${imp.pkg.version.javax.xml}",
                             javax.xml.transform.stream; version="${imp.pkg.version.javax.xml}",
                             org.apache.commons.logging; version="${commons-logging.osgi.version.range}",
-                            org.apache.xerces.impl;
-                            org.apache.xerces.util;
+                            org.apache.xerces.impl; resolution:=optional,
+                            org.apache.xerces.util; resolution:=optional,
                             org.w3c.dom
                         </Import-Package>
                     </instructions>
