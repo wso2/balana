@@ -62,7 +62,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.wso2.balana.utils.Utils;
 
-import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -166,7 +165,7 @@ public class SelectorModule extends AttributeFinderModule {
                 if(contextNode != null){
                     // make the node appear to be a direct child of the Document
                     try{
-                        DocumentBuilderFactory dbf = Utils.getSecuredDocumentBuilder();
+                        DocumentBuilderFactory dbf = Utils.getSecuredDocumentBuilderFactory();
                         DocumentBuilder builder = dbf.newDocumentBuilder();
                         dbf.setNamespaceAware(true);
                         Document docRoot = builder.newDocument();

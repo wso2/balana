@@ -115,7 +115,7 @@ public class InputParser implements ErrorHandler {
         NodeList nodes = null;
 
         try {
-            DocumentBuilderFactory factory = Utils.getSecuredDocumentBuilder();
+            DocumentBuilderFactory factory = Utils.getSecuredDocumentBuilderFactory();
             factory.setIgnoringComments(true);
 
             DocumentBuilder builder = null;

@@ -23,8 +23,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.xerces.util.SecurityManager;
 import org.apache.xerces.impl.Constants;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.InputSource;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -35,7 +33,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.StringReader;
 import java.io.StringWriter;
 
 /**
@@ -77,7 +74,7 @@ public class Utils {
      */
     public static Document createNewDocument() throws ParserConfigurationException {
 
-        DocumentBuilderFactory docFactory = getSecuredDocumentBuilder();
+        DocumentBuilderFactory docFactory = getSecuredDocumentBuilderFactory();
         DocumentBuilder docBuilder = null;
         Document doc = null;
         docBuilder = docFactory.newDocumentBuilder();
@@ -90,7 +87,7 @@ public class Utils {
      *
      * @return DocumentBuilderFactory instance
      */
-    public static DocumentBuilderFactory getSecuredDocumentBuilder() {
+    public static DocumentBuilderFactory getSecuredDocumentBuilderFactory() {
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setNamespaceAware(true);

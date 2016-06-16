@@ -18,10 +18,8 @@
 
 package org.wso2.balana;
 
-import com.sun.org.apache.xerces.internal.impl.Constants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.xerces.util.SecurityManager;
 import org.wso2.balana.attr.AttributeFactory;
 import org.wso2.balana.combine.CombiningAlgFactory;
 import org.wso2.balana.cond.FunctionFactory;
@@ -35,7 +33,6 @@ import org.wso2.balana.finder.impl.SelectorModule;
 import org.wso2.balana.utils.Utils;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -215,7 +212,7 @@ public class Balana {
         }
 
         // init builder
-        this.builder = Utils.getSecuredDocumentBuilder();
+        this.builder = Utils.getSecuredDocumentBuilderFactory();
     }
 
     /**
