@@ -25,8 +25,6 @@ import org.wso2.balana.utils.Utils;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
@@ -139,7 +137,7 @@ public class Attributes {
         if(content != null){
             // make the node appear to be a direct child of the Document
             try{
-                DocumentBuilderFactory dbf = Utils.getSecuredDocumentBuilder();
+                DocumentBuilderFactory dbf = Utils.getSecuredDocumentBuilderFactory();
                 DocumentBuilder builder = dbf.newDocumentBuilder();
                 dbf.setNamespaceAware(true);
                 Document docRoot = builder.newDocument();

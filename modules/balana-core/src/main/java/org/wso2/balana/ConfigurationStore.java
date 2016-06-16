@@ -79,7 +79,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -307,7 +306,7 @@ public class ConfigurationStore {
      * Private helper that parses the file and sets up the DOM tree.
      */
     private Node getRootNode(File configFile) throws ParsingException {
-        DocumentBuilderFactory dbFactory = Utils.getSecuredDocumentBuilder();
+        DocumentBuilderFactory dbFactory = Utils.getSecuredDocumentBuilderFactory();
 
         dbFactory.setIgnoringComments(true);
         dbFactory.setNamespaceAware(false);

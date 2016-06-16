@@ -210,7 +210,7 @@ public class FileBasedPolicyFinderModule extends PolicyFinderModule{
 
         try {
             // create the factory
-            DocumentBuilderFactory factory = Utils.getSecuredDocumentBuilder();
+            DocumentBuilderFactory factory = Utils.getSecuredDocumentBuilderFactory();
             factory.setIgnoringComments(true);
             factory.setNamespaceAware(true);
             factory.setValidating(false);
