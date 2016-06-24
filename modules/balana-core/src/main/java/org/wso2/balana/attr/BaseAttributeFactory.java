@@ -188,7 +188,7 @@ public class BaseAttributeFactory extends AttributeFactory {
         }
 
         if (attributeValue == null) {
-            throw new ParsingException("Invalid request. Couldn't create " + type + " attribute based on DOM node");
+            throw new ParsingException("Could not create " + type + " attribute based on DOM node");
         }
 
         return attributeValue;
