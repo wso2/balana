@@ -128,6 +128,12 @@ public class Obligation implements ObligationResult{
         return assignments;
     }
 
+    /**
+     * Returns the obligation id of the obligation object
+     * @return the obligation Id
+     */
+    public URI getObligationId(){ return obligationId; }
+
 
     /**
      * Encodes this <code>Obligation</code> into its XML form
