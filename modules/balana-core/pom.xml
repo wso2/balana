@@ -94,8 +94,8 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Bundle-Name>${pom.artifactId}</Bundle-Name>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Name>${project.artifactId}</Bundle-Name>
                         <Export-Package>
                             org.wso2.balana.*;version=${exp.pkg.version.balana}
                         </Export-Package>
