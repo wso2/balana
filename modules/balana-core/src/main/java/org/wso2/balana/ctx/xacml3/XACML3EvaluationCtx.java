@@ -55,7 +55,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
      * multiple content selectors.
      */
     private Set<Attributes> multipleContentSelectors;
-    
+
     /**
      * whether multiple attributes are present or not
      */
@@ -138,11 +138,11 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
                     }
                 }
             }
-
-            if(attributeValues.size() < 1){
-                return callHelper(type, id, issuer, category);
-            }
         }
+        if (attributeValues.isEmpty()) {
+            return callHelper(type, id, issuer, category);
+        }
+
         // if we got here, then we found at least one useful AttributeValue
         return new EvaluationResult(new BagAttribute(type, attributeValues));
     }
@@ -207,7 +207,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
      * for each. The Form is a Map that is indexed by the String form of the category ids, and that
      * contains Sets at each entry with all attributes that have that id
      *
-     * @param attributeSet 
+     * @param attributeSet
      * @param mapAttributes
      * @return
      */
@@ -352,7 +352,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
 
     /**
      * Process multi request element
-     * 
+     *
      * @param evaluationCtx <code>XACML3EvaluationCtx</code>
      * @return <code>MultipleCtxResult</code>
      */
@@ -395,13 +395,13 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
                 children.add(new XACML3EvaluationCtx(ctx, pdpConfig));
             }
         }
-        
+
         return new MultipleCtxResult(children);
     }
 
     /**
      * Process multiple attributes with same category
-     * 
+     *
      * @param evaluationCtx <code>XACML3EvaluationCtx</code>
      * @return <code>MultipleCtxResult</code>
      */
@@ -577,12 +577,12 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
         return new MultipleCtxResult(children);
 
     }
-    
+
     /**
      * Changes the value of the resource-id attribute in this context. This is useful when you have
      * multiple resources (ie, a scope other than IMMEDIATE), and you need to keep changing only the
      * resource-id to evaluate the different effective requests.
-     * 
+     *
      * @param resourceId  resourceId the new resource-id value
      * @param attributesSet a <code>Set</code> of <code>Attributes</code>
      */
@@ -618,7 +618,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
 
         Set<String> xPaths = new HashSet<String>();
         NamespaceContext namespaceContext = null;
-        
+
         XPathFactory factory = XPathFactory.newInstance();
         XPath xpath = factory.newXPath();
 
@@ -716,7 +716,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
     }
 
     /**
-     * 
+     *
      * @param category
      * @return
      */
