@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Policy
-        xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
         xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os
         access_control-xacml-2.0-policy-schema-os.xsd"
         PolicyId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIA008:policy"
@@ -22,7 +22,8 @@
                     <SubjectMatch
                             MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
                         <AttributeValue
-                                DataType="http://www.w3.org/2001/XMLSchema#string">Julius Hibbert</AttributeValue>
+                                DataType="http://www.w3.org/2001/XMLSchema#string">Julius Hibbert
+                        </AttributeValue>
                         <SubjectAttributeDesignator
                                 SubjectCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
                                 AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
@@ -35,7 +36,9 @@
                     <ResourceMatch
                             MatchId="urn:oasis:names:tc:xacml:1.0:function:anyURI-equal">
                         <AttributeValue
-                                DataType="http://www.w3.org/2001/XMLSchema#anyURI">http://medico.com/record/patient/BartSimpson</AttributeValue>
+                                DataType="http://www.w3.org/2001/XMLSchema#anyURI">
+                            http://medico.com/record/patient/BartSimpson
+                        </AttributeValue>
                         <ResourceAttributeDesignator
                                 AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
                                 DataType="http://www.w3.org/2001/XMLSchema#anyURI"/>
@@ -47,7 +50,8 @@
                     <ActionMatch
                             MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
                         <AttributeValue
-                                DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+                                DataType="http://www.w3.org/2001/XMLSchema#string">read
+                        </AttributeValue>
                         <ActionAttributeDesignator
                                 AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
                                 DataType="http://www.w3.org/2001/XMLSchema#string"/>
@@ -57,7 +61,8 @@
                     <ActionMatch
                             MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
                         <AttributeValue
-                                DataType="http://www.w3.org/2001/XMLSchema#string">write</AttributeValue>
+                                DataType="http://www.w3.org/2001/XMLSchema#string">write
+                        </AttributeValue>
                         <ActionAttributeDesignator
                                 AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
                                 DataType="http://www.w3.org/2001/XMLSchema#string"/>
@@ -69,7 +74,8 @@
         <Condition>
             <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-is-in">
                 <AttributeValue
-                        DataType="http://www.w3.org/2001/XMLSchema#string">riddle me this</AttributeValue>
+                        DataType="http://www.w3.org/2001/XMLSchema#string">riddle me this
+                </AttributeValue>
                 <SubjectAttributeDesignator
                         SubjectCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
                         AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:some-attribute"

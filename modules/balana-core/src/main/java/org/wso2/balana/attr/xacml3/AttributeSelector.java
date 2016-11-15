@@ -42,40 +42,36 @@ import java.util.List;
 public class AttributeSelector extends AbstractAttributeSelector {
 
     /**
-     * category of the select 
+     * the logger we'll use for all messages
+     */
+    private static Log logger = LogFactory.getLog(AttributeSelector.class);
+    /**
+     * category of the select
      */
     private URI category;
-
     /**
      * the XPath search for context node
      */
     private URI contextSelectorId;
-
     /**
      * the XPath to search fpr attributes
      */
     private String path;
 
-    /**
-     * the logger we'll use for all messages
-     */
-    private static Log logger = LogFactory.getLog(AttributeSelector.class);
-
-
 
     /**
      * Creates a new <code>AttributeSelector</code>.
      *
-     * @param category category of the attribute select
-     * @param type the data type of the attribute values this selector looks for
-     * @param contextSelectorId  XPath search for context node
-     * @param path the XPath to query attribute
-     * @param mustBePresent must resolution find a match
-     * @param xpathVersion the XPath version to use, which must be a valid XPath version string (the
-     *            identifier for XPath 1.0 is provided in <code>PolicyMetaData</code>)
+     * @param category          category of the attribute select
+     * @param type              the data type of the attribute values this selector looks for
+     * @param contextSelectorId XPath search for context node
+     * @param path              the XPath to query attribute
+     * @param mustBePresent     must resolution find a match
+     * @param xpathVersion      the XPath version to use, which must be a valid XPath version string (the
+     *                          identifier for XPath 1.0 is provided in <code>PolicyMetaData</code>)
      */
     public AttributeSelector(URI category, URI type, URI contextSelectorId, String path,
-                                                    boolean mustBePresent, String xpathVersion) {
+                             boolean mustBePresent, String xpathVersion) {
         this.category = category;
         this.type = type;
         this.contextSelectorId = contextSelectorId;
@@ -90,15 +86,13 @@ public class AttributeSelector extends AbstractAttributeSelector {
      * as of XACML 1.1 the XPathVersion element is required in any policy that uses a selector, so
      * if the <code>xpathVersion</code> string is null, then this will throw an exception.
      *
-     * @param root the root of the DOM tree for the XML AttributeSelectorType XML type
+     * @param root     the root of the DOM tree for the XML AttributeSelectorType XML type
      * @param metaData the meta-data associated with the containing policy
-     *
      * @return an <code>AttributeSelector</code>
-     *
      * @throws ParsingException if the AttributeSelectorType was invalid
      */
     public static AttributeSelector getInstance(Node root, PolicyMetaData metaData)
-                                                                        throws ParsingException {
+            throws ParsingException {
         URI category = null;
         URI type = null;
         URI contextSelectorId = null;
@@ -107,7 +101,7 @@ public class AttributeSelector extends AbstractAttributeSelector {
         String xpathVersion = metaData.getXPathIdentifier();
 
         // make sure we were given an xpath version
-        if (xpathVersion == null){
+        if (xpathVersion == null) {
             throw new ParsingException("An XPathVersion is required for "
                     + "any policies that use selectors");
         }
@@ -121,7 +115,7 @@ public class AttributeSelector extends AbstractAttributeSelector {
             throw new ParsingException("Error parsing required Category "
                     + "attribute in AttributeSelector", e);
         }
-        
+
         try {
             // there's always a DataType attribute
             type = new URI(attrs.getNamedItem("DataType").getNodeValue());
@@ -148,7 +142,7 @@ public class AttributeSelector extends AbstractAttributeSelector {
 
         try {
             Node node = attrs.getNamedItem("ContextSelectorId");
-            if(node != null){
+            if (node != null) {
                 contextSelectorId = new URI(node.getNodeValue());
             }
         } catch (Exception e) {
@@ -157,7 +151,7 @@ public class AttributeSelector extends AbstractAttributeSelector {
         }
 
         return new AttributeSelector(category, type, contextSelectorId, path, mustBePresent,
-                                                                                    xpathVersion);
+                xpathVersion);
     }
 
 
@@ -170,15 +164,14 @@ public class AttributeSelector extends AbstractAttributeSelector {
      * finding.
      *
      * @param context representation of the request to search
-     *
      * @return a result containing a bag either empty because no values were found or containing at
-     *         least one value, or status associated with an Indeterminate result
+     * least one value, or status associated with an Indeterminate result
      */
 
     public EvaluationResult evaluate(EvaluationCtx context) {
         // query the context
         EvaluationResult result = context.getAttribute(path, type, category,
-                                                                contextSelectorId, xpathVersion);
+                contextSelectorId, xpathVersion);
 
         // see if we got anything
         if (!result.indeterminate()) {
@@ -221,7 +214,6 @@ public class AttributeSelector extends AbstractAttributeSelector {
     public List getChildren() {
         return null;
     }
-
 
 
     public boolean returnsBag() {

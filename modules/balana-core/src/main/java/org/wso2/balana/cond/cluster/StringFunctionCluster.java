@@ -1,4 +1,3 @@
-
 /*
  * @(#)StringFunctionCluster.java
  *
@@ -49,19 +48,18 @@ import java.util.Set;
  * Clusters all the functions supported by <code>StringFunction</code>
  * and <code>URLStringCatFunction</code>.
  *
- * @since 2.0
  * @author Seth Proctor
+ * @since 2.0
  */
-public class StringFunctionCluster implements FunctionCluster
-{
+public class StringFunctionCluster implements FunctionCluster {
 
     public Set<Function> getSupportedFunctions() {
         Set<Function> set = new HashSet<Function>();
         Iterator it = StringFunction.getSupportedIdentifiers().
-            iterator();
+                iterator();
 
         while (it.hasNext())
-            set.add(new StringFunction((String)(it.next())));
+            set.add(new StringFunction((String) (it.next())));
 
         set.add(new URLStringCatFunction());
 

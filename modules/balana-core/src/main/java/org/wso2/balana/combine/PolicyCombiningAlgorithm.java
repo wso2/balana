@@ -51,16 +51,16 @@ import java.util.List;
  * NOT_APPLICABLE is the returned effect, no obligations may be included in the result. If the
  * effect of the combining algorithm is PERMIT or DENY, then obligations with a matching fulfillOn
  * effect are also included in the result.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
  * @author Marco Barreno
+ * @since 1.0
  */
 public abstract class PolicyCombiningAlgorithm extends CombiningAlgorithm {
 
     /**
      * Constructor that takes the algorithm's identifier.
-     * 
+     *
      * @param identifier the algorithm's identifier
      */
     public PolicyCombiningAlgorithm(URI identifier) {
@@ -73,12 +73,11 @@ public abstract class PolicyCombiningAlgorithm extends CombiningAlgorithm {
      * <p>
      * Note that unlike in the RuleCombiningAlgorithms, here you must explicitly match the
      * sub-policies to make sure that you should consider them, and you must handle Obligations.
-     * 
-     * @param context the representation of the request
-     * @param parameters a (possibly empty) non-null <code>List</code> of
-     *            <code>CombinerParameter<code>s
+     *
+     * @param context        the representation of the request
+     * @param parameters     a (possibly empty) non-null <code>List</code> of
+     *                       <code>CombinerParameter<code>s
      * @param policyElements a <code>List</code> of <code>CombinerElement<code>s
-     * 
      * @return a single unified result based on the combining logic
      */
     public abstract AbstractResult combine(EvaluationCtx context, List parameters, List policyElements);

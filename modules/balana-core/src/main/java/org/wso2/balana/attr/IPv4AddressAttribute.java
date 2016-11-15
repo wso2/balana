@@ -41,15 +41,15 @@ import java.net.UnknownHostException;
 /**
  * Subclass of <code>IPAddressAttribute</code> that handles the specifics of IPv4. In general, you
  * shouldn't need to interact with this class except to create an instance directly.
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
 public class IPv4AddressAttribute extends IPAddressAttribute {
 
     /**
      * Creates the new <code>IPv4AddressAttribute</code> with just the required address component.
-     * 
+     *
      * @param address a non-null <code>InetAddress</code>
      */
     public IPv4AddressAttribute(InetAddress address) {
@@ -58,9 +58,9 @@ public class IPv4AddressAttribute extends IPAddressAttribute {
 
     /**
      * Creates the new <code>IPv4AddressAttribute</code> with the optional address mask.
-     * 
+     *
      * @param address a non-null <code>InetAddress</code>
-     * @param mask an <code>InetAddress</code> or null if there is no mask
+     * @param mask    an <code>InetAddress</code> or null if there is no mask
      */
     public IPv4AddressAttribute(InetAddress address, InetAddress mask) {
         this(address, mask, new PortRange());
@@ -68,8 +68,8 @@ public class IPv4AddressAttribute extends IPAddressAttribute {
 
     /**
      * Creates the new <code>IPv4AddressAttribute</code> with the optional port range.
-     * 
-     * @param address a non-null <code>InetAddress</code>
+     *
+     * @param address   a non-null <code>InetAddress</code>
      * @param portRange a non-null <code>PortRange</code>
      */
     public IPv4AddressAttribute(InetAddress address, PortRange range) {
@@ -78,9 +78,9 @@ public class IPv4AddressAttribute extends IPAddressAttribute {
 
     /**
      * Creates the new <code>IPv4AddressAttribute</code> with all the optional components.
-     * 
-     * @param address a non-null <code>InetAddress</code>
-     * @param mask an <code>InetAddress</code> or null if there is no mask
+     *
+     * @param address   a non-null <code>InetAddress</code>
+     * @param mask      an <code>InetAddress</code> or null if there is no mask
      * @param portRange a non-null <code>PortRange</code>
      */
     public IPv4AddressAttribute(InetAddress address, InetAddress mask, PortRange range) {
@@ -93,13 +93,11 @@ public class IPv4AddressAttribute extends IPAddressAttribute {
      * directly. Instead, you should call <code>getInstance</code> on
      * <code>IPAddressAttribute</code> which provides versions that take both a <code>String</code>
      * and a <code>Node</code> and will determine the protocol version correctly.
-     * 
+     *
      * @param value a string representing the address
-     * 
      * @return a new <code>IPAddressAttribute</code>
-     * 
      * @throws UnknownHostException if the address components is invalid
-     * @throws ParsingException if any of the address components is invalid
+     * @throws ParsingException     if any of the address components is invalid
      */
     protected static IPAddressAttribute getV4Instance(String value) throws UnknownHostException {
         InetAddress address = null;

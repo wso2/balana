@@ -45,16 +45,16 @@ import java.util.List;
 
 /**
  * The base type for all Rule combining algorithms.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
  * @author Marco Barreno
+ * @since 1.0
  */
 public abstract class RuleCombiningAlgorithm extends CombiningAlgorithm {
 
     /**
      * Constructor that takes the algorithm's identifier.
-     * 
+     *
      * @param identifier the algorithm's identifier
      */
     public RuleCombiningAlgorithm(URI identifier) {
@@ -64,12 +64,11 @@ public abstract class RuleCombiningAlgorithm extends CombiningAlgorithm {
     /**
      * Combines the rules based on the context to produce some unified result. This is the one
      * function of a combining algorithm.
-     * 
-     * @param context the representation of the request
-     * @param parameters a (possibly empty) non-null <code>List</code> of
-     *            <code>CombinerParameter<code>s
+     *
+     * @param context      the representation of the request
+     * @param parameters   a (possibly empty) non-null <code>List</code> of
+     *                     <code>CombinerParameter<code>s
      * @param ruleElements a <code>List</code> of <code>CombinerElement<code>s
-     * 
      * @return a single unified result based on the combining logic
      */
     public abstract AbstractResult combine(EvaluationCtx context, List parameters, List ruleElements);

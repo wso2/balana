@@ -44,9 +44,9 @@ import java.util.Set;
 
 /**
  * Clusters all the functions supported by <code>SubtractFunction</code>.
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public class SubtractFunctionCluster implements FunctionCluster {
 

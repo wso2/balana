@@ -28,25 +28,14 @@ import java.util.HashMap;
  */
 public class ObligationFactory {
 
-    private HashMap<String, AbstractObligation> targetMap = new HashMap<String, AbstractObligation>();
-
     private static volatile ObligationFactory factoryInstance;
-
-    public AbstractObligation getObligation(Node node, PolicyMetaData metaData) throws ParsingException {
-
-        if(XACMLConstants.XACML_VERSION_3_0 == metaData.getXACMLVersion()){
-            return ObligationExpression.getInstance(node, metaData);
-        } else {
-            return org.wso2.balana.xacml2.Obligation.getInstance(node);
-        }
-
-    }
+    private HashMap<String, AbstractObligation> targetMap = new HashMap<String, AbstractObligation>();
 
     /**
      * Returns an instance of this factory. This method enforces a singleton model, meaning that
      * this always returns the same instance, creating the factory if it hasn't been requested
      * before.
-    *
+     *
      * @return the factory instance
      */
     public static ObligationFactory getFactory() {
@@ -59,6 +48,16 @@ public class ObligationFactory {
         }
 
         return factoryInstance;
+    }
+
+    public AbstractObligation getObligation(Node node, PolicyMetaData metaData) throws ParsingException {
+
+        if (XACMLConstants.XACML_VERSION_3_0 == metaData.getXACMLVersion()) {
+            return ObligationExpression.getInstance(node, metaData);
+        } else {
+            return org.wso2.balana.xacml2.Obligation.getInstance(node);
+        }
+
     }
 
 }

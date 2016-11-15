@@ -41,8 +41,8 @@ public class ObligationExpressions {
     /**
      * Constructor that creates a new <code>ObligationExpressions</code> based on
      * the given elements.
-     * 
-     * @param obligationExpressions  <code>Set</code> of <code>ObligationExpression</code>
+     *
+     * @param obligationExpressions <code>Set</code> of <code>ObligationExpression</code>
      */
     public ObligationExpressions(Set<ObligationExpression> obligationExpressions) {
         this.obligationExpressions = obligationExpressions;
@@ -52,9 +52,9 @@ public class ObligationExpressions {
     /**
      * creates a <code>ObligationExpressions</code> based on its DOM node.
      *
-     * @param root root the node to parse for the ObligationExpressions
+     * @param root     root the node to parse for the ObligationExpressions
      * @param metaData meta-date associated with the policy
-     * @return  a new <code>ObligationExpressions</code> constructed by parsing
+     * @return a new <code>ObligationExpressions</code> constructed by parsing
      * @throws ParsingException if the DOM node is invalid
      */
     public static ObligationExpressions getInstance(Node root, PolicyMetaData metaData) throws ParsingException {
@@ -63,16 +63,16 @@ public class ObligationExpressions {
 
         NodeList children = root.getChildNodes();
 
-        for(int i = 0; i < children.getLength(); i ++){
+        for (int i = 0; i < children.getLength(); i++) {
             Node child = children.item(i);
-            if("ObligationExpression".equals(DOMHelper.getLocalName(child))){
-                obligationExpressions.add(ObligationExpression.getInstance(child, metaData));    
+            if ("ObligationExpression".equals(DOMHelper.getLocalName(child))) {
+                obligationExpressions.add(ObligationExpression.getInstance(child, metaData));
             }
         }
 
-        if(obligationExpressions.isEmpty()){
+        if (obligationExpressions.isEmpty()) {
             throw new ParsingException("ObligationExpressions must contain at least one " +
-                    "ObligationExpression");            
+                    "ObligationExpression");
         }
 
         return new ObligationExpressions(obligationExpressions);

@@ -63,9 +63,9 @@ import org.xml.sax.SAXException;
  * This class represents the StatusDetailType in the context schema. Because status detail is
  * defined as a sequence of xs:any XML type, the data in this class must be generic, and it is up to
  * the application developer to interpret the data appropriately.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class StatusDetail {
 
@@ -73,21 +73,20 @@ public class StatusDetail {
     private String detailText = null;
 
     /**
-     * a List of MissingAttributeDetail 
+     * a List of MissingAttributeDetail
      */
-    private  List<MissingAttributeDetail> missingAttributeDetails;
+    private List<MissingAttributeDetail> missingAttributeDetails;
 
     /**
      * Constructor that uses a <code>List</code> of <code>MissingAttributeDetail</code>s to define the status
      * detail. This is a common form of detail data, and can be used for things like providing the
      * information included with the missing-attribute status code.
-     * 
+     *
      * @param missingAttributeDetails a <code>List</code> of <code>MissingAttributeDetail</code>s
-     * 
      * @throws IllegalArgumentException if there is a problem encoding the <code>MissingAttributeDetail</code>s
      */
     public StatusDetail(List<MissingAttributeDetail> missingAttributeDetails)
-                                                                throws IllegalArgumentException {
+            throws IllegalArgumentException {
 
         this.missingAttributeDetails = missingAttributeDetails;
         try {
@@ -104,7 +103,7 @@ public class StatusDetail {
             // the attribute could have caused problems...
 
             throw new IllegalArgumentException("Invalid MissingAttributeDetail data, caused by " +
-                                                                                pe.getMessage());
+                    pe.getMessage());
         }
     }
 
@@ -112,9 +111,8 @@ public class StatusDetail {
      * Constructor that takes the text-encoded form of the XML to use as the status data. The
      * encoded text will be wrapped with the <code>StatusDetail</code> XML tag, and the resulting
      * text must be valid XML or a <code>ParsingException</code> will be thrown.
-     * 
+     *
      * @param encoded a non-null <code>String</code> that encodes the status detail
-     * 
      * @throws ParsingException if the encoded text is invalid XML
      */
     public StatusDetail(String encoded) throws ParsingException {
@@ -126,10 +124,10 @@ public class StatusDetail {
      * Private constructor that just sets the root node. This interface is provided publically
      * through the getInstance method.
      *
-     * @param root  the DOM root of StatusDetail element
+     * @param root the DOM root of StatusDetail element
      */
     private StatusDetail(Node root) {
-        try{
+        try {
             detailText = nodeToText(root);
         } catch (ParsingException e) {
             // just ignore as this is not a must to convert this to text
@@ -137,8 +135,25 @@ public class StatusDetail {
     }
 
     /**
+     * Creates an instance of a <code>StatusDetail</code> object based on the given DOM root node.
+     * The node must be a valid StatusDetailType root, or else a <code>ParsingException</code> is
+     * thrown.
+     *
+     * @param root the DOM root of the StatusDetailType XML type
+     * @return a new <code>StatusDetail</code> object
+     * @throws ParsingException if the root node is invalid
+     */
+    public static StatusDetail getInstance(Node root) throws ParsingException {
+        // check that it's really a StatusDetailType root
+        if (!DOMHelper.getLocalName(root).equals("StatusDetail")) {
+            throw new ParsingException("not a StatusDetail node");
+        }
+        return new StatusDetail(root);
+    }
+
+    /**
      * Private helper routine that converts text into a node
-     * 
+     *
      * @param encoded
      * @return
      * @throws ParsingException
@@ -161,7 +176,7 @@ public class StatusDetail {
 
     /**
      * Private helper routine that converts text into a node
-     * 
+     *
      * @param node
      * @return
      * @throws ParsingException
@@ -181,29 +196,9 @@ public class StatusDetail {
     }
 
     /**
-     * Creates an instance of a <code>StatusDetail</code> object based on the given DOM root node.
-     * The node must be a valid StatusDetailType root, or else a <code>ParsingException</code> is
-     * thrown.
-     * 
-     * @param root the DOM root of the StatusDetailType XML type
-     *
-     * @return a new <code>StatusDetail</code> object
-     * 
-     * @throws ParsingException if the root node is invalid
-     */
-    public static StatusDetail getInstance(Node root) throws ParsingException {
-        // check that it's really a StatusDetailType root
-        if (!DOMHelper.getLocalName(root).equals("StatusDetail")){
-            throw new ParsingException("not a StatusDetail node");
-        }
-        return new StatusDetail(root);
-    }
-
-
-    /**
      * Gets List of <code>MissingAttributeDetail</code> elements
      *
-     * @return  a <code>List</code> of <code>MissingAttributeDetail</code> 
+     * @return a <code>List</code> of <code>MissingAttributeDetail</code>
      */
     public List<MissingAttributeDetail> getMissingAttributeDetails() {
         return missingAttributeDetails;
@@ -215,14 +210,13 @@ public class StatusDetail {
      * the <code>List</code> form constructor was used, it will be the encoded attribute data. If
      * this was created using the <code>getInstance</code> method, then <code>getEncoded</code> will
      * throw an exception.
-     * 
+     *
      * @return the encoded form of this data
-     * 
      * @throws IllegalStateException if this object was created using the <code>getInstance</code>
-     *             method
+     *                               method
      */
     public String getEncoded() throws IllegalStateException {
-        if (detailText == null){
+        if (detailText == null) {
             throw new IllegalStateException("no encoded form available");
         }
         return detailText;

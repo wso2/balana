@@ -25,9 +25,9 @@ import java.net.URI;
  * It was added becuase in 2.0 multiple classes needed this. Note that this could also be added to
  * Expression and that interface could be made an abstract class, but that would require substantial
  * change.
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
 public class ExpressionHandler {
 
@@ -35,18 +35,17 @@ public class ExpressionHandler {
      * Parses an expression, recursively handling any sub-elements. This is provided as a utility
      * class, but in practice is used only by <code>Apply</code>, <code>Condition</code>, and
      * <code>VariableDefinition</code>.
-     * 
-     * @param root the DOM root of an ExpressionType XML type
+     *
+     * @param root     the DOM root of an ExpressionType XML type
      * @param metaData the meta-data associated with the containing policy
-     * @param manager <code>VariableManager</code> used to connect references and definitions while
-     *            parsing
-     * 
+     * @param manager  <code>VariableManager</code> used to connect references and definitions while
+     *                 parsing
      * @return an <code>Expression</code> or null if the root node cannot be parsed as a valid
-     *         Expression
+     * Expression
      * @throws org.wso2.balana.ParsingException
      */
     public static Expression parseExpression(Node root, PolicyMetaData metaData,
-            VariableManager manager) throws ParsingException {
+                                             VariableManager manager) throws ParsingException {
         String name = DOMHelper.getLocalName(root);
 
         if (name.equals("Apply")) {
@@ -57,7 +56,7 @@ public class ExpressionHandler {
             } catch (UnknownIdentifierException uie) {
                 throw new ParsingException("Unknown DataType", uie);
             }
-        } else if("AttributeDesignator".equals(name)){
+        } else if ("AttributeDesignator".equals(name)) {
             return AttributeDesignatorFactory.getFactory().getAbstractDesignator(root, metaData);
         } else if (name.equals("SubjectAttributeDesignator")) {
             return AttributeDesignatorFactory.getFactory().getAbstractDesignator(root, metaData);

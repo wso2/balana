@@ -41,9 +41,9 @@ import org.w3c.dom.Node;
 
 /**
  * Representation of an rfc822Name (ie, an email address).
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class RFC822NameAttribute extends AttributeValue {
 
@@ -79,14 +79,16 @@ public class RFC822NameAttribute extends AttributeValue {
             earlyException = new IllegalArgumentException();
             earlyException.initCause(e);
         }
-    };
+    }
+
+    ;
 
     // the actual value being stored
     private String value;
 
     /**
      * Creates a new <code>RFC822NameAttribute</code> that represents the value supplied.
-     * 
+     *
      * @param value the email address to be represented
      */
     public RFC822NameAttribute(String value) {
@@ -111,7 +113,7 @@ public class RFC822NameAttribute extends AttributeValue {
     /**
      * Returns a new <code>RFC822NameAttribute</code> that represents the email address at a
      * particular DOM node.
-     * 
+     *
      * @param root the <code>Node</code> that contains the desired value
      * @return a new <code>RFC822NameAttribute</code> representing the appropriate value
      */
@@ -122,7 +124,7 @@ public class RFC822NameAttribute extends AttributeValue {
     /**
      * Returns a new <code>RFC822NameAttribute</code> that represents the email address value
      * indicated by the string provided.
-     * 
+     *
      * @param value a string representing the desired value
      * @return a new <code>RFC822NameAttribute</code> representing the appropriate value
      */
@@ -132,7 +134,7 @@ public class RFC822NameAttribute extends AttributeValue {
 
     /**
      * Returns the name value represented by this object
-     * 
+     *
      * @return the name
      */
     public String getValue() {
@@ -142,9 +144,8 @@ public class RFC822NameAttribute extends AttributeValue {
     /**
      * Returns true if the input is an instance of this class and if its value equals the value
      * contained in this class.
-     * 
+     *
      * @param o the object to compare
-     * 
      * @return true if this object and the input represent the same value
      */
     public boolean equals(Object o) {
@@ -159,7 +160,7 @@ public class RFC822NameAttribute extends AttributeValue {
     /**
      * Returns the hashcode value used to index and compare this object with others of the same
      * type. Typically this is the hashcode of the backing data object.
-     * 
+     *
      * @return the object's hashcode value
      */
     public int hashCode() {

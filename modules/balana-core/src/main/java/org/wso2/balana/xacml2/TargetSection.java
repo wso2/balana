@@ -1,4 +1,3 @@
-
 /*
  * @(#)TargetSection.java
  *
@@ -57,11 +56,10 @@ import org.w3c.dom.NodeList;
  * and represents the Subjects, Resources, Actions, and Environments
  * sections of an XACML Target. This section may apply to any request.
  *
- * @since 2.0
  * @author Seth Proctor
+ * @since 2.0
  */
-public class TargetSection
-{
+public class TargetSection {
 
     // the list of match groups
     private List<TargetMatchGroup> matchGroups;
@@ -76,9 +74,9 @@ public class TargetSection
      * Constructor that takes a group and a version. If the group is
      * null or empty, then this represents a section that matches any request.
      *
-     * @param matchGroups a possibly null <code>List</code> of
-     *                    <code>TargetMatchGroup</code>s
-     * @param matchType the type as defined in <code>TargetMatch</code>
+     * @param matchGroups  a possibly null <code>List</code> of
+     *                     <code>TargetMatchGroup</code>s
+     * @param matchType    the type as defined in <code>TargetMatch</code>
      * @param xacmlVersion the version XACML being used
      */
     public TargetSection(List<TargetMatchGroup> matchGroups, int matchType, int xacmlVersion) {
@@ -86,7 +84,7 @@ public class TargetSection
             this.matchGroups = Collections.unmodifiableList(new ArrayList<TargetMatchGroup>());
         else
             this.matchGroups = Collections.
-                unmodifiableList(new ArrayList<TargetMatchGroup>(matchGroups));
+                    unmodifiableList(new ArrayList<TargetMatchGroup>(matchGroups));
         this.matchType = matchType;
         this.xacmlVersion = xacmlVersion;
     }
@@ -94,18 +92,15 @@ public class TargetSection
     /**
      * Creates a <code>Target</code> by parsing a node.
      *
-     * @param root the node to parse for the <code>Target</code>
+     * @param root      the node to parse for the <code>Target</code>
      * @param matchType the type as defined in <code>TargetMatch</code>
-     * @param metaData the meta-data from the enclosing policy
-     *
+     * @param metaData  the meta-data from the enclosing policy
      * @return a new <code>Target</code> constructed by parsing
-     *
      * @throws org.wso2.balana.ParsingException if the DOM node is invalid
      */
     public static TargetSection getInstance(Node root, int matchType,
                                             PolicyMetaData metaData)
-        throws ParsingException
-    {
+            throws ParsingException {
         List<TargetMatchGroup> groups = new ArrayList<TargetMatchGroup>();
         NodeList children = root.getChildNodes();
 
@@ -116,7 +111,7 @@ public class TargetSection
 
             if (name.equals(typeName)) {
                 groups.add(TargetMatchGroup.getInstance(child, matchType,
-                                                        metaData));
+                        metaData));
             } else if (name.equals("Any" + typeName)) {
                 // in a schema-valid policy, the Any element will always be
                 // the only element, so if we find this we stop
@@ -128,7 +123,7 @@ public class TargetSection
         // match) or is empty (it applies to any request using the 1.x or
         // 2.0 syntax)
         return new TargetSection(groups, matchType,
-                                 metaData.getXACMLVersion());
+                metaData.getXACMLVersion());
     }
 
     /**
@@ -152,9 +147,8 @@ public class TargetSection
     /**
      * Determines whether this <code>TargetSection</code> matches
      * the input request (whether it is applicable).
-     * 
-     * @param context the representation of the request
      *
+     * @param context the representation of the request
      * @return the result of trying to match the target and the request
      */
     public MatchResult match(EvaluationCtx context) {
@@ -167,7 +161,7 @@ public class TargetSection
         Status firstIndeterminateStatus = null;
 
         // in order for this section to match, one of the groups must match 
-        for (TargetMatchGroup  group : matchGroups) {
+        for (TargetMatchGroup group : matchGroups) {
             // get the next group and try matching it
             MatchResult result = group.match(context);
 
@@ -191,7 +185,7 @@ public class TargetSection
             return new MatchResult(MatchResult.NO_MATCH);
         else
             return new MatchResult(MatchResult.INDETERMINATE,
-                                   firstIndeterminateStatus);
+                    firstIndeterminateStatus);
     }
 
     /**
@@ -214,7 +208,7 @@ public class TargetSection
     public void encode(StringBuilder builder) {
 
         String name = TargetMatch.NAMES[matchType];
-        
+
         // figure out if this section applies to any request
         if (matchGroups.isEmpty()) {
             // this applies to any, so now we need to encode it based on
@@ -235,5 +229,5 @@ public class TargetSection
             builder.append("</").append(name).append("s>\n");
         }
     }
-    
+
 }

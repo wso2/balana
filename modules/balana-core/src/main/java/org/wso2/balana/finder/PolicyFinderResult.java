@@ -46,9 +46,9 @@ import org.wso2.balana.ctx.Status;
  * <p>
  * The OnlyOneApplicable combining logic is used in looking for a policy, so the result from calling
  * findPolicy can never be more than one policy.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class PolicyFinderResult {
 
@@ -68,7 +68,7 @@ public class PolicyFinderResult {
 
     /**
      * Creates a result containing a single applicable policy.
-     * 
+     *
      * @param policy the applicable policy
      */
     public PolicyFinderResult(AbstractPolicy policy) {
@@ -78,7 +78,7 @@ public class PolicyFinderResult {
 
     /**
      * Create a result of Indeterminate, including Status data.
-     * 
+     *
      * @param status the error information
      */
     public PolicyFinderResult(Status status) {
@@ -88,7 +88,7 @@ public class PolicyFinderResult {
 
     /**
      * Returns true if the result was NotApplicable.
-     * 
+     *
      * @return true if the result was NotApplicable
      */
     public boolean notApplicable() {
@@ -97,7 +97,7 @@ public class PolicyFinderResult {
 
     /**
      * Returns true if the result was Indeterminate.
-     * 
+     *
      * @return true if there was an error
      */
     public boolean indeterminate() {
@@ -106,7 +106,7 @@ public class PolicyFinderResult {
 
     /**
      * Returns the found policy, or null if there was an error or no policy was found.
-     * 
+     *
      * @return the applicable policy or null
      */
     public AbstractPolicy getPolicy() {
@@ -115,7 +115,7 @@ public class PolicyFinderResult {
 
     /**
      * Returns the status if there was an error, or null if no error occurred.
-     * 
+     *
      * @return the error status data or null
      */
     public Status getStatus() {

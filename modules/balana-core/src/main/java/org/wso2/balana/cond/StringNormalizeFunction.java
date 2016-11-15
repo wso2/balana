@@ -48,10 +48,10 @@ import java.util.Set;
  * A class that implements all the string conversion functions (string-normalize-space and
  * string-normalize-to-lower-case). It takes string argument, normalizes that value, and returns the
  * result. If the argument is indeterminate, an indeterminate result is returned.
- * 
- * @since 1.0
+ *
  * @author Steve Hanna
  * @author Seth Proctor
+ * @since 1.0
  */
 public class StringNormalizeFunction extends FunctionBase {
 
@@ -72,10 +72,9 @@ public class StringNormalizeFunction extends FunctionBase {
 
     /**
      * Creates a new <code>StringNormalizeFunction</code> object.
-     * 
+     *
      * @param functionName the standard XACML name of the function to be handled by this object,
-     *            including the full namespace
-     * 
+     *                     including the full namespace
      * @throws IllegalArgumentException if the function is unknown
      */
     public StringNormalizeFunction(String functionName) {
@@ -97,7 +96,7 @@ public class StringNormalizeFunction extends FunctionBase {
 
     /**
      * Returns a <code>Set</code> containing all the function identifiers supported by this class.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public static Set getSupportedIdentifiers() {
@@ -111,11 +110,11 @@ public class StringNormalizeFunction extends FunctionBase {
 
     /**
      * Evaluate the function, using the specified parameters.
-     * 
-     * @param inputs a <code>List</code> of <code>Evaluatable</code> objects representing the
-     *            arguments passed to the function
+     *
+     * @param inputs  a <code>List</code> of <code>Evaluatable</code> objects representing the
+     *                arguments passed to the function
      * @param context an <code>EvaluationCtx</code> so that the <code>Evaluatable</code> objects can
-     *            be evaluated
+     *                be evaluated
      * @return an <code>EvaluationResult</code> representing the function's result
      */
     public EvaluationResult evaluate(List inputs, EvaluationCtx context) {
@@ -128,30 +127,30 @@ public class StringNormalizeFunction extends FunctionBase {
         // Now that we have real values, perform the numeric conversion
         // operation in the manner appropriate for this function.
         switch (getFunctionId()) {
-        case ID_STRING_NORMALIZE_SPACE: {
-            String str = ((StringAttribute) argValues[0]).getValue();
+            case ID_STRING_NORMALIZE_SPACE: {
+                String str = ((StringAttribute) argValues[0]).getValue();
 
-            // Trim whitespace from start and end of string
-            int startIndex = 0;
-            int endIndex = str.length() - 1;
-            while ((startIndex <= endIndex) && Character.isWhitespace(str.charAt(startIndex)))
-                startIndex++;
-            while ((startIndex <= endIndex) && Character.isWhitespace(str.charAt(endIndex)))
-                endIndex--;
-            String strResult = str.substring(startIndex, endIndex + 1);
+                // Trim whitespace from start and end of string
+                int startIndex = 0;
+                int endIndex = str.length() - 1;
+                while ((startIndex <= endIndex) && Character.isWhitespace(str.charAt(startIndex)))
+                    startIndex++;
+                while ((startIndex <= endIndex) && Character.isWhitespace(str.charAt(endIndex)))
+                    endIndex--;
+                String strResult = str.substring(startIndex, endIndex + 1);
 
-            result = new EvaluationResult(new StringAttribute(strResult));
-            break;
-        }
-        case ID_STRING_NORMALIZE_TO_LOWER_CASE: {
-            String str = ((StringAttribute) argValues[0]).getValue();
+                result = new EvaluationResult(new StringAttribute(strResult));
+                break;
+            }
+            case ID_STRING_NORMALIZE_TO_LOWER_CASE: {
+                String str = ((StringAttribute) argValues[0]).getValue();
 
-            // Convert string to lower case
-            String strResult = str.toLowerCase();
+                // Convert string to lower case
+                String strResult = str.toLowerCase();
 
-            result = new EvaluationResult(new StringAttribute(strResult));
-            break;
-        }
+                result = new EvaluationResult(new StringAttribute(strResult));
+                break;
+            }
         }
 
         return result;

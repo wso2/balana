@@ -56,9 +56,9 @@ import java.util.List;
  * provide a new type, extend this class and implement the
  * <code>equals(Object)</code> and <code>hashCode</code> methods from <code>Object</code>, which are
  * used for equality checking.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public abstract class AttributeValue implements Evaluatable {
 
@@ -67,7 +67,7 @@ public abstract class AttributeValue implements Evaluatable {
 
     /**
      * Constructor that takes the specific attribute type.
-     * 
+     *
      * @param type the attribute's type
      */
     protected AttributeValue(URI type) {
@@ -77,7 +77,7 @@ public abstract class AttributeValue implements Evaluatable {
     /**
      * Returns the type of this attribute value. By default this always returns the type passed to
      * the constructor.
-     * 
+     *
      * @return the attribute's type
      */
     public URI getType() {
@@ -89,7 +89,7 @@ public abstract class AttributeValue implements Evaluatable {
      * from <code>Expression</code>, but the more meaningful <code>isBag</code> method is used by
      * <code>AttributeValue</code>s, so this method is declared as final and calls the
      * <code>isBag</code> method for this value.
-     * 
+     *
      * @return true if this is a bag of values, false otherwise
      */
     public final boolean returnsBag() {
@@ -101,12 +101,10 @@ public abstract class AttributeValue implements Evaluatable {
      * from <code>Evaluatable</code>, but the more meaningful <code>isBag</code> method is used by
      * <code>AttributeValue</code>s, so this method is declared as final and calls the
      * <code>isBag</code> method for this value.
-     * 
-     * 
-     * @deprecated As of 2.0, you should use the <code>returnsBag</code> method from the
-     *             super-interface <code>Expression</code>.
-     * 
+     *
      * @return true if this is a bag of values, false otherwise
+     * @deprecated As of 2.0, you should use the <code>returnsBag</code> method from the
+     * super-interface <code>Expression</code>.
      */
     public final boolean evaluatesToBag() {
         return isBag();
@@ -114,7 +112,7 @@ public abstract class AttributeValue implements Evaluatable {
 
     /**
      * Always returns an empty list since values never have children.
-     * 
+     *
      * @return an empty <code>List</code>
      */
     public List getChildren() {
@@ -125,7 +123,7 @@ public abstract class AttributeValue implements Evaluatable {
      * Returns whether or not this value is actually a bag of values. By default this returns
      * <code>false</code>. Typically, only the <code>BagAttribute</code> should ever override this
      * to return <code>true</code>.
-     * 
+     *
      * @return true if this is a bag of values, false otherwise
      */
     public boolean isBag() {
@@ -136,9 +134,8 @@ public abstract class AttributeValue implements Evaluatable {
      * Implements the required interface from <code>Evaluatable</code>. Since there is nothing to
      * evaluate in an attribute value, the default result is just this instance. Override this
      * method if you want special behavior, like a dynamic value.
-     * 
+     *
      * @param context the representation of the request
-     * 
      * @return a successful evaluation containing this value
      */
     public EvaluationResult evaluate(EvaluationCtx context) {
@@ -149,7 +146,7 @@ public abstract class AttributeValue implements Evaluatable {
      * Encodes the value in a form suitable for including in XML data like a request or an
      * obligation. This must return a value that could in turn be used by the factory to create a
      * new instance with the same value.
-     * 
+     *
      * @return a <code>String</code> form of the value
      */
     public abstract String encode();
@@ -159,7 +156,7 @@ public abstract class AttributeValue implements Evaluatable {
      * to the given <code>StringBuilder</code> This will always produce the version
      * used in a policy rather than that used in a request, so this is equivalent to calling
      * <code>encodeWithTags(true)</code> and then stuffing that into a stream.
-     * 
+     *
      * @param builder string stream into which the XML-encoded data is written
      */
     public void encode(StringBuilder builder) {
@@ -171,14 +168,13 @@ public abstract class AttributeValue implements Evaluatable {
      * be included in a valid XACML policy or Request/Response. The <code>boolean</code> parameter
      * lets you include the DataType attribute, which is required in a policy but not allowed in a
      * Request or Response.
-     * 
+     *
      * @param includeType include the DataType XML attribute if <code>true</code>, exclude if
-     *            <code>false</code>
-     * 
+     *                    <code>false</code>
      * @return a <code>String</code> encoding including the XML tags
      */
     public String encodeWithTags(boolean includeType) {
-        
+
         if (includeType && type != null) {
             return "<AttributeValue DataType=\"" + type.toString() + "\">" + encode()
                     + "</AttributeValue>";

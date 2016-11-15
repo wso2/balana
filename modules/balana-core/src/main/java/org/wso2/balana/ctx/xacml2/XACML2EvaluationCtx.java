@@ -50,44 +50,36 @@ import java.util.Set;
 public class XACML2EvaluationCtx extends BasicEvaluationCtx {
 
 
+    private static Log logger = LogFactory.getLog(XACML2EvaluationCtx.class);
     private Set<Attributes> attributesSet;
-
     private int xacmlVersion;
-
     // the DOM root the original RequestContext document
     private Node requestRoot;
-
     // the 4 maps that contain the attribute data
     private HashMap subjectMap;
     private HashMap resourceMap;
     private HashMap actionMap;
     private HashMap environmentMap;
-
     // the resource and its scope
     private AttributeValue resourceId;
     private int scope;
-
     // the cached current date, time, and datetime, which we may or may
     // not be using depending on how this object was constructed
     private DateAttribute currentDate;
     private TimeAttribute currentTime;
     private DateTimeAttribute currentDateTime;
-    private boolean useCachedEnvValues;
 
     //private Set<ObligationResult>  obligationResults;
 
     //private Set<Advice>  advices;
-
+    private boolean useCachedEnvValues;
     private MultipleCtxResult multipleCtxResult;
 
+    // the logger we'll use for all messages
     private RequestCtx requestCtx;
 
-    // the logger we'll use for all messages
-
-    private static Log logger = LogFactory.getLog(XACML2EvaluationCtx.class);
-
     public XACML2EvaluationCtx() {
-        
+
     }
 
     public XACML2EvaluationCtx(RequestCtx requestCtx, PDPConfig pdpConfig) throws ParsingException {
@@ -134,7 +126,7 @@ public class XACML2EvaluationCtx extends BasicEvaluationCtx {
      * SubjectCategory that keeps Maps that in turn are indexed by id and keep the unique
      * ctx.Attribute objects.
      */
-    private void setupSubjects(Set subjects)  {
+    private void setupSubjects(Set subjects) {
 
         // now go through the subject attributes
         Iterator it = subjects.iterator();
@@ -295,24 +287,25 @@ public class XACML2EvaluationCtx extends BasicEvaluationCtx {
 
         // ...and insert the new value
         attrSet.add(new Attribute(attr.getId(), attr.getIssuer(), attr.getIssueInstant(),
-                resourceId,XACMLConstants.XACML_VERSION_2_0));
+                resourceId, XACMLConstants.XACML_VERSION_2_0));
     }
 
     public EvaluationResult getAttribute(URI type, URI id, String issuer, URI category) {
 
-        if(XACMLConstants.SUBJECT_CATEGORY.equals(category.toString())){
+        if (XACMLConstants.SUBJECT_CATEGORY.equals(category.toString())) {
             return getSubjectAttribute(type, id, category, issuer);
-        } else if(XACMLConstants.RESOURCE_CATEGORY.equals(category.toString())){
+        } else if (XACMLConstants.RESOURCE_CATEGORY.equals(category.toString())) {
             return getResourceAttribute(type, id, category, issuer);
-        } else if(XACMLConstants.ACTION_CATEGORY.equals(category.toString())){
+        } else if (XACMLConstants.ACTION_CATEGORY.equals(category.toString())) {
             return getActionAttribute(type, id, category, issuer);
-        } else if(XACMLConstants.ENT_CATEGORY.equals(category.toString())){
+        } else if (XACMLConstants.ENT_CATEGORY.equals(category.toString())) {
             return getEnvironmentAttribute(type, id, category, issuer);
         } else {
             ArrayList<String> code = new ArrayList<String>();
-            code.add(Status.STATUS_PROCESSING_ERROR);                                                                            ;
+            code.add(Status.STATUS_PROCESSING_ERROR);
+            ;
             Status status = new Status(code);
-            return  new EvaluationResult(status);
+            return new EvaluationResult(status);
         }
     }
 
@@ -328,7 +321,7 @@ public class XACML2EvaluationCtx extends BasicEvaluationCtx {
      * @param issuer   the issuer of the attribute value(s) to find or null
      * @param category the category the attribute value(s) must be in
      * @return a result containing a bag either empty because no values were found or containing at
-     *         least one value, or status associated with an Indeterminate result
+     * least one value, or status associated with an Indeterminate result
      */
     public EvaluationResult getSubjectAttribute(URI type, URI id, URI category, String issuer) {
         // This is the same as the other three lookups except that this
@@ -351,7 +344,7 @@ public class XACML2EvaluationCtx extends BasicEvaluationCtx {
      * @param id     the id of the attribute value(s) to find
      * @param issuer the issuer of the attribute value(s) to find or null
      * @return a result containing a bag either empty because no values were found or containing at
-     *         least one value, or status associated with an Indeterminate result
+     * least one value, or status associated with an Indeterminate result
      */
     public EvaluationResult getResourceAttribute(URI type, URI id, URI category, String issuer) {
         return getGenericAttributes(type, id, category, issuer, resourceMap);
@@ -364,7 +357,7 @@ public class XACML2EvaluationCtx extends BasicEvaluationCtx {
      * @param id     the id of the attribute value(s) to find
      * @param issuer the issuer of the attribute value(s) to find or null
      * @return a result containing a bag either empty because no values were found or containing at
-     *         least one value, or status associated with an Indeterminate result
+     * least one value, or status associated with an Indeterminate result
      */
     public EvaluationResult getActionAttribute(URI type, URI id, URI category, String issuer) {
         return getGenericAttributes(type, id, category, issuer, actionMap);
@@ -377,7 +370,7 @@ public class XACML2EvaluationCtx extends BasicEvaluationCtx {
      * @param id     the id of the attribute value(s) to find
      * @param issuer the issuer of the attribute value(s) to find or null
      * @return a result containing a bag either empty because no values were found or containing at
-     *         least one value, or status associated with an Indeterminate result
+     * least one value, or status associated with an Indeterminate result
      */
     public EvaluationResult getEnvironmentAttribute(URI type, URI id, URI category, String issuer) {
         return getGenericAttributes(type, id, category, issuer, environmentMap);
@@ -387,7 +380,7 @@ public class XACML2EvaluationCtx extends BasicEvaluationCtx {
      * Helper function for the resource, action and environment methods to get an attribute.
      */
     private EvaluationResult getGenericAttributes(URI type, URI id, URI category, String issuer,
-                                                                                        Map map) {
+                                                  Map map) {
         // try to find the id
         Set attrSet = (Set) (map.get(id.toString()));
         if (attrSet == null) {
@@ -442,16 +435,16 @@ public class XACML2EvaluationCtx extends BasicEvaluationCtx {
 
         Set<EvaluationCtx> evaluationCtxSet = new HashSet<EvaluationCtx>();
 
-        if(scope != XACMLConstants.SCOPE_IMMEDIATE){
+        if (scope != XACMLConstants.SCOPE_IMMEDIATE) {
             MultipleCtxResult result = processHierarchicalAttributes(this);
-            if(result.isIndeterminate()){
+            if (result.isIndeterminate()) {
                 return result;
             } else {
                 evaluationCtxSet.addAll(result.getEvaluationCtxSet());
             }
         }
-        
-        if(evaluationCtxSet.size() > 0){
+
+        if (evaluationCtxSet.size() > 0) {
             return new MultipleCtxResult(evaluationCtxSet, null, false);
         } else {
             evaluationCtxSet.add(this);
@@ -470,24 +463,24 @@ public class XACML2EvaluationCtx extends BasicEvaluationCtx {
         AttributeValue resourceId = evaluationCtx.getResourceId();
         int resourceScope = evaluationCtx.getResourceScope();
 
-        if(resourceId != null){
-            if(resourceScope == XACMLConstants.SCOPE_CHILDREN){
+        if (resourceId != null) {
+            if (resourceScope == XACMLConstants.SCOPE_CHILDREN) {
                 resourceResult = evaluationCtx.getPdpConfig().getResourceFinder().
-                                                findChildResources(resourceId, evaluationCtx);
-            } else if(resourceScope == XACMLConstants.SCOPE_DESCENDANTS) {
+                        findChildResources(resourceId, evaluationCtx);
+            } else if (resourceScope == XACMLConstants.SCOPE_DESCENDANTS) {
                 resourceResult = evaluationCtx.getPdpConfig().getResourceFinder().
-                                                findDescendantResources(resourceId, evaluationCtx);
+                        findDescendantResources(resourceId, evaluationCtx);
             } else {
-                logger.error("Unknown scope type: " );
+                logger.error("Unknown scope type: ");
                 //TODO
             }
         } else {
-             logger.error("ResourceId Attribute is NULL: " );
+            logger.error("ResourceId Attribute is NULL: ");
             // TODO
         }
 
-        if(resourceResult == null || resourceResult.isEmpty()){
-            logger.error("Resource Finder result is NULL: " );
+        if (resourceResult == null || resourceResult.isEmpty()) {
+            logger.error("Resource Finder result is NULL: ");
             // TODO
         } else {
             for (AttributeValue resource : resourceResult.getResources()) {

@@ -45,9 +45,9 @@ import java.net.URI;
  * This is the abstract class that all <code>PolicyFinder</code> modules extend. All methods have
  * default values to represent that the given feature isn't supported by this module, so module
  * writers needs only implement the methods for the features they're supporting.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public abstract class PolicyFinderModule {
 
@@ -56,7 +56,7 @@ public abstract class PolicyFinderModule {
      * it is a good idea, especially in support of management software. Common identifiers would be
      * the full package and class name (the default if this method isn't overridden), just the class
      * name, or some other well-known string that identifies this class.
-     * 
+     *
      * @return this module's identifier
      */
     public String getIdentifier() {
@@ -66,7 +66,7 @@ public abstract class PolicyFinderModule {
     /**
      * Returns true if the module supports finding policies based on a request (ie, target
      * matching). By default this method returns false.
-     * 
+     *
      * @return true if request retrieval is supported
      */
     public boolean isRequestSupported() {
@@ -76,7 +76,7 @@ public abstract class PolicyFinderModule {
     /**
      * Returns true if the module supports finding policies based on an id reference (in a
      * PolicySet). By default this method returns false.
-     * 
+     *
      * @return true if idReference retrieval is supported
      */
     public boolean isIdReferenceSupported() {
@@ -92,7 +92,7 @@ public abstract class PolicyFinderModule {
      * of this module. This might also be a good time to reset any internal
      * caches or temporary data. Note that this method may be called more
      * than once in the lifetime of a module.
-     * 
+     *
      * @param finder the <code>PolicyFinder</code> using this module
      */
     public abstract void init(PolicyFinder finder);
@@ -109,7 +109,7 @@ public abstract class PolicyFinderModule {
      * This method has been introduced to see what people think of this functionality, and how they
      * would like to use it. It may be removed in future versions, or it may be changed to a more
      * general message-passing system (if other useful messages are identified).
-     * 
+     *
      * @since 1.2
      */
     public void invalidateCache() {
@@ -121,9 +121,8 @@ public abstract class PolicyFinderModule {
      * data. If more than one policy is found, this is an error and must be reported as such. If no
      * policies are found, then an empty result must be returned. By default this method returns an
      * empty result. This method should never return null.
-     * 
+     *
      * @param context the representation of the request
-     * 
      * @return the result of looking for a matching policy
      */
     public PolicyFinderResult findPolicy(EvaluationCtx context) {
@@ -135,20 +134,19 @@ public abstract class PolicyFinderModule {
      * is found, this is an error and must be reported as such. If no policies are found, then an
      * empty result must be returned. By default this method returns an empty result. This method
      * should never return null.
-     * 
-     * @param idReference an identifier specifying some policy
-     * @param type type of reference (policy or policySet) as identified by the fields in
-     *            <code>PolicyReference</code>
-     * @param constraints any optional constraints on the version of the referenced policy (this
-     *            will never be null, but it may impose no constraints, and in fact will never
-     *            impose constraints when used from a pre-2.0 XACML policy)
+     *
+     * @param idReference    an identifier specifying some policy
+     * @param type           type of reference (policy or policySet) as identified by the fields in
+     *                       <code>PolicyReference</code>
+     * @param constraints    any optional constraints on the version of the referenced policy (this
+     *                       will never be null, but it may impose no constraints, and in fact will never
+     *                       impose constraints when used from a pre-2.0 XACML policy)
      * @param parentMetaData the meta-data from the parent policy, which provides XACML version,
-     *            factories, etc.
-     * 
+     *                       factories, etc.
      * @return the result of looking for a matching policy
      */
     public PolicyFinderResult findPolicy(URI idReference, int type, VersionConstraints constraints,
-            PolicyMetaData parentMetaData) {
+                                         PolicyMetaData parentMetaData) {
         return new PolicyFinderResult();
     }
 

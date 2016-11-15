@@ -64,9 +64,9 @@ import org.w3c.dom.NodeList;
  * later) XML types in XACML, depending on the value of the type field. This is the part of the
  * Target that actually evaluates whether the specified attribute values in the Target match the
  * corresponding attribute values in the request context.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class TargetMatch {
 
@@ -93,7 +93,7 @@ public class TargetMatch {
     /**
      * Mapping from the 4 match types to their string representations
      */
-    public static final String[] NAMES = { "Subject", "Resource", "Action", "Environment"};
+    public static final String[] NAMES = {"Subject", "Resource", "Action", "Environment"};
 
     // the type of this target match
     // if there is no type, value is zero
@@ -110,14 +110,13 @@ public class TargetMatch {
 
     /**
      * Constructor that creates a <code>TargetMatch</code> from components.
-     * 
-     * @param type an integer indicating whether this class represents a SubjectMatch,
-     *            ResourceMatch, or ActionMatch
-     * @param function the <code>Function</code> that represents the MatchId
-     * @param eval the <code>AttributeDesignator</code> or <code>AttributeSelector</code> to be used
-     *            to select attributes from the request context
+     *
+     * @param type      an integer indicating whether this class represents a SubjectMatch,
+     *                  ResourceMatch, or ActionMatch
+     * @param function  the <code>Function</code> that represents the MatchId
+     * @param eval      the <code>AttributeDesignator</code> or <code>AttributeSelector</code> to be used
+     *                  to select attributes from the request context
      * @param attrValue the <code>AttributeValue</code> to compare against
-     * 
      * @throws IllegalArgumentException if the input type isn't a valid value
      */
     public TargetMatch(int type, Function function, Evaluatable eval, AttributeValue attrValue)
@@ -137,11 +136,10 @@ public class TargetMatch {
     /**
      * Constructor that creates a <code>TargetMatch</code> from components.
      *
-     * @param function the <code>Function</code> that represents the MatchId
-     * @param eval the <code>AttributeDesignator</code> or <code>AttributeSelector</code> to be used
-     *            to select attributes from the request context
+     * @param function  the <code>Function</code> that represents the MatchId
+     * @param eval      the <code>AttributeDesignator</code> or <code>AttributeSelector</code> to be used
+     *                  to select attributes from the request context
      * @param attrValue the <code>AttributeValue</code> to compare against
-     *
      * @throws IllegalArgumentException if the input type isn't a valid value
      */
     public TargetMatch(Function function, Evaluatable eval, AttributeValue attrValue)
@@ -153,25 +151,21 @@ public class TargetMatch {
     }
 
 
-
     /**
      * Creates a <code>TargetMatch</code> by parsing a node, using the input prefix to determine
      * whether this is a SubjectMatch, ResourceMatch, or ActionMatch.
-     * 
-     * @deprecated As of 2.0 you should avoid using this method and should instead use the version
-     *             that takes a <code>PolicyMetaData</code> instance. This method will only work for
-     *             XACML 1.x policies.
-     * 
-     * @param root the node to parse for the <code>TargetMatch</code>
-     * @param prefix a String indicating what type of <code>TargetMatch</code> to instantiate
-     *            (Subject, Resource, or Action)
+     *
+     * @param root         the node to parse for the <code>TargetMatch</code>
+     * @param prefix       a String indicating what type of <code>TargetMatch</code> to instantiate
+     *                     (Subject, Resource, or Action)
      * @param xpathVersion the XPath version to use in any selectors, or null if this is unspecified
-     *            (ie, not supplied in the defaults section of the policy)
-     * 
+     *                     (ie, not supplied in the defaults section of the policy)
      * @return a new <code>TargetMatch</code> constructed by parsing
-     * 
      * @throws org.wso2.balana.ParsingException if there was an error during parsing
-     * @throws IllegalArgumentException if the input prefix isn't a valid value
+     * @throws IllegalArgumentException         if the input prefix isn't a valid value
+     * @deprecated As of 2.0 you should avoid using this method and should instead use the version
+     * that takes a <code>PolicyMetaData</code> instance. This method will only work for
+     * XACML 1.x policies.
      */
     public static TargetMatch getInstance(Node root, String prefix, String xpathVersion)
             throws ParsingException, IllegalArgumentException {
@@ -187,21 +181,19 @@ public class TargetMatch {
     }
 
 
-    public static TargetMatch getInstance(Node root, PolicyMetaData metaData) throws ParsingException {        
+    public static TargetMatch getInstance(Node root, PolicyMetaData metaData) throws ParsingException {
         return getInstance(root, 0, metaData);
     }
 
     /**
      * Creates a <code>TargetMatch</code> by parsing a node, using the input prefix to determine
      * whether this is a SubjectMatch, ResourceMatch, or ActionMatch.
-     * 
-     * @param root the node to parse for the <code>TargetMatch</code>
+     *
+     * @param root      the node to parse for the <code>TargetMatch</code>
      * @param matchType the type of <code>TargetMatch</code> as specified by the SUBJECT, RESOURCE,
-     *            ACTION, or ENVIRONMENT fields
-     * @param metaData the policy's meta-data
-     * 
+     *                  ACTION, or ENVIRONMENT fields
+     * @param metaData  the policy's meta-data
      * @return a new <code>TargetMatch</code> constructed by parsing
-     * 
      * @throws ParsingException if there was an error during parsing
      */
     public static TargetMatch getInstance(Node root, int matchType, PolicyMetaData metaData)
@@ -243,10 +235,10 @@ public class TargetMatch {
             String name = DOMHelper.getLocalName(node);
 
             if (XACMLConstants.XACML_VERSION_3_0 == metaData.getXACMLVersion()
-                    && "AttributeDesignator".equals(name)){
+                    && "AttributeDesignator".equals(name)) {
                 eval = AttributeDesignatorFactory.getFactory().getAbstractDesignator(node, metaData);
-            } else if(!(XACMLConstants.XACML_VERSION_3_0 == metaData.getXACMLVersion())
-                    && (NAMES[matchType] + "AttributeDesignator").equals(name)){
+            } else if (!(XACMLConstants.XACML_VERSION_3_0 == metaData.getXACMLVersion())
+                    && (NAMES[matchType] + "AttributeDesignator").equals(name)) {
                 eval = AttributeDesignatorFactory.getFactory().getAbstractDesignator(node, metaData);
             } else if (name.equals("AttributeSelector")) {
                 eval = AttributeSelectorFactory.getFactory().getAbstractSelector(node, metaData);
@@ -265,7 +257,7 @@ public class TargetMatch {
         inputs.add(eval);
         function.checkInputsNoBag(inputs);
 
-        if(XACMLConstants.XACML_VERSION_3_0 == metaData.getXACMLVersion()){
+        if (XACMLConstants.XACML_VERSION_3_0 == metaData.getXACMLVersion()) {
             return new TargetMatch(function, eval, attrValue);
         } else {
             return new TargetMatch(matchType, function, eval, attrValue);
@@ -275,7 +267,7 @@ public class TargetMatch {
     /**
      * Returns the type of this <code>TargetMatch</code>, either <code>SUBJECT</code>,
      * <code>RESOURCE</code>, <code>ACTION</code>, or <code>ENVIRONMENT</code>.
-     * 
+     *
      * @return the type
      */
     public int getType() {
@@ -284,7 +276,7 @@ public class TargetMatch {
 
     /**
      * Returns the <code>Function</code> used to do the matching.
-     * 
+     *
      * @return the match function
      */
     public Function getMatchFunction() {
@@ -293,7 +285,7 @@ public class TargetMatch {
 
     /**
      * Returns the <code>AttributeValue</code> used by the matching function.
-     * 
+     *
      * @return the <code>AttributeValue</code> for the match
      */
     public AttributeValue getMatchValue() {
@@ -303,7 +295,7 @@ public class TargetMatch {
     /**
      * Returns the <code>AttributeDesignator</code> or <code>AttributeSelector</code> used by the
      * matching function.
-     * 
+     *
      * @return the designator or selector for the match
      */
     public Evaluatable getMatchEvaluatable() {
@@ -313,9 +305,8 @@ public class TargetMatch {
     /**
      * Determines whether this <code>TargetMatch</code> matches the input request (whether it is
      * applicable)
-     * 
+     *
      * @param context the representation of the request
-     * 
      * @return the result of trying to match the TargetMatch and the request
      */
     public MatchResult match(EvaluationCtx context) {
@@ -342,7 +333,7 @@ public class TargetMatch {
                 ArrayList<Evaluatable> inputs = new ArrayList<Evaluatable>();
 
                 inputs.add(attrValue);
-                inputs.add((Evaluatable)it.next());
+                inputs.add((Evaluatable) it.next());
 
                 // do the evaluation
                 MatchResult match = evaluateMatch(inputs, context);
@@ -387,8 +378,8 @@ public class TargetMatch {
      * Private helper that evaluates an individual match.
      *
      * @param inputs  <code>List</code> of <code>Evaluatable</code>
-     * @param context  <code>EvaluationCtx</code>
-     * @return  match result as <code>MatchResult</code>
+     * @param context <code>EvaluationCtx</code>
+     * @return match result as <code>MatchResult</code>
      */
     private MatchResult evaluateMatch(List inputs, EvaluationCtx context) {
         // first off, evaluate the function
@@ -417,13 +408,13 @@ public class TargetMatch {
 
         String tagName = "Match";
 
-        if(type != 0){
-            tagName = NAMES[type] + "Match";    
+        if (type != 0) {
+            tagName = NAMES[type] + "Match";
         }
 
         builder.append("<").append(tagName).append(" MatchId=\"").
                 append(function.getIdentifier().toString()).append("\">\n");
-        
+
         attrValue.encode(builder);
         eval.encode(builder);
 

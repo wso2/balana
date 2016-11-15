@@ -49,10 +49,10 @@ import java.util.Set;
  * A class that implements all the *-abs functions. It takes one operand of the appropriate type and
  * returns the absolute value of the operand. If the operand is indeterminate, an indeterminate
  * result is returned.
- * 
- * @since 1.0
+ *
  * @author Steve Hanna
  * @author Seth Proctor
+ * @since 1.0
  */
 public class AbsFunction extends FunctionBase {
 
@@ -72,10 +72,9 @@ public class AbsFunction extends FunctionBase {
 
     /**
      * Creates a new <code>AbsFunction</code> object.
-     * 
+     *
      * @param functionName the standard XACML name of the function to be handled by this object,
-     *            including the full namespace
-     * 
+     *                     including the full namespace
      * @throws IllegalArgumentException if the function is known
      */
     public AbsFunction(String functionName) {
@@ -109,7 +108,7 @@ public class AbsFunction extends FunctionBase {
 
     /**
      * Returns a <code>Set</code> containing all the function identifiers supported by this class.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public static Set getSupportedIdentifiers() {
@@ -123,11 +122,11 @@ public class AbsFunction extends FunctionBase {
 
     /**
      * Evaluate the function, using the specified parameters.
-     * 
-     * @param inputs a <code>List</code> of <code>Evaluatable</code> objects representing the
-     *            arguments passed to the function
+     *
+     * @param inputs  a <code>List</code> of <code>Evaluatable</code> objects representing the
+     *                arguments passed to the function
      * @param context an <code>EvaluationCtx</code> so that the <code>Evaluatable</code> objects can
-     *            be evaluated
+     *                be evaluated
      * @return an <code>EvaluationResult</code> representing the function's result
      */
     public EvaluationResult evaluate(List inputs, EvaluationCtx context) {
@@ -141,20 +140,20 @@ public class AbsFunction extends FunctionBase {
         // Now that we have real values, perform the abs operation
         // in the manner appropriate for the type of the arguments.
         switch (getFunctionId()) {
-        case ID_INTEGER_ABS: {
-            long arg = ((IntegerAttribute) argValues[0]).getValue();
-            long absValue = Math.abs(arg);
+            case ID_INTEGER_ABS: {
+                long arg = ((IntegerAttribute) argValues[0]).getValue();
+                long absValue = Math.abs(arg);
 
-            result = new EvaluationResult(new IntegerAttribute(absValue));
-            break;
-        }
-        case ID_DOUBLE_ABS: {
-            double arg = ((DoubleAttribute) argValues[0]).getValue();
-            double absValue = Math.abs(arg);
+                result = new EvaluationResult(new IntegerAttribute(absValue));
+                break;
+            }
+            case ID_DOUBLE_ABS: {
+                double arg = ((DoubleAttribute) argValues[0]).getValue();
+                double absValue = Math.abs(arg);
 
-            result = new EvaluationResult(new DoubleAttribute(absValue));
-            break;
-        }
+                result = new EvaluationResult(new DoubleAttribute(absValue));
+                break;
+            }
         }
 
         return result;

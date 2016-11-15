@@ -45,9 +45,9 @@ import java.util.Set;
  * that implements <code>FunctionCluster</code> in addition to the <code>Function</code>. This is
  * particularly important for the run-time configuration system, which uses this interface to create
  * "clusters" of functions and therefore can use a smaller configuration file.
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public interface FunctionCluster {
 
@@ -58,7 +58,7 @@ public interface FunctionCluster {
      * <p>
      * Note that this is only used to return concrete <code>Function</code>s. It may not be used to
      * report abstract functions.
-     * 
+     *
      * @return the functions supported by this class
      */
     public Set<Function> getSupportedFunctions();

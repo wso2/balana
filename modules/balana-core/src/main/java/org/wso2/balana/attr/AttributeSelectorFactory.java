@@ -30,21 +30,11 @@ public class AttributeSelectorFactory {
 
     private static volatile AttributeSelectorFactory factoryInstance;
 
-    public AbstractAttributeSelector getAbstractSelector(Node root, PolicyMetaData metaData)
-                                                                        throws ParsingException {
-
-        if(metaData.getXACMLVersion() == XACMLConstants.XACML_VERSION_3_0){
-            return org.wso2.balana.attr.xacml3.AttributeSelector.getInstance(root, metaData);
-        } else {
-            return org.wso2.balana.attr.AttributeSelector.getInstance(root, metaData);
-        }
-    }
-
     /**
      * Returns an instance of this factory. This method enforces a singleton model, meaning that
      * this always returns the same instance, creating the factory if it hasn't been requested
      * before.
-    *
+     *
      * @return the factory instance
      */
     public static AttributeSelectorFactory getFactory() {
@@ -57,6 +47,16 @@ public class AttributeSelectorFactory {
         }
 
         return factoryInstance;
+    }
+
+    public AbstractAttributeSelector getAbstractSelector(Node root, PolicyMetaData metaData)
+            throws ParsingException {
+
+        if (metaData.getXACMLVersion() == XACMLConstants.XACML_VERSION_3_0) {
+            return org.wso2.balana.attr.xacml3.AttributeSelector.getInstance(root, metaData);
+        } else {
+            return org.wso2.balana.attr.AttributeSelector.getInstance(root, metaData);
+        }
     }
 
 }

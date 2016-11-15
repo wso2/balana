@@ -55,10 +55,10 @@ import org.wso2.balana.xacml3.Attributes;
 /**
  * Represents a XACML2 request made to the PDP. This is the class that contains all the data used to start
  * a policy evaluation.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
  * @author Marco Barreno
+ * @since 1.0
  */
 public class RequestCtx extends AbstractRequestCtx {
 
@@ -78,10 +78,9 @@ public class RequestCtx extends AbstractRequestCtx {
 
     // There may be any number of environment attributes
     private Set environment = null;
-    
+
     /**
      * Constructor that creates a <code>RequestCtx</code> from components.
-     *
      */
     public RequestCtx(Set<Attributes> attributesSet, Node documentRoot) {
         this(attributesSet, documentRoot, null);
@@ -92,34 +91,33 @@ public class RequestCtx extends AbstractRequestCtx {
      * Constructor that creates a <code>RequestCtx</code> from components.
      *
      * @param documentRoot the root node of the DOM tree for this request
-     * @param version xacml version of the request
+     * @param version      xacml version of the request
      */
     public RequestCtx(Set<Attributes> attributesSet, Node documentRoot, int version) {
-        this(attributesSet, documentRoot,  null);
+        this(attributesSet, documentRoot, null);
     }
 
     /**
      * Constructor that creates a <code>RequestCtx</code> from components.
      *
      * @param resourceContent a text-encoded version of the content, suitable for including in the
-     *            RequestType, including the root <code>RequestContent</code> node
+     *                        RequestType, including the root <code>RequestContent</code> node
      */
-    public RequestCtx(Set<Attributes> attributesSet,  String resourceContent) {
-        this( attributesSet, null, resourceContent);
+    public RequestCtx(Set<Attributes> attributesSet, String resourceContent) {
+        this(attributesSet, null, resourceContent);
     }
 
     /**
      * Constructor that creates a <code>RequestCtx</code> from components.
      *
      * @param attributesSet
-     * @param documentRoot the root node of the DOM tree for this request
+     * @param documentRoot    the root node of the DOM tree for this request
      * @param resourceContent a text-encoded version of the content, suitable for including in the
-     *            RequestType, including the root <code>RequestContent</code> node
-     * 
+     *                        RequestType, including the root <code>RequestContent</code> node
      * @throws IllegalArgumentException if the inputs are not well formed
      */
     public RequestCtx(Set<Attributes> attributesSet, Node documentRoot, String resourceContent)
-                                                                    throws IllegalArgumentException {
+            throws IllegalArgumentException {
 
         this.attributesSet = attributesSet;
         this.documentRoot = documentRoot;
@@ -128,7 +126,6 @@ public class RequestCtx extends AbstractRequestCtx {
     }
 
     /**
-     *
      * @param subjects
      * @param resource
      * @param action
@@ -145,14 +142,13 @@ public class RequestCtx extends AbstractRequestCtx {
      * Constructor that creates a <code>RequestCtx</code> from components.
      *
      * @param attributesSet
-     * @param documentRoot the root node of the DOM tree for this request
+     * @param documentRoot    the root node of the DOM tree for this request
      * @param resourceContent a text-encoded version of the content, suitable for including in the
-     *            RequestType, including the root <code>RequestContent</code> node
-     *
+     *                        RequestType, including the root <code>RequestContent</code> node
      * @throws IllegalArgumentException if the inputs are not well formed
      */
     public RequestCtx(Set<Attributes> attributesSet, Node documentRoot, Set<Subject> subjects,
-                      Set<Attribute> resource, Set<Attribute> action,  Set<Attribute> environment,
+                      Set<Attribute> resource, Set<Attribute> action, Set<Attribute> environment,
                       String resourceContent) throws IllegalArgumentException {
 
         this.attributesSet = attributesSet;
@@ -168,17 +164,15 @@ public class RequestCtx extends AbstractRequestCtx {
     /**
      * Create a new <code>RequestCtx</code> by parsing a node. This node should be created by
      * schema-verified parsing of an <code>XML</code> document.
-     * 
+     *
      * @param root the node to parse for the <code>RequestCtx</code>
-     * 
      * @return a new <code>RequestCtx</code> constructed by parsing
-     * 
      * @throws ParsingException if the DOM node is invalid
      */
     public static RequestCtx getInstance(Node root) throws ParsingException {
 
         Set<Subject> newSubjects = new HashSet<Subject>();
-        Set<Attributes> attributesSet =  new HashSet<Attributes>();
+        Set<Attributes> attributesSet = new HashSet<Attributes>();
         Node content = null;
         Set<Attribute> newResource = null;
         Set<Attribute> newAction = null;
@@ -210,7 +204,7 @@ public class RequestCtx extends AbstractRequestCtx {
                         throw new ParsingException("Invalid Category URI", e);
                     }
                 }
-                
+
                 // now we get the attributes
                 Set<Attribute> attributes = parseAttributes(node);
                 // finally, add the list to the set of subject attributes
@@ -219,7 +213,7 @@ public class RequestCtx extends AbstractRequestCtx {
                 attributesSet.add(new Attributes(category, null, attributes, null));
 
                 // make sure that there is at least one Subject
-                if(newSubjects.size() < 1){
+                if (newSubjects.size() < 1) {
                     throw new ParsingException("Request must a contain subject");
                 }
 
@@ -230,7 +224,7 @@ public class RequestCtx extends AbstractRequestCtx {
                     Node child = nodes.item(j);
                     if (DOMHelper.getLocalName(node).equals(XACMLConstants.RESOURCE_CONTENT)) {
                         // only one value can be in an Attribute
-                        if (content != null){
+                        if (content != null) {
                             throw new ParsingException("Too many resource content elements are defined.");
                         }
                         // now get the value
@@ -258,13 +252,13 @@ public class RequestCtx extends AbstractRequestCtx {
 
         // if we didn't have an environment section, the only optional section
         // of the four, then create a new empty set for it
-        if (newEnvironment == null){
+        if (newEnvironment == null) {
             newEnvironment = new HashSet<Attribute>();
             attributesSet.add(new Attributes(null, content, newEnvironment, null));
         }
         // Now create and return the RequestCtx from the information
         // gathered
-        return new RequestCtx(attributesSet, root,newSubjects, newResource,
+        return new RequestCtx(attributesSet, root, newSubjects, newResource,
                 newAction, newEnvironment, null);
     }
 
@@ -285,7 +279,7 @@ public class RequestCtx extends AbstractRequestCtx {
 
         return set;
     }
-    
+
     /**
      * Returns a <code>Set</code> containing <code>Subject</code> objects.
      *
@@ -331,12 +325,12 @@ public class RequestCtx extends AbstractRequestCtx {
      */
     public Node getDocumentRoot() {
         return documentRoot;
-    }    
+    }
 
     /**
      * Encodes this  <code>AbstractRequestCtx</code>  into its XML representation and writes this encoding to the given
      * <code>OutputStream</code>. No indentation is used.
-     * 
+     *
      * @param output a stream into which the XML-encoded data is written
      */
     public void encode(OutputStream output) {
@@ -346,8 +340,8 @@ public class RequestCtx extends AbstractRequestCtx {
     /**
      * Encodes this  <code>AbstractRequestCtx</code>  into its XML representation and writes this encoding to the given
      * <code>OutputStream</code> with indentation.
-     * 
-     * @param output a stream into which the XML-encoded data is written
+     *
+     * @param output   a stream into which the XML-encoded data is written
      * @param indenter an object that creates indentation strings
      */
     public void encode(OutputStream output, Indenter indenter) {

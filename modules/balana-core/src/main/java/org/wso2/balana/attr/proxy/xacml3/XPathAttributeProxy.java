@@ -35,9 +35,9 @@ public class XPathAttributeProxy implements AttributeProxy {
     public AttributeValue getInstance(String value, String[] params) throws Exception {
         //only one parameter is needed which is called XPathcategory
         String xPathCategory = null;
-        if(params != null){
+        if (params != null) {
             xPathCategory = params[0];
         }
-        return XPathAttribute.getInstance(value, xPathCategory);    
+        return XPathAttribute.getInstance(value, xPathCategory);
     }
 }

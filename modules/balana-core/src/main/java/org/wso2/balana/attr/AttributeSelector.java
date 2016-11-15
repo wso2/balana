@@ -61,57 +61,52 @@ import org.w3c.dom.Node;
  * Supports the standard selector functionality in XACML 1.0 /2.0 version, which uses XPath expressions to resolve
  * values from the Request or elsewhere. All selector queries are done by
  * <code>AttributeFinderModule</code>s so that it's easy to plugin different XPath implementations.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class AttributeSelector extends AbstractAttributeSelector {
 
+    // the logger we'll use for all messages
+    private static Log logger = LogFactory.getLog(AttributeSelector.class);
     // the data type returned by this selector
     private URI type;
-
     // the XPath to search
     private String contextPath;
-
     // must resolution find something
     private boolean mustBePresent;
-
     // the xpath version we've been told to use
     private String xpathVersion;
-
     // the policy root, where we get namespace mapping details
     private Node policyRoot;
 
-    // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(AttributeSelector.class);
-
     /**
      * Creates a new <code>AttributeSelector</code> with no policy root.
-     * 
-     * @param type the data type of the attribute values this selector looks for
-     * @param contextPath the XPath to query
+     *
+     * @param type          the data type of the attribute values this selector looks for
+     * @param contextPath   the XPath to query
      * @param mustBePresent must resolution find a match
-     * @param xpathVersion the XPath version to use, which must be a valid XPath version string (the
-     *            identifier for XPath 1.0 is provided in <code>PolicyMetaData</code>)
+     * @param xpathVersion  the XPath version to use, which must be a valid XPath version string (the
+     *                      identifier for XPath 1.0 is provided in <code>PolicyMetaData</code>)
      */
     public AttributeSelector(URI type, String contextPath, boolean mustBePresent,
-            String xpathVersion) {
+                             String xpathVersion) {
         this(type, contextPath, null, mustBePresent, xpathVersion);
     }
 
     /**
      * Creates a new <code>AttributeSelector</code>.
-     * 
-     * @param type the data type of the attribute values this selector looks for
-     * @param contextPath the XPath to query
-     * @param policyRoot the root DOM Element for the policy containing this selector, which defines
-     *            namespace mappings
+     *
+     * @param type          the data type of the attribute values this selector looks for
+     * @param contextPath   the XPath to query
+     * @param policyRoot    the root DOM Element for the policy containing this selector, which defines
+     *                      namespace mappings
      * @param mustBePresent must resolution find a match
-     * @param xpathVersion the XPath version to use, which must be a valid XPath version string (the
-     *            identifier for XPath 1.0 is provided in <code>PolicyMetaData</code>)
+     * @param xpathVersion  the XPath version to use, which must be a valid XPath version string (the
+     *                      identifier for XPath 1.0 is provided in <code>PolicyMetaData</code>)
      */
     public AttributeSelector(URI type, String contextPath, Node policyRoot, boolean mustBePresent,
-            String xpathVersion) {
+                             String xpathVersion) {
         this.type = type;
         this.contextPath = contextPath;
         this.mustBePresent = mustBePresent;
@@ -123,18 +118,15 @@ public class AttributeSelector extends AbstractAttributeSelector {
      * Creates a new <code>AttributeSelector</code> based on the DOM root of the XML type. Note that
      * as of XACML 1.1 the XPathVersion element is required in any policy that uses a selector, so
      * if the <code>xpathVersion</code> string is null, then this will throw an exception.
-     * 
-     * @deprecated As of 2.0 you should avoid using this method and should instead use the version
-     *             that takes a <code>PolicyMetaData</code> instance. This method will only work for
-     *             XACML 1.x policies.
-     * 
-     * @param root the root of the DOM tree for the XML AttributeSelectorType XML type
+     *
+     * @param root         the root of the DOM tree for the XML AttributeSelectorType XML type
      * @param xpathVersion the XPath version to use, or null if this is unspecified (ie, not
-     *            supplied in the defaults section of the policy)
-     * 
+     *                     supplied in the defaults section of the policy)
      * @return an <code>AttributeSelector</code>
-     * 
      * @throws ParsingException if the AttributeSelectorType was invalid
+     * @deprecated As of 2.0 you should avoid using this method and should instead use the version
+     * that takes a <code>PolicyMetaData</code> instance. This method will only work for
+     * XACML 1.x policies.
      */
     public static AttributeSelector getInstance(Node root, String xpathVersion)
             throws ParsingException {
@@ -146,12 +138,10 @@ public class AttributeSelector extends AbstractAttributeSelector {
      * Creates a new <code>AttributeSelector</code> based on the DOM root of the XML type. Note that
      * as of XACML 1.1 the XPathVersion element is required in any policy that uses a selector, so
      * if the <code>xpathVersion</code> string is null, then this will throw an exception.
-     * 
-     * @param root the root of the DOM tree for the XML AttributeSelectorType XML type
+     *
+     * @param root     the root of the DOM tree for the XML AttributeSelectorType XML type
      * @param metaData the meta-data associated with the containing policy
-     * 
      * @return an <code>AttributeSelector</code>
-     * 
      * @throws ParsingException if the AttributeSelectorType was invalid
      */
     public static AttributeSelector getInstance(Node root, PolicyMetaData metaData)
@@ -214,7 +204,7 @@ public class AttributeSelector extends AbstractAttributeSelector {
 
     /**
      * Returns the XPath query used to resolve attribute values.
-     * 
+     *
      * @return the XPath query
      */
     public String getContextPath() {
@@ -223,7 +213,7 @@ public class AttributeSelector extends AbstractAttributeSelector {
 
     /**
      * Always returns true, since a selector always returns a bag of attribute values.
-     * 
+     *
      * @return true
      */
     public boolean returnsBag() {
@@ -232,11 +222,10 @@ public class AttributeSelector extends AbstractAttributeSelector {
 
     /**
      * Always returns true, since a selector always returns a bag of attribute values.
-     * 
-     * @deprecated As of 2.0, you should use the <code>returnsBag</code> method from the
-     *             super-interface <code>Expression</code>.
-     * 
+     *
      * @return true
+     * @deprecated As of 2.0, you should use the <code>returnsBag</code> method from the
+     * super-interface <code>Expression</code>.
      */
     public boolean evaluatesToBag() {
         return true;
@@ -244,7 +233,7 @@ public class AttributeSelector extends AbstractAttributeSelector {
 
     /**
      * Always returns an empty list since selectors never have children.
-     * 
+     *
      * @return an empty <code>List</code>
      */
     public List getChildren() {
@@ -259,11 +248,10 @@ public class AttributeSelector extends AbstractAttributeSelector {
      * empty bag. To support the basic selector functionality defined in the XACML specification,
      * use a finder that has only the <code>SelectorModule</code> as a module that supports selector
      * finding.
-     * 
+     *
      * @param context representation of the request to search
-     * 
      * @return a result containing a bag either empty because no values were found or containing at
-     *         least one value, or status associated with an Indeterminate result
+     * least one value, or status associated with an Indeterminate result
      */
     public EvaluationResult evaluate(EvaluationCtx context) {
         // query the context
@@ -314,7 +302,7 @@ public class AttributeSelector extends AbstractAttributeSelector {
         String tag = "<AttributeSelector RequestContextPath=\"" + contextPath + "\" DataType=\""
                 + type.toString() + "\"";
 
-        if (mustBePresent){
+        if (mustBePresent) {
             tag += " MustBePresent=\"true\"";
         }
         tag += "/>\n";

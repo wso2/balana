@@ -58,9 +58,9 @@ import java.util.Set;
 /**
  * Represents all of the Set functions, though the actual implementations are in two sub-classes
  * specific to the condition and general set functions.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public abstract class SetFunction extends FunctionBase {
 
@@ -102,45 +102,60 @@ public abstract class SetFunction extends FunctionBase {
     /**
      * A complete list of all the XACML datatypes supported by the Set functions in XACML 1.x
      */
-    protected static String baseTypes[] = { StringAttribute.identifier,
+    protected static String baseTypes[] = {StringAttribute.identifier,
             BooleanAttribute.identifier, IntegerAttribute.identifier, DoubleAttribute.identifier,
             DateAttribute.identifier, DateTimeAttribute.identifier, TimeAttribute.identifier,
             AnyURIAttribute.identifier, HexBinaryAttribute.identifier,
             Base64BinaryAttribute.identifier, DayTimeDurationAttribute.identifier,
             YearMonthDurationAttribute.identifier, X500NameAttribute.identifier,
-            RFC822NameAttribute.identifier };
+            RFC822NameAttribute.identifier};
 
     /**
      * A complete list of all the XACML datatypes newly supported by the Set functions in XACML 2.0
      */
-    protected static String baseTypes2[] = { IPAddressAttribute.identifier,
-            DNSNameAttribute.identifier };
+    protected static String baseTypes2[] = {IPAddressAttribute.identifier,
+            DNSNameAttribute.identifier};
 
     /**
      * A complete list of all the XACML datatypes supported by the Set functions in XACML 1.x, using
      * the "simple" form of the names (eg, string instead of
      * http://www.w3.org/2001/XMLSchema#string)
      */
-    protected static String simpleTypes[] = { "string", "boolean", "integer", "double", "date",
+    protected static String simpleTypes[] = {"string", "boolean", "integer", "double", "date",
             "dateTime", "time", "anyURI", "hexBinary", "base64Binary", "dayTimeDuration",
-            "yearMonthDuration", "x500Name", "rfc822Name" };
+            "yearMonthDuration", "x500Name", "rfc822Name"};
 
     /**
      * A complete list of all the XACML datatypes newly supported by the Set functions in XACML 2.0,
      * using the "simple" form of the names (eg, string instead of
      * http://www.w3.org/2001/XMLSchema#string)
      */
-    protected static String simpleTypes2[] = { "ipAddress", "dnsName" };
+    protected static String simpleTypes2[] = {"ipAddress", "dnsName"};
+
+    /**
+     * Protected constuctor used by the general and condition subclasses. If you need to create a
+     * new <code>SetFunction</code> instance you should either use one of the
+     * <code>getInstance</code> methods or construct one of the sub-classes directly.
+     *
+     * @param functionName the identitifer for the function
+     * @param functionId   an optional, internal numeric identifier
+     * @param argumentType the datatype this function accepts
+     * @param returnType   the datatype this function returns
+     * @param returnsBag   whether this function returns bags
+     */
+    protected SetFunction(String functionName, int functionId, String argumentType,
+                          String returnType, boolean returnsBag) {
+        super(functionName, functionId, argumentType, true, 2, returnType, returnsBag);
+    }
 
     /**
      * Creates a new instance of the intersection set function. This should be used to create
      * support for any new attribute types and then the new <code>SetFunction</code> object should
      * be added to the factory (all set functions for the base types are already installed in the
      * factory).
-     * 
+     *
      * @param functionName the name of the function
      * @param argumentType the attribute type this function will work with
-     * 
      * @return a new <code>SetFunction</code> for the given type
      */
     public static SetFunction getIntersectionInstance(String functionName, String argumentType) {
@@ -152,10 +167,9 @@ public abstract class SetFunction extends FunctionBase {
      * create support for any new attribute types and then the new <code>SetFunction</code> object
      * should be added to the factory (all set functions for the base types are already installed in
      * the factory).
-     * 
+     *
      * @param functionName the name of the function
      * @param argumentType the attribute type this function will work with
-     * 
      * @return a new <code>SetFunction</code> for the given type
      */
     public static SetFunction getAtLeastOneInstance(String functionName, String argumentType) {
@@ -167,10 +181,9 @@ public abstract class SetFunction extends FunctionBase {
      * Creates a new instance of the union set function. This should be used to create support for
      * any new attribute types and then the new <code>SetFunction</code> object should be added to
      * the factory (all set functions for the base types are already installed in the factory).
-     * 
+     *
      * @param functionName the name of the function
      * @param argumentType the attribute type this function will work with
-     * 
      * @return a new <code>SetFunction</code> for the given type
      */
     public static SetFunction getUnionInstance(String functionName, String argumentType) {
@@ -181,10 +194,9 @@ public abstract class SetFunction extends FunctionBase {
      * Creates a new instance of the subset set function. This should be used to create support for
      * any new attribute types and then the new <code>SetFunction</code> object should be added to
      * the factory (all set functions for the base types are already installed in the factory).
-     * 
+     *
      * @param functionName the name of the function
      * @param argumentType the attribute type this function will work with
-     * 
      * @return a new <code>SetFunction</code> for the given type
      */
     public static SetFunction getSubsetInstance(String functionName, String argumentType) {
@@ -195,10 +207,9 @@ public abstract class SetFunction extends FunctionBase {
      * Creates a new instance of the equals set function. This should be used to create support for
      * any new attribute types and then the new <code>SetFunction</code> object should be added to
      * the factory (all set functions for the base types are already installed in the factory).
-     * 
+     *
      * @param functionName the name of the function
      * @param argumentType the attribute type this function will work with
-     * 
      * @return a new <code>SetFunction</code> for the given type
      */
     public static SetFunction getSetEqualsInstance(String functionName, String argumentType) {
@@ -206,24 +217,8 @@ public abstract class SetFunction extends FunctionBase {
     }
 
     /**
-     * Protected constuctor used by the general and condition subclasses. If you need to create a
-     * new <code>SetFunction</code> instance you should either use one of the
-     * <code>getInstance</code> methods or construct one of the sub-classes directly.
-     * 
-     * @param functionName the identitifer for the function
-     * @param functionId an optional, internal numeric identifier
-     * @param argumentType the datatype this function accepts
-     * @param returnType the datatype this function returns
-     * @param returnsBag whether this function returns bags
-     */
-    protected SetFunction(String functionName, int functionId, String argumentType,
-            String returnType, boolean returnsBag) {
-        super(functionName, functionId, argumentType, true, 2, returnType, returnsBag);
-    }
-
-    /**
      * Returns a <code>Set</code> containing all the function identifiers supported by this class.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public static Set getSupportedIdentifiers() {

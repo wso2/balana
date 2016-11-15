@@ -37,9 +37,9 @@ package org.wso2.balana;
 
 /**
  * Exception that gets thrown if any general parsing error occurs.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class ParsingException extends Exception {
 
@@ -54,7 +54,7 @@ public class ParsingException extends Exception {
      * Constructs a new <code>ParsingException</code> with a message, but no cause. The message is
      * saved for later retrieval by the {@link java.lang#Throwable.getMessage()
      * Throwable.getMessage()} method.
-     * 
+     *
      * @param message the detail message (<code>null</code> if nonexistent or unknown)
      */
     public ParsingException(String message) {
@@ -65,7 +65,7 @@ public class ParsingException extends Exception {
      * Constructs a new <code>ParsingException</code> with a cause, but no message. The cause is
      * saved for later retrieval by the {@link java.lang#Throwable.getCause() Throwable.getCause()}
      * method.
-     * 
+     *
      * @param cause the cause (<code>null</code> if nonexistent or unknown)
      */
     public ParsingException(Throwable cause) {
@@ -77,9 +77,9 @@ public class ParsingException extends Exception {
      * cause are saved for later retrieval by the {@link java.lang#Throwable.getMessage()
      * Throwable.getMessage()} and {@link java.lang#Throwable.getCause() Throwable.getCause()}
      * methods.
-     * 
+     *
      * @param message the detail message (<code>null</code> if nonexistent or unknown)
-     * @param cause the cause (<code>null</code> if nonexistent or unknown)
+     * @param cause   the cause (<code>null</code> if nonexistent or unknown)
      */
     public ParsingException(String message, Throwable cause) {
         super(message, cause);

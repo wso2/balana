@@ -32,69 +32,69 @@ import java.util.*;
 public class StringCreationFunction extends FunctionBase {
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     * Standard identifier for the String-from-boolean function.
      */
     public static final String NAME_STRING_FROM_BOOLEAN = FUNCTION_NS_3 + "string-from-boolean";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     * Standard identifier for the String-from-boolean function.
      */
-    public static final String NAME_STRING_FROM_DOUBLE= FUNCTION_NS_3 + "string-from-double";
+    public static final String NAME_STRING_FROM_DOUBLE = FUNCTION_NS_3 + "string-from-double";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     * Standard identifier for the String-from-boolean function.
      */
     public static final String NAME_STRING_FROM_TIME = FUNCTION_NS_3 + "string-from-time";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     * Standard identifier for the String-from-boolean function.
      */
     public static final String NAME_STRING_FROM_DATE_TIME = FUNCTION_NS_3 + "string-from-date";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     * Standard identifier for the String-from-boolean function.
      */
-    public static final String NAME_STRING_FROM_DATE= FUNCTION_NS_3 + "dateTime-from-string";
+    public static final String NAME_STRING_FROM_DATE = FUNCTION_NS_3 + "dateTime-from-string";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     * Standard identifier for the String-from-boolean function.
      */
     public static final String NAME_STRING_FROM_INTEGER = FUNCTION_NS_3 + "string-from-integer";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     * Standard identifier for the String-from-boolean function.
      */
     public static final String NAME_STRING_FROM_URI = FUNCTION_NS_3 + "string-from-anyURI";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     * Standard identifier for the String-from-boolean function.
      */
     public static final String NAME_STRING_FROM_DAYTIME_DURATION = FUNCTION_NS_3 +
-                                                                    "string-from-dayTimeDuration";
+            "string-from-dayTimeDuration";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     * Standard identifier for the String-from-boolean function.
      */
     public static final String NAME_STRING_FROM_YEAR_MONTH_DURATION = FUNCTION_NS_3 +
-                                                                    "string-from-yearMonthDuration";
+            "string-from-yearMonthDuration";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     * Standard identifier for the String-from-boolean function.
      */
     public static final String NAME_STRING_FROM_X500NAME = FUNCTION_NS_3 + "string-from-x500Name";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     * Standard identifier for the String-from-boolean function.
      */
     public static final String NAME_STRING_FROM_RFC822NAME = FUNCTION_NS_3 + "string-from-rfc822Name";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     * Standard identifier for the String-from-boolean function.
      */
     public static final String NAME_STRING_FROM_DNS = FUNCTION_NS_3 + "string-from-dnsName";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     * Standard identifier for the String-from-boolean function.
      */
     public static final String NAME_STRING_FROM_IP_ADDRESS = FUNCTION_NS_3 + "string-from-ipAddress";
 
@@ -107,7 +107,7 @@ public class StringCreationFunction extends FunctionBase {
     static {
 
         dataTypeMap = new HashMap<String, String>();
-        
+
         dataTypeMap.put(NAME_STRING_FROM_BOOLEAN, BooleanAttribute.identifier);
         dataTypeMap.put(NAME_STRING_FROM_INTEGER, IntegerAttribute.identifier);
         dataTypeMap.put(NAME_STRING_FROM_DOUBLE, DoubleAttribute.identifier);
@@ -128,7 +128,7 @@ public class StringCreationFunction extends FunctionBase {
      * Creates a new <code>EqualFunction</code> object.
      *
      * @param functionName the standard XACML name of the function to be handled by this object,
-     *            including the full namespace
+     *                     including the full namespace
      */
     public StringCreationFunction(String functionName) {
         super(functionName, 0, getArgumentType(functionName), false, 1, StringAttribute.identifier, false);
@@ -157,7 +157,7 @@ public class StringCreationFunction extends FunctionBase {
         // Evaluate the arguments
         AttributeValue[] argValues = new AttributeValue[inputs.size()];
         EvaluationResult result = evalArgs(inputs, context, argValues);
-        if (result != null){
+        if (result != null) {
             return result;
         }
 

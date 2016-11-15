@@ -53,27 +53,25 @@ import org.wso2.balana.ctx.EvaluationCtx;
 /**
  * This class contains a group of <code>TargetMatch</code> instances and represents the Subject,
  * Resource, Action, and Environment elements in an XACML Target.
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
 public class TargetMatchGroup {
 
-    // the list of matches
-    private List<TargetMatch> matches;
-
-    // the match type contained in this group
-    private int matchType;
-
     // the logger we'll use for all messages
     private static Log logger = LogFactory.getLog(TargetMatchGroup.class);
+    // the list of matches
+    private List<TargetMatch> matches;
+    // the match type contained in this group
+    private int matchType;
 
 
     /**
      * Constructor that creates a new <code>TargetMatchGroup</code> based on the given elements.
-     * 
+     *
      * @param matchElements a <code>List</code> of <code>TargetMatch</code>
-     * @param matchType the match type as defined in <code>TargetMatch</code>
+     * @param matchType     the match type as defined in <code>TargetMatch</code>
      */
     public TargetMatchGroup(List<TargetMatch> matchElements, int matchType) {
         if (matchElements == null)
@@ -85,13 +83,11 @@ public class TargetMatchGroup {
 
     /**
      * Creates a <code>Target</code> based on its DOM node.
-     * 
-     * @param root the node to parse for the target group
+     *
+     * @param root      the node to parse for the target group
      * @param matchType the type of the match
-     * @param metaData meta-date associated with the policy
-     * 
+     * @param metaData  meta-date associated with the policy
      * @return a new <code>TargetMatchGroup</code> constructed by parsing
-     * 
      * @throws org.wso2.balana.ParsingException if the DOM node is invalid
      */
     public static TargetMatchGroup getInstance(Node root, int matchType, PolicyMetaData metaData)
@@ -114,9 +110,8 @@ public class TargetMatchGroup {
     /**
      * Determines whether this <code>TargetMatchGroup</code> matches the input request (whether it
      * is applicable).
-     * 
+     *
      * @param context the representation of the request
-     * 
      * @return the result of trying to match the group with the context
      */
     public MatchResult match(EvaluationCtx context) {
@@ -161,6 +156,5 @@ public class TargetMatchGroup {
         builder.append("</").append(name).append(">\n");
     }
 
-    
 
 }

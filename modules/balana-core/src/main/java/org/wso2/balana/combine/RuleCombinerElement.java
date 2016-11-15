@@ -46,16 +46,16 @@ import java.util.List;
 
 /**
  * Specific version of <code>CombinerElement</code> used for rule combining.
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
 public class RuleCombinerElement extends CombinerElement {
 
     /**
      * Constructor that only takes a <code>Rule</code. No parameters are associated with this
      * <code>Rule</code> when combining.
-     * 
+     *
      * @param rule a <code>Rule</code> to use in combining
      */
     public RuleCombinerElement(Rule rule) {
@@ -65,10 +65,10 @@ public class RuleCombinerElement extends CombinerElement {
     /**
      * Constructor that takes both the <code>Rule</code> to combine and its associated combiner
      * parameters.
-     * 
-     * @param rule a <code>Rule</code> to use in combining
+     *
+     * @param rule       a <code>Rule</code> to use in combining
      * @param parameters a (possibly empty) non-null <code>List</code> of
-     *            <code>CombinerParameter<code>s provided for general
+     *                   <code>CombinerParameter<code>s provided for general
      *                   use (for all pre-2.0 policies this must be empty)
      */
     public RuleCombinerElement(Rule rule, List parameters) {
@@ -77,7 +77,7 @@ public class RuleCombinerElement extends CombinerElement {
 
     /**
      * Returns the <code>Rule</code> in this element.
-     * 
+     *
      * @return the element's <code>Rule</code>
      */
     public Rule getRule() {

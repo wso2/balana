@@ -38,9 +38,9 @@ package org.wso2.balana;
 /**
  * Runtime exception that's thrown if any unexpected error occurs. This could appear, for example,
  * if you try to match a referernced policy that can't be resolved.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class ProcessingException extends RuntimeException {
 
@@ -55,7 +55,7 @@ public class ProcessingException extends RuntimeException {
      * Constructs a new <code>ProcessingException</code> with a message, but no cause. The message
      * is saved for later retrieval by the {@link java.lang#Throwable.getMessage()
      * Throwable.getMessage()} method.
-     * 
+     *
      * @param message the detail message (<code>null</code> if nonexistent or unknown)
      */
     public ProcessingException(String message) {
@@ -66,7 +66,7 @@ public class ProcessingException extends RuntimeException {
      * Constructs a new <code>ProcessingException</code> with a cause, but no message. The cause is
      * saved for later retrieval by the {@link java.lang#Throwable.getCause() Throwable.getCause()}
      * method.
-     * 
+     *
      * @param cause the cause (<code>null</code> if nonexistent or unknown)
      */
     public ProcessingException(Throwable cause) {
@@ -78,9 +78,9 @@ public class ProcessingException extends RuntimeException {
      * cause are saved for later retrieval by the {@link java.lang#Throwable.getMessage()
      * Throwable.getMessage()} and {@link java.lang#Throwable.getCause() Throwable.getCause()}
      * methods.
-     * 
+     *
      * @param message the detail message (<code>null</code> if nonexistent or unknown)
-     * @param cause the cause (<code>null</code> if nonexistent or unknown)
+     * @param cause   the cause (<code>null</code> if nonexistent or unknown)
      */
     public ProcessingException(String message, Throwable cause) {
         super(message, cause);

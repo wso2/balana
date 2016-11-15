@@ -35,70 +35,70 @@ import java.util.*;
 /**
  * String conversion functions that creates different data-types from String type
  */
-public class StringConversionFunction extends FunctionBase{
+public class StringConversionFunction extends FunctionBase {
 
     /**
-     *  Standard identifier for the boolean-from-string function.
+     * Standard identifier for the boolean-from-string function.
      */
     public static final String NAME_BOOLEAN_FROM_STRING = FUNCTION_NS_3 + "boolean-from-string";
 
     /**
-     *  Standard identifier for the integer-from-boolean function.
+     * Standard identifier for the integer-from-boolean function.
      */
     public static final String NAME_INTEGER_FROM_STRING = FUNCTION_NS_3 + "integer-from-string";
 
     /**
-     *  Standard identifier for the integer-from-boolean function.
+     * Standard identifier for the integer-from-boolean function.
      */
     public static final String NAME_DOUBLE_FROM_STRING = FUNCTION_NS_3 + "double-from-string";
 
     /**
-     *  Standard identifier for the integer-from-boolean function.
+     * Standard identifier for the integer-from-boolean function.
      */
     public static final String NAME_TIME_FROM_STRING = FUNCTION_NS_3 + "time-from-string";
 
     /**
-     *  Standard identifier for the integer-from-boolean function.
+     * Standard identifier for the integer-from-boolean function.
      */
     public static final String NAME_DATE_FROM_STRING = FUNCTION_NS_3 + "date-from-string";
 
     /**
-     *  Standard identifier for the integer-from-boolean function.
+     * Standard identifier for the integer-from-boolean function.
      */
     public static final String NAME_DATE_TIME_FROM_STRING = FUNCTION_NS_3 + "dateTime-from-string";
 
     /**
-     *  Standard identifier for the integer-from-boolean function.
+     * Standard identifier for the integer-from-boolean function.
      */
     public static final String NAME_URI_FROM_STRING = FUNCTION_NS_3 + "anyURI-from-string";
 
     /**
-     *  Standard identifier for the integer-from-boolean function.
+     * Standard identifier for the integer-from-boolean function.
      */
     public static final String NAME_DAYTIME_DURATION_FROM_STRING = FUNCTION_NS_3 + "dayTimeDuration-from-string";
 
     /**
-     *  Standard identifier for the integer-from-boolean function.
+     * Standard identifier for the integer-from-boolean function.
      */
     public static final String NAME_YEAR_MONTH_DURATION_FROM_STRING = FUNCTION_NS_3 + "yearMonthDuration-from-string";
 
     /**
-     *  Standard identifier for the integer-from-boolean function.
+     * Standard identifier for the integer-from-boolean function.
      */
     public static final String NAME_X500NAME_FROM_STRING = FUNCTION_NS_3 + "x500Name-from-string";
 
     /**
-     *  Standard identifier for the integer-from-boolean function.
+     * Standard identifier for the integer-from-boolean function.
      */
     public static final String NAME_RFC822_FROM_STRING = FUNCTION_NS_3 + "rfc822Name-from-string";
 
     /**
-     *  Standard identifier for the integer-from-boolean function.
+     * Standard identifier for the integer-from-boolean function.
      */
     public static final String NAME_IP_ADDRESS_FROM_STRING = FUNCTION_NS_3 + "ipAddress-from-string";
 
     /**
-     *  Standard identifier for the integer-from-boolean function.
+     * Standard identifier for the integer-from-boolean function.
      */
     public static final String NAME_DNS_FROM_STRING = FUNCTION_NS_3 + "dnsName-from-string";
 
@@ -132,7 +132,7 @@ public class StringConversionFunction extends FunctionBase{
      * Creates a new <code>EqualFunction</code> object.
      *
      * @param functionName the standard XACML name of the function to be handled by this object,
-     *            including the full namespace
+     *                     including the full namespace
      */
     public StringConversionFunction(String functionName) {
         super(functionName, 0, StringAttribute.identifier, false, 1, getReturnType(functionName), false);
@@ -161,27 +161,27 @@ public class StringConversionFunction extends FunctionBase{
         // Evaluate the arguments
         AttributeValue[] argValues = new AttributeValue[inputs.size()];
         EvaluationResult result = evalArgs(inputs, context, argValues);
-        if (result != null){
+        if (result != null) {
             return result;
         }
 
         try {
-            URI dataType = new URI (dataTypeMap.get(getFunctionName()));
-            AttributeValue value = Balana.getInstance().getAttributeFactory().createValue(dataType, 
-                                                                            argValues[0].encode());
+            URI dataType = new URI(dataTypeMap.get(getFunctionName()));
+            AttributeValue value = Balana.getInstance().getAttributeFactory().createValue(dataType,
+                    argValues[0].encode());
             return new EvaluationResult(value);
         } catch (URISyntaxException e) {
-			List<String> code = new ArrayList<String>();
-			code.add(Status.STATUS_PROCESSING_ERROR);
-			return new EvaluationResult(new Status(code, e.getMessage()));
+            List<String> code = new ArrayList<String>();
+            code.add(Status.STATUS_PROCESSING_ERROR);
+            return new EvaluationResult(new Status(code, e.getMessage()));
         } catch (ParsingException e) {
-			List<String> code = new ArrayList<String>();
-			code.add(Status.STATUS_PROCESSING_ERROR);
-			return new EvaluationResult(new Status(code, e.getMessage()));
+            List<String> code = new ArrayList<String>();
+            code.add(Status.STATUS_PROCESSING_ERROR);
+            return new EvaluationResult(new Status(code, e.getMessage()));
         } catch (UnknownIdentifierException e) {
-			List<String> code = new ArrayList<String>();
-			code.add(Status.STATUS_PROCESSING_ERROR);
-			return new EvaluationResult(new Status(code, e.getMessage()));
+            List<String> code = new ArrayList<String>();
+            code.add(Status.STATUS_PROCESSING_ERROR);
+            return new EvaluationResult(new Status(code, e.getMessage()));
         }
     }
 }

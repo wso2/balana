@@ -44,14 +44,14 @@ import java.util.Set;
 
 /**
  * Clusters all the functions supported by <code>GeneralBagFunction</code>.
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public class GeneralBagFunctionCluster implements FunctionCluster {
 
-    public Set<Function>  getSupportedFunctions() {
-        Set<Function>  set = new HashSet<Function>();
+    public Set<Function> getSupportedFunctions() {
+        Set<Function> set = new HashSet<Function>();
         Iterator it = GeneralBagFunction.getSupportedIdentifiers().iterator();
 
         while (it.hasNext())

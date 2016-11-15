@@ -1,10 +1,11 @@
-<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
-        xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="TestPolicy0005"
+<Policy xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+        xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="TestPolicy0005"
         RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
         Version="1.0">
     <Description>Test policy 0005 - Sample Policy with policy advices.
         The bar1 action can be done by bob on resource foo/foo1
-        and The bar2 action can be done by alice on resource foo/foo2</Description>
+        and The bar2 action can be done by alice on resource foo/foo2
+    </Description>
     <Target>
         <AnyOf>
             <AllOf>
@@ -34,9 +35,10 @@
             </AnyOf>
             <AnyOf>
                 <AllOf>
-                     <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
                         <AttributeValue
-                                DataType="http://www.w3.org/2001/XMLSchema#string">bar1</AttributeValue>
+                                DataType="http://www.w3.org/2001/XMLSchema#string">bar1
+                        </AttributeValue>
                         <AttributeDesignator MustBePresent="false"
                                              Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
                                              AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
@@ -58,7 +60,7 @@
         <AdviceExpressions>
             <AdviceExpression AdviceId="permitRule1Advice" AppliesTo="Permit">
                 <AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xacml:2.0:example:attribute:text">
-                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">AdviceRule1</AttributeValue>
+                    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">AdviceRule1</AttributeValue>
                 </AttributeAssignmentExpression>
             </AdviceExpression>
         </AdviceExpressions>
@@ -75,9 +77,10 @@
                                              AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
                                              DataType="http://www.w3.org/2001/XMLSchema#string"/>
                     </Match>
-                     <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
                         <AttributeValue
-                                DataType="http://www.w3.org/2001/XMLSchema#string">bar2</AttributeValue>
+                                DataType="http://www.w3.org/2001/XMLSchema#string">bar2
+                        </AttributeValue>
                         <AttributeDesignator MustBePresent="false"
                                              Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
                                              AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
@@ -99,7 +102,7 @@
         <AdviceExpressions>
             <AdviceExpression AdviceId="permitRule2Advice" AppliesTo="Permit">
                 <AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xacml:2.0:example:attribute:text">
-                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">AdviceRule2</AttributeValue>
+                    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">AdviceRule2</AttributeValue>
                 </AttributeAssignmentExpression>
             </AdviceExpression>
         </AdviceExpressions>
@@ -109,7 +112,7 @@
         <AdviceExpressions>
             <AdviceExpression AdviceId="denyRule3Advice" AppliesTo="Deny">
                 <AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xacml:2.0:example:attribute:text">
-                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">AdviceRule3</AttributeValue>
+                    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">AdviceRule3</AttributeValue>
                 </AttributeAssignmentExpression>
             </AdviceExpression>
         </AdviceExpressions>
@@ -117,12 +120,12 @@
     <AdviceExpressions>
         <AdviceExpression AdviceId="denyPolicyAdvice" AppliesTo="Deny">
             <AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xacml:2.0:example:attribute:text">
-            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">DenyAdvice</AttributeValue>
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">DenyAdvice</AttributeValue>
             </AttributeAssignmentExpression>
         </AdviceExpression>
         <AdviceExpression AdviceId="permitPolicyAdvice" AppliesTo="Permit">
             <AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xacml:2.0:example:attribute:text">
-            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">PermitAdvice</AttributeValue>
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">PermitAdvice</AttributeValue>
             </AttributeAssignmentExpression>
         </AdviceExpression>
     </AdviceExpressions>

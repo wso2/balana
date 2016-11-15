@@ -55,7 +55,6 @@ import org.wso2.balana.xacml3.Advice;
 
 /**
  * XACML 2 and 1 implementation of <code>AbstractResult</code>
- *
  */
 public class Result extends AbstractResult {
 
@@ -64,21 +63,21 @@ public class Result extends AbstractResult {
      */
     private String resourceId = null;
 
-    public Result(int decision, Status status){
+    public Result(int decision, Status status) {
         // version can be XACML 2.0,  1.1 or 1.0 But here we assume as XACML 2.0 as a common
         super(decision, status, XACMLConstants.XACML_VERSION_2_0);
     }
 
     public Result(int decision, Status status, List<ObligationResult> obligationResults)
-                                                                throws IllegalArgumentException {
+            throws IllegalArgumentException {
         // version can be XACML 2.0,  1.1 or 1.0 But here we assume as XACML 2.0 as a common
-        super(decision, status, obligationResults, null,  XACMLConstants.XACML_VERSION_2_0);
+        super(decision, status, obligationResults, null, XACMLConstants.XACML_VERSION_2_0);
     }
 
     public Result(int decision, Status status, List<ObligationResult> obligationResults,
                   String resourceId) throws IllegalArgumentException {
         // version can be XACML 2.0,  1.1 or 1.0 But here we assume as XACML 2.0 as a common
-        super(decision, status, obligationResults, null,  XACMLConstants.XACML_VERSION_2_0);
+        super(decision, status, obligationResults, null, XACMLConstants.XACML_VERSION_2_0);
         this.resourceId = resourceId;
     }
 
@@ -88,13 +87,11 @@ public class Result extends AbstractResult {
      * root doesn't represent a valid ResultType.
      *
      * @param root the DOM root of a ResultType
-     *
      * @return a new <code>Result</code>
-     *
      * @throws ParsingException if the node is invalid
      */
     public static AbstractResult getInstance(Node root) throws ParsingException {
-        
+
         int decision = -1;
         Status status = null;
         String resource = null;
@@ -102,7 +99,7 @@ public class Result extends AbstractResult {
 
         NamedNodeMap attrs = root.getAttributes();
         Node resourceAttr = attrs.getNamedItem("ResourceId");
-        if (resourceAttr != null){
+        if (resourceAttr != null) {
             resource = resourceAttr.getNodeValue();
         }
         NodeList nodes = root.getChildNodes();
@@ -122,29 +119,29 @@ public class Result extends AbstractResult {
                 if (decision == -1)
                     throw new ParsingException("Unknown Decision: " + type);
             } else if (name.equals("Status")) {
-                if(status == null){
+                if (status == null) {
                     status = Status.getInstance(node);
                 } else {
-                    throw new ParsingException("More than one StatusType defined");      
+                    throw new ParsingException("More than one StatusType defined");
                 }
             } else if (name.equals("Obligations")) {
-                if(obligations == null){
+                if (obligations == null) {
                     obligations = parseObligations(node);
                 } else {
-                    throw new ParsingException("More than one ObligationsType defined");    
+                    throw new ParsingException("More than one ObligationsType defined");
                 }
             }
         }
 
         return new Result(decision, status, obligations, resource);
     }
-    
+
     /**
      * Helper method that handles the obligations
      *
      * @param root the DOM root of the ObligationsType XML type
      * @return a <code>List</code> of <code>ObligationResult</code>
-     * @throws ParsingException  if any issues in parsing DOM
+     * @throws ParsingException if any issues in parsing DOM
      */
     private static List<ObligationResult> parseObligations(Node root) throws ParsingException {
 
@@ -152,12 +149,12 @@ public class Result extends AbstractResult {
         NodeList nodes = root.getChildNodes();
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
-            if (DOMHelper.getLocalName(node).equals("Obligation")){
+            if (DOMHelper.getLocalName(node).equals("Obligation")) {
                 list.add(Obligation.getInstance(node));
             }
         }
 
-        if (list.size() == 0){
+        if (list.size() == 0) {
             throw new ParsingException("ObligationsType must not be empty");
         }
 
@@ -165,10 +162,9 @@ public class Result extends AbstractResult {
     }
 
 
-
     /**
      * Returns the resourceId to which this Result applies, or null if none is specified.
-     * 
+     *
      * @return a resourceId identifier or null
      */
     public String getResourceId() {
@@ -179,16 +175,15 @@ public class Result extends AbstractResult {
      * Sets the resourceId identifier if it has not already been set before. The core code does not
      * set the resourceId identifier, so this is useful if you want to write wrapper code that needs
      * this information.
-     * 
+     *
      * @param resource the resourceId identifier
-     * 
      * @return true if the resourceId identifier was set, false if it already had a value
      */
     public boolean setResource(String resource) {
-        if (this.resourceId != null){
+        if (this.resourceId != null) {
             return false;
         }
-        
+
         this.resourceId = resource;
 
         return true;
@@ -197,7 +192,7 @@ public class Result extends AbstractResult {
     @Override
     public void encode(StringBuilder builder) {
 
-        if (resourceId == null){
+        if (resourceId == null) {
             builder.append("<Result>");
         } else {
             builder.append("<Result ResourceId=\"").append(resourceId).append("\">");
@@ -207,7 +202,7 @@ public class Result extends AbstractResult {
         builder.append("<Decision>").append(DECISIONS[decision]).append("</Decision>");
 
         // encode the status
-        if (status != null){
+        if (status != null) {
             status.encode(builder);
         }
 

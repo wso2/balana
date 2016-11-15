@@ -66,7 +66,7 @@ public class DenyOverridesPolicyAlg extends PolicyCombiningAlgorithm {
     public DenyOverridesPolicyAlg() {
         super(identifierURI);
 
-        if (earlyException != null){
+        if (earlyException != null) {
             throw earlyException;
         }
     }
@@ -83,11 +83,10 @@ public class DenyOverridesPolicyAlg extends PolicyCombiningAlgorithm {
     /**
      * Applies the combining rule to the set of policies based on the evaluation context.
      *
-     * @param context the context from the request
-     * @param parameters a (possibly empty) non-null <code>List</code> of
-     *            <code>CombinerParameter<code>s
+     * @param context        the context from the request
+     * @param parameters     a (possibly empty) non-null <code>List</code> of
+     *                       <code>CombinerParameter<code>s
      * @param policyElements the policies to combine
-     *
      * @return the result of running the combining algorithm
      */
     public AbstractResult combine(EvaluationCtx context, List parameters, List policyElements) {
@@ -100,7 +99,7 @@ public class DenyOverridesPolicyAlg extends PolicyCombiningAlgorithm {
         AbstractResult firstIndeterminateResultP = null;
         AbstractResult firstIndeterminateResultDP = null;
         List<ObligationResult> permitObligations = new ArrayList<ObligationResult>();
-        List<Advice> permitAdvices= new ArrayList<Advice>();
+        List<Advice> permitAdvices = new ArrayList<Advice>();
         Iterator it = policyElements.iterator();
 
 
@@ -109,7 +108,7 @@ public class DenyOverridesPolicyAlg extends PolicyCombiningAlgorithm {
             // make sure that the policy matches the context
             MatchResult match = policy.match(context);
 
-            if (match.getResult() == MatchResult.INDETERMINATE){ //TODO  do we really want this?ve need to check match if...
+            if (match.getResult() == MatchResult.INDETERMINATE) { //TODO  do we really want this?ve need to check match if...
                 return ResultFactory.getFactory().getResult(AbstractResult.DECISION_DENY, context);
             }
 
@@ -120,17 +119,17 @@ public class DenyOverridesPolicyAlg extends PolicyCombiningAlgorithm {
 
                 // if there was a value of DENY, then regardless of what else
                 // we've seen, we always return DENY
-                if (value == AbstractResult.DECISION_DENY){
+                if (value == AbstractResult.DECISION_DENY) {
                     return result;
                 }
 
-                if(value == AbstractResult.DECISION_NOT_APPLICABLE){
+                if (value == AbstractResult.DECISION_NOT_APPLICABLE) {
                     continue;
                 }
 
                 // keep track of whether we had at least one rule that
                 // actually pertained to the request
-                if (value == AbstractResult.DECISION_PERMIT){
+                if (value == AbstractResult.DECISION_PERMIT) {
 
                     atLeastOnePermit = true;
                     permitAdvices.addAll(result.getAdvices());
@@ -139,25 +138,25 @@ public class DenyOverridesPolicyAlg extends PolicyCombiningAlgorithm {
                 } else {
 
                     // if it was INDETERMINATE, check extended results
-                    if (value == AbstractResult.DECISION_INDETERMINATE_DENY){
+                    if (value == AbstractResult.DECISION_INDETERMINATE_DENY) {
                         atLeastOneErrorD = true;
                         // there are no rules about what to do if multiple cases
                         // cause errors, so we'll just return the first one
-                        if(firstIndeterminateResultD == null){
+                        if (firstIndeterminateResultD == null) {
                             firstIndeterminateResultD = result;
                         }
-                    } else if (value== AbstractResult.DECISION_INDETERMINATE_PERMIT){
+                    } else if (value == AbstractResult.DECISION_INDETERMINATE_PERMIT) {
                         atLeastOneErrorP = true;
                         // there are no rules about what to do if multiple cases
                         // cause errors, so we'll just return the first one
-                        if(firstIndeterminateResultP == null){
+                        if (firstIndeterminateResultP == null) {
                             firstIndeterminateResultP = result;
                         }
-                    } else if(value == AbstractResult.DECISION_INDETERMINATE_DENY_OR_PERMIT){
+                    } else if (value == AbstractResult.DECISION_INDETERMINATE_DENY_OR_PERMIT) {
                         atLeastOneErrorDP = true;
                         // there are no rules about what to do if multiple cases
                         // cause errors, so we'll just return the first one
-                        if(firstIndeterminateResultDP == null){
+                        if (firstIndeterminateResultDP == null) {
                             firstIndeterminateResultDP = result;
                         }
                     }
@@ -165,31 +164,31 @@ public class DenyOverridesPolicyAlg extends PolicyCombiningAlgorithm {
             }
         }
 
-        if(atLeastOneErrorDP){
-            return firstIndeterminateResultDP;    
+        if (atLeastOneErrorDP) {
+            return firstIndeterminateResultDP;
         }
 
-        if (atLeastOneErrorD && (atLeastOneErrorP && atLeastOnePermit)){
+        if (atLeastOneErrorD && (atLeastOneErrorP && atLeastOnePermit)) {
 
             return ResultFactory.getFactory().getResult(AbstractResult.DECISION_INDETERMINATE_DENY_OR_PERMIT,
-                                                   firstIndeterminateResultD.getStatus(), context);
+                    firstIndeterminateResultD.getStatus(), context);
         }
 
-        if(atLeastOneErrorD){
+        if (atLeastOneErrorD) {
             return firstIndeterminateResultD;
         }
 
         if (atLeastOnePermit) {
             return ResultFactory.getFactory().getResult(AbstractResult.DECISION_PERMIT,
-                                                        permitObligations, permitAdvices, context);
+                    permitObligations, permitAdvices, context);
         }
 
-        if (atLeastOneErrorP){
+        if (atLeastOneErrorP) {
             return firstIndeterminateResultP;
         }
         // if we hit this point, then none of the rules actually applied
         // to us, so we return NOT_APPLICABLE
-        return ResultFactory.getFactory().getResult(AbstractResult.DECISION_NOT_APPLICABLE, context);        
+        return ResultFactory.getFactory().getResult(AbstractResult.DECISION_NOT_APPLICABLE, context);
     }
 
 }

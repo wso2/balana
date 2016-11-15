@@ -28,18 +28,18 @@ import java.io.ByteArrayInputStream;
 
 /**
  * This class is created for patch provided in IDENTITY-416
- *
+ * <p>
  * XML parsing via DOM API the method node.getLocalName() or getNodeName() is used. But not all parsed
  * nodes are elements or attribute. to support namespaces  it is needed to either access via node.getLocalName()
  * or DOMHelper.getLocalName(node) depending on the node type.
  */
 public class DOMHelper {
 
-	public static String getLocalName(Node child) {
+    public static String getLocalName(Node child) {
 
-		String localName = child.getLocalName();
-		if (localName == null) return child.getNodeName();
-		return localName;
+        String localName = child.getLocalName();
+        if (localName == null) return child.getNodeName();
+        return localName;
 
-	}
+    }
 }

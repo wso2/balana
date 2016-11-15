@@ -45,9 +45,9 @@ import org.w3c.dom.Node;
 
 /**
  * A proxy class that is provided mainly for the run-time configuration code to use.
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
 public class IPAddressAttributeProxy extends AbstractAttributeProxy {
 

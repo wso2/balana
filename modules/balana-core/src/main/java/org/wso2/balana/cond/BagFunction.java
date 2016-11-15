@@ -58,9 +58,9 @@ import java.util.Set;
 /**
  * Represents all of the Bag functions, though the actual implementations are in two sub-classes
  * specific to the condition and general bag functions.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public abstract class BagFunction extends FunctionBase {
 
@@ -93,49 +93,81 @@ public abstract class BagFunction extends FunctionBase {
     public static final String NAME_BASE_BAG = "-bag";
 
     // bag parameter info for the functions that accept multiple args
-    private static final boolean bagParams[] = { false, true };
+    private static final boolean bagParams[] = {false, true};
 
     /**
      * A complete list of all the XACML 1.x datatypes supported by the Bag functions
      */
-    protected static String baseTypes[] = { StringAttribute.identifier,
+    protected static String baseTypes[] = {StringAttribute.identifier,
             BooleanAttribute.identifier, IntegerAttribute.identifier, DoubleAttribute.identifier,
             DateAttribute.identifier, DateTimeAttribute.identifier, TimeAttribute.identifier,
             AnyURIAttribute.identifier, HexBinaryAttribute.identifier,
             Base64BinaryAttribute.identifier, DayTimeDurationAttribute.identifier,
             YearMonthDurationAttribute.identifier, X500NameAttribute.identifier,
-            RFC822NameAttribute.identifier };
+            RFC822NameAttribute.identifier};
 
     /**
      * A complete list of all the XACML 2.0 datatypes newly supported by the Bag functions
      */
-    protected static String baseTypes2[] = { IPAddressAttribute.identifier,
-            DNSNameAttribute.identifier };
+    protected static String baseTypes2[] = {IPAddressAttribute.identifier,
+            DNSNameAttribute.identifier};
 
     /**
      * A complete list of all the 1.x XACML datatypes supported by the Bag functions, using the
      * "simple" form of the names (eg, string instead of http://www.w3.org/2001/XMLSchema#string)
      */
-    protected static String simpleTypes[] = { "string", "boolean", "integer", "double", "date",
+    protected static String simpleTypes[] = {"string", "boolean", "integer", "double", "date",
             "dateTime", "time", "anyURI", "hexBinary", "base64Binary", "dayTimeDuration",
-            "yearMonthDuration", "x500Name", "rfc822Name" };
+            "yearMonthDuration", "x500Name", "rfc822Name"};
 
     /**
      * A complete list of all the 2.0 XACML datatypes newly supported by the Bag functions, using
      * the "simple" form of the names (eg, string instead of
      * http://www.w3.org/2001/XMLSchema#string)
      */
-    protected static String simpleTypes2[] = { "ipAddress", "dnsName" };
+    protected static String simpleTypes2[] = {"ipAddress", "dnsName"};
+
+    /**
+     * Protected constuctor used by the general and condition subclasses to create a non-boolean
+     * function with parameters of the same datatype. If you need to create a new
+     * <code>BagFunction</code> instance you should either use one of the <code>getInstance</code>
+     * methods or construct one of the sub-classes directly.
+     *
+     * @param functionName the identitifer for the function
+     * @param functionId   an optional, internal numeric identifier
+     * @param paramType    the datatype this function accepts
+     * @param paramIsBag   whether the parameters are bags
+     * @param numParams    number of parameters allowed or -1 for any number
+     * @param returnType   the datatype this function returns
+     * @param returnsBag   whether this function returns bags
+     */
+    protected BagFunction(String functionName, int functionId, String paramType,
+                          boolean paramIsBag, int numParams, String returnType, boolean returnsBag) {
+        super(functionName, functionId, paramType, paramIsBag, numParams, returnType, returnsBag);
+    }
+
+    /**
+     * Protected constuctor used by the general and condition subclasses to create a boolean
+     * function with parameters of different datatypes. If you need to create a new
+     * <code>BagFunction</code> instance you should either use one of the <code>getInstance</code>
+     * methods or construct one of the sub-classes directly.
+     *
+     * @param functionName the identitifer for the function
+     * @param functionId   an optional, internal numeric identifier
+     * @param paramTypes   the datatype of each parameter
+     */
+    protected BagFunction(String functionName, int functionId, String[] paramTypes) {
+        super(functionName, functionId, paramTypes, bagParams, BooleanAttribute.identifier, false);
+    }
 
     /**
      * Returns a new <code>BagFunction</code> that provides the type-one-and-only functionality over
      * the given attribute type. This should be used to create new function instances for any new
      * attribute types, and the resulting object should be put into the <code>FunctionFactory</code>
      * (instances already exist in the factory for the standard attribute types).
-     * 
+     *
      * @param functionName the name to use for the function
      * @param argumentType the type to operate on
-     * 
      * @return a new <code>BagFunction</code>
      */
     public static BagFunction getOneAndOnlyInstance(String functionName, String argumentType) {
@@ -147,10 +179,9 @@ public abstract class BagFunction extends FunctionBase {
      * given attribute type. This should be used to create new function instances for any new
      * attribute types, and the resulting object should be put into the <code>FunctionFactory</code>
      * (instances already exist in the factory for the standard attribute types).
-     * 
+     *
      * @param functionName the name to use for the function
      * @param argumentType the type to operate on
-     * 
      * @return a new <code>BagFunction</code>
      */
     public static BagFunction getBagSizeInstance(String functionName, String argumentType) {
@@ -162,10 +193,9 @@ public abstract class BagFunction extends FunctionBase {
      * given attribute type. This should be used to create new function instances for any new
      * attribute types, and the resulting object should be put into the <code>FunctionFactory</code>
      * (instances already exist in the factory for the standard attribute types).
-     * 
+     *
      * @param functionName the name to use for the function
      * @param argumentType the type to operate on
-     * 
      * @return a new <code>BagFunction</code>
      */
     public static BagFunction getIsInInstance(String functionName, String argumentType) {
@@ -177,10 +207,9 @@ public abstract class BagFunction extends FunctionBase {
      * given attribute type. This should be used to create new function instances for any new
      * attribute types, and the resulting object should be put into the <code>FunctionFactory</code>
      * (instances already exist in the factory for the standard attribute types).
-     * 
+     *
      * @param functionName the name to use for the function
      * @param argumentType the type to operate on
-     * 
      * @return a new <code>BagFunction</code>
      */
     public static BagFunction getBagInstance(String functionName, String argumentType) {
@@ -188,41 +217,8 @@ public abstract class BagFunction extends FunctionBase {
     }
 
     /**
-     * Protected constuctor used by the general and condition subclasses to create a non-boolean
-     * function with parameters of the same datatype. If you need to create a new
-     * <code>BagFunction</code> instance you should either use one of the <code>getInstance</code>
-     * methods or construct one of the sub-classes directly.
-     * 
-     * @param functionName the identitifer for the function
-     * @param functionId an optional, internal numeric identifier
-     * @param paramType the datatype this function accepts
-     * @param paramIsBag whether the parameters are bags
-     * @param numParams number of parameters allowed or -1 for any number
-     * @param returnType the datatype this function returns
-     * @param returnsBag whether this function returns bags
-     */
-    protected BagFunction(String functionName, int functionId, String paramType,
-            boolean paramIsBag, int numParams, String returnType, boolean returnsBag) {
-        super(functionName, functionId, paramType, paramIsBag, numParams, returnType, returnsBag);
-    }
-
-    /**
-     * Protected constuctor used by the general and condition subclasses to create a boolean
-     * function with parameters of different datatypes. If you need to create a new
-     * <code>BagFunction</code> instance you should either use one of the <code>getInstance</code>
-     * methods or construct one of the sub-classes directly.
-     * 
-     * @param functionName the identitifer for the function
-     * @param functionId an optional, internal numeric identifier
-     * @param paramTypes the datatype of each parameter
-     */
-    protected BagFunction(String functionName, int functionId, String[] paramTypes) {
-        super(functionName, functionId, paramTypes, bagParams, BooleanAttribute.identifier, false);
-    }
-
-    /**
      * Returns a <code>Set</code> containing all the function identifiers supported by this class.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public static Set getSupportedIdentifiers() {

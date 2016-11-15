@@ -26,7 +26,6 @@ import java.net.URI;
  * Represents ObligationType in the XACML 2.0 and  ObligationExpressionType in the XACML 2.0
  * policy schema. AbstractObligation class has been written to provide a unique interface for
  * both XACML 2.0 and XACML 3.0
- * 
  */
 public abstract class AbstractObligation {
 
@@ -36,15 +35,15 @@ public abstract class AbstractObligation {
     protected URI obligationId;
 
     /**
-     * effect that will cause this obligation to be included in a response 
+     * effect that will cause this obligation to be included in a response
      */
     protected int fulfillOn;
 
     /**
      * Evaluates obligation and creates the results
      *
-     * @param ctx  <code>EvaluationCtx</code>
-     * @return  <code>ObligationResult</code>
+     * @param ctx <code>EvaluationCtx</code>
+     * @return <code>ObligationResult</code>
      */
     public abstract ObligationResult evaluate(EvaluationCtx ctx);
 
@@ -53,7 +52,7 @@ public abstract class AbstractObligation {
      *
      * @return the fulfillOn effect
      */
-    public int getFulfillOn(){
+    public int getFulfillOn() {
         return fulfillOn;
     }
 

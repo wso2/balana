@@ -30,27 +30,10 @@ public class TargetFactory {
     private static volatile TargetFactory factoryInstance;
 
     /**
-     * Returns AbstractTarget based one the XACML version
-     *
-     * @param node  DOM node
-     * @param metaData policy meta data
-     * @return  <code>AbstractTarget</code>
-     * @throws ParsingException
-     */
-    public AbstractTarget getTarget(Node node, PolicyMetaData metaData) throws ParsingException {
-
-        if(XACMLConstants.XACML_VERSION_3_0 == metaData.getXACMLVersion()){
-            return org.wso2.balana.xacml3.Target.getInstance(node, metaData);
-        } else {
-            return org.wso2.balana.xacml2.Target.getInstance(node, metaData);
-        }
-    }
-
-    /**
      * Returns an instance of this factory. This method enforces a singleton model, meaning that
      * this always returns the same instance, creating the factory if it hasn't been requested
      * before.
-    *
+     *
      * @return the factory instance
      */
     public static TargetFactory getFactory() {
@@ -63,5 +46,22 @@ public class TargetFactory {
         }
 
         return factoryInstance;
+    }
+
+    /**
+     * Returns AbstractTarget based one the XACML version
+     *
+     * @param node     DOM node
+     * @param metaData policy meta data
+     * @return <code>AbstractTarget</code>
+     * @throws ParsingException
+     */
+    public AbstractTarget getTarget(Node node, PolicyMetaData metaData) throws ParsingException {
+
+        if (XACMLConstants.XACML_VERSION_3_0 == metaData.getXACMLVersion()) {
+            return org.wso2.balana.xacml3.Target.getInstance(node, metaData);
+        } else {
+            return org.wso2.balana.xacml2.Target.getInstance(node, metaData);
+        }
     }
 }

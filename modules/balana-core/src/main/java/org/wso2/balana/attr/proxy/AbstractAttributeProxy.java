@@ -31,16 +31,14 @@ public abstract class AbstractAttributeProxy implements AttributeProxy {
      * Tries to create a new <code>AttributeValue</code> based on the given String data.
      *
      * @param value the text form of some attribute data
-     *
      * @return an <code>AttributeValue</code> representing the given data
-     *
      * @throws Exception if the data couldn't be used (the exception is typically wrapping some
-     *             other exception)
+     *                   other exception)
      */
     public abstract AttributeValue getInstance(String value) throws Exception;
 
     public AttributeValue getInstance(String value, String[] params) throws Exception {
-        if(params == null || params.length < 1){
+        if (params == null || params.length < 1) {
             return getInstance(value);
         } else {
             throw new Exception("Invalid method is called.");

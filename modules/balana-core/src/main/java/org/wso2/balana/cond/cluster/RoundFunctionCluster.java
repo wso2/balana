@@ -44,9 +44,9 @@ import java.util.Set;
 
 /**
  * Clusters all the functions supported by <code>RoundFunction</code>.
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public class RoundFunctionCluster implements FunctionCluster {
 

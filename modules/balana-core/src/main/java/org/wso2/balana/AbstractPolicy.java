@@ -65,49 +65,40 @@ import org.wso2.balana.xacml3.ObligationExpression;
 /**
  * Represents an instance of an XACML policy.
  *
- * @since 1.0
  * @author Seth Proctor
  * @author Marco Barreno
+ * @since 1.0
  */
-public abstract class AbstractPolicy  implements PolicyTreeElement{
+public abstract class AbstractPolicy implements PolicyTreeElement {
 
+    // the logger we'll use for all messages
+    private static Log logger = LogFactory.getLog(AbstractPolicy.class);
+    // the meta-data associated with this policy
+    protected PolicyMetaData metaData;
     // attributes associated with this policy
     private URI idAttr;
     private String version;
     private CombiningAlgorithm combiningAlg;
-
     // the elements in the policy
     private String description;
     private AbstractTarget target;
-
     // the value in defaults, or null if there was no default value
     private String defaultVersion;
-
-    // the meta-data associated with this policy
-    protected PolicyMetaData metaData;
-
     // the child elements under this policy represented simply as the
     // PolicyTreeElements...
     private List<PolicyTreeElement> children;
     // ...or the CombinerElements that are passed to combining algorithms
     private List<CombinerElement> childElements;
-
     // any obligations held by this policy
     private Set<AbstractObligation> obligationExpressions;
-
     // any advice expressions held by this policy
     private Set<AdviceExpression> adviceExpressions;
-
     // the list of combiner parameters
     private List<CombinerParameter> parameters;
-
     private String subjectPolicyValue;
     private String resourcePolicyValue;
     private String actionPolicyValue;
     private String envPolicyValue;
-
-    // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(AbstractPolicy.class);
 
     /**
      * Constructor used by <code>PolicyReference</code>, which supplies its own values for the
@@ -120,53 +111,53 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
     /**
      * Constructor used to create a policy from concrete components.
      *
-     * @param id the policy id
-     * @param version the policy version or null for the default (this is always null for pre-2.0
-     *            policies)
+     * @param id           the policy id
+     * @param version      the policy version or null for the default (this is always null for pre-2.0
+     *                     policies)
      * @param combiningAlg the combining algorithm to use
-     * @param description describes the policy or null if there is none
-     * @param target the policy's target
+     * @param description  describes the policy or null if there is none
+     * @param target       the policy's target
      */
     protected AbstractPolicy(URI id, String version, CombiningAlgorithm combiningAlg,
-            String description, AbstractTarget target) {
+                             String description, AbstractTarget target) {
         this(id, version, combiningAlg, description, target, null);
     }
 
     /**
      * Constructor used to create a policy from concrete components.
      *
-     * @param id the policy id
-     * @param version the policy version or null for the default (this is always null for pre-2.0
-     *            policies)
-     * @param combiningAlg the combining algorithm to use
-     * @param description describes the policy or null if there is none
-     * @param target the policy's target
+     * @param id             the policy id
+     * @param version        the policy version or null for the default (this is always null for pre-2.0
+     *                       policies)
+     * @param combiningAlg   the combining algorithm to use
+     * @param description    describes the policy or null if there is none
+     * @param target         the policy's target
      * @param defaultVersion the XPath version to use for selectors
      */
     protected AbstractPolicy(URI id, String version, CombiningAlgorithm combiningAlg,
-            String description, AbstractTarget target, String defaultVersion) {
+                             String description, AbstractTarget target, String defaultVersion) {
         this(id, version, combiningAlg, description, target, defaultVersion, null, null, null);
     }
 
     /**
      * Constructor used to create a policy from concrete components.
      *
-     * @param id the policy id
-     * @param version the policy version or null for the default (this is always null for pre-2.0
-     *            policies)
-     * @param combiningAlg the combining algorithm to use
-     * @param description describes the policy or null if there is none
-     * @param target the policy's target
-     * @param defaultVersion the XPath version to use for selectors
+     * @param id                    the policy id
+     * @param version               the policy version or null for the default (this is always null for pre-2.0
+     *                              policies)
+     * @param combiningAlg          the combining algorithm to use
+     * @param description           describes the policy or null if there is none
+     * @param target                the policy's target
+     * @param defaultVersion        the XPath version to use for selectors
      * @param obligationExpressions the policy's ObligationExpressions
-     * @param adviceExpressions the policy's advice expressions
-     * @param parameters the policy's parameters
+     * @param adviceExpressions     the policy's advice expressions
+     * @param parameters            the policy's parameters
      */
     protected AbstractPolicy(URI id, String version, CombiningAlgorithm combiningAlg,
-            String description, AbstractTarget target, String defaultVersion,
-            Set<AbstractObligation> obligationExpressions, Set<AdviceExpression> adviceExpressions,
-            List<CombinerParameter> parameters) {
-        
+                             String description, AbstractTarget target, String defaultVersion,
+                             Set<AbstractObligation> obligationExpressions, Set<AdviceExpression> adviceExpressions,
+                             List<CombinerParameter> parameters) {
+
         idAttr = id;
         this.combiningAlg = combiningAlg;
         this.description = description;
@@ -185,13 +176,13 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
             this.obligationExpressions = new HashSet<AbstractObligation>();
         else
             this.obligationExpressions = Collections.
-                        unmodifiableSet(new HashSet<AbstractObligation>(obligationExpressions));
+                    unmodifiableSet(new HashSet<AbstractObligation>(obligationExpressions));
 
-        if(adviceExpressions == null){
+        if (adviceExpressions == null) {
             this.adviceExpressions = new HashSet<AdviceExpression>();
         } else {
             this.adviceExpressions = Collections.
-                        unmodifiableSet(new HashSet<AdviceExpression>(adviceExpressions));
+                    unmodifiableSet(new HashSet<AdviceExpression>(adviceExpressions));
         }
 
         if (parameters == null)
@@ -203,10 +194,10 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
     /**
      * Constructor used by child classes to initialize the shared data from a DOM root node.
      *
-     * @param root the DOM root of the policy
-     * @param policyPrefix either "Policy" or "PolicySet"
+     * @param root          the DOM root of the policy
+     * @param policyPrefix  either "Policy" or "PolicySet"
      * @param combiningName name of the field naming the combining alg
-     * the XACML policy, if null use default factories
+     *                      the XACML policy, if null use default factories
      * @throws ParsingException if the policy is invalid
      */
     protected AbstractPolicy(Node root, String policyPrefix, String combiningName)
@@ -261,7 +252,7 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
         }
 
         // with the defaults read, create the meta-data
-        metaData = new PolicyMetaData(root.getNamespaceURI(), defaultVersion);        
+        metaData = new PolicyMetaData(root.getNamespaceURI(), defaultVersion);
 
         // now read the remaining policy elements
         obligationExpressions = new HashSet<AbstractObligation>();
@@ -274,7 +265,7 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
             String cname = DOMHelper.getLocalName(child);
 
             if (cname.equals("Description")) {
-                if (child.hasChildNodes()){
+                if (child.hasChildNodes()) {
                     description = child.getFirstChild().getNodeValue();
                 }
             } else if (cname.equals("Target")) {
@@ -329,7 +320,7 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
     /**
      * Helper routine to parse the obligation data
      *
-     * @param root  root node of ObligationExpression
+     * @param root root node of ObligationExpression
      * @throws ParsingException if error while parsing node
      */
     private void parseObligationExpressions(Node root) throws ParsingException {
@@ -338,9 +329,9 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
             if (DOMHelper.getLocalName(node).equals("ObligationExpression") ||
-                                DOMHelper.getLocalName(node).equals("Obligation")){
+                    DOMHelper.getLocalName(node).equals("Obligation")) {
                 AbstractObligation obligation = ObligationFactory.getFactory().
-                                                                getObligation(node, metaData);
+                        getObligation(node, metaData);
                 obligationExpressions.add(obligation);
             }
         }
@@ -349,7 +340,7 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
     /**
      * Helper routine to parse the Advice Expression data
      *
-     * @param root  root node of AdviceExpressions
+     * @param root root node of AdviceExpressions
      * @throws ParsingException if error while parsing node
      */
     private void parseAdviceExpressions(Node root) throws ParsingException {
@@ -366,6 +357,7 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
      * There used to be multiple things in the defaults type, but now there's just the one string
      * that must be a certain value, so it doesn't seem all that useful to have a class for
      * this...we could always bring it back, however, if it started to do more
+     *
      * @param root
      * @throws ParsingException
      */
@@ -375,7 +367,7 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
 
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
-            if (DOMHelper.getLocalName(node).equals("XPathVersion")){
+            if (DOMHelper.getLocalName(node).equals("XPathVersion")) {
                 defaultVersion = node.getFirstChild().getNodeValue();
             }
         }
@@ -383,6 +375,7 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
 
     /**
      * Handles all the CombinerParameters in the policy or policy set
+     *
      * @param root
      * @throws ParsingException
      */
@@ -391,7 +384,7 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
 
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
-            if (DOMHelper.getLocalName(node).equals("CombinerParameter")){
+            if (DOMHelper.getLocalName(node).equals("CombinerParameter")) {
                 parameters.add(CombinerParameter.getInstance(node));
             }
         }
@@ -474,6 +467,34 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
     }
 
     /**
+     * Sets the child policy tree elements for this node, which are passed to the combining
+     * algorithm on evaluation. The <code>List</code> must contain <code>CombinerElement</code>s,
+     * which in turn will contain <code>Rule</code>s or <code>AbstractPolicy</code>s, but may not
+     * contain both types of elements.
+     *
+     * @param children a <code>List</code> of <code>CombinerElement</code>s representing the child
+     *                 elements used by the combining algorithm
+     */
+    protected void setChildren(List<CombinerElement> children) {
+        // we always want a concrete list, since we're going to pass it to
+        // a combiner that expects a non-null input
+        if (children == null) {
+            this.children = new ArrayList<PolicyTreeElement>();
+        } else {
+            // NOTE: since this is only getting called by known child
+            // classes we don't check that the types are all the same
+            List<PolicyTreeElement> list = new ArrayList<PolicyTreeElement>();
+
+            for (CombinerElement aChildren : children) {
+                list.add(aChildren.getElement());
+            }
+
+            this.children = Collections.unmodifiableList(list);
+            childElements = Collections.unmodifiableList(children);
+        }
+    }
+
+    /**
      * Returns the <code>List</code> of <code>CombinerElement</code>s that is provided to the
      * combining algorithm. This returns the same set of children that <code>getChildren</code>
      * provides along with any associated combiner parameters.
@@ -516,39 +537,10 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
      * request.
      *
      * @param context the representation of the request
-     *
      * @return the result of trying to match the policy and the request
      */
     public MatchResult match(EvaluationCtx context) {
         return target.match(context);
-    }
-
-    /**
-     * Sets the child policy tree elements for this node, which are passed to the combining
-     * algorithm on evaluation. The <code>List</code> must contain <code>CombinerElement</code>s,
-     * which in turn will contain <code>Rule</code>s or <code>AbstractPolicy</code>s, but may not
-     * contain both types of elements.
-     *
-     * @param children a <code>List</code> of <code>CombinerElement</code>s representing the child
-     *            elements used by the combining algorithm
-     */
-    protected void setChildren(List<CombinerElement> children) {
-        // we always want a concrete list, since we're going to pass it to
-        // a combiner that expects a non-null input
-        if (children == null) {
-            this.children = new ArrayList<PolicyTreeElement>();
-        } else {
-            // NOTE: since this is only getting called by known child
-            // classes we don't check that the types are all the same
-            List<PolicyTreeElement> list = new ArrayList<PolicyTreeElement>();
-
-            for (CombinerElement aChildren : children) {
-                list.add(aChildren.getElement());
-            }
-
-            this.children = Collections.unmodifiableList(list);
-            childElements = Collections.unmodifiableList(children);
-        }
     }
 
     /**
@@ -557,16 +549,15 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
      * MATCH, before this method is called.
      *
      * @param context the representation of the request
-     *
      * @return the result of evaluation
      */
     public AbstractResult evaluate(EvaluationCtx context) {
-        
+
         // evaluate
         AbstractResult result = combiningAlg.combine(context, parameters, childElements);
 
         // if we have no obligation expressions or advice expressions, we're done
-        if (obligationExpressions.size() < 1 && adviceExpressions.size() < 1){
+        if (obligationExpressions.size() < 1 && adviceExpressions.size() < 1) {
             return result;
         }
 
@@ -578,7 +569,7 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
             // we didn't permit/deny, so we never return obligations
             return result;
         }
-        
+
         // if any obligations or advices are defined, evaluates them and return
         processObligationAndAdvices(context, effect, result);
         return result;
@@ -589,25 +580,25 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
      * helper method to evaluate the obligations and advice expressions
      *
      * @param evaluationCtx context of a single policy evaluation
-     * @param effect policy effect
-     * @param result result of combining algorithm
+     * @param effect        policy effect
+     * @param result        result of combining algorithm
      */
-    private void processObligationAndAdvices(EvaluationCtx evaluationCtx, int effect, AbstractResult result){
+    private void processObligationAndAdvices(EvaluationCtx evaluationCtx, int effect, AbstractResult result) {
 
-        if(obligationExpressions != null && obligationExpressions.size() > 0){
-            Set<ObligationResult>  results = new HashSet<ObligationResult>();
-            for(AbstractObligation obligationExpression : obligationExpressions){
-                if(obligationExpression.getFulfillOn() == effect) {
+        if (obligationExpressions != null && obligationExpressions.size() > 0) {
+            Set<ObligationResult> results = new HashSet<ObligationResult>();
+            for (AbstractObligation obligationExpression : obligationExpressions) {
+                if (obligationExpression.getFulfillOn() == effect) {
                     results.add(obligationExpression.evaluate(evaluationCtx));
                 }
             }
             result.getObligations().addAll(results);
         }
 
-        if(adviceExpressions != null && adviceExpressions.size() > 0){
-            Set<Advice>  advices = new HashSet<Advice>();
-            for(AdviceExpression adviceExpression : adviceExpressions){
-                if(adviceExpression.getAppliesTo() == effect) {
+        if (adviceExpressions != null && adviceExpressions.size() > 0) {
+            Set<Advice> advices = new HashSet<Advice>();
+            for (AdviceExpression adviceExpression : adviceExpressions) {
+                if (adviceExpression.getAppliesTo() == effect) {
                     advices.add(adviceExpression.evaluate(evaluationCtx));
                 }
             }
@@ -630,7 +621,7 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
 
         if (obligationExpressions != null && obligationExpressions.size() != 0) {
 
-            if(metaData.getXACMLVersion() == XACMLConstants.XACML_VERSION_3_0){
+            if (metaData.getXACMLVersion() == XACMLConstants.XACML_VERSION_3_0) {
                 builder.append("<Obligations>\n");
             } else {
                 builder.append("<ObligationExpressions>\n");
@@ -640,7 +631,7 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
                 obligationExpression.encode(builder);
             }
 
-            if(metaData.getXACMLVersion() == XACMLConstants.XACML_VERSION_3_0){
+            if (metaData.getXACMLVersion() == XACMLConstants.XACML_VERSION_3_0) {
                 builder.append("</Obligations>\n");
             } else {
                 builder.append("</ObligationExpressions>\n");

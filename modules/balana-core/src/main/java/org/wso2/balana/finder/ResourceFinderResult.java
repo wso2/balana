@@ -48,9 +48,9 @@ import java.util.Set;
  * returns an empty set, since it will always contain at least the original parent resource. This
  * class will provide two sets of identifiers: those that were successfully resolved and those that
  * had an error.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class ResourceFinderResult {
 
@@ -76,7 +76,7 @@ public class ResourceFinderResult {
      * Creates a result containing the given <code>Set</code> of resource identifiers. The
      * <code>Set</code>must not be null. The new <code>ResourceFinderResult</code> represents a
      * resource retrieval that encountered no errors.
-     * 
+     *
      * @param resources a non-null <code>Set</code> of <code>AttributeValue</code>s
      */
     public ResourceFinderResult(Set<AttributeValue> resources) {
@@ -89,9 +89,9 @@ public class ResourceFinderResult {
      * the resources that could not be resolved, and they map to a <code>Status</code> object
      * explaining the error. The new <code>ResourceFinderResult</code> represents a resource
      * retrieval that did not succeed in finding any resource identifiers.
-     * 
+     *
      * @param failures a non-null <code>Map</code> mapping failed <code>AttributeValue</code>
-     *            identifiers to their <code>Status</code>
+     *                 identifiers to their <code>Status</code>
      */
     public ResourceFinderResult(HashMap failures) {
         this(new HashSet(), failures);
@@ -100,10 +100,10 @@ public class ResourceFinderResult {
     /**
      * Creates a new result containing both successfully resolved Resource Ids and resources that
      * caused errors.
-     * 
+     *
      * @param resources a non-null <code>Set</code> of <code>AttributeValue</code>s
-     * @param failures a non-null <code>Map</code> mapping failed <code>AttributeValue</code>
-     *            identifiers to their <code>Status</code>
+     * @param failures  a non-null <code>Map</code> mapping failed <code>AttributeValue</code>
+     *                  identifiers to their <code>Status</code>
      */
     public ResourceFinderResult(Set resources, Map failures) {
         this.resources = Collections.unmodifiableSet(new HashSet<AttributeValue>(resources));
@@ -115,7 +115,7 @@ public class ResourceFinderResult {
      * Returns whether or not this result contains any Resource Id listings. This will return false
      * if either the set of successfully resolved resource identifiers or the map of failed
      * resources is not empty.
-     * 
+     *
      * @return false if this result names any resources, otherwise true
      */
     public boolean isEmpty() {
@@ -125,7 +125,7 @@ public class ResourceFinderResult {
     /**
      * Returns the <code>Set</code> of successfully resolved Resource Id <code>AttributeValue</code>
      * s, which will be empty if no resources were successfully resolved.
-     * 
+     *
      * @return a <code>Set</code> of <code>AttributeValue</code>s
      */
     public Set<AttributeValue> getResources() {
@@ -135,7 +135,7 @@ public class ResourceFinderResult {
     /**
      * Returns the <code>Map</code> of Resource Ids that caused an error on resolution, which will
      * be empty if no resources caused any error.
-     * 
+     *
      * @return a <code>Map</code> of <code>AttributeValue</code>s to <code>Status</code>
      */
     public Map getFailures() {

@@ -31,21 +31,11 @@ public class AttributeDesignatorFactory {
 
     private static volatile AttributeDesignatorFactory factoryInstance;
 
-    public AbstractDesignator getAbstractDesignator(Node root, PolicyMetaData metaData)
-                                                                        throws ParsingException {
-
-        if(metaData.getXACMLVersion() == XACMLConstants.XACML_VERSION_3_0){
-            return AttributeDesignator.getInstance(root);
-        } else {
-            return org.wso2.balana.attr.AttributeDesignator.getInstance(root);
-        }
-    }
-
     /**
      * Returns an instance of this factory. This method enforces a singleton model, meaning that
      * this always returns the same instance, creating the factory if it hasn't been requested
      * before.
-    *
+     *
      * @return the factory instance
      */
     public static AttributeDesignatorFactory getFactory() {
@@ -58,6 +48,16 @@ public class AttributeDesignatorFactory {
         }
 
         return factoryInstance;
+    }
+
+    public AbstractDesignator getAbstractDesignator(Node root, PolicyMetaData metaData)
+            throws ParsingException {
+
+        if (metaData.getXACMLVersion() == XACMLConstants.XACML_VERSION_3_0) {
+            return AttributeDesignator.getInstance(root);
+        } else {
+            return org.wso2.balana.attr.AttributeDesignator.getInstance(root);
+        }
     }
 
 }

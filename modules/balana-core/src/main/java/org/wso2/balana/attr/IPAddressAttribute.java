@@ -52,9 +52,9 @@ import org.w3c.dom.Node;
  * directly, you must use the constructors provided by <code>IPv4AddressAttribute</code> and
  * <code>IPv6AddressAttribute</code>. These will both create an attribute of XACML type ipAddress,
  * but will handle the differences in these two representations correctly.
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
 public abstract class IPAddressAttribute extends AttributeValue {
 
@@ -90,7 +90,9 @@ public abstract class IPAddressAttribute extends AttributeValue {
             earlyException = new IllegalArgumentException();
             earlyException.initCause(e);
         }
-    };
+    }
+
+    ;
 
     // the required address
     private InetAddress address;
@@ -103,9 +105,9 @@ public abstract class IPAddressAttribute extends AttributeValue {
 
     /**
      * Creates the new <code>IPAddressAttribute</code> with all the optional components.
-     * 
-     * @param address a non-null <code>InetAddress</code>
-     * @param mask an <code>InetAddress</code> or null if there is no mask
+     *
+     * @param address   a non-null <code>InetAddress</code>
+     * @param mask      an <code>InetAddress</code> or null if there is no mask
      * @param portRange a non-null <code>PortRange</code>
      */
     protected IPAddressAttribute(InetAddress address, InetAddress mask, PortRange range) {
@@ -123,12 +125,10 @@ public abstract class IPAddressAttribute extends AttributeValue {
     /**
      * Returns a new <code>IPAddressAttribute</code> that represents the name at a particular DOM
      * node.
-     * 
+     *
      * @param root the <code>Node</code> that contains the desired value
-     * 
      * @return a new <code>IPAddressAttribute</code> representing the appropriate value (null if
-     *         there is a parsing error)
-     * 
+     * there is a parsing error)
      * @throws ParsingException if any of the address components is invalid
      */
     public static IPAddressAttribute getInstance(Node root) throws ParsingException {
@@ -138,11 +138,9 @@ public abstract class IPAddressAttribute extends AttributeValue {
     /**
      * Returns a new <code>IPAddressAttribute</code> that represents the name indicated by the
      * <code>String</code> provided.
-     * 
+     *
      * @param value a string representing the address
-     * 
      * @return a new <code>IPAddressAttribute</code>
-     * 
      * @throws ParsingException if any of the address components is invalid
      */
     public static IPAddressAttribute getInstance(String value) throws ParsingException {
@@ -159,7 +157,7 @@ public abstract class IPAddressAttribute extends AttributeValue {
 
     /**
      * Returns the address represented by this object.
-     * 
+     *
      * @return the address
      */
     public InetAddress getAddress() {
@@ -168,7 +166,7 @@ public abstract class IPAddressAttribute extends AttributeValue {
 
     /**
      * Returns the mask represented by this object, or null if there is no mask.
-     * 
+     *
      * @return the mask or null
      */
     public InetAddress getMask() {
@@ -178,7 +176,7 @@ public abstract class IPAddressAttribute extends AttributeValue {
     /**
      * Returns the port range represented by this object which will be unbound if no range was
      * specified.
-     * 
+     *
      * @return the range
      */
     public PortRange getRange() {
@@ -188,9 +186,8 @@ public abstract class IPAddressAttribute extends AttributeValue {
     /**
      * Returns true if the input is an instance of this class and if its value equals the value
      * contained in this class.
-     * 
+     *
      * @param o the object to compare
-     * 
      * @return true if this object and the input represent the same value
      */
     public boolean equals(Object o) {
@@ -222,7 +219,7 @@ public abstract class IPAddressAttribute extends AttributeValue {
     /**
      * Returns the hashcode value used to index and compare this object with others of the same
      * type.
-     * 
+     *
      * @return the object's hashcode value
      */
     public int hashCode() {
@@ -234,7 +231,7 @@ public abstract class IPAddressAttribute extends AttributeValue {
 
     /**
      * Converts to a String representation.
-     * 
+     *
      * @return the String representation
      */
     public String toString() {

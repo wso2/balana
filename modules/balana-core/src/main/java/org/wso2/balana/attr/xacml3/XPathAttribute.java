@@ -61,10 +61,12 @@ public class XPathAttribute extends AttributeValue {
             earlyException = new IllegalArgumentException();
             earlyException.initCause(e);
         }
-    };
+    }
+
+    ;
 
     /**
-     * The actual xpath expression as String value 
+     * The actual xpath expression as String value
      */
     private String value;
 
@@ -76,25 +78,25 @@ public class XPathAttribute extends AttributeValue {
     /**
      * Creates a new <code>XPathAttribute</code> that represents the String value supplied.
      *
-     * @param value the <code>String</code> that represent xpath expression
+     * @param value         the <code>String</code> that represent xpath expression
      * @param xPathCategory the <code>String</code> that represent the namespace context
      */
     public XPathAttribute(String value, String xPathCategory) {
         super(identifierURI);
 
         // Shouldn't happen, but just in case...
-        if (earlyException != null){
+        if (earlyException != null) {
             throw earlyException;
         }
 
-        if (value == null){
+        if (value == null) {
             this.value = "";
         } else {
             this.value = value;
         }
 
-        if(xPathCategory == null){
-            this.xPathCategory = "";    
+        if (xPathCategory == null) {
+            this.xPathCategory = "";
         } else {
             this.xPathCategory = xPathCategory;
         }
@@ -105,14 +107,14 @@ public class XPathAttribute extends AttributeValue {
      *
      * @param root the <code>Node</code> that contains the desired value
      * @return a new <code>XPathAttribute</code> representing the appropriate value (null if there
-     *         is a parsing error)
+     * is a parsing error)
      */
     public static XPathAttribute getInstance(Node root) {
 
         String xPathCategory = null;
 
         NamedNodeMap nodeMap = root.getAttributes();
-        if(nodeMap != null){
+        if (nodeMap != null) {
             Node categoryNode = nodeMap.getNamedItem("XPathCategory");
             xPathCategory = categoryNode.getNodeValue();
         }
@@ -125,7 +127,7 @@ public class XPathAttribute extends AttributeValue {
      * Returns a new <code>XPathAttribute</code> that represents value indicated by
      * the <code>String</code> provided.
      *
-     * @param value a string representing the desired xpath expression value
+     * @param value         a string representing the desired xpath expression value
      * @param xPathCategory a String represents the namespace context
      * @return a new <code>XPathAttribute</code> representing the appropriate value
      */
@@ -156,7 +158,6 @@ public class XPathAttribute extends AttributeValue {
      * contained in this class.
      *
      * @param o the object to compare
-     *
      * @return true if this object and the input represent the same value
      */
     public boolean equals(Object o) {

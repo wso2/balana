@@ -67,31 +67,28 @@ import java.util.Set;
  * OnlyOneApplicable combining algorithm), so any module that is added to this finder will be
  * evaluated each time a policy is requested. This means that you should think carefully about how
  * many modules you include, and how they can cache policy data.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class PolicyFinder {
-
-    /**
-     * all modules in this finder
-     */
-    private Set allModules;
-
-    /**
-     * all the request modules
-     */
-    private Set requestModules;
-
-    /**
-     * all the reference modules
-     */
-    private Set referenceModules;
 
     /**
      * the logger we'll use for all messages
      */
     private static Log logger = LogFactory.getLog(PolicyFinder.class);
+    /**
+     * all modules in this finder
+     */
+    private Set allModules;
+    /**
+     * all the request modules
+     */
+    private Set requestModules;
+    /**
+     * all the reference modules
+     */
+    private Set referenceModules;
 
     /**
      * Default constructor that creates a <code>PDPConfig</code> from components.
@@ -103,7 +100,7 @@ public class PolicyFinder {
     /**
      * Returns the unordered <code>Set</code> of <code>PolicyFinderModule</code>s used by this class
      * to find policies.
-     * 
+     *
      * @return a <code>Set</code> of <code>PolicyFinderModule</code>s
      */
     public Set getModules() {
@@ -113,7 +110,7 @@ public class PolicyFinder {
     /**
      * Sets the unordered <code>Set</code> of <code>PolicyFinderModule</code>s used by this class to
      * find policies.
-     * 
+     *
      * @param modules a <code>Set</code> of <code>PolicyFinderModule</code>s
      */
     public void setModules(Set modules) {
@@ -154,9 +151,8 @@ public class PolicyFinder {
      * Finds a policy based on a request's context. This may involve using the request data as
      * indexing data to lookup a policy. This will always do a Target match to make sure that the
      * given policy applies. If more than one applicable policy is found, this will return an error.
-     * 
+     *
      * @param context the representation of the request data
-     * 
      * @return the result of trying to find an applicable policy
      */
     public PolicyFinderResult findPolicy(EvaluationCtx context) {
@@ -209,20 +205,18 @@ public class PolicyFinder {
      * Finds a policy based on an id reference. This may involve using the reference as indexing
      * data to lookup a policy. This will always do a Target match to make sure that the given
      * policy applies. If more than one applicable policy is found, this will return an error.
-     * 
-     * @param idReference the identifier used to resolve a policy
-     * @param type type of reference (policy or policySet) as identified by the fields in
-     *            <code>PolicyReference</code>
-     * @param constraints any optional constraints on the version of the referenced policy
+     *
+     * @param idReference    the identifier used to resolve a policy
+     * @param type           type of reference (policy or policySet) as identified by the fields in
+     *                       <code>PolicyReference</code>
+     * @param constraints    any optional constraints on the version of the referenced policy
      * @param parentMetaData the meta-data from the parent policy, which provides XACML version,
-     *            factories, etc.
-     * 
+     *                       factories, etc.
      * @return the result of trying to find an applicable policy
-     * 
      * @throws IllegalArgumentException if <code>type</code> is invalid
      */
     public PolicyFinderResult findPolicy(URI idReference, int type, VersionConstraints constraints,
-            PolicyMetaData parentMetaData) throws IllegalArgumentException {
+                                         PolicyMetaData parentMetaData) throws IllegalArgumentException {
         PolicyFinderResult result = null;
         Iterator it = referenceModules.iterator();
 

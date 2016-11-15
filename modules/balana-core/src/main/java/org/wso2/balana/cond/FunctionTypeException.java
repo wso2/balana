@@ -38,9 +38,9 @@ package org.wso2.balana.cond;
 /**
  * Exception that gets thrown if one of the createFunction methods on the
  * <code>FunctionFactory</code> was called, but the other method should have been called instead.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class FunctionTypeException extends Exception {
 
@@ -55,7 +55,7 @@ public class FunctionTypeException extends Exception {
      * Constructs a new <code>FunctionTypeException</code> with a message, but no cause. The message
      * is saved for later retrieval by the {@link java.lang#Throwable.getMessage()
      * Throwable.getMessage()} method.
-     * 
+     *
      * @param message the detail message (<code>null</code> if nonexistent or unknown)
      */
     public FunctionTypeException(String message) {
@@ -66,7 +66,7 @@ public class FunctionTypeException extends Exception {
      * Constructs a new <code>FunctionTypeException</code> with a cause, but no message. The cause
      * is saved for later retrieval by the {@link java.lang#Throwable.getCause()
      * Throwable.getCause()} method.
-     * 
+     *
      * @param cause the cause (<code>null</code> if nonexistent or unknown)
      */
     public FunctionTypeException(Throwable cause) {
@@ -78,9 +78,9 @@ public class FunctionTypeException extends Exception {
      * and cause are saved for later retrieval by the {@link java.lang#Throwable.getMessage()
      * Throwable.getMessage()} and {@link java.lang#Throwable.getCause() Throwable.getCause()}
      * methods.
-     * 
+     *
      * @param message the detail message (<code>null</code> if nonexistent or unknown)
-     * @param cause the cause (<code>null</code> if nonexistent or unknown)
+     * @param cause   the cause (<code>null</code> if nonexistent or unknown)
      */
     public FunctionTypeException(String message, Throwable cause) {
         super(message, cause);

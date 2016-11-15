@@ -3,7 +3,7 @@
         Version="1.0">
     <Description>Advance Test policy 0003. This has been written for jira COMMONS-97.
         Use case : Users who is from asela.com can only see read patient data whose registered email is
-        from asela.com domain.  Advice is returned with patient id of the permitted patient data.
+        from asela.com domain. Advice is returned with patient id of the permitted patient data.
         First XPath evaluation is done with respect to multiple:content-selector. This would creates
         the multiple XACML request. Then each XACML request is evaluated with Attribute selector.
         Here content element has been bounded with custom namespace and prefix
@@ -25,7 +25,7 @@
         </AnyOf>
     </Target>
     <Rule RuleId="rule1" Effect="Permit">
-    <Description>Rule to match value in content element using XPath</Description>
+        <Description>Rule to match value in content element using XPath</Description>
         <Target>
             <AnyOf>
                 <AllOf>
@@ -45,10 +45,10 @@
                 <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">@asela.com</AttributeValue>
                 <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
                     <AttributeSelector MustBePresent="false"
-                            ContextSelectorId="urn:oasis:names:tc:xacml:3.0:content-selector"
-                            Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
-                            Path="/ak:patient/ak:patientContact/ak:email/text()"
-                            DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                                       ContextSelectorId="urn:oasis:names:tc:xacml:3.0:content-selector"
+                                       Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                                       Path="/ak:patient/ak:patientContact/ak:email/text()"
+                                       DataType="http://www.w3.org/2001/XMLSchema#string"/>
                 </Apply>
             </Apply>
         </Condition>

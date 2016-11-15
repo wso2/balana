@@ -44,9 +44,9 @@ import java.util.Set;
 
 /**
  * Clusters all the functions supported by <code>AbsFunction</code>.
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public class AbsFunctionCluster implements FunctionCluster {
 

@@ -56,27 +56,14 @@ import org.wso2.balana.ctx.EvaluationCtx;
 /**
  * Represents the XACML ConditionType type. It contains exactly one child expression that is boolean
  * and returns a single value. This class was added in XACML 2.0
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
 public class Condition implements Evaluatable {
 
     // a local Boolean URI that is used as the return type
     private static URI booleanIdentifier;
-
-    // regardless of version, this contains the Condition's children
-    private List<Expression> children;
-
-    // regardless of version, this is an expression that can be evaluated
-    // directly
-    private Expression expression;
-
-    // the condition function, which is only used if this is a 1.x condition
-    private Function function;
-
-    // flags whether this is XACML 1.x or 2.0
-    private boolean isVersionOne;
 
     // initialize the boolean identifier
     static {
@@ -89,15 +76,24 @@ public class Condition implements Evaluatable {
         }
     }
 
+    // regardless of version, this contains the Condition's children
+    private List<Expression> children;
+    // regardless of version, this is an expression that can be evaluated
+    // directly
+    private Expression expression;
+    // the condition function, which is only used if this is a 1.x condition
+    private Function function;
+    // flags whether this is XACML 1.x or 2.0
+    private boolean isVersionOne;
+
     /**
      * Constructs a <code>Condition</code> as used in XACML 1.x.
-     * 
-     * @param function the <code>Function</code> to use in evaluating the elements in the Condition
+     *
+     * @param function    the <code>Function</code> to use in evaluating the elements in the Condition
      * @param expressions the contents of the Condition which will be the parameters to the function, each
-     *            of which is an <code>Expression</code>
-     * 
+     *                    of which is an <code>Expression</code>
      * @throws IllegalArgumentException if the input expressions don't match the signature of the
-     *             function or if the function is invalid for use in a Condition
+     *                                  function or if the function is invalid for use in a Condition
      */
     public Condition(Function function, List expressions) throws IllegalArgumentException {
         isVersionOne = true;
@@ -115,9 +111,8 @@ public class Condition implements Evaluatable {
 
     /**
      * Constructs a <code>Condition</code> as used in XACML 2.0.
-     * 
+     *
      * @param expression the child <code>Expression</code>
-     * 
      * @throws IllegalArgumentException if the expression is not boolean or returns a bag
      */
     public Condition(Expression expression) throws IllegalArgumentException {
@@ -139,28 +134,12 @@ public class Condition implements Evaluatable {
     }
 
     /**
-     * Private helper for the constructors that checks if a given expression is valid for the root
-     * of a Condition
-     */
-    private void checkExpression(Expression xpr) {
-        // make sure it's a boolean expression...
-        if (!xpr.getType().equals(booleanIdentifier))
-            throw new IllegalArgumentException("A Condition must return a "
-                    + "boolean...cannot create " + "with " + xpr.getType());
-
-        // ...and that it never returns a bag
-        if (xpr.returnsBag())
-            throw new IllegalArgumentException("A Condition must not return " + "a Bag");
-    }
-
-    /**
      * Returns an instance of <code>Condition</code> based on the given DOM root.
-     * 
-     * @param root the DOM root of a ConditionType XML type
+     *
+     * @param root     the DOM root of a ConditionType XML type
      * @param metaData the meta-data associated with the containing policy
-     * @param manager <code>VariableManager</code> used to connect references and definitions while
-     *            parsing
-     * 
+     * @param manager  <code>VariableManager</code> used to connect references and definitions while
+     *                 parsing
      * @throws ParsingException if this is not a valid ConditionType
      */
     public static Condition getInstance(Node root, PolicyMetaData metaData, VariableManager manager)
@@ -184,9 +163,24 @@ public class Condition implements Evaluatable {
     }
 
     /**
+     * Private helper for the constructors that checks if a given expression is valid for the root
+     * of a Condition
+     */
+    private void checkExpression(Expression xpr) {
+        // make sure it's a boolean expression...
+        if (!xpr.getType().equals(booleanIdentifier))
+            throw new IllegalArgumentException("A Condition must return a "
+                    + "boolean...cannot create " + "with " + xpr.getType());
+
+        // ...and that it never returns a bag
+        if (xpr.returnsBag())
+            throw new IllegalArgumentException("A Condition must not return " + "a Bag");
+    }
+
+    /**
      * Returns the <code>Function</code> used by this <code>Condition</code> if this is a 1.x
      * condition, or null if this is a 2.0 condition.
-     * 
+     *
      * @return a <code>Function</code> or null
      */
     public Function getFunction() {
@@ -196,7 +190,7 @@ public class Condition implements Evaluatable {
     /**
      * Returns the <code>List</code> of children for this <code>Condition</code>. The
      * <code>List</code> contains <code>Expression</code>s. The list is unmodifiable.
-     * 
+     *
      * @return a <code>List</code> of <code>Expression</code>s
      */
     public List getChildren() {
@@ -206,7 +200,7 @@ public class Condition implements Evaluatable {
     /**
      * Returns the type of attribute that this object will return on a call to <code>evaluate</code>
      * . This is always a boolean, since that's all that a Condition is allowed to return.
-     * 
+     *
      * @return the boolean type
      */
     public URI getType() {
@@ -216,7 +210,7 @@ public class Condition implements Evaluatable {
     /**
      * Returns whether or not this <code>Condition</code> will return a bag of values on evaluation.
      * This always returns false, since a Condition isn't allowed to return a bag.
-     * 
+     *
      * @return false
      */
     public boolean returnsBag() {
@@ -226,11 +220,10 @@ public class Condition implements Evaluatable {
     /**
      * Returns whether or not this <code>Condition</code> will return a bag of values on evaluation.
      * This always returns false, since a Condition isn't allowed to return a bag.
-     * 
-     * @deprecated As of 2.0, you should use the <code>returnsBag</code> method from the
-     *             super-interface <code>Expression</code>.
-     * 
+     *
      * @return false
+     * @deprecated As of 2.0, you should use the <code>returnsBag</code> method from the
+     * super-interface <code>Expression</code>.
      */
     public boolean evaluatesToBag() {
         return false;
@@ -238,9 +231,8 @@ public class Condition implements Evaluatable {
 
     /**
      * Evaluates the <code>Condition</code> by evaluating its child <code>Expression</code>.
-     * 
+     *
      * @param context the representation of the request
-     * 
      * @return the result of trying to evaluate this condition object
      */
     public EvaluationResult evaluate(EvaluationCtx context) {

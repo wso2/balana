@@ -41,12 +41,12 @@ public class Attributes {
     private URI category;
 
     /**
-     *  content of the Attributes element that can be a XML data
+     * content of the Attributes element that can be a XML data
      */
     private Node content;
 
     /**
-     *  a <code>Set</code> of <code>Attribute</code> that contains in <code>Attributes</code> 
+     * a <code>Set</code> of <code>Attribute</code> that contains in <code>Attributes</code>
      */
     private Set<Attribute> attributes;
 
@@ -58,22 +58,24 @@ public class Attributes {
     /**
      * Constructor that creates a new <code>Attributes</code> based on
      * the given elements.
-     * @param category category of the Attributes element whether it is subject, action and etc
-     * @param attributes  a <code>Set</code> of <code>Attribute</code>
-     * that contains in <code>Attributes</code>
+     *
+     * @param category   category of the Attributes element whether it is subject, action and etc
+     * @param attributes a <code>Set</code> of <code>Attribute</code>
+     *                   that contains in <code>Attributes</code>
      */
-    public Attributes(URI category,Set<Attribute> attributes) {
+    public Attributes(URI category, Set<Attribute> attributes) {
         this(category, null, attributes, null);
     }
 
     /**
      * Constructor that creates a new <code>Attributes</code> based on
      * the given elements.
-     * @param category category of the Attributes element whether it is subject, action and etc
-     * @param content content of the Attributes element that can be a XML data
-     * @param attributes  a <code>Set</code> of <code>Attribute</code>
-     * that contains in <code>Attributes</code> 
-     * @param id   id of the Attribute element
+     *
+     * @param category   category of the Attributes element whether it is subject, action and etc
+     * @param content    content of the Attributes element that can be a XML data
+     * @param attributes a <code>Set</code> of <code>Attribute</code>
+     *                   that contains in <code>Attributes</code>
+     * @param id         id of the Attribute element
      */
     public Attributes(URI category, Node content, Set<Attribute> attributes, String id) {
         this.category = category;
@@ -83,13 +85,12 @@ public class Attributes {
     }
 
     /**
-     *
      * @param root
      * @return
      * @throws ParsingException
      */
     public static Attributes getInstance(Node root) throws ParsingException {
-        URI category ;
+        URI category;
         Node content = null;
         String id = null;
         Set<Attribute> attributes = new HashSet<Attribute>();
@@ -111,12 +112,12 @@ public class Attributes {
 
         try {
             Node idNode = attrs.getNamedItem(XACMLConstants.ATTRIBUTES_ID);
-            if(idNode != null){
+            if (idNode != null) {
                 id = idNode.getNodeValue();
             }
         } catch (Exception e) {
             throw new ParsingException("Error parsing optional attributes in " +
-                            "AttributesType", e);
+                    "AttributesType", e);
         }
 
         NodeList nodes = root.getChildNodes();
@@ -124,19 +125,19 @@ public class Attributes {
             Node node = nodes.item(i);
             if (DOMHelper.getLocalName(node).equals(XACMLConstants.ATTRIBUTES_CONTENT)) {
                 // only one value can be in an Attribute
-                if (content != null){
+                if (content != null) {
                     throw new ParsingException("Too many content elements are defined.");
                 }
                 // now get the value
                 content = node.getFirstChild();
-            } else if(DOMHelper.getLocalName(node).equals(XACMLConstants.ATTRIBUTE_ELEMENT)) {
+            } else if (DOMHelper.getLocalName(node).equals(XACMLConstants.ATTRIBUTE_ELEMENT)) {
                 attributes.add(Attribute.getInstance(node, XACMLConstants.XACML_VERSION_3_0));
             }
         }
 
-        if(content != null){
+        if (content != null) {
             // make the node appear to be a direct child of the Document
-            try{
+            try {
                 DocumentBuilderFactory dbf = Utils.getSecuredDocumentBuilderFactory();
                 DocumentBuilder builder = dbf.newDocumentBuilder();
                 dbf.setNamespaceAware(true);
@@ -144,12 +145,12 @@ public class Attributes {
                 Node topRoot = docRoot.importNode(content, true);
                 docRoot.appendChild(topRoot);
                 content = docRoot.getDocumentElement();
-            } catch (Exception e){
+            } catch (Exception e) {
                 //
             }
         }
 
-        return new Attributes(category, content, attributes , id);
+        return new Attributes(category, content, attributes, id);
     }
 
     /**
@@ -173,7 +174,7 @@ public class Attributes {
     /**
      * Returns list of attribute that contains in the attributes element
      *
-     * @return  list of <code>Attribute</code>
+     * @return list of <code>Attribute</code>
      */
     public Set<Attribute> getAttributes() {
         return attributes;
@@ -182,7 +183,7 @@ public class Attributes {
     /**
      * Returns the id of this attributes, or null if it was not included
      *
-     * @return  the attribute 's id as <code>String</code> or null 
+     * @return the attribute 's id as <code>String</code> or null
      */
     public String getId() {
         return id;
@@ -209,13 +210,13 @@ public class Attributes {
 
         builder.append("<Attributes Category=\"").append(category.toString()).append("\">");
 
-        for(Attribute attribute : attributes){
-            if(attribute.isIncludeInResult()){
+        for (Attribute attribute : attributes) {
+            if (attribute.isIncludeInResult()) {
                 attribute.encode(builder);
             }
         }
         if (content != null) {
-        // TODO
+            // TODO
         }
 
         builder.append("</Attributes>");
@@ -256,7 +257,6 @@ public class Attributes {
 //            out.println(indent + "</Attributes>");
 //        }
 //    }
-
 
 
 //    /**

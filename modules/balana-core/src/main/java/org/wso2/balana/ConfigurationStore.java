@@ -106,9 +106,9 @@ import org.w3c.dom.NodeList;
  * Note that becuase this doesn't tie directly into the rest of the code, you are still free to
  * design your own run-time configuration mechanisms. This is simply provided as a convenience, and
  * so that all programmers can start from a common point.
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public class ConfigurationStore {
 
@@ -116,36 +116,30 @@ public class ConfigurationStore {
      * Property used to specify the configuration file.
      */
     public static final String PDP_CONFIG_PROPERTY = "org.wso2.balana.PDPConfigFile";
-
+    // the logger we'll use for all messages
+    private static Log logger = LogFactory.getLog(ConfigurationStore.class);
     // pdp elements
     private PDPConfig defaultPDPConfig;
     private HashMap pdpConfigMap;
-
     // attribute factory elements
     private AttributeFactoryProxy defaultAttributeFactoryProxy;
     private HashMap attributeMap;
-
     // combining algorithm factory elements
     private CombiningAlgFactoryProxy defaultCombiningFactoryProxy;
     private HashMap combiningMap;
-
     // function factory elements
     private FunctionFactoryProxy defaultFunctionFactoryProxy;
     private HashMap functionMap;
-
     // the classloader we'll use for loading classes
     private ClassLoader loader;
-
-    // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(ConfigurationStore.class);
 
     /**
      * Default constructor. This constructor uses the <code>PDP_CONFIG_PROPERTY</code> property to
      * load the configuration. If the property isn't set, if it names a file that can't be accessed,
      * or if the file is invalid, then an exception is thrown.
-     * 
+     *
      * @throws ParsingException if anything goes wrong during the parsing of the configuration file,
-     *             the class loading, or the factory and pdp setup
+     *                          the class loading, or the factory and pdp setup
      */
     public ConfigurationStore() throws ParsingException {
         String configFile = System.getProperty(PDP_CONFIG_PROPERTY);
@@ -173,9 +167,9 @@ public class ConfigurationStore {
      * security model doesn't allow the use of properties, if you don't want to use a property to
      * specify a configuration file, or if you want to use more then one configuration file. If the
      * file can't be accessed, or if the file is invalid, then an exception is thrown.
-     * 
+     *
      * @throws ParsingException if anything goes wrong during the parsing of the configuration file,
-     *             the class loading, or the factory and pdp setup
+     *                          the class loading, or the factory and pdp setup
      */
     public ConfigurationStore(File configFile) throws ParsingException {
         try {
@@ -331,7 +325,7 @@ public class ConfigurationStore {
         } catch (IllegalArgumentException iae) {
             throw new ParsingException("no data to parse", iae);
         } finally {
-            if(stream != null){
+            if (stream != null) {
                 try {
                     stream.close();
                 } catch (IOException e) {
@@ -715,9 +709,8 @@ public class ConfigurationStore {
     /**
      * Returns the default PDP configuration. If no default was specified then this throws an
      * exception.
-     * 
+     *
      * @return the default PDP configuration
-     * 
      * @throws UnknownIdentifierException if there is no default config
      */
     public PDPConfig getDefaultPDPConfig() throws UnknownIdentifierException {
@@ -730,9 +723,8 @@ public class ConfigurationStore {
     /**
      * Returns the PDP configuration with the given name. If no such configuration exists then an
      * exception is thrown.
-     * 
+     *
      * @return the matching PDP configuation
-     * 
      * @throws UnknownIdentifierException if the name is unknown
      */
     public PDPConfig getPDPConfig(String name) throws UnknownIdentifierException {
@@ -746,7 +738,7 @@ public class ConfigurationStore {
 
     /**
      * Returns a set of identifiers representing each PDP configuration available.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public Set getSupportedPDPConfigurations() {
@@ -755,7 +747,7 @@ public class ConfigurationStore {
 
     /**
      * Returns the default attribute factory.
-     * 
+     *
      * @return the default attribute factory
      */
     public AttributeFactoryProxy getDefaultAttributeFactoryProxy() {
@@ -765,9 +757,8 @@ public class ConfigurationStore {
     /**
      * Returns the attribute factory with the given name. If no such factory exists then an
      * exception is thrown.
-     * 
+     *
      * @return the matching attribute factory
-     * 
      * @throws UnknownIdentifierException if the name is unknown
      */
     public AttributeFactory getAttributeFactory(String name) throws UnknownIdentifierException {
@@ -781,7 +772,7 @@ public class ConfigurationStore {
 
     /**
      * Returns a set of identifiers representing each attribute factory available.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public Set getSupportedAttributeFactories() {
@@ -814,7 +805,7 @@ public class ConfigurationStore {
 
     /**
      * Returns the default combiningAlg factory.
-     * 
+     *
      * @return the default combiningAlg factory
      */
     public CombiningAlgFactoryProxy getDefaultCombiningFactoryProxy() {
@@ -824,9 +815,8 @@ public class ConfigurationStore {
     /**
      * Returns the combiningAlg factory with the given name. If no such factory exists then an
      * exception is thrown.
-     * 
+     *
      * @return the matching combiningAlg factory
-     * 
      * @throws UnknownIdentifierException if the name is unknown
      */
     public CombiningAlgFactory getCombiningAlgFactory(String name)
@@ -841,7 +831,7 @@ public class ConfigurationStore {
 
     /**
      * Returns a set of identifiers representing each combiningAlg factory available.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public Set getSupportedCombiningAlgFactories() {
@@ -873,7 +863,7 @@ public class ConfigurationStore {
 
     /**
      * Returns the default function factory proxy.
-     * 
+     *
      * @return the default function factory proxy
      */
     public FunctionFactoryProxy getDefaultFunctionFactoryProxy() {
@@ -883,9 +873,8 @@ public class ConfigurationStore {
     /**
      * Returns the function factory proxy with the given name. If no such proxy exists then an
      * exception is thrown.
-     * 
+     *
      * @return the matching function factory proxy
-     * 
      * @throws UnknownIdentifierException if the name is unknown
      */
     public FunctionFactoryProxy getFunctionFactoryProxy(String name)
@@ -900,7 +889,7 @@ public class ConfigurationStore {
 
     /**
      * Returns a set of identifiers representing each function factory proxy available.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public Set getSupportedFunctionFactories() {

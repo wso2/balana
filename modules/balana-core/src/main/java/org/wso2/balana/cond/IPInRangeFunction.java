@@ -46,13 +46,28 @@ public class IPInRangeFunction extends FunctionBase {
     }
 
     /**
+     * Helper method
+     *
+     * @param ip
+     * @return
+     */
+    public static long ipToLong(InetAddress ip) {
+        byte[] octets = ip.getAddress();
+        long result = 0;
+        for (byte octet : octets) {
+            result <<= 8;
+            result |= octet & 0xff;
+        }
+        return result;
+    }
+
+    /**
      * Evaluates the ip-in-range function, which takes three <code>IPAddressAttribute</code> values.
      * This function return true if the first value falls between the second and third values
      *
-     * @param inputs a <code>List</code> of <code>Evaluatable</code> objects representing the
-     *            arguments passed to the function
+     * @param inputs  a <code>List</code> of <code>Evaluatable</code> objects representing the
+     *                arguments passed to the function
      * @param context the respresentation of the request
-     *
      * @return an <code>EvaluationResult</code> containing true or false
      */
     public EvaluationResult evaluate(List inputs, EvaluationCtx context) {
@@ -66,11 +81,11 @@ public class IPInRangeFunction extends FunctionBase {
             return result;
 
         // get the three ip values
-        long ipAddressToTest = ipToLong(((IPAddressAttribute)argValues[0]).getAddress());
-        long ipAddressMin = ipToLong(((IPAddressAttribute)argValues[1]).getAddress());
-        long ipAddressMax = ipToLong(((IPAddressAttribute)argValues[2]).getAddress());
+        long ipAddressToTest = ipToLong(((IPAddressAttribute) argValues[0]).getAddress());
+        long ipAddressMin = ipToLong(((IPAddressAttribute) argValues[1]).getAddress());
+        long ipAddressMax = ipToLong(((IPAddressAttribute) argValues[2]).getAddress());
 
-        if(ipAddressMin > ipAddressMax){
+        if (ipAddressMin > ipAddressMax) {
             long temp = ipAddressMax;
             ipAddressMax = ipAddressMin;
             ipAddressMin = temp;
@@ -78,22 +93,6 @@ public class IPInRangeFunction extends FunctionBase {
 
         // we're in the range if the middle is now between min and max ip address
         return EvaluationResult.getInstance(ipAddressToTest >= ipAddressMin && ipAddressToTest <= ipAddressMax);
-    }
-
-
-    /**
-     * Helper method
-     * @param ip
-     * @return
-     */
-    public static long ipToLong(InetAddress ip) {
-        byte[] octets = ip.getAddress();
-        long result = 0;
-        for (byte octet : octets) {
-            result <<= 8;
-            result |= octet & 0xff;
-        }
-        return result;
     }
 
 }

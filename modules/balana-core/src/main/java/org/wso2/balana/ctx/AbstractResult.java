@@ -30,8 +30,7 @@ import java.util.List;
  * Abstract Represents the ResultType XML object from the Context schema. Any number
  * of these may included in a <code>ResponseCtx</code>. This class provides an abstract method to
  * encode XACML result with the decision effect, as well as an optional status data and obligations
- * and advices. encode method must be implemented under the concert class. 
- *
+ * and advices. encode method must be implemented under the concert class.
  */
 public abstract class AbstractResult {
 
@@ -69,11 +68,11 @@ public abstract class AbstractResult {
      * The decision that a decision about the request cannot be made
      */
     public static final int DECISION_INDETERMINATE_DENY_OR_PERMIT = 6;
-    
+
     /**
      * string versions of the 4 Decision types used for encoding
      */
-    public static final String[] DECISIONS = { "Permit", "Deny", "Indeterminate", "NotApplicable"};
+    public static final String[] DECISIONS = {"Permit", "Deny", "Indeterminate", "NotApplicable"};
 
     /**
      * List of obligations which may be empty
@@ -102,12 +101,12 @@ public abstract class AbstractResult {
 
     /**
      * Constructs a <code>AbstractResult</code> object with decision status data, obligations, advices
-     *  and evaluation ctx
+     * and evaluation ctx
      *
      * @param decision the decision effect to include in this result. This must be one of the four
-     *            fields in this class.
-     * @param status the <code>Status</code> to include in this result
-     * @param version XACML version
+     *                 fields in this class.
+     * @param status   the <code>Status</code> to include in this result
+     * @param version  XACML version
      * @throws IllegalArgumentException if decision is not valid
      */
     public AbstractResult(int decision, Status status, int version) throws IllegalArgumentException {
@@ -123,7 +122,7 @@ public abstract class AbstractResult {
         }
 
         this.decision = decision;
-        if (status == null){
+        if (status == null) {
             this.status = Status.getOkInstance();
         } else {
             this.status = status;
@@ -132,21 +131,21 @@ public abstract class AbstractResult {
 
     /**
      * Constructs a <code>AbstractResult</code> object with decision status data, obligations, advices
-     *  and evaluation ctx
+     * and evaluation ctx
      *
-     * @param decision the decision effect to include in this result. This must be one of the four
-     *            fields in this class.
-     * @param status the <code>Status</code> to include in this result
+     * @param decision          the decision effect to include in this result. This must be one of the four
+     *                          fields in this class.
+     * @param status            the <code>Status</code> to include in this result
      * @param obligationResults a list of <code>ObligationResult</code> objects
-     * @param advices  a list of <code>Advice</code> objects  
-     * @param version XACML version
+     * @param advices           a list of <code>Advice</code> objects
+     * @param version           XACML version
      * @throws IllegalArgumentException if decision is not valid
      */
     public AbstractResult(int decision, Status status, List<ObligationResult> obligationResults,
-                  List<Advice> advices, int version) throws IllegalArgumentException {
+                          List<Advice> advices, int version) throws IllegalArgumentException {
 
         this.version = version;
-        
+
         // check that decision is valid
         if ((decision != DECISION_PERMIT) && (decision != DECISION_DENY)
                 && (decision != DECISION_INDETERMINATE) && (decision != DECISION_NOT_APPLICABLE)
@@ -154,18 +153,18 @@ public abstract class AbstractResult {
                 && (decision != DECISION_INDETERMINATE_DENY_OR_PERMIT)) {
             throw new IllegalArgumentException("invalid decision value");
         }
-        
+
         this.decision = decision;
 
-        if(obligationResults != null){
+        if (obligationResults != null) {
             this.obligations = obligationResults;
         }
 
-        if(advices != null){
-            this.advices = advices;            
+        if (advices != null) {
+            this.advices = advices;
         }
 
-        if (status == null){
+        if (status == null) {
             this.status = Status.getOkInstance();
         } else {
             this.status = status;
@@ -178,7 +177,7 @@ public abstract class AbstractResult {
      * @return the set of <code>Obligation</code>
      */
     public List<ObligationResult> getObligations() {
-        if(obligations == null){
+        if (obligations == null) {
             obligations = new ArrayList<ObligationResult>();
         }
         return obligations;
@@ -191,7 +190,7 @@ public abstract class AbstractResult {
      * @return the set of <code>Advice</code>
      */
     public List<Advice> getAdvices() {
-        if(advices  == null){
+        if (advices == null) {
             advices = new ArrayList<Advice>();
         }
         return advices;

@@ -51,342 +51,333 @@ import org.w3c.dom.Node;
  * Representation of an xf:yearMonthDuration value. This class supports parsing xd:yearMonthDuration
  * values. All objects of this class are immutable and thread-safe. The <code>Date</code> objects
  * returned are not, but these objects are cloned before being returned.
- * 
- * @since 1.0
+ *
  * @author Steve Hanna
+ * @since 1.0
  */
 public class YearMonthDurationAttribute extends AttributeValue {
-	/**
-	 * Official name of this type
-	 */
-	public static final String identifier = "http://www.w3.org/TR/2002/WD-xquery-operators-20020816#"
-			+ "yearMonthDuration";
+    /**
+     * Official name of this type
+     */
+    public static final String identifier = "http://www.w3.org/TR/2002/WD-xquery-operators-20020816#"
+            + "yearMonthDuration";
+    /**
+     * Regular expression for yearMonthDuration (a la java.util.regex)
+     */
+    private static final String patternString = "(\\-)?P((\\d+)?Y)?((\\d+)?M)?";
+    /**
+     * The index of the capturing group for the negative sign.
+     */
+    private static final int GROUP_SIGN = 1;
+    /**
+     * The index of the capturing group for the number of years.
+     */
+    private static final int GROUP_YEARS = 3;
 
-	/**
-	 * URI version of name for this type
-	 * <p>
-	 * This field is initialized by a static initializer so that we can catch any exceptions thrown
-	 * by URI(String) and transform them into a RuntimeException, since this should never happen but
-	 * should be reported properly if it ever does.
-	 */
-	private static URI identifierURI;
+    ;
+    /**
+     * The index of the capturing group for the number of months.
+     */
+    private static final int GROUP_MONTHS = 5;
+    /**
+     * URI version of name for this type
+     * <p>
+     * This field is initialized by a static initializer so that we can catch any exceptions thrown
+     * by URI(String) and transform them into a RuntimeException, since this should never happen but
+     * should be reported properly if it ever does.
+     */
+    private static URI identifierURI;
+    /**
+     * RuntimeException that wraps an Exception thrown during the creation of identifierURI, null if
+     * none.
+     */
+    private static RuntimeException earlyException;
+    /**
+     * Static BigInteger values. We only use these if one of the components is bigger than
+     * Integer.MAX_LONG and we want to detect overflow, so we don't initialize these until they're
+     * needed.
+     */
+    private static BigInteger big12 = BigInteger.valueOf(12);
+    private static BigInteger bigMaxLong = BigInteger.valueOf(Long.MAX_VALUE);
+    /**
+     * A shared Pattern object, only initialized if needed
+     */
+    private static Pattern pattern;
 
-	/**
-	 * RuntimeException that wraps an Exception thrown during the creation of identifierURI, null if
-	 * none.
-	 */
-	private static RuntimeException earlyException;
+    /**
+     * Static initializer that initializes the identifierURI class field so that we can catch any
+     * exceptions thrown by URI(String) and transform them into a RuntimeException. Such exceptions
+     * should never happen but should be reported properly if they ever do.
+     */
+    static {
+        try {
+            identifierURI = new URI(identifier);
+        } catch (Exception e) {
+            earlyException = new IllegalArgumentException();
+            earlyException.initCause(e);
+        }
+    }
 
-	/**
-	 * Static initializer that initializes the identifierURI class field so that we can catch any
-	 * exceptions thrown by URI(String) and transform them into a RuntimeException. Such exceptions
-	 * should never happen but should be reported properly if they ever do.
-	 */
-	static {
-		try {
-			identifierURI = new URI(identifier);
-		} catch (Exception e) {
-			earlyException = new IllegalArgumentException();
-			earlyException.initCause(e);
-		}
-	};
+    /**
+     * Negative flag. true if duration is negative, false otherwise
+     */
+    private boolean negative;
 
-	/**
-	 * Regular expression for yearMonthDuration (a la java.util.regex)
-	 */
-	private static final String patternString = "(\\-)?P((\\d+)?Y)?((\\d+)?M)?";
+    /**
+     * Number of years
+     */
+    private long years;
 
-	/**
-	 * The index of the capturing group for the negative sign.
-	 */
-	private static final int GROUP_SIGN = 1;
+    /**
+     * Number of months
+     */
+    private long months;
 
-	/**
-	 * The index of the capturing group for the number of years.
-	 */
-	private static final int GROUP_YEARS = 3;
+    /**
+     * Total number of months (used for equals)
+     */
+    private long totalMonths;
 
-	/**
-	 * The index of the capturing group for the number of months.
-	 */
-	private static final int GROUP_MONTHS = 5;
+    /**
+     * Cached encoded value (null if not cached yet).
+     */
+    private String encodedValue = null;
 
-	/**
-	 * Static BigInteger values. We only use these if one of the components is bigger than
-	 * Integer.MAX_LONG and we want to detect overflow, so we don't initialize these until they're
-	 * needed.
-	 */
-	private static BigInteger big12 = BigInteger.valueOf(12);
-	private static BigInteger bigMaxLong = BigInteger.valueOf(Long.MAX_VALUE);
+    /**
+     * Creates a new <code>YearMonthDurationAttribute</code> that represents the duration supplied.
+     *
+     * @param negative true if the duration is negative, false otherwise
+     * @param years    the number of years in the duration (must be positive)
+     * @param months   the number of months in the duration (must be positive)
+     * @throws IllegalArgumentException if the total number of months exceeds Long.MAX_LONG or the
+     *                                  number of months or years is negative
+     */
+    public YearMonthDurationAttribute(boolean negative, long years, long months)
+            throws IllegalArgumentException {
+        super(identifierURI);
 
-	/**
-	 * A shared Pattern object, only initialized if needed
-	 */
-	private static Pattern pattern;
+        // Shouldn't happen, but just in case...
+        if (earlyException != null)
+            throw earlyException;
 
-	/**
-	 * Negative flag. true if duration is negative, false otherwise
-	 */
-	private boolean negative;
+        this.negative = negative;
+        this.years = years;
+        this.months = months;
 
-	/**
-	 * Number of years
-	 */
-	private long years;
+        // Convert all the components except nanoseconds to milliseconds
 
-	/**
-	 * Number of months
-	 */
-	private long months;
+        // If any of the components is big (too big to be an int),
+        // use the BigInteger class to do the math so we can detect
+        // overflow.
+        if ((years > Integer.MAX_VALUE) || (months > Integer.MAX_VALUE)) {
 
-	/**
-	 * Total number of months (used for equals)
-	 */
-	private long totalMonths;
+            BigInteger bigMonths = BigInteger.valueOf(months);
+            BigInteger bigYears = BigInteger.valueOf(years);
 
-	/**
-	 * Cached encoded value (null if not cached yet).
-	 */
-	private String encodedValue = null;
+            BigInteger bigTotal = bigYears.multiply(big12).add(bigMonths);
 
-	/**
-	 * Creates a new <code>YearMonthDurationAttribute</code> that represents the duration supplied.
-	 * 
-	 * @param negative true if the duration is negative, false otherwise
-	 * @param years the number of years in the duration (must be positive)
-	 * @param months the number of months in the duration (must be positive)
-	 * @throws IllegalArgumentException if the total number of months exceeds Long.MAX_LONG or the
-	 *             number of months or years is negative
-	 */
-	public YearMonthDurationAttribute(boolean negative, long years, long months)
-			throws IllegalArgumentException {
-		super(identifierURI);
+            // If the result is bigger than Long.MAX_VALUE, we have an
+            // overflow. Indicate an error (should be a processing error,
+            // since it can be argued that we should handle gigantic
+            // values for this).
+            if (bigTotal.compareTo(bigMaxLong) == 1)
+                throw new IllegalArgumentException("total number of " + "months "
+                        + "exceeds Long.MAX_VALUE");
+            // If no overflow, convert to a long.
+            totalMonths = bigTotal.longValue();
+            if (negative)
+                totalMonths = -totalMonths;
+        } else {
+            // The numbers are small, so do it the fast way.
+            totalMonths = ((years * 12) + months) * (negative ? -1 : 1);
+        }
+    }
 
-		// Shouldn't happen, but just in case...
-		if (earlyException != null)
-			throw earlyException;
+    /**
+     * Returns a new <code>YearMonthDurationAttribute</code> that represents the
+     * xf:yearMonthDuration at a particular DOM node.
+     *
+     * @param root the <code>Node</code> that contains the desired value
+     * @return a new <code>YearMonthDurationAttribute</code> representing the appropriate value
+     * @throws ParsingException if any problems occurred while parsing
+     */
+    public static YearMonthDurationAttribute getInstance(Node root) throws ParsingException {
+        return getInstance(root.getFirstChild().getNodeValue());
+    }
 
-		this.negative = negative;
-		this.years = years;
-		this.months = months;
+    /**
+     * Returns the long value for the capturing group groupNumber. This method takes a Matcher that
+     * has been used to match a Pattern against a String, fetches the value for the specified
+     * capturing group, converts that value to an long, and returns the value. If that group did not
+     * match, 0 is returned. If the matched value is not a valid long, NumberFormatException is
+     * thrown.
+     *
+     * @param matcher     the Matcher from which to fetch the group
+     * @param groupNumber the group number to fetch
+     * @return the long value for that groupNumber
+     * @throws NumberFormatException if the string value for that groupNumber is not a valid long
+     */
+    private static long parseGroup(Matcher matcher, int groupNumber) throws NumberFormatException {
+        long groupLong = 0;
 
-		// Convert all the components except nanoseconds to milliseconds
+        if (matcher.start(groupNumber) != -1) {
+            String groupString = matcher.group(groupNumber);
+            groupLong = Long.parseLong(groupString);
+        }
+        return groupLong;
+    }
 
-		// If any of the components is big (too big to be an int),
-		// use the BigInteger class to do the math so we can detect
-		// overflow.
-		if ((years > Integer.MAX_VALUE) || (months > Integer.MAX_VALUE)) {
-			
-			BigInteger bigMonths = BigInteger.valueOf(months);
-			BigInteger bigYears = BigInteger.valueOf(years);
+    /**
+     * Returns a new <code>YearMonthDurationAttribute</code> that represents the
+     * xf:yearMonthDuration value indicated by the string provided.
+     *
+     * @param value a string representing the desired value
+     * @return a new <code>YearMonthDurationAttribute</code> representing the desired value
+     * @throws ParsingException if any problems occurred while parsing
+     */
+    public static YearMonthDurationAttribute getInstance(String value) throws ParsingException {
+        boolean negative = false;
+        long years = 0;
+        long months = 0;
 
-			BigInteger bigTotal = bigYears.multiply(big12).add(bigMonths);
+        // Compile the pattern, if not already done.
+        if (pattern == null) {
+            try {
+                pattern = Pattern.compile(patternString);
+            } catch (PatternSyntaxException e) {
+                // This should never happen
+                throw new ParsingException("unexpected pattern syntax error");
+            }
+        }
 
-			// If the result is bigger than Long.MAX_VALUE, we have an
-			// overflow. Indicate an error (should be a processing error,
-			// since it can be argued that we should handle gigantic
-			// values for this).
-			if (bigTotal.compareTo(bigMaxLong) == 1)
-				throw new IllegalArgumentException("total number of " + "months "
-						+ "exceeds Long.MAX_VALUE");
-			// If no overflow, convert to a long.
-			totalMonths = bigTotal.longValue();
-			if (negative)
-				totalMonths = -totalMonths;
-		} else {
-			// The numbers are small, so do it the fast way.
-			totalMonths = ((years * 12) + months) * (negative ? -1 : 1);
-		}
-	}
+        // See if the value matches the pattern.
+        Matcher matcher = pattern.matcher(value);
+        boolean matches = matcher.matches();
 
-	/**
-	 * Returns a new <code>YearMonthDurationAttribute</code> that represents the
-	 * xf:yearMonthDuration at a particular DOM node.
-	 * 
-	 * @param root the <code>Node</code> that contains the desired value
-	 * @return a new <code>YearMonthDurationAttribute</code> representing the appropriate value
-	 * @throws ParsingException if any problems occurred while parsing
-	 */
-	public static YearMonthDurationAttribute getInstance(Node root) throws ParsingException {
-		return getInstance(root.getFirstChild().getNodeValue());
-	}
+        // If not, syntax error!
+        if (!matches) {
+            throw new ParsingException("Syntax error in yearMonthDuration");
+        }
 
-	/**
-	 * Returns the long value for the capturing group groupNumber. This method takes a Matcher that
-	 * has been used to match a Pattern against a String, fetches the value for the specified
-	 * capturing group, converts that value to an long, and returns the value. If that group did not
-	 * match, 0 is returned. If the matched value is not a valid long, NumberFormatException is
-	 * thrown.
-	 * 
-	 * @param matcher the Matcher from which to fetch the group
-	 * @param groupNumber the group number to fetch
-	 * @return the long value for that groupNumber
-	 * @throws NumberFormatException if the string value for that groupNumber is not a valid long
-	 */
-	private static long parseGroup(Matcher matcher, int groupNumber) throws NumberFormatException {
-		long groupLong = 0;
+        // If the negative group matched, the value is negative.
+        if (matcher.start(GROUP_SIGN) != -1)
+            negative = true;
 
-		if (matcher.start(groupNumber) != -1) {
-			String groupString = matcher.group(groupNumber);
-			groupLong = Long.parseLong(groupString);
-		}
-		return groupLong;
-	}
+        try {
+            // If the years group matched, parse that value.
+            years = parseGroup(matcher, GROUP_YEARS);
 
-	/**
-	 * Returns a new <code>YearMonthDurationAttribute</code> that represents the
-	 * xf:yearMonthDuration value indicated by the string provided.
-	 * 
-	 * @param value a string representing the desired value
-	 * 
-	 * @return a new <code>YearMonthDurationAttribute</code> representing the desired value
-	 * 
-	 * @throws ParsingException if any problems occurred while parsing
-	 */
-	public static YearMonthDurationAttribute getInstance(String value) throws ParsingException {
-		boolean negative = false;
-		long years = 0;
-		long months = 0;
+            // If the months group matched, parse that value.
+            months = parseGroup(matcher, GROUP_MONTHS);
+        } catch (NumberFormatException e) {
+            // If we run into a number that's too big to be a long
+            // that's an error. Really, it's a processing error,
+            // since one can argue that we should handle that.
+            throw new ParsingException("Unable to handle number size");
+        }
 
-		// Compile the pattern, if not already done.
-		if (pattern == null) {
-			try {
-				pattern = Pattern.compile(patternString);
-			} catch (PatternSyntaxException e) {
-				// This should never happen
-				throw new ParsingException("unexpected pattern syntax error");
-			}
-		}
+        // If parsing went OK, create a new YearMonthDurationAttribute
+        // object and return it.
+        return new YearMonthDurationAttribute(negative, years, months);
+    }
 
-		// See if the value matches the pattern.
-		Matcher matcher = pattern.matcher(value);
-		boolean matches = matcher.matches();
+    /**
+     * Returns true if the duration is negative.
+     *
+     * @return true if the duration is negative, false otherwise
+     */
+    public boolean isNegative() {
+        return negative;
+    }
 
-		// If not, syntax error!
-		if (!matches) {
-			throw new ParsingException("Syntax error in yearMonthDuration");
-		}
+    /**
+     * Gets the number of years.
+     *
+     * @return the number of years
+     */
+    public long getYears() {
+        return years;
+    }
 
-		// If the negative group matched, the value is negative.
-		if (matcher.start(GROUP_SIGN) != -1)
-			negative = true;
+    /**
+     * Gets the number of months.
+     *
+     * @return the number of months
+     */
+    public long getMonths() {
+        return months;
+    }
 
-		try {
-			// If the years group matched, parse that value.
-			years = parseGroup(matcher, GROUP_YEARS);
+    /**
+     * Returns true if the input is an instance of this class and if its value equals the value
+     * contained in this class.
+     *
+     * @param o the object to compare
+     * @return true if this object and the input represent the same value
+     */
+    public boolean equals(Object o) {
+        if (!(o instanceof YearMonthDurationAttribute))
+            return false;
 
-			// If the months group matched, parse that value.
-			months = parseGroup(matcher, GROUP_MONTHS);
-		} catch (NumberFormatException e) {
-			// If we run into a number that's too big to be a long
-			// that's an error. Really, it's a processing error,
-			// since one can argue that we should handle that.
-			throw new ParsingException("Unable to handle number size");
-		}
+        YearMonthDurationAttribute other = (YearMonthDurationAttribute) o;
 
-		// If parsing went OK, create a new YearMonthDurationAttribute
-		// object and return it.
-		return new YearMonthDurationAttribute(negative, years, months);
-	}
+        return (totalMonths == other.totalMonths);
+    }
 
-	/**
-	 * Returns true if the duration is negative.
-	 * 
-	 * @return true if the duration is negative, false otherwise
-	 */
-	public boolean isNegative() {
-		return negative;
-	}
+    /**
+     * Returns the hashcode value used to index and compare this object with others of the same
+     * type. Typically this is the hashcode of the backing data object.
+     *
+     * @return the object's hashcode value
+     */
+    public int hashCode() {
+        return (int) totalMonths ^ (int) (totalMonths >> 32);
+    }
 
-	/**
-	 * Gets the number of years.
-	 * 
-	 * @return the number of years
-	 */
-	public long getYears() {
-		return years;
-	}
+    /**
+     * Converts to a String representation.
+     *
+     * @return the String representation
+     */
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("YearMonthDurationAttribute: [\n");
+        sb.append("  Negative: " + negative);
+        sb.append("  Years: " + years);
+        sb.append("  Months: " + months);
+        sb.append("]");
 
-	/**
-	 * Gets the number of months.
-	 * 
-	 * @return the number of months
-	 */
-	public long getMonths() {
-		return months;
-	}
+        return sb.toString();
+    }
 
-	/**
-	 * Returns true if the input is an instance of this class and if its value equals the value
-	 * contained in this class.
-	 * 
-	 * @param o the object to compare
-	 * 
-	 * @return true if this object and the input represent the same value
-	 */
-	public boolean equals(Object o) {
-		if (!(o instanceof YearMonthDurationAttribute))
-			return false;
+    /**
+     * Encodes the value in a form suitable for including in XML data like a request or an
+     * obligation. This must return a value that could in turn be used by the factory to create a
+     * new instance with the same value.
+     *
+     * @return a <code>String</code> form of the value
+     */
+    public String encode() {
+        if (encodedValue != null)
+            return encodedValue;
 
-		YearMonthDurationAttribute other = (YearMonthDurationAttribute) o;
+        // Length is variable
+        StringBuffer buf = new StringBuffer(10);
 
-		return (totalMonths == other.totalMonths);
-	}
+        if (negative)
+            buf.append('-');
+        buf.append('P');
+        if ((years != 0) || (months == 0)) {
+            buf.append(Long.toString(years));
+            buf.append('Y');
+        }
+        if (months != 0) {
+            buf.append(Long.toString(months));
+            buf.append('M');
+        }
 
-	/**
-	 * Returns the hashcode value used to index and compare this object with others of the same
-	 * type. Typically this is the hashcode of the backing data object.
-	 * 
-	 * @return the object's hashcode value
-	 */
-	public int hashCode() {
-		return (int) totalMonths ^ (int) (totalMonths >> 32);
-	}
+        encodedValue = buf.toString();
 
-	/**
-	 * Converts to a String representation.
-	 * 
-	 * @return the String representation
-	 */
-	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("YearMonthDurationAttribute: [\n");
-		sb.append("  Negative: " + negative);
-		sb.append("  Years: " + years);
-		sb.append("  Months: " + months);
-		sb.append("]");
-
-		return sb.toString();
-	}
-
-	/**
-	 * Encodes the value in a form suitable for including in XML data like a request or an
-	 * obligation. This must return a value that could in turn be used by the factory to create a
-	 * new instance with the same value.
-	 * 
-	 * @return a <code>String</code> form of the value
-	 */
-	public String encode() {
-		if (encodedValue != null)
-			return encodedValue;
-
-		// Length is variable
-		StringBuffer buf = new StringBuffer(10);
-
-		if (negative)
-			buf.append('-');
-		buf.append('P');
-		if ((years != 0) || (months == 0)) {
-			buf.append(Long.toString(years));
-			buf.append('Y');
-		}
-		if (months != 0) {
-			buf.append(Long.toString(months));
-			buf.append('M');
-		}
-
-		encodedValue = buf.toString();
-
-		return encodedValue;
-	}
+        return encodedValue;
+    }
 }

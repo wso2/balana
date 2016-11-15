@@ -44,9 +44,9 @@ import org.w3c.dom.Node;
 /**
  * Represents the DNSName datatype introduced in XACML 2.0. All objects of this class are immutable
  * and all methods of the class are thread-safe.
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
 public class DNSNameAttribute extends AttributeValue {
 
@@ -82,7 +82,9 @@ public class DNSNameAttribute extends AttributeValue {
             earlyException = new IllegalArgumentException();
             earlyException.initCause(e);
         }
-    };
+    }
+
+    ;
 
     // the required hostname
     private String hostname;
@@ -95,9 +97,8 @@ public class DNSNameAttribute extends AttributeValue {
 
     /**
      * Creates the new <code>DNSNameAttribute</code> with only the required hostname component.
-     * 
+     *
      * @param hostname the host name component of the address
-     * 
      * @throws ParsingException if the hostname is invalid
      */
     public DNSNameAttribute(String hostname) throws ParsingException {
@@ -106,10 +107,9 @@ public class DNSNameAttribute extends AttributeValue {
 
     /**
      * Creates the new <code>DNSNameAttribute</code> with the optional port range component.
-     * 
+     *
      * @param hostname the host name component of the address
-     * @param range the port range
-     * 
+     * @param range    the port range
      * @throws ParsingException if the hostname is invalid
      */
     public DNSNameAttribute(String hostname, PortRange range) throws ParsingException {
@@ -132,30 +132,12 @@ public class DNSNameAttribute extends AttributeValue {
     }
 
     /**
-     * Private helper that tests whether the given string is valid.
-     */
-    private boolean isValidHostName(String hostname) {
-        /*
-         * hostname = *( domainlabel "." ) toplabel [ "." ] domainlabel = alphanum | alphanum *(
-         * alphanum | "-" ) alphanum toplabel = alpha | alpha *( alphanum | "-" ) alphanum
-         */
-
-        String domainlabel = "\\w[[\\w|\\-]*\\w]?";
-        String toplabel = "[a-zA-Z][[\\w|\\-]*\\w]?";
-        String pattern = "[\\*\\.]?[" + domainlabel + "\\.]*" + toplabel + "\\.?";
-
-        return hostname.matches(pattern);
-    }
-
-    /**
      * Returns a new <code>DNSNameAttribute</code> that represents the name at a particular DOM
      * node.
-     * 
+     *
      * @param root the <code>Node</code> that contains the desired value
-     * 
      * @return a new <code>DNSNameAttribute</code> representing the appropriate value (null if there
-     *         is a parsing error)
-     * 
+     * is a parsing error)
      * @throws ParsingException if the hostname is invalid
      */
     public static DNSNameAttribute getInstance(Node root) throws ParsingException {
@@ -165,11 +147,9 @@ public class DNSNameAttribute extends AttributeValue {
     /**
      * Returns a new <code>DNSNameAttribute</code> that represents the name indicated by the
      * <code>String</code> provided.
-     * 
+     *
      * @param value a string representing the name
-     * 
      * @return a new <code>DNSNameAttribute</code>
-     * 
      * @throws ParsingException if the hostname is invalid
      */
     public static DNSNameAttribute getInstance(String value) throws ParsingException {
@@ -187,8 +167,24 @@ public class DNSNameAttribute extends AttributeValue {
     }
 
     /**
+     * Private helper that tests whether the given string is valid.
+     */
+    private boolean isValidHostName(String hostname) {
+        /*
+         * hostname = *( domainlabel "." ) toplabel [ "." ] domainlabel = alphanum | alphanum *(
+         * alphanum | "-" ) alphanum toplabel = alpha | alpha *( alphanum | "-" ) alphanum
+         */
+
+        String domainlabel = "\\w[[\\w|\\-]*\\w]?";
+        String toplabel = "[a-zA-Z][[\\w|\\-]*\\w]?";
+        String pattern = "[\\*\\.]?[" + domainlabel + "\\.]*" + toplabel + "\\.?";
+
+        return hostname.matches(pattern);
+    }
+
+    /**
      * Returns the host name represented by this object.
-     * 
+     *
      * @return the host name
      */
     public String getHostName() {
@@ -198,7 +194,7 @@ public class DNSNameAttribute extends AttributeValue {
     /**
      * Returns the port range represented by this object which will be unbound if no range was
      * specified.
-     * 
+     *
      * @return the port range
      */
     public PortRange getPortRange() {
@@ -208,7 +204,7 @@ public class DNSNameAttribute extends AttributeValue {
     /**
      * Returns true if the leading character in the hostname is a '*', and therefore represents a
      * matching subdomain, or false otherwise.
-     * 
+     *
      * @return true if the name represents a subdomain, false otherwise
      */
     public boolean isSubdomain() {
@@ -218,9 +214,8 @@ public class DNSNameAttribute extends AttributeValue {
     /**
      * Returns true if the input is an instance of this class and if its value equals the value
      * contained in this class.
-     * 
+     *
      * @param o the object to compare
-     * 
      * @return true if this object and the input represent the same value
      */
     public boolean equals(Object o) {
@@ -241,7 +236,7 @@ public class DNSNameAttribute extends AttributeValue {
     /**
      * Returns the hashcode value used to index and compare this object with others of the same
      * type.
-     * 
+     *
      * @return the object's hashcode value
      */
     public int hashCode() {
@@ -253,7 +248,7 @@ public class DNSNameAttribute extends AttributeValue {
 
     /**
      * Converts to a String representation.
-     * 
+     *
      * @return the String representation
      */
     public String toString() {

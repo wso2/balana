@@ -57,10 +57,10 @@ import javax.security.auth.x500.X500Principal;
 
 /**
  * Implements the standard matching and regular expression functions.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
  * @author Yassir Elley
+ * @since 1.0
  */
 public class MatchFunction extends FunctionBase {
 
@@ -125,33 +125,32 @@ public class MatchFunction extends FunctionBase {
     private static final int ID_X500NAME_REGEXP_MATCH = 8;
 
     // private mappings for the input arguments
-    private static final String regexpParams[] = { StringAttribute.identifier,
-            StringAttribute.identifier };
-    private static final String x500Params[] = { X500NameAttribute.identifier,
-            X500NameAttribute.identifier };
-    private static final String rfc822Params[] = { StringAttribute.identifier,
-            RFC822NameAttribute.identifier };
-    private static final String stringRegexpParams[] = { StringAttribute.identifier,
-            StringAttribute.identifier };
-    private static final String anyURIRegexpParams[] = { StringAttribute.identifier,
-            AnyURIAttribute.identifier };
-    private static final String ipAddressRegexpParams[] = { StringAttribute.identifier,
-            IPAddressAttribute.identifier };
-    private static final String dnsNameRegexpParams[] = { StringAttribute.identifier,
-            DNSNameAttribute.identifier };
-    private static final String rfc822NameRegexpParams[] = { StringAttribute.identifier,
-            RFC822NameAttribute.identifier };
-    private static final String x500NameRegexpParams[] = { StringAttribute.identifier,
-            X500NameAttribute.identifier };
+    private static final String regexpParams[] = {StringAttribute.identifier,
+            StringAttribute.identifier};
+    private static final String x500Params[] = {X500NameAttribute.identifier,
+            X500NameAttribute.identifier};
+    private static final String rfc822Params[] = {StringAttribute.identifier,
+            RFC822NameAttribute.identifier};
+    private static final String stringRegexpParams[] = {StringAttribute.identifier,
+            StringAttribute.identifier};
+    private static final String anyURIRegexpParams[] = {StringAttribute.identifier,
+            AnyURIAttribute.identifier};
+    private static final String ipAddressRegexpParams[] = {StringAttribute.identifier,
+            IPAddressAttribute.identifier};
+    private static final String dnsNameRegexpParams[] = {StringAttribute.identifier,
+            DNSNameAttribute.identifier};
+    private static final String rfc822NameRegexpParams[] = {StringAttribute.identifier,
+            RFC822NameAttribute.identifier};
+    private static final String x500NameRegexpParams[] = {StringAttribute.identifier,
+            X500NameAttribute.identifier};
 
     // private mapping for bag input options
-    private static final boolean bagParams[] = { false, false };
+    private static final boolean bagParams[] = {false, false};
 
     /**
      * Creates a new <code>MatchFunction</code> based on the given name.
-     * 
+     *
      * @param functionName the name of the standard match function, including the complete namespace
-     * 
      * @throws IllegalArgumentException if the function is unknown
      */
     public MatchFunction(String functionName) {
@@ -215,7 +214,7 @@ public class MatchFunction extends FunctionBase {
 
     /**
      * Returns a <code>Set</code> containing all the function identifiers supported by this class.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public static Set getSupportedIdentifiers() {
@@ -236,11 +235,11 @@ public class MatchFunction extends FunctionBase {
 
     /**
      * Evaluate the function, using the specified parameters.
-     * 
-     * @param inputs a <code>List</code> of <code>Evaluatable</code> objects representing the
-     *            arguments passed to the function
+     *
+     * @param inputs  a <code>List</code> of <code>Evaluatable</code> objects representing the
+     *                arguments passed to the function
      * @param context an <code>EvaluationCtx</code> so that the <code>Evaluatable</code> objects can
-     *            be evaluated
+     *                be evaluated
      * @return an <code>EvaluationResult</code> representing the function's result
      */
     public EvaluationResult evaluate(List inputs, EvaluationCtx context) {
@@ -259,100 +258,100 @@ public class MatchFunction extends FunctionBase {
 
         switch (getFunctionId()) {
 
-        case ID_REGEXP_STRING_MATCH:
-        case ID_STRING_REGEXP_MATCH: {
-            // arg0 is a regular expression; arg1 is a general string
-            String arg0 = ((StringAttribute) (argValues[0])).getValue();
-            String arg1 = ((StringAttribute) (argValues[1])).getValue();
+            case ID_REGEXP_STRING_MATCH:
+            case ID_STRING_REGEXP_MATCH: {
+                // arg0 is a regular expression; arg1 is a general string
+                String arg0 = ((StringAttribute) (argValues[0])).getValue();
+                String arg1 = ((StringAttribute) (argValues[1])).getValue();
 
-            if (context.isSearching() && arg1.equals(XACMLConstants.ANY)) {
-                boolResult = true;
-            } else {
+                if (context.isSearching() && arg1.equals(XACMLConstants.ANY)) {
+                    boolResult = true;
+                } else {
+                    boolResult = regexpHelper(arg0, arg1);
+                }
+
+                break;
+            }
+
+            case ID_X500NAME_MATCH: {
+                X500Principal arg0 = ((X500NameAttribute) (argValues[0])).getValue();
+                X500Principal arg1 = ((X500NameAttribute) (argValues[1])).getValue();
+
+                boolResult = arg1.getName(X500Principal.CANONICAL).endsWith(
+                        arg0.getName(X500Principal.CANONICAL));
+
+                break;
+            }
+
+            case ID_RFC822NAME_MATCH: {
+                String arg0 = ((StringAttribute) (argValues[0])).getValue();
+                String arg1 = ((RFC822NameAttribute) (argValues[1])).getValue();
+
+                if (arg0.indexOf('@') != -1) {
+                    // this is case #1 : a whole address
+                    String normalized = (new RFC822NameAttribute(arg0)).getValue();
+                    boolResult = normalized.equals(arg1);
+                } else if (arg0.charAt(0) == '.') {
+                    // this is case #3 : a sub-domain
+                    boolResult = arg1.endsWith(arg0.toLowerCase());
+                } else {
+                    // this is case #2 : any mailbox at a specific domain
+                    String mailDomain = arg1.substring(arg1.indexOf('@') + 1);
+                    boolResult = arg0.toLowerCase().equals(mailDomain);
+                }
+
+                break;
+            }
+
+            case ID_ANYURI_REGEXP_MATCH: {
+                // arg0 is a regular expression; arg1 is a general string
+                String arg0 = ((StringAttribute) (argValues[0])).getValue();
+                String arg1 = ((AnyURIAttribute) (argValues[1])).encode();
+
                 boolResult = regexpHelper(arg0, arg1);
+
+                break;
             }
 
-            break;
-        }
+            case ID_IPADDRESS_REGEXP_MATCH: {
+                // arg0 is a regular expression; arg1 is a general string
+                String arg0 = ((StringAttribute) (argValues[0])).getValue();
+                String arg1 = ((IPAddressAttribute) (argValues[1])).encode();
 
-        case ID_X500NAME_MATCH: {
-            X500Principal arg0 = ((X500NameAttribute) (argValues[0])).getValue();
-            X500Principal arg1 = ((X500NameAttribute) (argValues[1])).getValue();
+                boolResult = regexpHelper(arg0, arg1);
 
-            boolResult = arg1.getName(X500Principal.CANONICAL).endsWith(
-                    arg0.getName(X500Principal.CANONICAL));
-
-            break;
-        }
-
-        case ID_RFC822NAME_MATCH: {
-            String arg0 = ((StringAttribute) (argValues[0])).getValue();
-            String arg1 = ((RFC822NameAttribute) (argValues[1])).getValue();
-
-            if (arg0.indexOf('@') != -1) {
-                // this is case #1 : a whole address
-                String normalized = (new RFC822NameAttribute(arg0)).getValue();
-                boolResult = normalized.equals(arg1);
-            } else if (arg0.charAt(0) == '.') {
-                // this is case #3 : a sub-domain
-                boolResult = arg1.endsWith(arg0.toLowerCase());
-            } else {
-                // this is case #2 : any mailbox at a specific domain
-                String mailDomain = arg1.substring(arg1.indexOf('@') + 1);
-                boolResult = arg0.toLowerCase().equals(mailDomain);
+                break;
             }
 
-            break;
-        }
+            case ID_DNSNAME_REGEXP_MATCH: {
+                // arg0 is a regular expression; arg1 is a general string
+                String arg0 = ((StringAttribute) (argValues[0])).getValue();
+                String arg1 = ((DNSNameAttribute) (argValues[1])).encode();
 
-        case ID_ANYURI_REGEXP_MATCH: {
-            // arg0 is a regular expression; arg1 is a general string
-            String arg0 = ((StringAttribute) (argValues[0])).getValue();
-            String arg1 = ((AnyURIAttribute) (argValues[1])).encode();
+                boolResult = regexpHelper(arg0, arg1);
 
-            boolResult = regexpHelper(arg0, arg1);
+                break;
+            }
 
-            break;
-        }
+            case ID_RFC822NAME_REGEXP_MATCH: {
+                // arg0 is a regular expression; arg1 is a general string
+                String arg0 = ((StringAttribute) (argValues[0])).getValue();
+                String arg1 = ((RFC822NameAttribute) (argValues[1])).encode();
 
-        case ID_IPADDRESS_REGEXP_MATCH: {
-            // arg0 is a regular expression; arg1 is a general string
-            String arg0 = ((StringAttribute) (argValues[0])).getValue();
-            String arg1 = ((IPAddressAttribute) (argValues[1])).encode();
+                boolResult = regexpHelper(arg0, arg1);
 
-            boolResult = regexpHelper(arg0, arg1);
+                break;
+            }
 
-            break;
-        }
+            case ID_X500NAME_REGEXP_MATCH: {
+                // arg0 is a regular expression; arg1 is a general string
+                String arg0 = ((StringAttribute) (argValues[0])).getValue();
+                String arg1 = ((X500NameAttribute) (argValues[1])).encode();
 
-        case ID_DNSNAME_REGEXP_MATCH: {
-            // arg0 is a regular expression; arg1 is a general string
-            String arg0 = ((StringAttribute) (argValues[0])).getValue();
-            String arg1 = ((DNSNameAttribute) (argValues[1])).encode();
+                boolResult = regexpHelper(arg0, arg1);
 
-            boolResult = regexpHelper(arg0, arg1);
-
-            break;
-        }
-
-        case ID_RFC822NAME_REGEXP_MATCH: {
-            // arg0 is a regular expression; arg1 is a general string
-            String arg0 = ((StringAttribute) (argValues[0])).getValue();
-            String arg1 = ((RFC822NameAttribute) (argValues[1])).encode();
-
-            boolResult = regexpHelper(arg0, arg1);
-
-            break;
-        }
-
-        case ID_X500NAME_REGEXP_MATCH: {
-            // arg0 is a regular expression; arg1 is a general string
-            String arg0 = ((StringAttribute) (argValues[0])).getValue();
-            String arg1 = ((X500NameAttribute) (argValues[1])).encode();
-
-            boolResult = regexpHelper(arg0, arg1);
-
-            break;
-        }
+                break;
+            }
 
         }
 

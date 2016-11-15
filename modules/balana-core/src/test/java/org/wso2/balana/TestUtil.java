@@ -69,8 +69,8 @@ public class TestUtil {
     /**
      * Checks matching of result that got from PDP and expected response from a file.
      *
-     * @param resultResponse  result that got from PDP
-     * @param expectedResponse  expected response from a file
+     * @param resultResponse   result that got from PDP
+     * @param expectedResponse expected response from a file
      * @return True/False
      */
     public static boolean isMatching(ResponseCtx resultResponse, ResponseCtx expectedResponse) {
@@ -80,70 +80,70 @@ public class TestUtil {
 
         boolean finalResult = false;
 
-        for(AbstractResult result : results){
+        for (AbstractResult result : results) {
 
             boolean match = false;
 
             int decision = result.getDecision();
 
-            String status =  result.getStatus().encode();
+            String status = result.getStatus().encode();
 
-            List<String> advices = new ArrayList <String>();
-            if( result.getAdvices() != null){
-                for(Advice advice : result.getAdvices()){
+            List<String> advices = new ArrayList<String>();
+            if (result.getAdvices() != null) {
+                for (Advice advice : result.getAdvices()) {
                     advices.add(advice.encode());
                 }
             }
 
-            List<String> obligations = new ArrayList <String>();
-            if(result.getObligations() != null){
-                for(ObligationResult obligationResult : result.getObligations()){
+            List<String> obligations = new ArrayList<String>();
+            if (result.getObligations() != null) {
+                for (ObligationResult obligationResult : result.getObligations()) {
                     obligations.add(obligationResult.encode());
                 }
             }
 
-            List<String> attributesList = new ArrayList <String>();
+            List<String> attributesList = new ArrayList<String>();
 
-            if(result instanceof Result){
+            if (result instanceof Result) {
                 Result xacml3Result = (Result) result;
-                if(xacml3Result.getAttributes() != null){
-                    for(Attributes attributesElement : xacml3Result.getAttributes()){
+                if (xacml3Result.getAttributes() != null) {
+                    for (Attributes attributesElement : xacml3Result.getAttributes()) {
                         attributesList.add(attributesElement.encode());
                     }
                 }
             }
 
-            for(AbstractResult expectedResult : expectedResults){
+            for (AbstractResult expectedResult : expectedResults) {
 
                 int decisionExpected = expectedResult.getDecision();
-                if(decision == 4 || decision == 5 || decision == 6){
+                if (decision == 4 || decision == 5 || decision == 6) {
                     decision = 2;
                 }
-                if(decision != decisionExpected){
+                if (decision != decisionExpected) {
                     continue;
                 }
 
                 String statusExpected = expectedResult.getStatus().encode();
 
-                if(!processResult(statusExpected).equals(processResult(status))){
+                if (!processResult(statusExpected).equals(processResult(status))) {
                     continue;
                 }
 
-                List<String> advicesExpected = new ArrayList <String>();
-                if(expectedResult.getAdvices() != null){
-                    for(Advice advice : expectedResult.getAdvices()){
+                List<String> advicesExpected = new ArrayList<String>();
+                if (expectedResult.getAdvices() != null) {
+                    for (Advice advice : expectedResult.getAdvices()) {
                         advicesExpected.add(advice.encode());
                     }
                 }
 
-                if(advices.size() != advicesExpected.size()){
+                if (advices.size() != advicesExpected.size()) {
                     continue;
                 }
 
-                if(advices.size() > 0){
+                if (advices.size() > 0) {
                     boolean adviceContains = false;
-                    for(String advice : advices){
-                        if(!advicesExpected.contains(advice)){
+                    for (String advice : advices) {
+                        if (!advicesExpected.contains(advice)) {
                             adviceContains = false;
                             break;
                         } else {
@@ -151,26 +151,26 @@ public class TestUtil {
                         }
                     }
 
-                    if(!adviceContains){
+                    if (!adviceContains) {
                         continue;
                     }
                 }
 
-                List<String> obligationsExpected = new ArrayList <String>();
-                if(expectedResult.getObligations() != null){
-                    for(ObligationResult obligationResult : expectedResult.getObligations()){
+                List<String> obligationsExpected = new ArrayList<String>();
+                if (expectedResult.getObligations() != null) {
+                    for (ObligationResult obligationResult : expectedResult.getObligations()) {
                         obligationsExpected.add(obligationResult.encode());
                     }
                 }
 
-                if(obligations.size() != obligationsExpected.size()){
+                if (obligations.size() != obligationsExpected.size()) {
                     continue;
                 }
 
-                if(obligations.size() > 0){
+                if (obligations.size() > 0) {
                     boolean obligationContains = false;
-                    for(String obligation : obligations){
-                        if(!obligationsExpected.contains(obligation)){
+                    for (String obligation : obligations) {
+                        if (!obligationsExpected.contains(obligation)) {
                             obligationContains = false;
                             break;
                         } else {
@@ -178,31 +178,31 @@ public class TestUtil {
                         }
                     }
 
-                    if(!obligationContains){
+                    if (!obligationContains) {
                         continue;
                     }
                 }
 
                 // if only XACML 3.0. result
-                if(expectedResult instanceof Result){
+                if (expectedResult instanceof Result) {
 
                     Result xacml3Result = (Result) expectedResult;
-                    List<String> attributesExpected = new ArrayList <String>();
+                    List<String> attributesExpected = new ArrayList<String>();
 
-                    if(xacml3Result.getAttributes() != null){
-                        for(Attributes  attributes : xacml3Result.getAttributes()){
+                    if (xacml3Result.getAttributes() != null) {
+                        for (Attributes attributes : xacml3Result.getAttributes()) {
                             attributesExpected.add(attributes.encode());
                         }
                     }
 
-                    if(attributesList.size() != attributesExpected.size()){
+                    if (attributesList.size() != attributesExpected.size()) {
                         continue;
                     }
 
-                    if(attributesList.size() > 0){
+                    if (attributesList.size() > 0) {
                         boolean attributeContains = false;
-                        for(String attribute : attributesList){
-                            if(!attributesExpected.contains(attribute)){
+                        for (String attribute : attributesList) {
+                            if (!attributesExpected.contains(attribute)) {
                                 attributeContains = false;
                                 break;
                             } else {
@@ -210,7 +210,7 @@ public class TestUtil {
                             }
                         }
 
-                        if(!attributeContains){
+                        if (!attributeContains) {
                             continue;
                         }
                     }
@@ -219,7 +219,7 @@ public class TestUtil {
                 break;
             }
 
-            if(match){
+            if (match) {
                 finalResult = true;
             } else {
                 finalResult = false;
@@ -227,7 +227,7 @@ public class TestUtil {
             }
         }
 
-        if(finalResult){
+        if (finalResult) {
             log.info("Test is Passed........!!!   " +
                     "Result received from the PDP is matched with expected result");
         } else {
@@ -240,13 +240,13 @@ public class TestUtil {
     /**
      * Evaluates XACML request
      *
-     * @param pdp  PDP instance
+     * @param pdp     PDP instance
      * @param request XACML request
      * @return XACML response as ResponseCtx
      */
     public static ResponseCtx evaluate(PDP pdp, String request) {
 
-        AbstractRequestCtx  requestCtx;
+        AbstractRequestCtx requestCtx;
         ResponseCtx responseCtx;
 
         try {
@@ -270,18 +270,18 @@ public class TestUtil {
     /**
      * This creates the XACML request from a file
      *
-     * @param rootDirectory   root directory of the  request files
-     * @param versionDirectory   version directory of the  request files
-     * @param requestId  request file name
+     * @param rootDirectory    root directory of the  request files
+     * @param versionDirectory version directory of the  request files
+     * @param requestId        request file name
      * @return String or null if any error
      */
     public static String createRequest(String rootDirectory, String versionDirectory,
-                                       String requestId){
+                                       String requestId) {
 
         File file = new File(".");
         StringWriter writer = null;
-        try{
-            String filePath =  file.getCanonicalPath() + File.separator +   TestConstants.RESOURCE_PATH +
+        try {
+            String filePath = file.getCanonicalPath() + File.separator + TestConstants.RESOURCE_PATH +
                     File.separator + rootDirectory + File.separator + versionDirectory +
                     File.separator + TestConstants.REQUEST_DIRECTORY + File.separator + requestId;
 
@@ -297,11 +297,11 @@ public class TestUtil {
             Transformer transformer = tf.newTransformer();
             transformer.transform(domSource, result);
             return writer.toString();
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Error while reading expected response from file ", e);
             //ignore any exception and return null
         } finally {
-            if(writer != null){
+            if (writer != null) {
                 try {
                     writer.close();
                 } catch (IOException e) {
@@ -316,17 +316,17 @@ public class TestUtil {
     /**
      * This creates the expected XACML response from a file
      *
-     * @param rootDirectory   root directory of the  response files
-     * @param versionDirectory   version directory of the  response files
-     * @param responseId  response file name
+     * @param rootDirectory    root directory of the  response files
+     * @param versionDirectory version directory of the  response files
+     * @param responseId       response file name
      * @return ResponseCtx or null if any error
      */
     public static ResponseCtx createResponse(String rootDirectory, String versionDirectory,
                                              String responseId) {
 
         File file = new File(".");
-        try{
-            String filePath =  file.getCanonicalPath() + File.separator +   TestConstants.RESOURCE_PATH +
+        try {
+            String filePath = file.getCanonicalPath() + File.separator + TestConstants.RESOURCE_PATH +
                     File.separator + rootDirectory + File.separator + versionDirectory +
                     File.separator + TestConstants.RESPONSE_DIRECTORY + File.separator + responseId;
 
@@ -337,7 +337,7 @@ public class TestUtil {
             DocumentBuilder db = factory.newDocumentBuilder();
             Document doc = db.parse(new FileInputStream(filePath));
             return ResponseCtx.getInstance(doc.getDocumentElement());
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Error while reading expected response from file ", e);
             //ignore any exception and return null
         }
@@ -351,12 +351,12 @@ public class TestUtil {
      * on the how you have defined it with the PDP, Therefore we can not compare it with
      * conformance tests.
      *
-     * @param response  XACML response String
+     * @param response XACML response String
      * @return XACML response String with out StatusMessage
      */
-    private static String processResult(String response){
+    private static String processResult(String response) {
 
-        if(response.contains("StatusMessage")){
+        if (response.contains("StatusMessage")) {
             response = response.substring(0, response.indexOf("<StatusMessage>")) +
                     response.substring(response.indexOf("</Status>"));
         }

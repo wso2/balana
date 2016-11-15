@@ -52,38 +52,36 @@ import org.wso2.balana.ctx.EvaluationCtx;
  * Resources, Actions, and Environments (in XACML 2.0 and later). The target is used to quickly
  * identify whether the parent element (a policy set, policy, or rule) is applicable to a given
  * request.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class Target extends AbstractTarget {
 
+    // the logger we'll use for all messages
+    private static Log logger = LogFactory.getLog(Target.class);
     // the four sections of a Target
     private TargetSection subjectsSection;
     private TargetSection resourcesSection;
     private TargetSection actionsSection;
     private TargetSection environmentsSection;
-
     // the version of XACML of the policy containing this target
     private int xacmlVersion;
-
-    // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(Target.class);
 
     /**
      * Constructor that creates an XACML 1.x <code>Target</code> from components. Each of the
      * sections must be non-null, but they may match any request. Because this is only used for 1.x
      * Targets, there is no Environments section.
-     * 
-     * @param subjectsSection a <code>TargetSection</code> representing the Subjects section of this
-     *            target
+     *
+     * @param subjectsSection  a <code>TargetSection</code> representing the Subjects section of this
+     *                         target
      * @param resourcesSection a <code>TargetSection</code> representing the Resources section of
-     *            this target
-     * @param actionsSection a <code>TargetSection</code> representing the Actions section of this
-     *            target
+     *                         this target
+     * @param actionsSection   a <code>TargetSection</code> representing the Actions section of this
+     *                         target
      */
     public Target(TargetSection subjectsSection, TargetSection resourcesSection,
-            TargetSection actionsSection) {
+                  TargetSection actionsSection) {
         if ((subjectsSection == null) || (resourcesSection == null) || (actionsSection == null))
             throw new ProcessingException("All sections of a Target must " + "be non-null");
 
@@ -98,18 +96,18 @@ public class Target extends AbstractTarget {
     /**
      * Constructor that creates an XACML 2.0 <code>Target</code> from components. Each of the
      * sections must be non-null, but they may match any request.
-     * 
-     * @param subjectsSection a <code>TargetSection</code> representing the Subjects section of this
-     *            target
-     * @param resourcesSection a <code>TargetSection</code> representing the Resources section of
-     *            this target
-     * @param actionsSection a <code>TargetSection</code> representing the Actions section of this
-     *            target
+     *
+     * @param subjectsSection     a <code>TargetSection</code> representing the Subjects section of this
+     *                            target
+     * @param resourcesSection    a <code>TargetSection</code> representing the Resources section of
+     *                            this target
+     * @param actionsSection      a <code>TargetSection</code> representing the Actions section of this
+     *                            target
      * @param environmentsSection a <code>TargetSection</code> representing the Environments section
-     *            of this target
+     *                            of this target
      */
     public Target(TargetSection subjectsSection, TargetSection resourcesSection,
-            TargetSection actionsSection, TargetSection environmentsSection) {
+                  TargetSection actionsSection, TargetSection environmentsSection) {
         if ((subjectsSection == null) || (resourcesSection == null) || (actionsSection == null)
                 || (environmentsSection == null))
             throw new ProcessingException("All sections of a Target must " + "be non-null");
@@ -123,18 +121,15 @@ public class Target extends AbstractTarget {
 
     /**
      * Creates a <code>Target</code> by parsing a node.
-     * 
-     * @deprecated As of 2.0 you should avoid using this method and should instead use the version
-     *             that takes a <code>PolicyMetaData</code> instance. This method will only work for
-     *             XACML 1.x policies.
-     * 
-     * @param root the node to parse for the <code>Target</code>
+     *
+     * @param root         the node to parse for the <code>Target</code>
      * @param xpathVersion the XPath version to use in any selectors, or null if this is unspecified
-     *            (ie, not supplied in the defaults section of the policy)
-     * 
+     *                     (ie, not supplied in the defaults section of the policy)
      * @return a new <code>Target</code> constructed by parsing
-     * 
      * @throws ParsingException if the DOM node is invalid
+     * @deprecated As of 2.0 you should avoid using this method and should instead use the version
+     * that takes a <code>PolicyMetaData</code> instance. This method will only work for
+     * XACML 1.x policies.
      */
     public static Target getInstance(Node root, String xpathVersion) throws ParsingException {
         return getInstance(root, new PolicyMetaData(XACMLConstants.XACML_1_0_IDENTIFIER,
@@ -143,15 +138,14 @@ public class Target extends AbstractTarget {
 
     /**
      * Creates a <code>Target</code> by parsing a node.
-     * 
-     * @param root the node to parse for the <code>Target</code>
+     *
+     * @param root     the node to parse for the <code>Target</code>
      * @param metaData
      * @return a new <code>Target</code> constructed by parsing
-     * 
      * @throws ParsingException if the DOM node is invalid
      */
     public static Target getInstance(Node root, PolicyMetaData metaData) throws ParsingException {
-        
+
         TargetSection subjects = null;
         TargetSection resources = null;
         TargetSection actions = null;
@@ -198,7 +192,7 @@ public class Target extends AbstractTarget {
 
     /**
      * Returns the Subjects section of this Target.
-     * 
+     *
      * @return a <code>TargetSection</code> representing the Subjects
      */
     public TargetSection getSubjectsSection() {
@@ -207,7 +201,7 @@ public class Target extends AbstractTarget {
 
     /**
      * Returns the Resources section of this Target.
-     * 
+     *
      * @return a <code>TargetSection</code> representing the Resources
      */
     public TargetSection getResourcesSection() {
@@ -216,7 +210,7 @@ public class Target extends AbstractTarget {
 
     /**
      * Returns the Actions section of this Target.
-     * 
+     *
      * @return a <code>TargetSection</code> representing the Actions
      */
     public TargetSection getActionsSection() {
@@ -227,7 +221,7 @@ public class Target extends AbstractTarget {
      * Returns the Environments section of this Target. Note that if this is an XACML 1.x policy,
      * then the section will always match anything, since XACML 1.x doesn't support matching on the
      * Environment.
-     * 
+     *
      * @return a <code>TargetSection</code> representing the Environments
      */
     public TargetSection getEnvironmentsSection() {
@@ -236,7 +230,7 @@ public class Target extends AbstractTarget {
 
     /**
      * Returns whether or not this <code>Target</code> matches any request.
-     * 
+     *
      * @return true if this Target matches any request, false otherwise
      */
     public boolean matchesAny() {
@@ -247,9 +241,8 @@ public class Target extends AbstractTarget {
     /**
      * Determines whether this <code>Target</code> matches the input request (whether it is
      * applicable).
-     * 
+     *
      * @param context the representation of the request
-     * 
      * @return the result of trying to match the target and the request
      */
     public MatchResult match(EvaluationCtx context) {
@@ -258,7 +251,7 @@ public class Target extends AbstractTarget {
         String resourcePolicyValue;
         String actionPolicyValue;
         String envPolicyValue;
-        
+
 
         // before matching, see if this target matches any request
         if (matchesAny())
@@ -293,7 +286,7 @@ public class Target extends AbstractTarget {
             }
             return result;
         }
-        
+
         actionPolicyValue = result.getPolicyValue();
 
         // finally, match the Environments section
@@ -304,9 +297,9 @@ public class Target extends AbstractTarget {
             }
             return result;
         }
-        
+
         envPolicyValue = result.getPolicyValue();
-        
+
         result.setActionPolicyValue(actionPolicyValue);
         result.setSubjectPolicyValue(subjectPolicyValue);
         result.setEnvPolicyValue(envPolicyValue);
@@ -349,7 +342,7 @@ public class Target extends AbstractTarget {
             actionsSection.encode(builder);
 
             // we should only do this if we're a 2.0 policy
-            if (xacmlVersion == XACMLConstants.XACML_VERSION_2_0){
+            if (xacmlVersion == XACMLConstants.XACML_VERSION_2_0) {
                 environmentsSection.encode(builder);
             }
             builder.append("</Target>\n");

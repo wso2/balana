@@ -43,7 +43,7 @@ import java.util.Set;
  * "NotApplicable" must never be the result. It is particularly useful at the top level
  * in a policy structure to ensure that a PDP will always return a definite "Permit" or "Deny" result.
  */
-public class PermitUnlessDenyPolicyAlg extends PolicyCombiningAlgorithm{
+public class PermitUnlessDenyPolicyAlg extends PolicyCombiningAlgorithm {
 
     /**
      * The standard URI used to identify this algorithm
@@ -71,7 +71,7 @@ public class PermitUnlessDenyPolicyAlg extends PolicyCombiningAlgorithm{
     public PermitUnlessDenyPolicyAlg() {
         super(identifierURI);
 
-        if (earlyException != null){
+        if (earlyException != null) {
             throw earlyException;
         }
     }
@@ -90,7 +90,7 @@ public class PermitUnlessDenyPolicyAlg extends PolicyCombiningAlgorithm{
     public AbstractResult combine(EvaluationCtx context, List parameters, List policyElements) {
 
         List<ObligationResult> permitObligations = new ArrayList<ObligationResult>();
-        List<Advice> permitAdvices= new ArrayList<Advice>();
+        List<Advice> permitAdvices = new ArrayList<Advice>();
 
         for (Object policyElement : policyElements) {
             AbstractPolicy policy = ((PolicyCombinerElement) (policyElement)).getPolicy();
@@ -112,6 +112,6 @@ public class PermitUnlessDenyPolicyAlg extends PolicyCombiningAlgorithm{
 
         // if there is not any value of DENY. The return PERMIT
         return ResultFactory.getFactory().getResult(AbstractResult.DECISION_PERMIT,
-                                                    permitObligations, permitAdvices, context);
-    }    
+                permitObligations, permitAdvices, context);
+    }
 }

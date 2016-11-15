@@ -59,18 +59,18 @@ import org.w3c.dom.NodeList;
 /**
  * Represents one of the two top-level constructs in XACML, the PolicySetType. This can contain
  * other policies and policy sets, and can also contain URIs that point to policies and policy sets.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class PolicySet extends AbstractPolicy {
 
     /**
      * Creates a new <code>PolicySet</code> with only the required elements.
-     * 
-     * @param id the policy set identifier
+     *
+     * @param id           the policy set identifier
      * @param combiningAlg the <code>CombiningAlgorithm</code> used on the policies in this set
-     * @param target the <code>AbstractTarget</code> for this set
+     * @param target       the <code>AbstractTarget</code> for this set
      */
     public PolicySet(URI id, PolicyCombiningAlgorithm combiningAlg, AbstractTarget target) {
         this(id, null, combiningAlg, null, target, null, null, null);
@@ -78,14 +78,13 @@ public class PolicySet extends AbstractPolicy {
 
     /**
      * Creates a new <code>PolicySet</code> with only the required elements, plus some policies.
-     * 
-     * @param id the policy set identifier
+     *
+     * @param id           the policy set identifier
      * @param combiningAlg the <code>CombiningAlgorithm</code> used on the policies in this set
-     * @param target the <code>AbstractTarget</code> for this set
-     * @param policies a list of <code>AbstractPolicy</code> objects
-     * 
+     * @param target       the <code>AbstractTarget</code> for this set
+     * @param policies     a list of <code>AbstractPolicy</code> objects
      * @throws IllegalArgumentException if the <code>List</code> of policies contains an object that
-     *             is not an <code>AbstractPolicy</code>
+     *                                  is not an <code>AbstractPolicy</code>
      */
     public PolicySet(URI id, PolicyCombiningAlgorithm combiningAlg, AbstractTarget target, List policies) {
         this(id, null, combiningAlg, null, target, policies, null, null);
@@ -94,64 +93,61 @@ public class PolicySet extends AbstractPolicy {
     /**
      * Creates a new <code>PolicySet</code> with the required elements plus some policies and a
      * String description.
-     * 
-     * @param id the policy set identifier
-     * @param version the policy version or null for the default (this is always null for pre-2.0
-     *            policies)
+     *
+     * @param id           the policy set identifier
+     * @param version      the policy version or null for the default (this is always null for pre-2.0
+     *                     policies)
      * @param combiningAlg the <code>CombiningAlgorithm</code> used on the policies in this set
-     * @param description a <code>String</code> describing the policy
-     * @param target the <code>AbstractTarget</code> for this set
-     * @param policies a list of <code>AbstractPolicy</code> objects
-     * 
+     * @param description  a <code>String</code> describing the policy
+     * @param target       the <code>AbstractTarget</code> for this set
+     * @param policies     a list of <code>AbstractPolicy</code> objects
      * @throws IllegalArgumentException if the <code>List</code> of policies contains an object that
-     *             is not an <code>AbstractPolicy</code>
+     *                                  is not an <code>AbstractPolicy</code>
      */
     public PolicySet(URI id, String version, PolicyCombiningAlgorithm combiningAlg,
-            String description, AbstractTarget target, List policies) {
+                     String description, AbstractTarget target, List policies) {
         this(id, version, combiningAlg, description, target, policies, null, null);
     }
 
     /**
      * Creates a new <code>PolicySet</code> with the required elements plus some policies, a String
      * description, and policy defaults.
-     * 
-     * @param id the policy set identifier
-     * @param version the policy version or null for the default (this is always null for pre-2.0
-     *            policies)
-     * @param combiningAlg the <code>CombiningAlgorithm</code> used on the policies in this set
-     * @param description a <code>String</code> describing the policy
-     * @param target the <code>AbstractTarget</code> for this set
-     * @param policies a list of <code>AbstractPolicy</code> objects
+     *
+     * @param id             the policy set identifier
+     * @param version        the policy version or null for the default (this is always null for pre-2.0
+     *                       policies)
+     * @param combiningAlg   the <code>CombiningAlgorithm</code> used on the policies in this set
+     * @param description    a <code>String</code> describing the policy
+     * @param target         the <code>AbstractTarget</code> for this set
+     * @param policies       a list of <code>AbstractPolicy</code> objects
      * @param defaultVersion the XPath version to use
-     * 
      * @throws IllegalArgumentException if the <code>List</code> of policies contains an object that
-     *             is not an <code>AbstractPolicy</code>
+     *                                  is not an <code>AbstractPolicy</code>
      */
     public PolicySet(URI id, String version, PolicyCombiningAlgorithm combiningAlg,
-            String description, AbstractTarget target, List policies, String defaultVersion) {
+                     String description, AbstractTarget target, List policies, String defaultVersion) {
         this(id, version, combiningAlg, description, target, policies, defaultVersion, null);
     }
 
     /**
      * Creates a new <code>PolicySet</code> with the required elements plus some policies, a String
      * description, policy defaults, and obligations.
-     * 
-     * @param id the policy set identifier
-     * @param version the policy version or null for the default (this is always null for pre-2.0
-     *            policies)
-     * @param combiningAlg the <code>CombiningAlgorithm</code> used on the policies in this set
-     * @param description a <code>String</code> describing the policy
-     * @param target the <code>AbstractTarget</code> for this set
-     * @param policies a list of <code>AbstractPolicy</code> objects
+     *
+     * @param id             the policy set identifier
+     * @param version        the policy version or null for the default (this is always null for pre-2.0
+     *                       policies)
+     * @param combiningAlg   the <code>CombiningAlgorithm</code> used on the policies in this set
+     * @param description    a <code>String</code> describing the policy
+     * @param target         the <code>AbstractTarget</code> for this set
+     * @param policies       a list of <code>AbstractPolicy</code> objects
      * @param defaultVersion the XPath version to use
-     * @param obligations a set of <code>Obligation</code> objects
-     * 
+     * @param obligations    a set of <code>Obligation</code> objects
      * @throws IllegalArgumentException if the <code>List</code> of policies contains an object that
-     *             is not an <code>AbstractPolicy</code>
+     *                                  is not an <code>AbstractPolicy</code>
      */
     public PolicySet(URI id, String version, PolicyCombiningAlgorithm combiningAlg,
-            String description, AbstractTarget target, List<AbstractPolicy> policies, String defaultVersion,
-            Set<AbstractObligation> obligations) {
+                     String description, AbstractTarget target, List<AbstractPolicy> policies, String defaultVersion,
+                     Set<AbstractObligation> obligations) {
         super(id, version, combiningAlg, description, target, defaultVersion, obligations, null, null);
 
         List<CombinerElement> list = null;
@@ -177,29 +173,28 @@ public class PolicySet extends AbstractPolicy {
      * the other constructors in this class, the policies list is actually a list of
      * <code>CombinerElement</code>s used to match a policy with any combiner parameters it may
      * have.
-     * 
-     * @param id the policy set identifier
-     * @param version the policy version or null for the default (this is always null for pre-2.0
-     *            policies)
-     * @param combiningAlg the <code>CombiningAlgorithm</code> used on the rules in this set
-     * @param description a <code>String</code> describing the policy or null if there is no
-     *            description
-     * @param target the <code>AbstractTarget</code> for this policy
+     *
+     * @param id             the policy set identifier
+     * @param version        the policy version or null for the default (this is always null for pre-2.0
+     *                       policies)
+     * @param combiningAlg   the <code>CombiningAlgorithm</code> used on the rules in this set
+     * @param description    a <code>String</code> describing the policy or null if there is no
+     *                       description
+     * @param target         the <code>AbstractTarget</code> for this policy
      * @param policyElements a list of <code>CombinerElement</code> objects or null if there are no
-     *            policies
+     *                       policies
      * @param defaultVersion the XPath version to use or null if there is no default version
-     * @param obligations a set of <code>Obligations</code> objects or null if there are no
-     *            obligations
-     * @param parameters the <code>List</code> of <code>CombinerParameter</code>s provided for
-     *            general use by the combining algorithm
-     * 
+     * @param obligations    a set of <code>Obligations</code> objects or null if there are no
+     *                       obligations
+     * @param parameters     the <code>List</code> of <code>CombinerParameter</code>s provided for
+     *                       general use by the combining algorithm
      * @throws IllegalArgumentException if the <code>List</code> of rules contains an object that is
-     *             not a <code>Rule</code>
+     *                                  not a <code>Rule</code>
      */
     public PolicySet(URI id, String version, PolicyCombiningAlgorithm combiningAlg,
-            String description, AbstractTarget target, List policyElements, String defaultVersion,
-            Set<AbstractObligation> obligations, List<CombinerParameter>  parameters) {
-        
+                     String description, AbstractTarget target, List policyElements, String defaultVersion,
+                     Set<AbstractObligation> obligations, List<CombinerParameter> parameters) {
+
         super(id, version, combiningAlg, description, target, defaultVersion, obligations, null,
                 parameters);
 
@@ -221,20 +216,20 @@ public class PolicySet extends AbstractPolicy {
      * supposed to use a getInstance() method to construct from a Node, but since we want some
      * common code in the parent class, we need this functionality in a constructor.
      *
-     * @param root  the node to parse for the <code>PolicySet</code>
+     * @param root   the node to parse for the <code>PolicySet</code>
      * @param finder the <code>PolicyFinder</code> used to handle references
-     * the XACML policy, if null use default factories
+     *               the XACML policy, if null use default factories
      * @throws ParsingException ParsingException if the PolicyType is invalid
      */
     private PolicySet(Node root, PolicyFinder finder) throws ParsingException {
-        
+
         super(root, "PolicySet", "PolicyCombiningAlgId");
 
         List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
         HashMap<String, List<CombinerParameter>> policyParameters =
-                                                new HashMap<String, List<CombinerParameter>>();
+                new HashMap<String, List<CombinerParameter>>();
         HashMap<String, List<CombinerParameter>> policySetParameters =
-                                                new HashMap<String, List<CombinerParameter>>();
+                new HashMap<String, List<CombinerParameter>>();
         PolicyMetaData metaData = getMetaData();
 
         // collect the PolicySet-specific elements
@@ -278,7 +273,7 @@ public class PolicySet extends AbstractPolicy {
             } else {
                 PolicyReference ref = (PolicyReference) policy;
                 String id = ref.getReference().toString();
-                if (ref.getReferenceType() == PolicyReference.POLICY_REFERENCE){
+                if (ref.getReferenceType() == PolicyReference.POLICY_REFERENCE) {
                     list = policyParameters.remove(id);
                 } else {
                     list = policySetParameters.remove(id);
@@ -292,8 +287,8 @@ public class PolicySet extends AbstractPolicy {
         if (!policyParameters.isEmpty()) {
             throw new ParsingException("Unmatched parameters in Policy");
         }
-        
-        if (!policySetParameters.isEmpty()){
+
+        if (!policySetParameters.isEmpty()) {
             throw new ParsingException("Unmatched parameters in PolicySet");
         }
         // finally, set the list of Rules
@@ -301,7 +296,42 @@ public class PolicySet extends AbstractPolicy {
     }
 
     /**
+     * Creates an instance of a <code>PolicySet</code> object based on a DOM node. The node must be
+     * the root of PolicySetType XML object, otherwise an exception is thrown. This
+     * <code>PolicySet</code> will not support references because it has no
+     * <code>PolicyFinder</code>.
+     *
+     * @param root the DOM root of a PolicySetType XML type
+     * @return a <code>PolicySet</code> object
+     * @throws ParsingException if the PolicySetType is invalid
+     */
+    public static PolicySet getInstance(Node root) throws ParsingException {
+        return getInstance(root, null);
+    }
+
+    /**
+     * Creates an instance of a <code>PolicySet</code> object based on a DOM node. The node must be
+     * the root of PolicySetType XML object, otherwise an exception is thrown. The finder is used to
+     * handle policy references.
+     *
+     * @param root   the DOM root of a PolicySetType XML type
+     * @param finder the <code>PolicyFinder</code> used to handle references
+     * @return a <code>PolicySet</code> object
+     * @throws ParsingException if the PolicySetType is invalid
+     */
+    public static PolicySet getInstance(Node root, PolicyFinder finder) throws ParsingException {
+        // first off, check that it's the right kind of node
+        if (!DOMHelper.getLocalName(root).equals("PolicySet")) {
+            throw new ParsingException("Cannot create PolicySet from root of" + " type "
+                    + DOMHelper.getLocalName(root));
+        }
+
+        return new PolicySet(root, finder);
+    }
+
+    /**
      * Private helper method that handles parsing a collection of parameters
+     *
      * @param parameters
      * @param root
      * @param prefix
@@ -309,8 +339,8 @@ public class PolicySet extends AbstractPolicy {
      * @throws ParsingException
      */
     private void parameterHelper(HashMap<String, List<CombinerParameter>> parameters,
-                                                Node root, String prefix) throws ParsingException {
-        
+                                 Node root, String prefix) throws ParsingException {
+
         String ref = root.getAttributes().getNamedItem(prefix + "IdRef").getNodeValue();
 
         if (parameters.containsKey(ref)) {
@@ -325,6 +355,7 @@ public class PolicySet extends AbstractPolicy {
 
     /**
      * Private helper method that handles parsing a single parameter.
+     *
      * @param parameters
      * @param root
      * @throws ParsingException
@@ -334,44 +365,10 @@ public class PolicySet extends AbstractPolicy {
 
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
-            if (DOMHelper.getLocalName(node).equals("CombinerParameter")){
+            if (DOMHelper.getLocalName(node).equals("CombinerParameter")) {
                 parameters.add(CombinerParameter.getInstance(node));
             }
         }
-    }
-
-    /**
-     * Creates an instance of a <code>PolicySet</code> object based on a DOM node. The node must be
-     * the root of PolicySetType XML object, otherwise an exception is thrown. This
-     * <code>PolicySet</code> will not support references because it has no
-     * <code>PolicyFinder</code>.
-     * 
-     * @param root the DOM root of a PolicySetType XML type
-     * @return  a <code>PolicySet</code> object
-     * @throws ParsingException if the PolicySetType is invalid
-     */
-    public static PolicySet getInstance(Node root) throws ParsingException {
-        return getInstance(root, null);
-    }
-
-    /**
-     * Creates an instance of a <code>PolicySet</code> object based on a DOM node. The node must be
-     * the root of PolicySetType XML object, otherwise an exception is thrown. The finder is used to
-     * handle policy references.
-     * 
-     * @param root the DOM root of a PolicySetType XML type
-     * @param finder the <code>PolicyFinder</code> used to handle references
-     * @return a <code>PolicySet</code> object
-     * @throws ParsingException if the PolicySetType is invalid
-     */
-    public static PolicySet getInstance(Node root, PolicyFinder finder) throws ParsingException {
-        // first off, check that it's the right kind of node
-        if (!DOMHelper.getLocalName(root).equals("PolicySet")) {
-            throw new ParsingException("Cannot create PolicySet from root of" + " type "
-                    + DOMHelper.getLocalName(root));
-        }
-
-        return new PolicySet(root, finder);
     }
 
     /**
@@ -398,12 +395,12 @@ public class PolicySet extends AbstractPolicy {
                 append(getCombiningAlg().getIdentifier().toString()).append("\">\n");
 
         String description = getDescription();
-        if (description != null){
+        if (description != null) {
             builder.append("<Description>").append(description).append("</Description>\n");
         }
-        
+
         String version = getDefaultVersion();
-        if (version != null){
+        if (version != null) {
             builder.append("<PolicySetDefaults><XPathVersion>").append(version).
                     append("</XPathVersion></PolicySetDefaults>\n");
         }

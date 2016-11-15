@@ -21,7 +21,7 @@
         </AnyOf>
     </Target>
     <Rule RuleId="rule1" Effect="Permit">
-    <Description>Rule to match value in content element using XPath</Description>
+        <Description>Rule to match value in content element using XPath</Description>
         <Condition>
             <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:any-of">
                 <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal"/>
@@ -32,9 +32,9 @@
                             DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
                 </Apply>
                 <AttributeSelector MustBePresent="false"
-                                     Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
-                                     Path="//ak:record/ak:patient/ak:patientId/text()"
-                                     DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                                   Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                                   Path="//ak:record/ak:patient/ak:patientId/text()"
+                                   DataType="http://www.w3.org/2001/XMLSchema#string"/>
             </Apply>
         </Condition>
     </Rule>

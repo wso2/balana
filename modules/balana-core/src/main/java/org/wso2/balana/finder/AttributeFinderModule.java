@@ -51,9 +51,9 @@ import org.w3c.dom.Node;
  * This is the abstract class that all <code>AttributeFinder</code> modules extend. All methods have
  * default values to represent that the given feature isn't supported by this module, so module
  * writers needs only implement the methods for the features they're supporting.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public abstract class AttributeFinderModule {
 
@@ -62,7 +62,7 @@ public abstract class AttributeFinderModule {
      * it is a good idea, especially in support of management software. Common identifiers would be
      * the full package and class name (the default if this method isn't overridden), just the class
      * name, or some other well-known string that identifies this class.
-     * 
+     *
      * @return this module's identifier
      */
     public String getIdentifier() {
@@ -72,7 +72,7 @@ public abstract class AttributeFinderModule {
     /**
      * Returns true if this module supports retrieving attributes based on the data provided in an
      * AttributeDesignatorType. By default this method returns false.
-     * 
+     *
      * @return true if retrieval based on designator data is supported
      */
     public boolean isDesignatorSupported() {
@@ -82,7 +82,7 @@ public abstract class AttributeFinderModule {
     /**
      * Returns true if this module supports retrieving attributes based on the data provided in an
      * AttributeSelectorType. By default this method returns false.
-     * 
+     *
      * @return true if retrieval based on selector data is supported
      */
     public boolean isSelectorSupported() {
@@ -95,7 +95,7 @@ public abstract class AttributeFinderModule {
      * are supported. A return value of null can mean that this module doesn't support designator
      * retrieval, or that it supports designators of all types. If the set is non-null, it should
      * contain the values specified in the <code>AttributeDesignator</code>
-     * 
+     *
      * @return a <code>Set</code> of <code>Integer</code>s, or null
      */
     public Set<String> getSupportedCategories() {
@@ -106,7 +106,7 @@ public abstract class AttributeFinderModule {
      * Returns a <code>Set</code> of <code>URI</code>s that represent the attributeIds handled by
      * this module, or null if this module doesn't handle any specific attributeIds. A return value
      * of null means that this module will try to resolve attributes of any id.
-     * 
+     *
      * @return a <code>Set</code> of <code>URI</code>s, or null
      */
     public Set getSupportedIds() {
@@ -125,7 +125,7 @@ public abstract class AttributeFinderModule {
      * This method has been introduced to see what people think of this functionality, and how they
      * would like to use it. It may be removed in future versions, or it may be changed to a more
      * general message-passing system (if other useful messages are identified).
-     * 
+     *
      * @since 1.2
      */
     public void invalidateCache() {
@@ -138,17 +138,16 @@ public abstract class AttributeFinderModule {
      * values were found, but no other error occurred, an empty bag is returned. This method may
      * need to invoke the context data to look for other attribute values, so a module writer must
      * take care not to create a scenario that loops forever.
-     * 
+     *
      * @param attributeType the datatype of the attributes to find
-     * @param attributeId the identifier of the attributes to find
-     * @param issuer the issuer of the attributes, or null if unspecified
-     * @param category the category of the attribute whether it is Subject, Resource or any thing
-     * @param context the representation of the request data
-     * 
+     * @param attributeId   the identifier of the attributes to find
+     * @param issuer        the issuer of the attributes, or null if unspecified
+     * @param category      the category of the attribute whether it is Subject, Resource or any thing
+     * @param context       the representation of the request data
      * @return the result of attribute retrieval, which will be a bag of attributes or an error
      */
     public EvaluationResult findAttribute(URI attributeType, URI attributeId, String issuer,
-            URI category, EvaluationCtx context) {
+                                          URI category, EvaluationCtx context) {
         return new EvaluationResult(BagAttribute.createEmptyBag(attributeType));
     }
 
@@ -159,20 +158,19 @@ public abstract class AttributeFinderModule {
      * need to invoke the context data to look for other attribute values, so a module writer must
      * take care not to create a scenario that loops forever.
      *
-     * @param contextPath the XPath expression to search against
-     * @param attributeType the datatype of the attributes to find
+     * @param contextPath     the XPath expression to search against
+     * @param attributeType   the datatype of the attributes to find
      * @param contextSelector the selector to find the context to apply XPath expression
-     *              if this is null, applied for default content. This is only used with XACML 3.0
-     * @param root  the DOM node that XPath evaluation is done. this only used by XACML 3.0
-     *              this can be null, if other XACML versions are used.
-     * @param context the representation of the request data
-     * @param xpathVersion the XPath version to use
-     * 
+     *                        if this is null, applied for default content. This is only used with XACML 3.0
+     * @param root            the DOM node that XPath evaluation is done. this only used by XACML 3.0
+     *                        this can be null, if other XACML versions are used.
+     * @param context         the representation of the request data
+     * @param xpathVersion    the XPath version to use
      * @return the result of attribute retrieval, which will be a bag of attributes or an error
      */
     public EvaluationResult findAttribute(String contextPath, URI attributeType,
-                    String contextSelector, Node root, EvaluationCtx context, String xpathVersion) {
-        
+                                          String contextSelector, Node root, EvaluationCtx context, String xpathVersion) {
+
         return new EvaluationResult(BagAttribute.createEmptyBag(attributeType));
     }
 

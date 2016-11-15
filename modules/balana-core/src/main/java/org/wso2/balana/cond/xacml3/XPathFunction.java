@@ -65,30 +65,29 @@ public class XPathFunction extends FunctionBase {
     /**
      * private identifiers for xpath-node-count function
      */
-	private static final int ID_XPATH_NODE_COUNT = 0;
+    private static final int ID_XPATH_NODE_COUNT = 0;
 
     /**
      * private identifiers for xpath-node-match function.
      */
-	private static final int ID_XPATH_NODE_MATCH = 1;
+    private static final int ID_XPATH_NODE_MATCH = 1;
 
     /**
      * private identifiers for xpath-node-equal function.
      */
-	private static final int ID_XPATH_NODE_EQUAL = 2;
+    private static final int ID_XPATH_NODE_EQUAL = 2;
 
 
     /**
      * Creates a new <code>StringFunction</code> object.
      *
      * @param functionName the standard XACML name of the function to be handled by this object,
-     *            including the full namespace
-     *
+     *                     including the full namespace
      * @throws IllegalArgumentException if the function is unknown
      */
     public XPathFunction(String functionName) {
         super(functionName, getId(functionName), XPathAttribute.identifier, false,
-                                getNumArgs(functionName), getReturnType(functionName), false);
+                getNumArgs(functionName), getReturnType(functionName), false);
     }
 
     /**
@@ -98,13 +97,13 @@ public class XPathFunction extends FunctionBase {
      * @return function id
      */
     private static int getId(String functionName) {
-        
-        if (functionName.equals(NAME_XPATH_NODE_COUNT)){
+
+        if (functionName.equals(NAME_XPATH_NODE_COUNT)) {
             return ID_XPATH_NODE_COUNT;
-        } else if (functionName.equals(NAME_XPATH_NODE_EQUAL)){
+        } else if (functionName.equals(NAME_XPATH_NODE_EQUAL)) {
             return ID_XPATH_NODE_EQUAL;
-        } else if (functionName.equals(NAME_XPATH_NODE_MATCH)){
-            return ID_XPATH_NODE_MATCH;            
+        } else if (functionName.equals(NAME_XPATH_NODE_MATCH)) {
+            return ID_XPATH_NODE_MATCH;
         } else {
             throw new IllegalArgumentException("unknown divide function " + functionName);
         }
@@ -119,8 +118,8 @@ public class XPathFunction extends FunctionBase {
      * @return identifier of the Data type
      */
     private static String getReturnType(String functionName) {
-        
-        if (functionName.equals(NAME_XPATH_NODE_COUNT)){
+
+        if (functionName.equals(NAME_XPATH_NODE_COUNT)) {
             return IntegerAttribute.identifier;
         } else {
             return BooleanAttribute.identifier;
@@ -137,7 +136,7 @@ public class XPathFunction extends FunctionBase {
      */
     private static int getNumArgs(String functionName) {
 
-        if (functionName.equals(NAME_XPATH_NODE_COUNT)){
+        if (functionName.equals(NAME_XPATH_NODE_COUNT)) {
             return 1;
         } else {
             return 2;
@@ -168,7 +167,7 @@ public class XPathFunction extends FunctionBase {
             return result;
         }
 
-		switch (getFunctionId()) {
+        switch (getFunctionId()) {
 
             case ID_XPATH_NODE_COUNT: {
 
@@ -180,13 +179,13 @@ public class XPathFunction extends FunctionBase {
 
                 // this must be XACML 3
                 List<Attributes> attributesSet = ((XACML3EvaluationCtx) context).getAttributes(category);
-                if(attributesSet != null && attributesSet.size() > 0){
+                if (attributesSet != null && attributesSet.size() > 0) {
                     // only one attributes can be there
                     Attributes attributes = attributesSet.get(0);
                     contextNode = attributes.getContent();
                 }
 
-                if(contextNode != null){
+                if (contextNode != null) {
                     // now apply XPath
                     try {
                         NodeList nodeList = getXPathResults(contextNode, xpathValue);
@@ -200,8 +199,8 @@ public class XPathFunction extends FunctionBase {
                 }
             }
 
-            case ID_XPATH_NODE_EQUAL :{
-                    //TODO
+            case ID_XPATH_NODE_EQUAL: {
+                //TODO
             }
 
         }
@@ -222,7 +221,7 @@ public class XPathFunction extends FunctionBase {
      * @throws XPathExpressionException
      */
     private NodeList getXPathResults(Node contextNode, String xpathValue)
-                                                                throws XPathExpressionException {
+            throws XPathExpressionException {
 
         XPathFactory factory = XPathFactory.newInstance();
         XPath xpath = factory.newXPath();
@@ -240,15 +239,15 @@ public class XPathFunction extends FunctionBase {
             // we found the matching namespace, so get the prefix
             // and then break out
             String prefix = DOMHelper.getLocalName(n);
-            String nodeValue= n.getNodeValue();
+            String nodeValue = n.getNodeValue();
             nsMap.put(prefix, nodeValue);
         }
 
         // if there is not any namespace is defined for content element, default XACML request
         //  name space would be there.
-        if(XACMLConstants.REQUEST_CONTEXT_3_0_IDENTIFIER.equals(namespace) ||
+        if (XACMLConstants.REQUEST_CONTEXT_3_0_IDENTIFIER.equals(namespace) ||
                 XACMLConstants.REQUEST_CONTEXT_2_0_IDENTIFIER.equals(namespace) ||
-                XACMLConstants.REQUEST_CONTEXT_1_0_IDENTIFIER.equals(namespace)){
+                XACMLConstants.REQUEST_CONTEXT_1_0_IDENTIFIER.equals(namespace)) {
             nsMap.put("xacml", namespace);
         }
 

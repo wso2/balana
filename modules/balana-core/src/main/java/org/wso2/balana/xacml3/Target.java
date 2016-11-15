@@ -36,13 +36,12 @@ import java.util.List;
 public class Target extends AbstractTarget {
 
     /**
-     *  AnyOf sections of this target as list of <code>AnyOfSelection</code> 
+     * AnyOf sections of this target as list of <code>AnyOfSelection</code>
      */
     List<AnyOfSelection> anyOfSelections;
 
     /**
      * Constructor that creates an XACML 3.0 <code>Target</code>
-     *
      */
     public Target() {
         this.anyOfSelections = new ArrayList<AnyOfSelection>();
@@ -52,7 +51,7 @@ public class Target extends AbstractTarget {
      * Constructor that creates an XACML 3.0 <code>Target</code> from components.
      *
      * @param anyOfSelections List of <code>AnyOfSelection</code> objects that
-     * representing the AnyOf sections of this target
+     *                        representing the AnyOf sections of this target
      */
     public Target(List<AnyOfSelection> anyOfSelections) {
         this.anyOfSelections = anyOfSelections;
@@ -61,20 +60,20 @@ public class Target extends AbstractTarget {
     /**
      * Creates a <code>Target</code> by parsing a node.
      *
-     * @param root the node to parse for the <code>Target</code>
+     * @param root     the node to parse for the <code>Target</code>
      * @param metaData the meta-data associated with the policy
      * @return new <code>Target</code> constructed by parsing
      * @throws org.wso2.balana.ParsingException if the DOM node is invalid
      */
     public static Target getInstance(Node root, PolicyMetaData metaData)
-                                                                throws ParsingException {
+            throws ParsingException {
 
         List<AnyOfSelection> anyOfSelections = new ArrayList<AnyOfSelection>();
         NodeList children = root.getChildNodes();
 
-        for(int i = 0; i < children.getLength(); i++){
+        for (int i = 0; i < children.getLength(); i++) {
             Node child = children.item(i);
-            if("AnyOf".equals(DOMHelper.getLocalName(child))){
+            if ("AnyOf".equals(DOMHelper.getLocalName(child))) {
                 anyOfSelections.add(AnyOfSelection.getInstance(child, metaData));
             }
         }
@@ -87,7 +86,6 @@ public class Target extends AbstractTarget {
      * applicable).
      *
      * @param context the representation of the request
-     *
      * @return the result of trying to match the target and the request
      */
     public MatchResult match(EvaluationCtx context) {
@@ -96,20 +94,20 @@ public class Target extends AbstractTarget {
 
         for (AnyOfSelection anyOfSelection : anyOfSelections) {
             MatchResult result = anyOfSelection.match(context);
-            if (result.getResult() == MatchResult.NO_MATCH){
+            if (result.getResult() == MatchResult.NO_MATCH) {
                 return result;
-            } else if(result.getResult() == MatchResult.INDETERMINATE){
-                if(firstIndeterminateStatus == null){
-                    firstIndeterminateStatus = result.getStatus();    
+            } else if (result.getResult() == MatchResult.INDETERMINATE) {
+                if (firstIndeterminateStatus == null) {
+                    firstIndeterminateStatus = result.getStatus();
                 }
             }
         }
 
-        if(firstIndeterminateStatus == null){
+        if (firstIndeterminateStatus == null) {
             return new MatchResult(MatchResult.MATCH);
         } else {
             return new MatchResult(MatchResult.INDETERMINATE,
-                                   firstIndeterminateStatus);
+                    firstIndeterminateStatus);
         }
     }
 
@@ -127,8 +125,8 @@ public class Target extends AbstractTarget {
 
         builder.append("<Target>\n");
 
-        if(anyOfSelections != null){
-            for(AnyOfSelection anyOfSelection : anyOfSelections){
+        if (anyOfSelections != null) {
+            for (AnyOfSelection anyOfSelection : anyOfSelections) {
                 anyOfSelection.encode(builder);
             }
         }

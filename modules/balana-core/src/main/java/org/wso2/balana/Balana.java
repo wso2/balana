@@ -41,59 +41,49 @@ import java.util.Set;
 
 /**
  * This is the core class for the Balana project providing the init point of Balana engine.
- *
  */
 public class Balana {
-
-    /**
-     * PDP configuration of Balana engine  instance
-     */
-    private PDPConfig pdpConfig;
-
-    /**
-     * Attribute factory that supports in Balana engine instance
-     */
-    private AttributeFactory attributeFactory;
-
-    /**
-     * Target Function factory that supports in Balana engine instance
-     */
-    private FunctionFactory functionTargetFactory;
-
-    /**
-     * Condition Function factory that supports in Balana engine instance
-     */
-    private FunctionFactory functionConditionFactory;
-
-    /**
-     * General function factory that supports in Balana engine instance
-     */
-    private FunctionFactory functionGeneralFactory;
-
-    /**
-     * combining factory that supports in Balana engine instance
-     */
-    private CombiningAlgFactory combiningAlgFactory;
-
-    /**
-     * builders to build XACML request
-     */
-    private DocumentBuilderFactory builder;
 
     /**
      * lock
      */
     private final static Object lock = new Object();
-
     /**
      * One instance of Balana engine is created.
      */
     private static Balana balana;
-
     /**
      * Logger instance
      */
     private static Log logger = LogFactory.getLog(Balana.class);
+    /**
+     * PDP configuration of Balana engine  instance
+     */
+    private PDPConfig pdpConfig;
+    /**
+     * Attribute factory that supports in Balana engine instance
+     */
+    private AttributeFactory attributeFactory;
+    /**
+     * Target Function factory that supports in Balana engine instance
+     */
+    private FunctionFactory functionTargetFactory;
+    /**
+     * Condition Function factory that supports in Balana engine instance
+     */
+    private FunctionFactory functionConditionFactory;
+    /**
+     * General function factory that supports in Balana engine instance
+     */
+    private FunctionFactory functionGeneralFactory;
+    /**
+     * combining factory that supports in Balana engine instance
+     */
+    private CombiningAlgFactory combiningAlgFactory;
+    /**
+     * builders to build XACML request
+     */
+    private DocumentBuilderFactory builder;
 
     /**
      * This constructor creates the Balana engine instance. First, it loads all configuration
@@ -102,65 +92,65 @@ public class Balana {
      * If configuration store does not configured or any error in building, It create default Balana
      * engine.
      *
-     * @param pdpConfigName pdp configuration name
-     * @param attributeFactoryName  attribute factory name
-     * @param functionFactoryName  function factory name
+     * @param pdpConfigName           pdp configuration name
+     * @param attributeFactoryName    attribute factory name
+     * @param functionFactoryName     function factory name
      * @param combiningAlgFactoryName combine factory name
      */
     private Balana(String pdpConfigName, String attributeFactoryName, String functionFactoryName,
-                                                                String combiningAlgFactoryName) {
-        ConfigurationStore  store = null;
+                   String combiningAlgFactoryName) {
+        ConfigurationStore store = null;
 
         try {
-            if(System.getProperty(ConfigurationStore.PDP_CONFIG_PROPERTY) != null){
+            if (System.getProperty(ConfigurationStore.PDP_CONFIG_PROPERTY) != null) {
                 store = new ConfigurationStore();
             } else {
                 String configFile = (new File(".")).getCanonicalPath() + File.separator + "src" +
-                File.separator + "main" + File.separator +  "resources" + File.separator + "config.xml";
+                        File.separator + "main" + File.separator + "resources" + File.separator + "config.xml";
                 File file = new File(configFile);
-                if(file.exists()) {
+                if (file.exists()) {
                     store = new ConfigurationStore(new File(configFile));
                 }
             }
 
-            if(store != null){
-                if(pdpConfigName != null){
+            if (store != null) {
+                if (pdpConfigName != null) {
                     pdpConfig = store.getPDPConfig(pdpConfigName);
                 } else {
                     pdpConfig = store.getDefaultPDPConfig();
                 }
 
-                if(attributeFactoryName != null){
+                if (attributeFactoryName != null) {
                     this.attributeFactory = store.getAttributeFactory(attributeFactoryName);
                 } else {
                     this.attributeFactory = store.getDefaultAttributeFactoryProxy().getFactory();
                 }
 
-                if(functionFactoryName != null){
+                if (functionFactoryName != null) {
                     this.functionTargetFactory = store.
-                                    getFunctionFactoryProxy(functionFactoryName).getTargetFactory();
+                            getFunctionFactoryProxy(functionFactoryName).getTargetFactory();
                 } else {
                     this.functionTargetFactory = store.
-                                    getDefaultFunctionFactoryProxy().getTargetFactory();
+                            getDefaultFunctionFactoryProxy().getTargetFactory();
                 }
 
-                if(functionFactoryName != null){
+                if (functionFactoryName != null) {
                     this.functionConditionFactory = store.
-                                    getFunctionFactoryProxy(functionFactoryName).getConditionFactory();
+                            getFunctionFactoryProxy(functionFactoryName).getConditionFactory();
                 } else {
                     this.functionConditionFactory = store.
-                                    getDefaultFunctionFactoryProxy().getConditionFactory();
+                            getDefaultFunctionFactoryProxy().getConditionFactory();
                 }
 
-                if(functionFactoryName != null){
+                if (functionFactoryName != null) {
                     this.functionGeneralFactory = store.
-                                    getFunctionFactoryProxy(functionFactoryName).getGeneralFactory();
+                            getFunctionFactoryProxy(functionFactoryName).getGeneralFactory();
                 } else {
                     this.functionGeneralFactory = store.
-                                    getDefaultFunctionFactoryProxy().getGeneralFactory();
+                            getDefaultFunctionFactoryProxy().getGeneralFactory();
                 }
 
-                if(functionFactoryName != null){
+                if (functionFactoryName != null) {
                     this.combiningAlgFactory = store.getCombiningAlgFactory(functionFactoryName);
                 } else {
                     this.combiningAlgFactory = store.getDefaultCombiningFactoryProxy().getFactory();
@@ -171,8 +161,8 @@ public class Balana {
             // just ignore all exceptions as all are init again with default configurations
         }
 
-        if(pdpConfig == null){
-            
+        if (pdpConfig == null) {
+
             //creating default one with Balana engine.
             PolicyFinder policyFinder = new PolicyFinder();
             Set<PolicyFinderModule> policyFinderModules = new HashSet<PolicyFinderModule>();
@@ -187,27 +177,27 @@ public class Balana {
             attributeFinderModules.add(selectorModule);
             attributeFinderModules.add(currentEnvModule);
             attributeFinder.setModules(attributeFinderModules);
-                        
+
             pdpConfig = new PDPConfig(attributeFinder, policyFinder, null, false);
         }
 
-        if(attributeFactory == null){
+        if (attributeFactory == null) {
             attributeFactory = AttributeFactory.getInstance();
         }
 
-        if(functionTargetFactory == null){
+        if (functionTargetFactory == null) {
             functionTargetFactory = FunctionFactory.getInstance().getTargetFactory();
         }
 
-        if(functionConditionFactory == null){
+        if (functionConditionFactory == null) {
             functionConditionFactory = FunctionFactory.getInstance().getConditionFactory();
         }
 
-        if(functionGeneralFactory == null){
+        if (functionGeneralFactory == null) {
             functionGeneralFactory = FunctionFactory.getInstance().getGeneralFactory();
         }
 
-        if(combiningAlgFactory == null){
+        if (combiningAlgFactory == null) {
             combiningAlgFactory = CombiningAlgFactory.getInstance();
         }
 
@@ -220,11 +210,11 @@ public class Balana {
      *
      * @return returns <code>Balana</code>
      */
-    public static Balana getInstance(){
+    public static Balana getInstance() {
 
-        if(balana == null){
-            synchronized (lock){
-                if(balana == null){
+        if (balana == null) {
+            synchronized (lock) {
+                if (balana == null) {
                     balana = new Balana(null, null, null, null);
                 }
             }
@@ -239,11 +229,11 @@ public class Balana {
      * @param identifier identifier name
      * @return returns <code>Balana</code>
      */
-    public Balana getInstance(String identifier){
+    public Balana getInstance(String identifier) {
 
-        if(balana == null){
-            synchronized (lock){
-                if(balana == null){
+        if (balana == null) {
+            synchronized (lock) {
+                if (balana == null) {
                     balana = new Balana(identifier, identifier, identifier, identifier);
                 }
             }
@@ -255,19 +245,19 @@ public class Balana {
     /**
      * Get instance of Balana engine for given identifiers
      *
-     * @param pdpConfigName pdp configuration name
-     * @param attributeFactoryName  attribute factory name
-     * @param functionFactoryName  function factory name
+     * @param pdpConfigName           pdp configuration name
+     * @param attributeFactoryName    attribute factory name
+     * @param functionFactoryName     function factory name
      * @param combiningAlgFactoryName combine factory name
      * @return returns <code>Balana</code>
      */
     public Balana getInstance(String pdpConfigName, String attributeFactoryName, String functionFactoryName,
-                                                                String combiningAlgFactoryName){
-        if(balana == null){
-            synchronized (lock){
-                if(balana == null){
+                              String combiningAlgFactoryName) {
+        if (balana == null) {
+            synchronized (lock) {
+                if (balana == null) {
                     balana = new Balana(pdpConfigName, attributeFactoryName, functionFactoryName,
-                                                                        combiningAlgFactoryName);
+                            combiningAlgFactoryName);
                 }
             }
         }

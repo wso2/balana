@@ -26,7 +26,7 @@ import java.io.OutputStream;
  * Represents the TargetType XML type in XACML. This defined as abstract, because there can be
  * more than one implementation of TargetType. As an example, TargetType is considerably defer in
  * XACML 2.0 and XACML 3.0 Therefore two implementations are used.
- *
+ * <p>
  * The target is used to quickly identify whether the parent element (a policy set, policy, or rule)
  * is applicable to a given request.
  */
@@ -37,7 +37,6 @@ public abstract class AbstractTarget {
      * applicable).
      *
      * @param context the representation of the request
-     *
      * @return the result of trying to match the target and the request
      */
     public abstract MatchResult match(EvaluationCtx context);

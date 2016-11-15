@@ -33,7 +33,7 @@ public class SubStringFunctionCluster implements FunctionCluster {
     public Set<Function> getSupportedFunctions() {
 
         Set<Function> set = new HashSet<Function>();
-        for (String identifier : SubStringFunction.getSupportedIdentifiers()){
+        for (String identifier : SubStringFunction.getSupportedIdentifiers()) {
             set.add(new SubStringFunction(identifier));
         }
         return set;

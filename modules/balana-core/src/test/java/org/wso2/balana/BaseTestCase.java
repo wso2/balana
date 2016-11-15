@@ -28,7 +28,7 @@ import org.wso2.balana.conformance.ConformanceTestV2;
 import org.wso2.balana.conformance.ConformanceTestV3;
 
 /**
- * Test suite for Balana 
+ * Test suite for Balana
  */
 public class BaseTestCase extends TestSuite {
 

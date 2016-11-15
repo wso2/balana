@@ -83,16 +83,16 @@ import javax.xml.xpath.*;
  * fully functional, correct implementation of XACML's AttributeSelector functionality, but is not
  * designed for environments that make significant use of XPath queries. Developers for any such
  * environment should consider implementing their own module.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class SelectorModule extends AttributeFinderModule {
 
     /**
      * Returns true since this module supports retrieving attributes based on the data provided in
      * an AttributeSelectorType.
-     * 
+     *
      * @return true
      */
     public boolean isSelectorSupported() {
@@ -102,17 +102,17 @@ public class SelectorModule extends AttributeFinderModule {
 
     @Override
     public EvaluationResult findAttribute(String contextPath, URI attributeType,
-                  String contextSelector, Node root, EvaluationCtx context, String xpathVersion) {
+                                          String contextSelector, Node root, EvaluationCtx context, String xpathVersion) {
 
         Node contextNode = null;
         NamespaceContext namespaceContext = null;
 
-        if(root == null){
+        if (root == null) {
             // root == null means there is not content element defined with the attributes element
             // therefore complete request is evaluated.
             // get the DOM root of the request document
             contextNode = context.getRequestRoot();
-        } else if(contextSelector != null) {
+        } else if (contextSelector != null) {
             // root != null  means content element is there.  we can find the context node by
             // evaluating the contextSelector
 
@@ -124,7 +124,7 @@ public class SelectorModule extends AttributeFinderModule {
 
             //see if the request root is in a namespace
             String namespace = null;
-            if(contextNode != null){
+            if (contextNode != null) {
                 namespace = contextNode.getNamespaceURI();
             }
             // name spaces are used, so we need to lookup the correct
@@ -138,33 +138,33 @@ public class SelectorModule extends AttributeFinderModule {
                 // we found the matching namespace, so get the prefix
                 // and then break out
                 String prefix = DOMHelper.getLocalName(n);
-                String nodeValue= n.getNodeValue();
+                String nodeValue = n.getNodeValue();
                 nsMap.put(prefix, nodeValue);
             }
 
             // if there is not any namespace is defined for content element, default XACML request
             //  name space would be there.
-            if(XACMLConstants.REQUEST_CONTEXT_3_0_IDENTIFIER.equals(namespace) ||
+            if (XACMLConstants.REQUEST_CONTEXT_3_0_IDENTIFIER.equals(namespace) ||
                     XACMLConstants.REQUEST_CONTEXT_2_0_IDENTIFIER.equals(namespace) ||
-                    XACMLConstants.REQUEST_CONTEXT_1_0_IDENTIFIER.equals(namespace)){
+                    XACMLConstants.REQUEST_CONTEXT_1_0_IDENTIFIER.equals(namespace)) {
                 nsMap.put("xacml", namespace);
             }
 
             namespaceContext = new DefaultNamespaceContext(nsMap);
             xpath.setNamespaceContext(namespaceContext);
 
-            try{
+            try {
                 XPathExpression expression = xpath.compile(contextSelector);
-                NodeList result = (NodeList) expression.evaluate(contextNode, XPathConstants.NODESET);                
-                if(result == null || result.getLength() == 0){
-                    throw new Exception("No node is found from context selector id evaluation");    
-                } else if(result.getLength() != 1){
+                NodeList result = (NodeList) expression.evaluate(contextNode, XPathConstants.NODESET);
+                if (result == null || result.getLength() == 0) {
+                    throw new Exception("No node is found from context selector id evaluation");
+                } else if (result.getLength() != 1) {
                     throw new Exception("More than one node is found from context selector id evaluation");
                 }
                 contextNode = result.item(0);
-                if(contextNode != null){
+                if (contextNode != null) {
                     // make the node appear to be a direct child of the Document
-                    try{
+                    try {
                         DocumentBuilderFactory dbf = Utils.getSecuredDocumentBuilderFactory();
                         DocumentBuilder builder = dbf.newDocumentBuilder();
                         dbf.setNamespaceAware(true);
@@ -172,7 +172,7 @@ public class SelectorModule extends AttributeFinderModule {
                         Node topRoot = docRoot.importNode(contextNode, true);
                         docRoot.appendChild(topRoot);
                         contextNode = docRoot.getDocumentElement();
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         //
                     }
                 }
@@ -190,11 +190,11 @@ public class SelectorModule extends AttributeFinderModule {
         XPathFactory factory = XPathFactory.newInstance();
         XPath xpath = factory.newXPath();
 
-        if(namespaceContext == null){
+        if (namespaceContext == null) {
 
             //see if the request root is in a namespace
             String namespace = null;
-            if(contextNode != null){
+            if (contextNode != null) {
                 namespace = contextNode.getNamespaceURI();
             }
             // name spaces are used, so we need to lookup the correct
@@ -208,15 +208,15 @@ public class SelectorModule extends AttributeFinderModule {
                 // we found the matching namespace, so get the prefix
                 // and then break out
                 String prefix = DOMHelper.getLocalName(n);
-                String nodeValue= n.getNodeValue();
+                String nodeValue = n.getNodeValue();
                 nsMap.put(prefix, nodeValue);
             }
-            
+
             // if there is not any namespace is defined for content element, default XACML request
             //  name space would be there.
-            if(XACMLConstants.REQUEST_CONTEXT_3_0_IDENTIFIER.equals(namespace) ||
+            if (XACMLConstants.REQUEST_CONTEXT_3_0_IDENTIFIER.equals(namespace) ||
                     XACMLConstants.REQUEST_CONTEXT_2_0_IDENTIFIER.equals(namespace) ||
-                    XACMLConstants.REQUEST_CONTEXT_1_0_IDENTIFIER.equals(namespace)){
+                    XACMLConstants.REQUEST_CONTEXT_1_0_IDENTIFIER.equals(namespace)) {
                 nsMap.put("xacml", namespace);
             }
 
@@ -226,12 +226,12 @@ public class SelectorModule extends AttributeFinderModule {
         xpath.setNamespaceContext(namespaceContext);
 
         NodeList matches;
-        
+
         try {
             XPathExpression expression = xpath.compile(contextPath);
             matches = (NodeList) expression.evaluate(contextNode, XPathConstants.NODESET);
-            if(matches == null || matches.getLength() < 1){
-                throw new Exception("No node is found from xpath evaluation");                 
+            if (matches == null || matches.getLength() < 1) {
+                throw new Exception("No node is found from xpath evaluation");
             }
         } catch (XPathExpressionException e) {
             List<String> codes = new ArrayList<String>();
@@ -275,7 +275,7 @@ public class SelectorModule extends AttributeFinderModule {
             }
 
             return new EvaluationResult(new BagAttribute(attributeType, list));
-            
+
         } catch (ParsingException pe) {
             ArrayList<String> code = new ArrayList<String>();
             code.add(Status.STATUS_PROCESSING_ERROR);

@@ -1,4 +1,3 @@
-
 /*
  * @(#)TestAttributeFinderModule.java
  *
@@ -59,15 +58,14 @@ import java.util.*;
  *
  * @author Seth Proctor
  */
-public class TestAttributeFinderModule extends AttributeFinderModule
-{
+public class TestAttributeFinderModule extends AttributeFinderModule {
 
     /**
      * The example identifier this module supports
      */
     public static final String ROLE_IDENTIFIER =
-        "urn:oasis:names:tc:xacml:1.0:example:attribute:role";
-    
+            "urn:oasis:names:tc:xacml:1.0:example:attribute:role";
+
     // the standard identifier for subject-id
     private static URI subjectIdentifier = null;
 
@@ -75,11 +73,13 @@ public class TestAttributeFinderModule extends AttributeFinderModule
     static {
         try {
             subjectIdentifier =
-                new URI("urn:oasis:names:tc:xacml:1.0:subject:subject-id");
+                    new URI("urn:oasis:names:tc:xacml:1.0:subject:subject-id");
         } catch (URISyntaxException urise) {
             // won't happen in this code
         }
-    };
+    }
+
+    ;
 
     /**
      * Default constructor.
@@ -102,7 +102,7 @@ public class TestAttributeFinderModule extends AttributeFinderModule
      * supports Subject attributes.
      *
      * @return a <code>Set</code> with an <code>Integer</code> of value
-     *         <code>AttributeDesignator.SUBJECT_TARGET</code>
+     * <code>AttributeDesignator.SUBJECT_TARGET</code>
      */
     public Set getSupportedDesignatorTypes() {
         Set set = new HashSet();
@@ -133,14 +133,14 @@ public class TestAttributeFinderModule extends AttributeFinderModule
                                           EvaluationCtx context,
                                           int designatorType) {
         // make sure this is the identifier we support
-        if (! attributeId.toString().equals(ROLE_IDENTIFIER))
+        if (!attributeId.toString().equals(ROLE_IDENTIFIER))
             return new EvaluationResult(BagAttribute.
-                                        createEmptyBag(attributeType));
+                    createEmptyBag(attributeType));
 
         // make sure we've been asked for a string
-        if (! attributeType.toString().equals(StringAttribute.identifier))
+        if (!attributeType.toString().equals(StringAttribute.identifier))
             return new EvaluationResult(BagAttribute.
-                                        createEmptyBag(attributeType));
+                    createEmptyBag(attributeType));
 
         // retrieve the subject identifer from the context
 
@@ -151,20 +151,20 @@ public class TestAttributeFinderModule extends AttributeFinderModule
             return result;
 
         // check that we succeeded in getting the subject identifier
-        BagAttribute bag = (BagAttribute)(result.getAttributeValue());
+        BagAttribute bag = (BagAttribute) (result.getAttributeValue());
         if (bag.isEmpty()) {
             ArrayList code = new ArrayList();
             code.add(Status.STATUS_MISSING_ATTRIBUTE);
             Status status = new Status(code, "missing subject-id");
             return new EvaluationResult(status);
         }
-        
+
         // finally, look for the subject who has the role-mapping defined,
         // and if they're the identified subject, add their role
         BagAttribute returnBag = null;
         Iterator it = bag.iterator();
         while (it.hasNext()) {
-            StringAttribute attr = (StringAttribute)(it.next());
+            StringAttribute attr = (StringAttribute) (it.next());
             if (attr.getValue().equals("Julius Hibbert")) {
                 List<AttributeValue> set = new ArrayList<AttributeValue>();
                 set.add(new StringAttribute("Physician"));

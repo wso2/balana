@@ -61,9 +61,9 @@ import org.w3c.dom.Node;
  * that most people will initialize these factories up-front, and then start processing without ever
  * modifying the factories. If you need these mutual operations to be thread-safe, then you should
  * write a wrapper class that implements the right synchronization.
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public class BaseFunctionFactory extends FunctionFactory {
 
@@ -85,7 +85,7 @@ public class BaseFunctionFactory extends FunctionFactory {
      * factories (Target, Condition, and General) have a superset relationship (Condition functions
      * are a superset of Target functions, etc.). Adding a function to this factory will
      * automatically add the same function to the superset factory.
-     * 
+     *
      * @param superset the superset factory or null
      */
     public BaseFunctionFactory(FunctionFactory superset) {
@@ -97,10 +97,10 @@ public class BaseFunctionFactory extends FunctionFactory {
     /**
      * Constructor that defines the initial functions supported by this factory but doesn't use a
      * superset factory.
-     * 
-     * @param supportedFunctions a <code>Set</code> of <code>Function</code>s
+     *
+     * @param supportedFunctions         a <code>Set</code> of <code>Function</code>s
      * @param supportedAbstractFunctions a mapping from <code>URI</code> to
-     *            <code>FunctionProxy</code>
+     *                                   <code>FunctionProxy</code>
      */
     public BaseFunctionFactory(Set supportedFunctions, Map supportedAbstractFunctions) {
         this(null, supportedFunctions, supportedAbstractFunctions);
@@ -111,14 +111,14 @@ public class BaseFunctionFactory extends FunctionFactory {
      * factory. Note that the functions supplied here are not propagated up to the superset factory,
      * so you must either make sure the superst factory is correctly initialized or use
      * <code>BaseFunctionFactory(FunctionFactory)</code> and then manually add each function.
-     * 
-     * @param superset the superset factory or null
-     * @param supportedFunctions a <code>Set</code> of <code>Function</code>s
+     *
+     * @param superset                   the superset factory or null
+     * @param supportedFunctions         a <code>Set</code> of <code>Function</code>s
      * @param supportedAbstractFunctions a mapping from <code>URI</code> to
-     *            <code>FunctionProxy</code>
+     *                                   <code>FunctionProxy</code>
      */
     public BaseFunctionFactory(FunctionFactory superset, Set supportedFunctions,
-            Map supportedAbstractFunctions) {
+                               Map supportedAbstractFunctions) {
         this(superset);
 
         Iterator it = supportedFunctions.iterator();
@@ -129,7 +129,7 @@ public class BaseFunctionFactory extends FunctionFactory {
 
         it = supportedAbstractFunctions.entrySet().iterator();
         while (it.hasNext()) {
-            URI id = (URI) (((Entry)it.next()).getKey());
+            URI id = (URI) (((Entry) it.next()).getKey());
             FunctionProxy proxy = (FunctionProxy) (supportedAbstractFunctions.get(id));
             functionMap.put(id.toString(), proxy);
         }
@@ -139,11 +139,10 @@ public class BaseFunctionFactory extends FunctionFactory {
      * Adds the function to the factory. Most functions have no state, so the singleton model used
      * here is typically desireable. The factory will not enforce the requirement that a Target or
      * Condition matching function must be boolean.
-     * 
+     *
      * @param function the <code>Function</code> to add to the factory
-     * 
      * @throws IllegalArgumentException if the function's identifier is already used or if the
-     *             function is non-boolean (when this is a Target or Condition factory)
+     *                                  function is non-boolean (when this is a Target or Condition factory)
      */
     public void addFunction(Function function) throws IllegalArgumentException {
         String id = function.getIdentifier().toString();
@@ -164,10 +163,9 @@ public class BaseFunctionFactory extends FunctionFactory {
      * Adds the abstract function proxy to the factory. This is used for those functions which have
      * state, or change behavior (for instance the standard map function, which changes its return
      * type based on how it is used).
-     * 
-     * @param proxy the <code>FunctionProxy</code> to add to the factory
+     *
+     * @param proxy    the <code>FunctionProxy</code> to add to the factory
      * @param identity the function's identifier
-     * 
      * @throws IllegalArgumentException if the function's identifier is already used
      */
     public void addAbstractFunction(FunctionProxy proxy, URI identity)
@@ -188,7 +186,7 @@ public class BaseFunctionFactory extends FunctionFactory {
 
     /**
      * Returns the function identifiers supported by this factory.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public Set getSupportedFunctions() {
@@ -202,12 +200,11 @@ public class BaseFunctionFactory extends FunctionFactory {
 
     /**
      * Tries to get an instance of the specified function.
-     * 
+     *
      * @param identity the name of the function
-     * 
      * @throws UnknownIdentifierException if the name isn't known
-     * @throws FunctionTypeException if the name is known to map to an abstract function, and should
-     *             therefore be created through createAbstractFunction
+     * @throws FunctionTypeException      if the name is known to map to an abstract function, and should
+     *                                    therefore be created through createAbstractFunction
      */
     public Function createFunction(URI identity) throws UnknownIdentifierException,
             FunctionTypeException {
@@ -216,12 +213,11 @@ public class BaseFunctionFactory extends FunctionFactory {
 
     /**
      * Tries to get an instance of the specified function.
-     * 
+     *
      * @param identity the name of the function
-     * 
      * @throws UnknownIdentifierException if the name isn't known
-     * @throws FunctionTypeException if the name is known to map to an abstract function, and should
-     *             therefore be created through createAbstractFunction
+     * @throws FunctionTypeException      if the name is known to map to an abstract function, and should
+     *                                    therefore be created through createAbstractFunction
      */
     public Function createFunction(String identity) throws UnknownIdentifierException,
             FunctionTypeException {
@@ -244,14 +240,13 @@ public class BaseFunctionFactory extends FunctionFactory {
 
     /**
      * Tries to get an instance of the specified abstract function.
-     * 
+     *
      * @param identity the name of the function
-     * @param root the DOM root containing info used to create the function
-     * 
+     * @param root     the DOM root containing info used to create the function
      * @throws UnknownIdentifierException if the name isn't known
-     * @throws FunctionTypeException if the name is known to map to a concrete function, and should
-     *             therefore be created through createFunction
-     * @throws ParsingException if the function can't be created with the given inputs
+     * @throws FunctionTypeException      if the name is known to map to a concrete function, and should
+     *                                    therefore be created through createFunction
+     * @throws ParsingException           if the function can't be created with the given inputs
      */
     public Function createAbstractFunction(URI identity, Node root)
             throws UnknownIdentifierException, ParsingException, FunctionTypeException {
@@ -260,16 +255,15 @@ public class BaseFunctionFactory extends FunctionFactory {
 
     /**
      * Tries to get an instance of the specified abstract function.
-     * 
-     * @param identity the name of the function
-     * @param root the DOM root containing info used to create the function
+     *
+     * @param identity     the name of the function
+     * @param root         the DOM root containing info used to create the function
      * @param xpathVersion the version specified in the contianing policy, or null if no version was
-     *            specified
-     * 
+     *                     specified
      * @throws UnknownIdentifierException if the name isn't known
-     * @throws FunctionTypeException if the name is known to map to a concrete function, and should
-     *             therefore be created through createFunction
-     * @throws ParsingException if the function can't be created with the given inputs
+     * @throws FunctionTypeException      if the name is known to map to a concrete function, and should
+     *                                    therefore be created through createFunction
+     * @throws ParsingException           if the function can't be created with the given inputs
      */
     public Function createAbstractFunction(URI identity, Node root, String xpathVersion)
             throws UnknownIdentifierException, ParsingException, FunctionTypeException {
@@ -278,14 +272,13 @@ public class BaseFunctionFactory extends FunctionFactory {
 
     /**
      * Tries to get an instance of the specified abstract function.
-     * 
+     *
      * @param identity the name of the function
-     * @param root the DOM root containing info used to create the function
-     * 
+     * @param root     the DOM root containing info used to create the function
      * @throws UnknownIdentifierException if the name isn't known
-     * @throws FunctionTypeException if the name is known to map to a concrete function, and should
-     *             therefore be created through createFunction
-     * @throws ParsingException if the function can't be created with the given inputs
+     * @throws FunctionTypeException      if the name is known to map to a concrete function, and should
+     *                                    therefore be created through createFunction
+     * @throws ParsingException           if the function can't be created with the given inputs
      */
     public Function createAbstractFunction(String identity, Node root)
             throws UnknownIdentifierException, ParsingException, FunctionTypeException {
@@ -294,16 +287,15 @@ public class BaseFunctionFactory extends FunctionFactory {
 
     /**
      * Tries to get an instance of the specified abstract function.
-     * 
-     * @param identity the name of the function
-     * @param root the DOM root containing info used to create the function
+     *
+     * @param identity     the name of the function
+     * @param root         the DOM root containing info used to create the function
      * @param xpathVersion the version specified in the contianing policy, or null if no version was
-     *            specified
-     * 
+     *                     specified
      * @throws UnknownIdentifierException if the name isn't known
-     * @throws FunctionTypeException if the name is known to map to a concrete function, and should
-     *             therefore be created through createFunction
-     * @throws ParsingException if the function can't be created with the given inputs
+     * @throws FunctionTypeException      if the name is known to map to a concrete function, and should
+     *                                    therefore be created through createFunction
+     * @throws ParsingException           if the function can't be created with the given inputs
      */
     public Function createAbstractFunction(String identity, Node root, String xpathVersion)
             throws UnknownIdentifierException, ParsingException, FunctionTypeException {

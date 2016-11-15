@@ -43,8 +43,8 @@ public class Advice {
     private URI adviceId;
 
     /**
-     *  Advice arguments as a <code>List</code> of <code>AttributeAssignment</code>
-     *  The values of the advice arguments may be interpreted by the PEP
+     * Advice arguments as a <code>List</code> of <code>AttributeAssignment</code>
+     * The values of the advice arguments may be interpreted by the PEP
      */
     private List<AttributeAssignment> assignments;
 
@@ -52,38 +52,25 @@ public class Advice {
      * Constructor that creates a new <code>Advice</code> based on
      * the given elements.
      *
-     * @param adviceId  Identifier that uniquely identify the Advice
-     * @param assignments  <code>List</code> of <code>AttributeAssignment</code>
+     * @param adviceId    Identifier that uniquely identify the Advice
+     * @param assignments <code>List</code> of <code>AttributeAssignment</code>
      */
     public Advice(URI adviceId, List<AttributeAssignment> assignments) {
         this.adviceId = adviceId;
         this.assignments = assignments;
     }
 
-    
-
-    /**
-     * Encodes this <code>Advice</code> into its XML form
-     *
-     * @return <code>String</code>
-     */
-    public String encode() {
-        StringBuilder builder = new StringBuilder();
-        encode(builder);
-        return builder.toString();
-    }
-
     /**
      * Creates a <code>Advice</code> based on its DOM node.
      *
      * @param root the DOM root of a AdviceType
-     * @return  an instance of an advice
-     * @throws ParsingException   if the structure isn't valid
+     * @return an instance of an advice
+     * @throws ParsingException if the structure isn't valid
      */
     public static Advice getInstance(Node root) throws ParsingException {
 
         URI adviceId;
-        List<AttributeAssignment> assignments =  new ArrayList<AttributeAssignment>();
+        List<AttributeAssignment> assignments = new ArrayList<AttributeAssignment>();
 
         if (!DOMHelper.getLocalName(root).equals("Advice")) {
             throw new ParsingException("Advice object cannot be created "
@@ -101,14 +88,25 @@ public class Advice {
 
         NodeList children = root.getChildNodes();
 
-        for(int i = 0; i < children.getLength(); i ++){
+        for (int i = 0; i < children.getLength(); i++) {
             Node child = children.item(i);
-            if("AttributeAssignment".equals(DOMHelper.getLocalName(child))){
+            if ("AttributeAssignment".equals(DOMHelper.getLocalName(child))) {
                 assignments.add(AttributeAssignment.getInstance(child));
             }
         }
 
         return new Advice(adviceId, assignments);
+    }
+
+    /**
+     * Encodes this <code>Advice</code> into its XML form
+     *
+     * @return <code>String</code>
+     */
+    public String encode() {
+        StringBuilder builder = new StringBuilder();
+        encode(builder);
+        return builder.toString();
     }
 
     public URI getAdviceId() {
@@ -125,12 +123,12 @@ public class Advice {
      *
      * @param builder string stream into which the XML-encoded data is written
      */
-    public void encode(StringBuilder builder){
+    public void encode(StringBuilder builder) {
 
         builder.append("<Advice AdviceId=\"").append(adviceId).append("\" >");
 
-        if(assignments != null && assignments.size() > 0){
-            for(AttributeAssignment assignment : assignments){
+        if (assignments != null && assignments.size() > 0) {
+            for (AttributeAssignment assignment : assignments) {
                 assignment.encode(builder);
             }
         }

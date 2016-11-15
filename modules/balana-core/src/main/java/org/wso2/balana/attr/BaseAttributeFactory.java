@@ -57,9 +57,9 @@ import org.w3c.dom.Node;
  * most people will initialize these factories up-front, and then start processing without ever
  * modifying the factories. If you need these mutual operations to be thread-safe, then you should
  * write a wrapper class that implements the right synchronization.
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public class BaseAttributeFactory extends AttributeFactory {
 
@@ -75,11 +75,10 @@ public class BaseAttributeFactory extends AttributeFactory {
 
     /**
      * Constructor that configures this factory with an initial set of supported datatypes.
-     * 
+     *
      * @param attributes a <code>Map</code> of <code>String</code>s to </code>AttributeProxy</code>s
-     * 
      * @throws IllegalArgumentException if any elements of the Map are not
-     *             </code>AttributeProxy</code>s
+     *                                  </code>AttributeProxy</code>s
      */
     public BaseAttributeFactory(Map attributes) {
         attributeMap = new HashMap();
@@ -101,8 +100,8 @@ public class BaseAttributeFactory extends AttributeFactory {
      * Adds a proxy to the factory, which in turn will allow new attribute types to be created using
      * the factory. Typically the proxy is provided as an anonymous class that simply calls the
      * getInstance methods (or something similar) of some <code>AttributeValue</code> class.
-     * 
-     * @param id the name of the attribute type
+     *
+     * @param id    the name of the attribute type
      * @param proxy the proxy used to create new attributes of the given type
      */
     public void addDatatype(String id, AttributeProxy proxy) {
@@ -115,7 +114,7 @@ public class BaseAttributeFactory extends AttributeFactory {
 
     /**
      * Returns the datatype identifiers supported by this factory.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public Set getSupportedDatatypes() {
@@ -127,13 +126,11 @@ public class BaseAttributeFactory extends AttributeFactory {
      * present in the node as an XACML attribute named <code>DataType</code>, as is the case with
      * the AttributeValueType in the policy schema. The value is assumed to be the first child of
      * this node.
-     * 
+     *
      * @param root the DOM root of an attribute value
-     * 
      * @return a new <code>AttributeValue</code>
-     * 
      * @throws UnknownIdentifierException if the type in the node isn't known to the factory
-     * @throws ParsingException if the node is invalid or can't be parsed by the appropriate proxy
+     * @throws ParsingException           if the node is invalid or can't be parsed by the appropriate proxy
      */
     public AttributeValue createValue(Node root) throws UnknownIdentifierException,
             ParsingException {
@@ -144,14 +141,12 @@ public class BaseAttributeFactory extends AttributeFactory {
 
     /**
      * Creates a value based on the given DOM root node and data type.
-     * 
-     * @param root the DOM root of an attribute value
+     *
+     * @param root     the DOM root of an attribute value
      * @param dataType the type of the attribute
-     * 
      * @return a new <code>AttributeValue</code>
-     * 
      * @throws UnknownIdentifierException if the data type isn't known to the factory
-     * @throws ParsingException if the node is invalid or can't be parsed by the appropriate proxy
+     * @throws ParsingException           if the node is invalid or can't be parsed by the appropriate proxy
      */
     public AttributeValue createValue(Node root, URI dataType) throws UnknownIdentifierException,
             ParsingException {
@@ -160,14 +155,12 @@ public class BaseAttributeFactory extends AttributeFactory {
 
     /**
      * Creates a value based on the given DOM root node and data type.
-     * 
+     *
      * @param root the DOM root of an attribute value
      * @param type the type of the attribute
-     * 
      * @return a new <code>AttributeValue</code>
-     * 
      * @throws UnknownIdentifierException if the type isn't known to the factory
-     * @throws ParsingException if the node is invalid or can't be parsed by the appropriate proxy
+     * @throws ParsingException           if the node is invalid or can't be parsed by the appropriate proxy
      */
     public AttributeValue createValue(Node root, String type) throws UnknownIdentifierException,
             ParsingException {
@@ -177,7 +170,7 @@ public class BaseAttributeFactory extends AttributeFactory {
 
         if (proxy != null) {
             try {
-                attributeValue =  proxy.getInstance(root);
+                attributeValue = proxy.getInstance(root);
             } catch (Exception e) {
                 throw new ParsingException("couldn't create " + type
                         + " attribute based on DOM node");
@@ -198,14 +191,13 @@ public class BaseAttributeFactory extends AttributeFactory {
      * Creates a value based on the given data type and text-encoded value. Used primarily by code
      * that does an XPath query to get an attribute value, and then needs to turn the resulting
      * value into an Attribute class.
-     * 
+     *
      * @param dataType the type of the attribute
-     * @param value the text-encoded representation of an attribute's value
-     * @param params additional parameters that need to creates a value
+     * @param value    the text-encoded representation of an attribute's value
+     * @param params   additional parameters that need to creates a value
      * @return a new <code>AttributeValue</code>
-     * 
      * @throws UnknownIdentifierException if the data type isn't known to the factory
-     * @throws ParsingException if the text is invalid or can't be parsed by the appropriate proxy
+     * @throws ParsingException           if the text is invalid or can't be parsed by the appropriate proxy
      */
     public AttributeValue createValue(URI dataType, String value, String[] params)
             throws UnknownIdentifierException, ParsingException {

@@ -71,9 +71,9 @@ import org.w3c.dom.Node;
  * to ask its <code>PolicyFinder</code> for the referenced policy, which can be a slow operation.
  * Care should be taken, therefore in calling these methods too often. Also note that it's not safe
  * to cache the results of these calls, since the referenced policy may change.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class PolicyReference extends AbstractPolicy {
 
@@ -86,38 +86,31 @@ public class PolicyReference extends AbstractPolicy {
      * Identifies this as a reference to a <code>PolicySet</code>
      */
     public static final int POLICYSET_REFERENCE = 1;
-
-    // the reference
-    private URI reference;
-
-    // the reference type
-    private int policyType;
-
-    // and version constraints on this reference
-    private VersionConstraints constraints;
-
-    // the finder to use in finding the referenced policy
-    private PolicyFinder finder;
-
-    // the meta-data for the parent policy
-    private PolicyMetaData parentMetaData;
-
     // the logger we'll use for all messages
     private static Log logger = LogFactory.getLog(PolicyReference.class);
+    // the reference
+    private URI reference;
+    // the reference type
+    private int policyType;
+    // and version constraints on this reference
+    private VersionConstraints constraints;
+    // the finder to use in finding the referenced policy
+    private PolicyFinder finder;
+    // the meta-data for the parent policy
+    private PolicyMetaData parentMetaData;
 
     /**
      * Creates a new <code>PolicyReference</code> instance. This has no constraints on version
      * matching. Note that an XACML 1.x reference may not have any constraints.
-     * 
-     * @param reference the reference to the policy
-     * @param policyType one of the two fields in this class
-     * @param finder the <code>PolicyFinder</code> used to handle the reference
+     *
+     * @param reference      the reference to the policy
+     * @param policyType     one of the two fields in this class
+     * @param finder         the <code>PolicyFinder</code> used to handle the reference
      * @param parentMetaData the meta-data associated with the containing (parent) policy
-     * 
      * @throws IllegalArgumentException if the input policyType isn't valid
      */
     public PolicyReference(URI reference, int policyType, PolicyFinder finder,
-            PolicyMetaData parentMetaData) throws IllegalArgumentException {
+                           PolicyMetaData parentMetaData) throws IllegalArgumentException {
         this(reference, policyType, new VersionConstraints(null, null, null), finder,
                 parentMetaData);
     }
@@ -125,19 +118,18 @@ public class PolicyReference extends AbstractPolicy {
     /**
      * Creates a new <code>PolicyReference</code> instance with version constraints. Note that an
      * XACML 1.x reference may not have any constraints.
-     * 
-     * @param reference the reference to the policy
-     * @param policyType one of the two fields in this class
-     * @param constraints any optional constraints on the version of the referenced policy (this is
-     *            never null, but it may impose no constraints, and in fact will never impose
-     *            constraints when used from a pre-2.0 XACML policy)
-     * @param finder the <code>PolicyFinder</code> used to handle the reference
+     *
+     * @param reference      the reference to the policy
+     * @param policyType     one of the two fields in this class
+     * @param constraints    any optional constraints on the version of the referenced policy (this is
+     *                       never null, but it may impose no constraints, and in fact will never impose
+     *                       constraints when used from a pre-2.0 XACML policy)
+     * @param finder         the <code>PolicyFinder</code> used to handle the reference
      * @param parentMetaData the meta-data associated with the containing (parent) policy
-     * 
      * @throws IllegalArgumentException if the input policyType isn't valid
      */
     public PolicyReference(URI reference, int policyType, VersionConstraints constraints,
-            PolicyFinder finder, PolicyMetaData parentMetaData) throws IllegalArgumentException {
+                           PolicyFinder finder, PolicyMetaData parentMetaData) throws IllegalArgumentException {
 
         // check if input policyType is a valid value
         if ((policyType != POLICY_REFERENCE) && (policyType != POLICYSET_REFERENCE))
@@ -152,15 +144,14 @@ public class PolicyReference extends AbstractPolicy {
 
     /**
      * Creates an instance of a <code>PolicyReference</code> object based on a DOM node.
-     * 
-     * @deprecated As of 2.0 you should avoid using this method and should instead use the version
-     *             that takes a <code>PolicyMetaData</code> instance. This method will only work for
-     *             XACML 1.x policies.
-     * 
-     * @param root the DOM root of a PolicyIdReference or a PolicySetIdReference XML type
+     *
+     * @param root   the DOM root of a PolicyIdReference or a PolicySetIdReference XML type
      * @param finder the <code>PolicyFinder</code> used to handle the reference
      * @return an instance of PolicyReference
-     * @exception ParsingException if the node is invalid
+     * @throws ParsingException if the node is invalid
+     * @deprecated As of 2.0 you should avoid using this method and should instead use the version
+     * that takes a <code>PolicyMetaData</code> instance. This method will only work for
+     * XACML 1.x policies.
      */
     public static PolicyReference getInstance(Node root, PolicyFinder finder)
             throws ParsingException {
@@ -169,15 +160,15 @@ public class PolicyReference extends AbstractPolicy {
 
     /**
      * Creates an instance of a <code>PolicyReference</code> object based on a DOM node.
-     * 
-     * @param root the DOM root of a PolicyIdReference or a PolicySetIdReference XML type
-     * @param finder the <code>PolicyFinder</code> used to handle the reference
+     *
+     * @param root     the DOM root of a PolicyIdReference or a PolicySetIdReference XML type
+     * @param finder   the <code>PolicyFinder</code> used to handle the reference
      * @param metaData the meta-data associated with the containing policy
      * @return an instance of PolicyReference
-     * @exception ParsingException if the node is invalid
+     * @throws ParsingException if the node is invalid
      */
     public static PolicyReference getInstance(Node root, PolicyFinder finder,
-            PolicyMetaData metaData) throws ParsingException {
+                                              PolicyMetaData metaData) throws ParsingException {
 
         URI reference;
         int policyType;
@@ -226,7 +217,7 @@ public class PolicyReference extends AbstractPolicy {
 
     /**
      * Returns the reference identifier used to resolve the policy.
-     * 
+     *
      * @return the reference <code>URI</code>
      */
     public URI getReference() {
@@ -236,7 +227,7 @@ public class PolicyReference extends AbstractPolicy {
     /**
      * Returns the version constraints associated with this reference. This will never be null,
      * though the constraints may be empty.
-     * 
+     *
      * @return the version constraints
      */
     public VersionConstraints getConstraints() {
@@ -245,9 +236,9 @@ public class PolicyReference extends AbstractPolicy {
 
     /**
      * Returns whether this is a reference to a policy or to a policy set.
-     * 
+     *
      * @return the reference type, either <code>POLICY_REFERENCE</code> or
-     *         <code>POLICYSET_REFERENCE</code>
+     * <code>POLICYSET_REFERENCE</code>
      */
     public int getReferenceType() {
         return policyType;
@@ -256,9 +247,8 @@ public class PolicyReference extends AbstractPolicy {
     /**
      * Returns the id of this policy. If the policy is invalid or can't be retrieved, then a runtime
      * exception is thrown.
-     * 
+     *
      * @return the policy id
-     * 
      * @throws ProcessingException if the referenced policy can't be retrieved
      */
     public URI getId() {
@@ -268,9 +258,8 @@ public class PolicyReference extends AbstractPolicy {
     /**
      * Returns the version of this policy. If the policy is invalid or can't be retrieved, then a
      * runtime exception is thrown.
-     * 
+     *
      * @return the policy version
-     * 
      * @throws ProcessingException if the referenced policy can't be retrieved
      */
     public String getVersion() {
@@ -280,9 +269,8 @@ public class PolicyReference extends AbstractPolicy {
     /**
      * Returns the combining algorithm used by this policy. If the policy is invalid or can't be
      * retrieved, then a runtime exception is thrown.
-     * 
+     *
      * @return the combining algorithm
-     * 
      * @throws ProcessingException if the referenced policy can't be retrieved
      */
     public CombiningAlgorithm getCombiningAlg() {
@@ -292,9 +280,8 @@ public class PolicyReference extends AbstractPolicy {
     /**
      * Returns the given description of this policy or null if there is no description. If the
      * policy is invalid or can't be retrieved, then a runtime exception is thrown.
-     * 
+     *
      * @return the description or null
-     * 
      * @throws ProcessingException if the referenced policy can't be retrieved
      */
     public String getDescription() {
@@ -304,9 +291,8 @@ public class PolicyReference extends AbstractPolicy {
     /**
      * Returns the target for this policy. If the policy is invalid or can't be retrieved, then a
      * runtime exception is thrown.
-     * 
+     *
      * @return the policy's target
-     * 
      * @throws ProcessingException if the referenced policy can't be retrieved
      */
     public AbstractTarget getTarget() {
@@ -316,9 +302,8 @@ public class PolicyReference extends AbstractPolicy {
     /**
      * Returns the default version for this policy. If the policy is invalid or can't be retrieved,
      * then a runtime exception is thrown.
-     * 
+     *
      * @return the policy's default version
-     * 
      * @throws ProcessingException if the referenced policy can't be retrieved
      */
     public String getDefaultVersion() {
@@ -328,9 +313,8 @@ public class PolicyReference extends AbstractPolicy {
     /**
      * Returns the child policy nodes under this node in the policy tree. If the policy is invalid
      * or can't be retrieved, then a runtime exception is thrown.
-     * 
+     *
      * @return the <code>List</code> of child policy nodes
-     * 
      * @throws ProcessingException if the referenced policy can't be retrieved
      */
     public List getChildren() {
@@ -340,9 +324,8 @@ public class PolicyReference extends AbstractPolicy {
     /**
      * Returns the child policy nodes and their associated parameters. If the policy is invalid or
      * can't be retrieved, then a runtime exception is thrown.
-     * 
+     *
      * @return a <code>List</code> of <code>CombinerElement</code>s
-     * 
      * @throws ProcessingException if the referenced policy can't be retrieved
      */
     public List getChildElements() {
@@ -353,9 +336,8 @@ public class PolicyReference extends AbstractPolicy {
      * Returns the Set of obligations for this policy, which may be empty if there are no
      * obligations. If the policy is invalid or can't be retrieved, then a runtime exception is
      * thrown.
-     * 
+     *
      * @return the policy's obligations
-     * 
      * @throws ProcessingException if the referenced policy can't be retrieved
      */
     public Set getObligationExpressions() {
@@ -367,9 +349,8 @@ public class PolicyReference extends AbstractPolicy {
      * retrieved, then a runtime exception is thrown. Note that this is the meta-data for the
      * referenced policy, not the meta-data for the parent policy (which is what gets provided to
      * the constructors of this class).
-     * 
+     *
      * @return the policy's meta-data
-     * 
      * @throws ProcessingException if the referenced policy can't be retrieved
      */
     public PolicyMetaData getMetaData() {
@@ -381,9 +362,8 @@ public class PolicyReference extends AbstractPolicy {
      * called by combining algorithms before they evaluate a policy. This is also used in the
      * initial policy finding operation to determine which top-level policies might apply to the
      * request. If the policy is invalid or can't be retrieved, then a runtime exception is thrown.
-     * 
+     *
      * @param context the representation of the request
-     * 
      * @return the result of trying to match the policy and the request
      */
     public MatchResult match(EvaluationCtx context) {
@@ -428,14 +408,13 @@ public class PolicyReference extends AbstractPolicy {
      * Tries to evaluate the policy by calling the combining algorithm on the given policies or
      * rules. The <code>match</code> method must always be called first, and must always return
      * MATCH, before this method is called.
-     * 
+     *
      * @param context the representation of the request
-     * 
      * @return the result of evaluation
      */
     public AbstractResult evaluate(EvaluationCtx context) {
         // if there is no finder, then we return NotApplicable
-        if (finder == null){
+        if (finder == null) {
             //return new Result(Result.DECISION_NOT_APPLICABLE, context.getResourceId().encode());
             return ResultFactory.getFactory().getResult(Result.DECISION_NOT_APPLICABLE, context);
         }
@@ -444,12 +423,12 @@ public class PolicyReference extends AbstractPolicy {
                 parentMetaData);
 
         // if we found nothing, then we return NotApplicable
-        if (pfr.notApplicable()){
+        if (pfr.notApplicable()) {
             //return new Result(Result.DECISION_NOT_APPLICABLE, context.getResourceId().encode());
             return ResultFactory.getFactory().getResult(Result.DECISION_NOT_APPLICABLE, context);
         }
         // if there was an error, we return that status data
-        if (pfr.indeterminate()){
+        if (pfr.indeterminate()) {
 //            return new Result(Result.DECISION_INDETERMINATE, pfr.getStatus(), context
 //                    .getResourceId().encode());
             return ResultFactory.getFactory().getResult(Result.DECISION_INDETERMINATE, pfr.getStatus(), context);
@@ -479,7 +458,7 @@ public class PolicyReference extends AbstractPolicy {
 
         if (policyType == POLICY_REFERENCE) {
             builder.append("<PolicyIdReference").append(encodeConstraints()).append(">").
-                            append(reference.toString()).append("</PolicyIdReference>");
+                    append(reference.toString()).append("</PolicyIdReference>");
         } else {
             builder.append("<PolicySetIdReference").append(encodeConstraints()).append(">").
                     append(reference.toString()).append("</PolicySetIdReference>");
@@ -489,6 +468,7 @@ public class PolicyReference extends AbstractPolicy {
     /**
      * Private helper method that encodes the variable constraints info. Note that if this is a
      * pre-2.0 policy the constraints are always null, so nothing will be added here.
+     *
      * @return
      */
     private String encodeConstraints() {

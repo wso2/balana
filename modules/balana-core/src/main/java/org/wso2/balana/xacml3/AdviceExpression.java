@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Represents the AdviceExpressionType XML type in XACML. Advice are introduced with XACML 3   
+ * Represents the AdviceExpressionType XML type in XACML. Advice are introduced with XACML 3
  */
 public class AdviceExpression {
 
@@ -58,8 +58,9 @@ public class AdviceExpression {
     /**
      * Constructor that takes all the data associated with an AdviceExpression
      * .
-     * @param adviceId the advice's id
-     * @param appliesTo the effect for which this advice must be provided
+     *
+     * @param adviceId                       the advice's id
+     * @param appliesTo                      the effect for which this advice must be provided
      * @param attributeAssignmentExpressions a <code>List</code> of <code>AttributeAssignmentExpression</code>s
      */
     public AdviceExpression(URI adviceId, int appliesTo,
@@ -70,12 +71,12 @@ public class AdviceExpression {
     }
 
     /**
-     *  Creates an instance of <code>AdviceExpression</code> based on the DOM root node.
+     * Creates an instance of <code>AdviceExpression</code> based on the DOM root node.
      *
-     * @param root  the DOM root of the AdviceExpressionType XML type
+     * @param root     the DOM root of the AdviceExpressionType XML type
      * @param metaData policy meta data
      * @return an instance of an <code>AdviceExpression</code>
-     * @throws ParsingException  if the structure isn't valid
+     * @throws ParsingException if the structure isn't valid
      */
     public static AdviceExpression getInstance(Node root, PolicyMetaData metaData) throws ParsingException {
 
@@ -146,14 +147,14 @@ public class AdviceExpression {
     /**
      * return  evaluation result of the advice expression
      *
-     * @param ctx  <code>EvaluationCtx</code>
-     * @return  result as <code>Advice</code> Object
+     * @param ctx <code>EvaluationCtx</code>
+     * @return result as <code>Advice</code> Object
      */
     public Advice evaluate(EvaluationCtx ctx) {
         List<AttributeAssignment> assignments = new ArrayList<AttributeAssignment>();
-        for(AttributeAssignmentExpression expression : attributeAssignmentExpressions){
+        for (AttributeAssignmentExpression expression : attributeAssignmentExpressions) {
             Set<AttributeAssignment> assignmentSet = expression.evaluate(ctx);
-            if(assignmentSet != null && assignmentSet.size() > 0){
+            if (assignmentSet != null && assignmentSet.size() > 0) {
                 assignments.addAll(assignmentSet);
             }
         }

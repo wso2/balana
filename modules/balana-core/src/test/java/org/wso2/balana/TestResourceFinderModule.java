@@ -1,4 +1,3 @@
-
 /*
  * @(#)TestResourceFinderModule.java
  *
@@ -55,8 +54,7 @@ import java.util.HashSet;
  *
  * @author Seth Proctor
  */
-public class TestResourceFinderModule extends ResourceFinderModule
-{
+public class TestResourceFinderModule extends ResourceFinderModule {
 
     /**
      * Default constructor.
@@ -87,15 +85,14 @@ public class TestResourceFinderModule extends ResourceFinderModule
      * Finds the children resources associated with the given root,
      * assuming the hierarchy is one that this module handles.
      *
-     * @param root the root resource in the hierarchy
+     * @param root    the root resource in the hierarchy
      * @param context the evaluation's context
-     *
      * @return the resource hierarchy
      */
     public ResourceFinderResult findChildResources(AttributeValue root,
                                                    EvaluationCtx context) {
         // make sure we can handle this hierarchy
-        if (! requestApplies(root))
+        if (!requestApplies(root))
             return new ResourceFinderResult();
 
         // add the root to the set of resolved resources
@@ -117,16 +114,15 @@ public class TestResourceFinderModule extends ResourceFinderModule
      * Finds the children resources associated with the given root,
      * assuming the hierarchy is one that this module handles.
      *
-     * @param root the root resource in the hierarchy
+     * @param root    the root resource in the hierarchy
      * @param context the evaluation's context
-     *
      * @return the resource hierarchy
      */
     public ResourceFinderResult findDescendantResources(AttributeValue root,
                                                         EvaluationCtx
-                                                        context) {
+                                                                context) {
         // make sure we can handle this hierarchy
-        if (! requestApplies(root))
+        if (!requestApplies(root))
             return new ResourceFinderResult();
 
         // add the root to the set of resolved resources
@@ -137,14 +133,14 @@ public class TestResourceFinderModule extends ResourceFinderModule
         try {
             set.add(new AnyURIAttribute(new URI("urn:root:child1")));
             set.add(new AnyURIAttribute(new
-                                        URI("urn:root:child1:descendant1")));
+                    URI("urn:root:child1:descendant1")));
             set.add(new AnyURIAttribute(new
-                                        URI("urn:root:child1:descendant2")));
+                    URI("urn:root:child1:descendant2")));
             set.add(new AnyURIAttribute(new URI("urn:root:child2")));
             set.add(new AnyURIAttribute(new
-                                        URI("urn:root:child2:descendant1")));
+                    URI("urn:root:child2:descendant1")));
             set.add(new AnyURIAttribute(new
-                                        URI("urn:root:child2:descendant2")));
+                    URI("urn:root:child2:descendant2")));
         } catch (URISyntaxException urise) {
             // this will never happen
         }
@@ -158,11 +154,11 @@ public class TestResourceFinderModule extends ResourceFinderModule
      */
     private boolean requestApplies(AttributeValue root) {
         // make sure the resource-id is a URI
-        if (! root.getType().toString().equals(AnyURIAttribute.identifier))
+        if (!root.getType().toString().equals(AnyURIAttribute.identifier))
             return false;
 
         // make sure that the root is urn:root
-        if (! ((AnyURIAttribute)root).getValue().toString().equals("urn:root"))
+        if (!((AnyURIAttribute) root).getValue().toString().equals("urn:root"))
             return false;
 
         return true;

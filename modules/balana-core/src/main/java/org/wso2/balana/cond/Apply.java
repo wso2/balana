@@ -62,9 +62,9 @@ import org.wso2.balana.ctx.EvaluationCtx;
  * Also, as of 2.0, the <code>Apply</code> is no longer used to represent a Condition, since the
  * XACML 2.0 specification changed how Condition works. Instead, there is now a
  * <code>Condition</code> class that represents both 1.x and 2.0 style Conditions.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class Apply implements Evaluatable {
 
@@ -76,13 +76,12 @@ public class Apply implements Evaluatable {
 
     /**
      * Constructs an <code>Apply</code> instance.
-     * 
+     *
      * @param function the <code>Function</code> to use in evaluating the elements in the apply
-     * @param xprs the contents of the apply which will be the parameters to the function, each of
-     *            which is an <code>Expression</code>
-     * 
+     * @param xprs     the contents of the apply which will be the parameters to the function, each of
+     *                 which is an <code>Expression</code>
      * @throws IllegalArgumentException if the input expressions don't match the signature of the
-     *             function
+     *                                  function
      */
     public Apply(Function function, List xprs) throws IllegalArgumentException {
         // check that the given inputs work for the function
@@ -95,18 +94,16 @@ public class Apply implements Evaluatable {
 
     /**
      * Constructs an <code>Apply</code> instance.
-     * 
-     * @deprecated As of 2.0 <code>Apply</code> is no longer used for Conditions, so the
-     *             <code>isCondition</code> parameter is no longer needed. You should now use the 2
-     *             parameter constructor. This constructor will be removed in a future release.
-     * 
-     * @param function the <code>Function</code> to use in evaluating the elements in the apply
-     * @param xprs the contents of the apply which will be the parameters to the function, each of
-     *            which is an <code>Expression</code>
+     *
+     * @param function    the <code>Function</code> to use in evaluating the elements in the apply
+     * @param xprs        the contents of the apply which will be the parameters to the function, each of
+     *                    which is an <code>Expression</code>
      * @param isCondition as of 2.0, this must always be false
-     * 
      * @throws IllegalArgumentException if the input expressions don't match the signature of the
-     *             function or if <code>isCondition</code> is true
+     *                                  function or if <code>isCondition</code> is true
+     * @deprecated As of 2.0 <code>Apply</code> is no longer used for Conditions, so the
+     * <code>isCondition</code> parameter is no longer needed. You should now use the 2
+     * parameter constructor. This constructor will be removed in a future release.
      */
     public Apply(Function function, List xprs, boolean isCondition) throws IllegalArgumentException {
         // make sure that no is using this constructor to create a Condition
@@ -134,13 +131,12 @@ public class Apply implements Evaluatable {
      * style ConditionType, but you will need to convert it into a <code>Condition</code> to use it
      * in evaluation. The preferred way to create a Condition is now through the
      * <code>getInstance</code> method on <code>Condition</code>.
-     * 
-     * @param root the DOM root of a ConditionType XML type
+     *
+     * @param root         the DOM root of a ConditionType XML type
      * @param xpathVersion the XPath version to use in any selectors or XPath functions, or null if
-     *            this is unspecified (ie, not supplied in the defaults section of the policy)
-     * @param manager <code>VariableManager</code> used to connect references and definitions while
-     *            parsing
-     * 
+     *                     this is unspecified (ie, not supplied in the defaults section of the policy)
+     * @param manager      <code>VariableManager</code> used to connect references and definitions while
+     *                     parsing
      * @throws ParsingException if this is not a valid ConditionType
      */
     public static Apply getConditionInstance(Node root, String xpathVersion, VariableManager manager)
@@ -154,18 +150,16 @@ public class Apply implements Evaluatable {
      * actually return a special kind of <code>Apply</code>, namely an XML ConditionType, which is
      * the root of the condition logic in a RuleType. A ConditionType is the same as an ApplyType
      * except that it must use a FunctionId that returns a boolean value.
-     * 
-     * @deprecated As of 2.0 you should avoid using this method, since it does not provide a
-     *             <code>Condition</code> instance and does not handle XACML 2.0 policies correctly.
-     *             If you need a similar method you can use the new version that accepts a
-     *             <code>VariableManager</code>. This will return an <code>Apply</code> instance for
-     *             XACML 1.x policies.
-     * 
-     * @param root the DOM root of a ConditionType XML type
+     *
+     * @param root         the DOM root of a ConditionType XML type
      * @param xpathVersion the XPath version to use in any selectors or XPath functions, or null if
-     *            this is unspecified (ie, not supplied in the defaults section of the policy)
-     * 
+     *                     this is unspecified (ie, not supplied in the defaults section of the policy)
      * @throws ParsingException if this is not a valid ConditionType
+     * @deprecated As of 2.0 you should avoid using this method, since it does not provide a
+     * <code>Condition</code> instance and does not handle XACML 2.0 policies correctly.
+     * If you need a similar method you can use the new version that accepts a
+     * <code>VariableManager</code>. This will return an <code>Apply</code> instance for
+     * XACML 1.x policies.
      */
     public static Apply getConditionInstance(Node root, String xpathVersion)
             throws ParsingException {
@@ -175,12 +169,11 @@ public class Apply implements Evaluatable {
 
     /**
      * Returns an instance of <code>Apply</code> based on the given DOM root.
-     * 
-     * @param root the DOM root of an ApplyType XML type
+     *
+     * @param root     the DOM root of an ApplyType XML type
      * @param metaData the meta-data associated with the containing policy
-     * @param manager <code>VariableManager</code> used to connect references and definitions while
-     *            parsing
-     * 
+     * @param manager  <code>VariableManager</code> used to connect references and definitions while
+     *                 parsing
      * @throws ParsingException if this is not a valid ApplyType
      */
     public static Apply getInstance(Node root, PolicyMetaData metaData, VariableManager manager)
@@ -190,17 +183,15 @@ public class Apply implements Evaluatable {
 
     /**
      * Returns an instance of <code>Apply</code> based on the given DOM root.
-     * 
-     * @deprecated As of 2.0 you should avoid using this method, since it does not handle XACML 2.0
-     *             policies correctly. If you need a similar method you can use the new version that
-     *             accepts a <code>VariableManager</code>. This will return an <code>Apply</code>
-     *             instance for XACML 1.x policies.
-     * 
-     * @param root the DOM root of an ApplyType XML type
+     *
+     * @param root         the DOM root of an ApplyType XML type
      * @param xpathVersion the XPath version to use in any selectors or XPath functions, or null if
-     *            this is unspecified (ie, not supplied in the defaults section of the policy)
-     * 
+     *                     this is unspecified (ie, not supplied in the defaults section of the policy)
      * @throws ParsingException if this is not a valid ApplyType
+     * @deprecated As of 2.0 you should avoid using this method, since it does not handle XACML 2.0
+     * policies correctly. If you need a similar method you can use the new version that
+     * accepts a <code>VariableManager</code>. This will return an <code>Apply</code>
+     * instance for XACML 1.x policies.
      */
     public static Apply getInstance(Node root, String xpathVersion) throws ParsingException {
         return getInstance(root, FunctionFactory.getGeneralInstance(), new PolicyMetaData(
@@ -212,7 +203,7 @@ public class Apply implements Evaluatable {
      * we know that we're getting the right kind of function.
      */
     private static Apply getInstance(Node root, FunctionFactory factory, PolicyMetaData metaData,
-            VariableManager manager) throws ParsingException {
+                                     VariableManager manager) throws ParsingException {
         Function function = ExpressionHandler.getFunction(root, metaData, factory);
         List xprs = new ArrayList();
 
@@ -229,7 +220,7 @@ public class Apply implements Evaluatable {
 
     /**
      * Returns the <code>Function</code> used by this <code>Apply</code>.
-     * 
+     *
      * @return the <code>Function</code>
      */
     public Function getFunction() {
@@ -239,7 +230,7 @@ public class Apply implements Evaluatable {
     /**
      * Returns the <code>List</code> of children for this <code>Apply</code>. The <code>List</code>
      * contains <code>Expression</code>s. The list is unmodifiable, and may be empty.
-     * 
+     *
      * @return a <code>List</code> of <code>Expression</code>s
      */
     public List getChildren() {
@@ -249,11 +240,10 @@ public class Apply implements Evaluatable {
     /**
      * Returns whether or not this ApplyType is actually a ConditionType. As of 2.0 this always
      * returns false;
-     * 
-     * @deprecated As of 2.0 this method should not be used, since an <code>Apply</code> is never a
-     *             Condition.
-     * 
+     *
      * @return false
+     * @deprecated As of 2.0 this method should not be used, since an <code>Apply</code> is never a
+     * Condition.
      */
     public boolean isCondition() {
         return false;
@@ -262,9 +252,8 @@ public class Apply implements Evaluatable {
     /**
      * Evaluates the apply object using the given function. This will in turn call evaluate on all
      * the given parameters, some of which may be other <code>Apply</code> objects.
-     * 
+     *
      * @param context the representation of the request
-     * 
      * @return the result of trying to evaluate this apply object
      */
     public EvaluationResult evaluate(EvaluationCtx context) {
@@ -281,7 +270,7 @@ public class Apply implements Evaluatable {
      * Returns the type of attribute that this object will return on a call to <code>evaluate</code>
      * . In practice, this will always be the same as the result of calling
      * <code>getReturnType</code> on the function used by this object.
-     * 
+     *
      * @return the type returned by <code>evaluate</code>
      */
     public URI getType() {
@@ -290,7 +279,7 @@ public class Apply implements Evaluatable {
 
     /**
      * Returns whether or not the <code>Function</code> will return a bag of values on evaluation.
-     * 
+     *
      * @return true if evaluation will return a bag of values, false otherwise
      */
     public boolean returnsBag() {
@@ -299,12 +288,10 @@ public class Apply implements Evaluatable {
 
     /**
      * Returns whether or not the <code>Function</code> will return a bag of values on evaluation.
-     * 
-     * 
-     * @deprecated As of 2.0, you should use the <code>returnsBag</code> method from the
-     *             super-interface <code>Expression</code>.
-     * 
+     *
      * @return true if evaluation will return a bag of values, false otherwise
+     * @deprecated As of 2.0, you should use the <code>returnsBag</code> method from the
+     * super-interface <code>Expression</code>.
      */
     public boolean evaluatesToBag() {
         return function.returnsBag();

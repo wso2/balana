@@ -56,8 +56,8 @@ import java.util.*;
  * that since this implementation does an ordered evaluation, this class also supports the Ordered
  * Permit Overrides algorithm.
  *
- * @since 1.0
  * @author Seth Proctor
+ * @since 1.0
  */
 public class PermitOverridesRuleAlg extends RuleCombiningAlgorithm {
 
@@ -103,11 +103,10 @@ public class PermitOverridesRuleAlg extends RuleCombiningAlgorithm {
     /**
      * Applies the combining rule to the set of rules based on the evaluation context.
      *
-     * @param context the context from the request
-     * @param parameters a (possibly empty) non-null <code>List</code> of
-     *            <code>CombinerParameter<code>s
+     * @param context      the context from the request
+     * @param parameters   a (possibly empty) non-null <code>List</code> of
+     *                     <code>CombinerParameter<code>s
      * @param ruleElements the rules to combine
-     *
      * @return the result of running the combining algorithm
      */
     public AbstractResult combine(EvaluationCtx context, List parameters, List ruleElements) {
@@ -126,7 +125,7 @@ public class PermitOverridesRuleAlg extends RuleCombiningAlgorithm {
 
             // if there was a value of PERMIT, then regardless of what
             // else we've seen, we always return PERMIT
-            if (value == AbstractResult.DECISION_PERMIT){
+            if (value == AbstractResult.DECISION_PERMIT) {
                 return result;
             }
             // if it was INDETERMINATE, then we couldn't figure something
@@ -135,18 +134,18 @@ public class PermitOverridesRuleAlg extends RuleCombiningAlgorithm {
                     value == AbstractResult.DECISION_INDETERMINATE_DENY ||
                     value == AbstractResult.DECISION_INDETERMINATE_PERMIT ||
                     value == AbstractResult.DECISION_INDETERMINATE_DENY_OR_PERMIT) {
-                
+
                 atLeastOneError = true;
 
                 // there are no rules about what to do if multiple cases
                 // cause errors, so we'll just return the first one
-                if (firstIndeterminateResult == null){
+                if (firstIndeterminateResult == null) {
                     firstIndeterminateResult = result;
                 }
                 // if the Rule's effect is PERMIT, then we can't let this
                 // alg return DENY, since this Rule might have permitted
                 // if it could do its stuff
-                if (rule.getEffect() == AbstractResult.DECISION_PERMIT){
+                if (rule.getEffect() == AbstractResult.DECISION_PERMIT) {
                     potentialPermit = true;
                 }
             } else {
@@ -154,25 +153,25 @@ public class PermitOverridesRuleAlg extends RuleCombiningAlgorithm {
                 // actually pertained to the request
                 if (value == AbstractResult.DECISION_DENY)
                     atLeastOneDeny = true;
-                    denyAdvices.addAll(result.getAdvices());
-                    denyObligations.addAll(result.getObligations());
+                denyAdvices.addAll(result.getAdvices());
+                denyObligations.addAll(result.getObligations());
             }
         }
 
         // we didn't explicitly PERMIT, but we might have had some Rule
         // been evaluated, so we have to return INDETERMINATE
-        if (potentialPermit){
+        if (potentialPermit) {
             return firstIndeterminateResult;
         }
         // some Rule said DENY, so since nothing could have permitted,
         // we return DENY
-        if (atLeastOneDeny){
+        if (atLeastOneDeny) {
             return ResultFactory.getFactory().getResult(AbstractResult.DECISION_DENY, denyObligations,
-                                                                            denyAdvices, context);
+                    denyAdvices, context);
         }
         // we didn't find anything that said DENY, but if we had a
         // problem with one of the Rules, then we're INDETERMINATE
-        if (atLeastOneError){
+        if (atLeastOneError) {
             return firstIndeterminateResult;
         }
         // if we hit this point, then none of the rules actually applied

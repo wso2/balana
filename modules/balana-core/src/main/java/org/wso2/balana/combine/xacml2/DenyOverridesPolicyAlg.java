@@ -55,9 +55,9 @@ import java.util.*;
  * Deny to take precedence over any number of permit, not applicable or indeterminate results. Note
  * that since this implementation does an ordered evaluation, this class also supports the Ordered
  * Deny Overrides algorithm.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class DenyOverridesPolicyAlg extends PolicyCombiningAlgorithm {
 
@@ -93,7 +93,7 @@ public class DenyOverridesPolicyAlg extends PolicyCombiningAlgorithm {
 
     /**
      * Protected constructor used by the ordered version of this algorithm.
-     * 
+     *
      * @param identifier the algorithm's identifier
      */
     protected DenyOverridesPolicyAlg(URI identifier) {
@@ -102,18 +102,17 @@ public class DenyOverridesPolicyAlg extends PolicyCombiningAlgorithm {
 
     /**
      * Applies the combining rule to the set of policies based on the evaluation context.
-     * 
-     * @param context the context from the request
-     * @param parameters a (possibly empty) non-null <code>List</code> of
-     *            <code>CombinerParameter<code>s
+     *
+     * @param context        the context from the request
+     * @param parameters     a (possibly empty) non-null <code>List</code> of
+     *                       <code>CombinerParameter<code>s
      * @param policyElements the policies to combine
-     * 
      * @return the result of running the combining algorithm
      */
     public AbstractResult combine(EvaluationCtx context, List parameters, List policyElements) {
         boolean atLeastOnePermit = false;
         List<ObligationResult> permitObligations = new ArrayList<ObligationResult>();
-        List<Advice> permitAdvices= new ArrayList<Advice>();
+        List<Advice> permitAdvices = new ArrayList<Advice>();
         Iterator it = policyElements.iterator();
 
         while (it.hasNext()) {
@@ -121,7 +120,7 @@ public class DenyOverridesPolicyAlg extends PolicyCombiningAlgorithm {
             // make sure that the policy matches the context
             MatchResult match = policy.match(context);
 
-            if (match.getResult() == MatchResult.INDETERMINATE){ //TODO  do we really want this?
+            if (match.getResult() == MatchResult.INDETERMINATE) { //TODO  do we really want this?
                 return ResultFactory.getFactory().getResult(AbstractResult.DECISION_DENY, context);
             }
 
@@ -132,15 +131,15 @@ public class DenyOverridesPolicyAlg extends PolicyCombiningAlgorithm {
 
                 // unlike in the RuleCombining version of this alg, we always
                 // return DENY if any Policy returns DENY or INDETERMINATE
-                if (effect == AbstractResult.DECISION_DENY){
+                if (effect == AbstractResult.DECISION_DENY) {
                     return result;
                 }
-                
+
                 if (effect == AbstractResult.DECISION_INDETERMINATE ||
-                    effect == AbstractResult.DECISION_INDETERMINATE_DENY ||
-                    effect == AbstractResult.DECISION_INDETERMINATE_PERMIT ||
-                    effect == AbstractResult.DECISION_INDETERMINATE_DENY_OR_PERMIT) {
-                    
+                        effect == AbstractResult.DECISION_INDETERMINATE_DENY ||
+                        effect == AbstractResult.DECISION_INDETERMINATE_PERMIT ||
+                        effect == AbstractResult.DECISION_INDETERMINATE_DENY_OR_PERMIT) {
+
                     return ResultFactory.getFactory().getResult(Result.DECISION_DENY, context);
                 }
                 // remember if at least one Policy said PERMIT
@@ -155,9 +154,9 @@ public class DenyOverridesPolicyAlg extends PolicyCombiningAlgorithm {
         // if we got a PERMIT, return it, otherwise it's NOT_APPLICABLE
         if (atLeastOnePermit) {
             return ResultFactory.getFactory().getResult(AbstractResult.DECISION_PERMIT,
-                                                        permitObligations, permitAdvices, context);
+                    permitObligations, permitAdvices, context);
         } else {
-            return ResultFactory.getFactory().getResult(AbstractResult.DECISION_NOT_APPLICABLE, context); 
+            return ResultFactory.getFactory().getResult(AbstractResult.DECISION_NOT_APPLICABLE, context);
         }
     }
 

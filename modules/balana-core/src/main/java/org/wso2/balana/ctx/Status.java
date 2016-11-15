@@ -53,9 +53,9 @@ import org.w3c.dom.NodeList;
 
 /**
  * Represents the status data that is included in a ResultType. By default, the status is OK.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class Status {
 
@@ -78,16 +78,6 @@ public class Status {
      * Standard identifier for the ProcessingError status
      */
     public static final String STATUS_PROCESSING_ERROR = "urn:oasis:names:tc:xacml:1.0:status:processing-error";
-
-    // the status code
-    private List<String> code;
-
-    // the message
-    private String message;
-
-    // the detail
-    private StatusDetail detail;
-
     // a single OK object we'll use most of the time
     private static Status okStatus;
 
@@ -96,14 +86,23 @@ public class Status {
         List<String> code = new ArrayList<String>();
         code.add(STATUS_OK);
         okStatus = new Status(code);
-    };
+    }
+
+    // the status code
+    private List<String> code;
+    // the message
+    private String message;
+    // the detail
+    private StatusDetail detail;
+
+    ;
 
     /**
      * Constructor that takes only the status code.
-     * 
+     *
      * @param code a <code>List</code> of <code>String</code> codes, typically just one code, but
-     *            this may contain any number of minor codes after the first item in the list, which
-     *            is the major code
+     *             this may contain any number of minor codes after the first item in the list, which
+     *             is the major code
      */
     public Status(List<String> code) {
         this(code, null, null);
@@ -111,10 +110,10 @@ public class Status {
 
     /**
      * Constructor that takes both the status code and a message to include with the status.
-     * 
-     * @param code a <code>List</code> of <code>String</code> codes, typically just one code, but
-     *            this may contain any number of minor codes after the first item in the list, which
-     *            is the major code
+     *
+     * @param code    a <code>List</code> of <code>String</code> codes, typically just one code, but
+     *                this may contain any number of minor codes after the first item in the list, which
+     *                is the major code
      * @param message a message to include with the code
      */
     public Status(List code, String message) {
@@ -126,15 +125,14 @@ public class Status {
      * the status. Note that the specification explicitly says that a status code of OK, SyntaxError
      * or ProcessingError may not appear with status detail, so an exception is thrown if one of
      * these status codes is used and detail is included.
-     * 
-     * @param code a <code>List</code> of <code>String</code> codes, typically just one code, but
-     *            this may contain any number of minor codes after the first item in the list, which
-     *            is the major code
+     *
+     * @param code    a <code>List</code> of <code>String</code> codes, typically just one code, but
+     *                this may contain any number of minor codes after the first item in the list, which
+     *                is the major code
      * @param message a message to include with the code, or null if there should be no message
-     * @param detail the status detail to include, or null if there is no detail
-     * 
+     * @param detail  the status detail to include, or null if there is no detail
      * @throws IllegalArgumentException if detail is included for a status code that doesn't allow
-     *             detail
+     *                                  detail
      */
     public Status(List<String> code, String message, StatusDetail detail) throws IllegalArgumentException {
         // if the code is ok, syntax error or processing error, there
@@ -153,36 +151,9 @@ public class Status {
     }
 
     /**
-     * Returns the status code.
-     * 
-     * @return the status code
-     */
-    public List<String> getCode() {
-        return code;
-    }
-
-    /**
-     * Returns the status message or null if there is none.
-     * 
-     * @return the status message or null
-     */
-    public String getMessage() {
-        return message;
-    }
-
-    /**
-     * Returns the status detail or null if there is none.
-     * 
-     * @return a <code>StatusDetail</code> or null
-     */
-    public StatusDetail getDetail() {
-        return detail;
-    }
-
-    /**
      * Gets a <code>Status</code> instance that has the OK status and no other information. This is
      * the default status data for all responses except Indeterminate ones.
-     * 
+     *
      * @return an instance with <code>STATUS_OK</code>
      */
     public static Status getOkInstance() {
@@ -192,11 +163,9 @@ public class Status {
     /**
      * Creates a new instance of <code>Status</code> based on the given DOM root node. A
      * <code>ParsingException</code> is thrown if the DOM root doesn't represent a valid StatusType.
-     * 
-     * @param root the DOM root of a StatusType
      *
+     * @param root the DOM root of a StatusType
      * @return a new <code>Status</code>
-     * 
      * @throws ParsingException if the node is invalid
      */
     public static Status getInstance(Node root) throws ParsingException {
@@ -219,7 +188,7 @@ public class Status {
             }
         }
 
-        if(code == null){
+        if (code == null) {
             throw new ParsingException("Missing required element StatusCode in StatusType");
         }
 
@@ -228,9 +197,8 @@ public class Status {
 
     /**
      * Private helper that parses the status code
-     * 
-     * @param root  the DOM root of a StatusCodeType
      *
+     * @param root the DOM root of a StatusCodeType
      * @return a List for status
      */
     private static List<String> parseStatusCode(Node root) {
@@ -250,6 +218,33 @@ public class Status {
     }
 
     /**
+     * Returns the status code.
+     *
+     * @return the status code
+     */
+    public List<String> getCode() {
+        return code;
+    }
+
+    /**
+     * Returns the status message or null if there is none.
+     *
+     * @return the status message or null
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     * Returns the status detail or null if there is none.
+     *
+     * @return a <code>StatusDetail</code> or null
+     */
+    public StatusDetail getDetail() {
+        return detail;
+    }
+
+    /**
      * Encodes this <code>Status</code> into its XML form
      *
      * @return <code>String</code>
@@ -261,7 +256,7 @@ public class Status {
     }
 
     /**
-     * Encodes this <code>Status</code> into its XML form and writes this out to the provided                        
+     * Encodes this <code>Status</code> into its XML form and writes this out to the provided
      * <code>StringBuilder<code>
      *
      * @param builder string stream into which the XML-encoded data is written
@@ -272,7 +267,7 @@ public class Status {
 
         encodeStatusCode(code.iterator(), builder);
 
-        if (message != null){
+        if (message != null) {
             builder.append("<StatusMessage>").append(message).append("</StatusMessage>");
         }
 
@@ -284,7 +279,7 @@ public class Status {
 
     /**
      * Encodes the object in XML
-     * 
+     *
      * @param iterator
      * @param builder
      */

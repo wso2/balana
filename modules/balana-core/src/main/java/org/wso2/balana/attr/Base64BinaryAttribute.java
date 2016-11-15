@@ -48,9 +48,9 @@ import org.w3c.dom.Node;
 /**
  * Representation of an xsi:base64Binary value. This class supports parsing xsi:base64Binary values.
  * All objects of this class are immutable and all methods of the class are thread-safe.
- * 
- * @since 1.0
+ *
  * @author Steve Hanna
+ * @since 1.0
  */
 public class Base64BinaryAttribute extends AttributeValue {
     /**
@@ -85,7 +85,9 @@ public class Base64BinaryAttribute extends AttributeValue {
             earlyException = new IllegalArgumentException();
             earlyException.initCause(e);
         }
-    };
+    }
+
+    ;
 
     /**
      * The actual binary value that this object represents.
@@ -99,7 +101,7 @@ public class Base64BinaryAttribute extends AttributeValue {
 
     /**
      * Creates a new <code>Base64BinaryAttribute</code> that represents the byte [] value supplied.
-     * 
+     *
      * @param value the <code>byte []</code> value to be represented
      */
     public Base64BinaryAttribute(byte[] value) {
@@ -117,10 +119,10 @@ public class Base64BinaryAttribute extends AttributeValue {
     /**
      * Returns a new <code>Base64BinaryAttribute</code> that represents the xsi:base64Binary at a
      * particular DOM node.
-     * 
+     *
      * @param root the <code>Node</code> that contains the desired value
      * @return a new <code>Base64BinaryAttribute</code> representing the appropriate value
-     * @exception ParsingException if a parsing error occurs
+     * @throws ParsingException if a parsing error occurs
      */
     public static Base64BinaryAttribute getInstance(Node root) throws ParsingException {
         return getInstance(root.getFirstChild().getNodeValue());
@@ -129,10 +131,10 @@ public class Base64BinaryAttribute extends AttributeValue {
     /**
      * Returns a new <code>Base64BinaryAttribute</code> that represents the xsi:base64Binary value
      * indicated by the string provided.
-     * 
+     *
      * @param value a string representing the desired value
      * @return a new <code>Base64BinaryAttribute</code> representing the desired value
-     * @exception ParsingException if a parsing error occurs
+     * @throws ParsingException if a parsing error occurs
      */
     public static Base64BinaryAttribute getInstance(String value) throws ParsingException {
         byte[] bytes = null;
@@ -149,7 +151,7 @@ public class Base64BinaryAttribute extends AttributeValue {
     /**
      * Returns the <code>byte []</code> value represented by this object. Note that this value is
      * cloned before returning to prevent unauthorized modifications.
-     * 
+     *
      * @return the <code>byte []</code> value
      */
     public byte[] getValue() {
@@ -159,9 +161,8 @@ public class Base64BinaryAttribute extends AttributeValue {
     /**
      * Returns true if the input is an instance of this class and if its value equals the value
      * contained in this class.
-     * 
+     *
      * @param o the object to compare
-     * 
      * @return true if this object and the input represent the same value
      */
     public boolean equals(Object o) {
@@ -176,7 +177,7 @@ public class Base64BinaryAttribute extends AttributeValue {
     /**
      * Returns the hashcode value used to index and compare this object with others of the same
      * type. Typically this is the hashcode of the backing data object.
-     * 
+     *
      * @return the object's hashcode value
      */
     public int hashCode() {
@@ -192,7 +193,7 @@ public class Base64BinaryAttribute extends AttributeValue {
 
     /**
      * Make the String representation of this object.
-     * 
+     *
      * @return the String representation
      */
     private String makeStringRep() {
@@ -201,7 +202,7 @@ public class Base64BinaryAttribute extends AttributeValue {
 
     /**
      * Returns a String representation.
-     * 
+     *
      * @return the String representation
      */
     public String toString() {

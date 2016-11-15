@@ -50,17 +50,20 @@ import org.w3c.dom.Node;
  * Representation of an xs:time value. This class supports parsing xs:time values. All objects of
  * this class are immutable and thread-safe. The <code>Date</code> objects returned are not, but
  * these objects are cloned before being returned.
- * 
- * @since 1.0
+ *
  * @author Steve Hanna
  * @author Seth Proctor
+ * @since 1.0
  */
 public class TimeAttribute extends AttributeValue {
     /**
      * Official name of this type
      */
     public static final String identifier = "http://www.w3.org/2001/XMLSchema#time";
-
+    /**
+     * Time zone value that indicates that the time zone was not specified.
+     */
+    public static final int TZ_UNSPECIFIED = -1000000;
     /**
      * URI version of name for this type
      * <p>
@@ -71,12 +74,13 @@ public class TimeAttribute extends AttributeValue {
      * This object is used for synchronization whenever we need protection across this whole class.
      */
     private static URI identifierURI;
-
     /**
      * RuntimeException that wraps an Exception thrown during the creation of identifierURI, null if
      * none.
      */
     private static RuntimeException earlyException;
+
+    ;
 
     /**
      * Static initializer that initializes the identifierURI class field so that we can catch any
@@ -90,12 +94,7 @@ public class TimeAttribute extends AttributeValue {
             earlyException = new IllegalArgumentException();
             earlyException.initCause(e);
         }
-    };
-
-    /**
-     * Time zone value that indicates that the time zone was not specified.
-     */
-    public static final int TZ_UNSPECIFIED = -1000000;
+    }
 
     /**
      * The time that this object represents in second resolution, in milliseconds GMT, with zero
@@ -144,11 +143,11 @@ public class TimeAttribute extends AttributeValue {
     /**
      * Creates a new <code>TimeAttribute</code> that represents the given time but uses the default
      * timezone and offset values.
-     * 
+     *
      * @param time a <code>Date</code> object representing the specified time down to second
-     *            resolution. This date should have a date of 01/01/1970. If it does not, such a
-     *            date will be forced. If this object has non-zero milliseconds, they are combined
-     *            with the nanoseconds parameter.
+     *             resolution. This date should have a date of 01/01/1970. If it does not, such a
+     *             date will be forced. If this object has non-zero milliseconds, they are combined
+     *             with the nanoseconds parameter.
      */
     public TimeAttribute(Date time) {
         super(identifierURI);
@@ -159,16 +158,16 @@ public class TimeAttribute extends AttributeValue {
 
     /**
      * Creates a new <code>TimeAttribute</code> that represents the time supplied.
-     * 
-     * @param time a <code>Date</code> object representing the specified time down to second
-     *            resolution. This date should have a date of 01/01/1970. If it does not, such a
-     *            date will be forced. If this object has non-zero milliseconds, they are combined
-     *            with the nanoseconds parameter.
-     * @param nanoseconds the number of nanoseconds beyond the Date specified in the date parameter
-     * @param timeZone the time zone specified for this object (or TZ_UNSPECIFIED if unspecified).
-     *            The offset to GMT, in minutes.
+     *
+     * @param time              a <code>Date</code> object representing the specified time down to second
+     *                          resolution. This date should have a date of 01/01/1970. If it does not, such a
+     *                          date will be forced. If this object has non-zero milliseconds, they are combined
+     *                          with the nanoseconds parameter.
+     * @param nanoseconds       the number of nanoseconds beyond the Date specified in the date parameter
+     * @param timeZone          the time zone specified for this object (or TZ_UNSPECIFIED if unspecified).
+     *                          The offset to GMT, in minutes.
      * @param defaultedTimeZone the time zone actually used for this object, which must be
-     *            specified. The offset to GMT, in minutes.
+     *                          specified. The offset to GMT, in minutes.
      */
     public TimeAttribute(Date time, int nanoseconds, int timeZone, int defaultedTimeZone) {
         super(identifierURI);
@@ -183,17 +182,65 @@ public class TimeAttribute extends AttributeValue {
     }
 
     /**
+     * Returns a new <code>TimeAttribute</code> that represents the xs:time at a particular DOM
+     * node.
+     *
+     * @param root the <code>Node</code> that contains the desired value
+     * @return a new <code>TimeAttribute</code> representing the appropriate value (null if there is
+     * a parsing error)
+     */
+    public static TimeAttribute getInstance(Node root) throws ParsingException,
+            NumberFormatException, ParseException {
+        return getInstance(root.getFirstChild().getNodeValue());
+    }
+
+    /**
+     * Returns a new <code>TimeAttribute</code> that represents the xs:time value indicated by the
+     * string provided.
+     *
+     * @param value a string representing the desired value
+     * @return a new <code>TimeAttribute</code> representing the desired value (null if there is a
+     * parsing error)
+     * @throws ParsingException if any problems occurred while parsing
+     */
+    public static TimeAttribute getInstance(String value) throws ParsingException,
+            NumberFormatException, ParseException {
+        // Prepend date string for Jan 1 1970 and use the
+        // DateTimeAttribute parsing code.
+
+        value = "1970-01-01T" + value;
+
+        DateTimeAttribute dateTime = DateTimeAttribute.getInstance(value);
+
+        // if there was no explicit TZ provided, then we want to make sure
+        // the that the defaulting is done correctly, especially since 1/1/70
+        // is always out of daylight savings time
+
+        Date dateValue = dateTime.getValue();
+        int defaultedTimeZone = dateTime.getDefaultedTimeZone();
+        if (dateTime.getTimeZone() == TZ_UNSPECIFIED) {
+            int newDefTimeZone = DateTimeAttribute.getDefaultTZOffset(new Date());
+            dateValue = new Date(dateValue.getTime() - (newDefTimeZone - defaultedTimeZone)
+                    * DateAttribute.MILLIS_PER_MINUTE);
+            defaultedTimeZone = newDefTimeZone;
+        }
+
+        return new TimeAttribute(dateValue, dateTime.getNanoseconds(), dateTime.getTimeZone(),
+                defaultedTimeZone);
+    }
+
+    /**
      * Initialization code shared by constructors.
-     * 
-     * @param date a <code>Date</code> object representing the specified time down to second
-     *            resolution. This date should have a date of 01/01/1970. If it does not, such a
-     *            date will be forced. If this object has non-zero milliseconds, they are combined
-     *            with the nanoseconds parameter.
-     * @param nanoseconds the number of nanoseconds beyond the Date specified in the date parameter
-     * @param timeZone the time zone specified for this object (or TZ_UNSPECIFIED if unspecified).
-     *            The offset to GMT, in minutes.
+     *
+     * @param date              a <code>Date</code> object representing the specified time down to second
+     *                          resolution. This date should have a date of 01/01/1970. If it does not, such a
+     *                          date will be forced. If this object has non-zero milliseconds, they are combined
+     *                          with the nanoseconds parameter.
+     * @param nanoseconds       the number of nanoseconds beyond the Date specified in the date parameter
+     * @param timeZone          the time zone specified for this object (or TZ_UNSPECIFIED if unspecified).
+     *                          The offset to GMT, in minutes.
      * @param defaultedTimeZone the time zone actually used for this object (if it was originally
-     *            unspecified, the default time zone used). The offset to GMT, in minutes.
+     *                          unspecified, the default time zone used). The offset to GMT, in minutes.
      */
     private void init(Date date, int nanoseconds, int timeZone, int defaultedTimeZone) {
 
@@ -225,58 +272,10 @@ public class TimeAttribute extends AttributeValue {
     }
 
     /**
-     * Returns a new <code>TimeAttribute</code> that represents the xs:time at a particular DOM
-     * node.
-     * 
-     * @param root the <code>Node</code> that contains the desired value
-     * @return a new <code>TimeAttribute</code> representing the appropriate value (null if there is
-     *         a parsing error)
-     */
-    public static TimeAttribute getInstance(Node root) throws ParsingException,
-            NumberFormatException, ParseException {
-        return getInstance(root.getFirstChild().getNodeValue());
-    }
-
-    /**
-     * Returns a new <code>TimeAttribute</code> that represents the xs:time value indicated by the
-     * string provided.
-     * 
-     * @param value a string representing the desired value
-     * @return a new <code>TimeAttribute</code> representing the desired value (null if there is a
-     *         parsing error)
-     * @throws ParsingException if any problems occurred while parsing
-     */
-    public static TimeAttribute getInstance(String value) throws ParsingException,
-            NumberFormatException, ParseException {
-        // Prepend date string for Jan 1 1970 and use the
-        // DateTimeAttribute parsing code.
-
-        value = "1970-01-01T" + value;
-
-        DateTimeAttribute dateTime = DateTimeAttribute.getInstance(value);
-
-        // if there was no explicit TZ provided, then we want to make sure
-        // the that the defaulting is done correctly, especially since 1/1/70
-        // is always out of daylight savings time
-
-        Date dateValue = dateTime.getValue();
-        int defaultedTimeZone = dateTime.getDefaultedTimeZone();
-        if (dateTime.getTimeZone() == TZ_UNSPECIFIED) {
-            int newDefTimeZone = DateTimeAttribute.getDefaultTZOffset(new Date());
-            dateValue = new Date(dateValue.getTime() - (newDefTimeZone - defaultedTimeZone)
-                    * DateAttribute.MILLIS_PER_MINUTE);
-            defaultedTimeZone = newDefTimeZone;
-        }
-
-        return new TimeAttribute(dateValue, dateTime.getNanoseconds(), dateTime.getTimeZone(),
-                defaultedTimeZone);
-    }
-
-    /**
      * Gets the time represented by this object. The return value is a <code>Date</code> object
      * representing the specified time down to second resolution with a date of January 1, 1970.
      * Subsecond values are handled by the {@link #getNanoseconds getNanoseconds} method.
-     * 
+     *
      * @return a <code>Date</code> object representing the time represented by this object
      */
     public Date getValue() {
@@ -287,7 +286,7 @@ public class TimeAttribute extends AttributeValue {
      * Gets the number of milliseconds since midnight GMT that this attribute value represents. This
      * is the same time returned by <code>getValue</code>, and likewise the milliseconds are
      * provided with second resolution.
-     * 
+     *
      * @return milliseconds since midnight GMT
      */
     public long getMilliseconds() {
@@ -296,7 +295,7 @@ public class TimeAttribute extends AttributeValue {
 
     /**
      * Gets the nanoseconds of this object.
-     * 
+     *
      * @return the number of nanoseconds
      */
     public int getNanoseconds() {
@@ -305,7 +304,7 @@ public class TimeAttribute extends AttributeValue {
 
     /**
      * Gets the time zone of this object (or TZ_UNSPECIFIED if unspecified).
-     * 
+     *
      * @return the offset to GMT in minutes (positive or negative)
      */
     public int getTimeZone() {
@@ -315,7 +314,7 @@ public class TimeAttribute extends AttributeValue {
     /**
      * Gets the time zone actually used for this object (if it was originally unspecified, the
      * default time zone used).
-     * 
+     *
      * @return the offset to GMT in minutes (positive or negative)
      */
     public int getDefaultedTimeZone() {
@@ -325,9 +324,8 @@ public class TimeAttribute extends AttributeValue {
     /**
      * Returns true if the input is an instance of this class and if its value equals the value
      * contained in this class.
-     * 
+     *
      * @param o the object to compare
-     * 
      * @return true if this object and the input represent the same value
      */
     public boolean equals(Object o) {
@@ -342,7 +340,7 @@ public class TimeAttribute extends AttributeValue {
     /**
      * Returns the hashcode value used to index and compare this object with others of the same
      * type. Typically this is the hashcode of the backing data object.
-     * 
+     *
      * @return the object's hashcode value
      */
     public int hashCode() {
@@ -359,7 +357,7 @@ public class TimeAttribute extends AttributeValue {
 
     /**
      * Converts to a String representation.
-     * 
+     *
      * @return the String representation
      */
     public String toString() {
@@ -391,7 +389,7 @@ public class TimeAttribute extends AttributeValue {
      * Encodes the value in a form suitable for including in XML data like a request or an
      * obligation. This returns a time value that could in turn be used by the factory to create a
      * new instance with the same value.
-     * 
+     *
      * @return a <code>String</code> form of the value
      */
     public String encode() {

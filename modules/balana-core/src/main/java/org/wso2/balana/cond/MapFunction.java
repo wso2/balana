@@ -61,9 +61,9 @@ import org.w3c.dom.NodeList;
 
 /**
  * Represents the higher order bag function map.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 class MapFunction implements Function {
 
@@ -71,10 +71,6 @@ class MapFunction implements Function {
      * The name of this function
      */
     public static final String NAME_MAP = FunctionBase.FUNCTION_NS + "map";
-
-    // the return type for this instance
-    private URI returnType;
-
     // the stuff used to make sure that we have a valid identifier or a
     // known error, just like in the attribute classes
     private static URI identifier;
@@ -88,11 +84,16 @@ class MapFunction implements Function {
             earlyException = new IllegalArgumentException();
             earlyException.initCause(e);
         }
-    };
+    }
+
+    // the return type for this instance
+    private URI returnType;
+
+    ;
 
     /**
      * Creates a new instance of a <code>MapFunction</code>.
-     * 
+     *
      * @param returnType the type returned by this function
      */
     public MapFunction(URI returnType) {
@@ -101,7 +102,7 @@ class MapFunction implements Function {
 
     /**
      * Returns a <code>Set</code> containing all the function identifiers supported by this class.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public static Set getSupportedIdentifiers() {
@@ -115,11 +116,9 @@ class MapFunction implements Function {
     /**
      * Creates a new instance of the map function using the data found in the DOM node provided.
      * This is called by a proxy when the factory is asked to create one of these functions.
-     * 
+     *
      * @param root the DOM node of the apply tag containing this function
-     * 
      * @return a <code>MapFunction</code> instance
-     * 
      * @throws ParsingException if the DOM data was incorrect
      */
     public static MapFunction getInstance(Node root) throws ParsingException {
@@ -161,8 +160,17 @@ class MapFunction implements Function {
     }
 
     /**
+     * Helper function to create a processing error message.
+     */
+    private static EvaluationResult makeProcessingError(String message) {
+        ArrayList code = new ArrayList();
+        code.add(Status.STATUS_PROCESSING_ERROR);
+        return new EvaluationResult(new Status(code, message));
+    }
+
+    /**
      * Returns the full identifier of this function, as known by the factories.
-     * 
+     *
      * @return the function's identifier
      */
     public URI getIdentifier() {
@@ -176,7 +184,7 @@ class MapFunction implements Function {
     /**
      * Returns the same value as <code>getReturnType</code>. This is here to support the
      * <code>Expression</code> interface.
-     * 
+     *
      * @return the return type
      */
     public URI getType() {
@@ -185,7 +193,7 @@ class MapFunction implements Function {
 
     /**
      * Returns the attribute type returned by this function.
-     * 
+     *
      * @return the return type
      */
     public URI getReturnType() {
@@ -194,7 +202,7 @@ class MapFunction implements Function {
 
     /**
      * Returns <code>true</code>, since the map function always returns a bag
-     * 
+     *
      * @return true
      */
     public boolean returnsBag() {
@@ -202,21 +210,11 @@ class MapFunction implements Function {
     }
 
     /**
-     * Helper function to create a processing error message.
-     */
-    private static EvaluationResult makeProcessingError(String message) {
-        ArrayList code = new ArrayList();
-        code.add(Status.STATUS_PROCESSING_ERROR);
-        return new EvaluationResult(new Status(code, message));
-    }
-
-    /**
      * Evaluates the function given the input data. Map expects a <code>Function</code> followed by
      * a <code>BagAttribute</code>.
-     * 
-     * @param inputs the input agrument list
+     *
+     * @param inputs  the input agrument list
      * @param context the representation of the request
-     * 
      * @return the result of evaluation
      */
     public EvaluationResult evaluate(List inputs, EvaluationCtx context) {
@@ -268,9 +266,8 @@ class MapFunction implements Function {
 
     /**
      * Checks that the input list is valid for evaluation.
-     * 
+     *
      * @param inputs a <code>List</code> of inputs
-     * 
      * @throws IllegalArgumentException if the inputs cannot be evaluated
      */
     public void checkInputs(List inputs) throws IllegalArgumentException {
@@ -306,9 +303,8 @@ class MapFunction implements Function {
 
     /**
      * Always throws <code>IllegalArgumentException</code> since map needs to work on a bag
-     * 
+     *
      * @param inputs a <code>List</code> of inputs
-     * 
      * @throws IllegalArgumentException always
      */
     public void checkInputsNoBag(List inputs) throws IllegalArgumentException {

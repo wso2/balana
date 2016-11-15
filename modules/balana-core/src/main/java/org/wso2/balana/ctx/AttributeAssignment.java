@@ -34,7 +34,7 @@ import java.net.URI;
 
 /**
  * Represents AttributeAssignmentType in the XACML 3.0 and 2.0 policy schema
- * This is used for including arguments in obligations and advices 
+ * This is used for including arguments in obligations and advices
  */
 public class AttributeAssignment extends AttributeValue {
 
@@ -49,7 +49,7 @@ public class AttributeAssignment extends AttributeValue {
     private URI category;
 
     /**
-     *  issuer of the AttributeAssignment
+     * issuer of the AttributeAssignment
      */
     private String issuer;
 
@@ -60,14 +60,15 @@ public class AttributeAssignment extends AttributeValue {
 
     /**
      * Constructor that creates a new <code>AttributeAssignment</code> based on the given elements.
-     * @param attributeId   attribute id of the AttributeAssignment  element
-     * @param dataType attributes datatype
-     * @param category category of the AttributeAssignment  element whether it is subject, action and etc
-     * @param content Content as String
-     * @param issuer issuer of the AttributeAssignment
+     *
+     * @param attributeId attribute id of the AttributeAssignment  element
+     * @param dataType    attributes datatype
+     * @param category    category of the AttributeAssignment  element whether it is subject, action and etc
+     * @param content     Content as String
+     * @param issuer      issuer of the AttributeAssignment
      */
     public AttributeAssignment(URI attributeId, URI dataType, URI category, String content,
-                                                                                String issuer) {
+                               String issuer) {
         super(dataType);
         this.attributeId = attributeId;
         this.category = category;
@@ -115,12 +116,12 @@ public class AttributeAssignment extends AttributeValue {
 
         try {
             Node categoryNode = nodeAttributes.getNamedItem("Category");
-            if(categoryNode != null){
+            if (categoryNode != null) {
                 category = new URI(categoryNode.getNodeValue());
             }
 
             Node issuerNode = nodeAttributes.getNamedItem("Issuer");
-            if(issuerNode != null){
+            if (issuerNode != null) {
                 issuer = issuerNode.getNodeValue();
             }
             content = root.getTextContent();
@@ -160,17 +161,17 @@ public class AttributeAssignment extends AttributeValue {
 
         builder.append(" DataType=\"").append(getType()).append("\"");
 
-        if(category != null){
+        if (category != null) {
             builder.append(" Category=\"").append(category).append("\"");
         }
 
-        if(issuer != null){
+        if (issuer != null) {
             builder.append("\" Issuer=\"").append(issuer).append("\"");
         }
 
         builder.append(">\n");
 
-        if(content != null){
+        if (content != null) {
             builder.append(content);
         }
 

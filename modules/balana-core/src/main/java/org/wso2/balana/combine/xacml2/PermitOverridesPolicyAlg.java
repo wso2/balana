@@ -56,9 +56,9 @@ import java.util.*;
  * of Permit to take precedence over any number of deny, not applicable or indeterminate results.
  * Note that since this implementation does an ordered evaluation, this class also supports the
  * Ordered Permit Overrides algorithm.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class PermitOverridesPolicyAlg extends PolicyCombiningAlgorithm {
 
@@ -94,7 +94,7 @@ public class PermitOverridesPolicyAlg extends PolicyCombiningAlgorithm {
 
     /**
      * Protected constructor used by the ordered version of this algorithm.
-     * 
+     *
      * @param identifier the algorithm's identifier
      */
     protected PermitOverridesPolicyAlg(URI identifier) {
@@ -103,12 +103,11 @@ public class PermitOverridesPolicyAlg extends PolicyCombiningAlgorithm {
 
     /**
      * Applies the combining rule to the set of policies based on the evaluation context.
-     * 
-     * @param context the context from the request
-     * @param parameters a (possibly empty) non-null <code>List</code> of
-     *            <code>CombinerParameter<code>s
-     * @param policyElements the policies to combine
      *
+     * @param context        the context from the request
+     * @param parameters     a (possibly empty) non-null <code>List</code> of
+     *                       <code>CombinerParameter<code>s
+     * @param policyElements the policies to combine
      * @return the result of running the combining algorithm
      */
     public AbstractResult combine(EvaluationCtx context, List parameters, List policyElements) {
@@ -129,7 +128,7 @@ public class PermitOverridesPolicyAlg extends PolicyCombiningAlgorithm {
                 atLeastOneError = true;
 
                 // keep track of the first error, regardless of cause
-                if (firstIndeterminateStatus == null){
+                if (firstIndeterminateStatus == null) {
                     firstIndeterminateStatus = match.getStatus();
                 }
             } else if (match.getResult() == MatchResult.MATCH) {
@@ -147,10 +146,10 @@ public class PermitOverridesPolicyAlg extends PolicyCombiningAlgorithm {
                     denyAdvices.addAll(result.getAdvices());
                     denyObligations.addAll(result.getObligations());
                 } else if (effect == AbstractResult.DECISION_INDETERMINATE ||
-                    effect == AbstractResult.DECISION_INDETERMINATE_DENY ||
-                    effect == AbstractResult.DECISION_INDETERMINATE_PERMIT ||
-                    effect == AbstractResult.DECISION_INDETERMINATE_DENY_OR_PERMIT) {
-                    
+                        effect == AbstractResult.DECISION_INDETERMINATE_DENY ||
+                        effect == AbstractResult.DECISION_INDETERMINATE_PERMIT ||
+                        effect == AbstractResult.DECISION_INDETERMINATE_DENY_OR_PERMIT) {
+
                     atLeastOneError = true;
                     // keep track of the first error, regardless of cause
                     if (firstIndeterminateStatus == null)
@@ -160,12 +159,12 @@ public class PermitOverridesPolicyAlg extends PolicyCombiningAlgorithm {
         }
 
         // if we got a DENY, return it
-        if (atLeastOneDeny){
+        if (atLeastOneDeny) {
             return ResultFactory.getFactory().getResult(Result.DECISION_DENY, denyObligations,
-                                                                            denyAdvices, context);
+                    denyAdvices, context);
         }
         // if we got an INDETERMINATE, return it
-        if (atLeastOneError){
+        if (atLeastOneError) {
             return ResultFactory.getFactory().getResult(Result.DECISION_INDETERMINATE,
                     firstIndeterminateStatus, context);
         }

@@ -42,9 +42,9 @@ import org.w3c.dom.Node;
 
 /**
  * Representation of an xs:anyURI value. This class supports parsing xs:anyURI values.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class AnyURIAttribute extends AttributeValue {
 
@@ -72,14 +72,16 @@ public class AnyURIAttribute extends AttributeValue {
             earlyException = new IllegalArgumentException();
             earlyException.initCause(e);
         }
-    };
+    }
+
+    ;
 
     // the URI value that this class represents
     private URI value;
 
     /**
      * Creates a new <code>AnyURIAttribute</code> that represents the URI value supplied.
-     * 
+     *
      * @param value the <code>URI</code> value to be represented
      */
     public AnyURIAttribute(URI value) {
@@ -95,11 +97,10 @@ public class AnyURIAttribute extends AttributeValue {
     /**
      * Returns a new <code>AnyURIAttribute</code> that represents the xs:anyURI at a particular DOM
      * node.
-     * 
+     *
      * @param root the <code>Node</code> that contains the desired value
-     * 
      * @return a new <code>AnyURIAttribute</code> representing the appropriate value (null if there
-     *         is a parsing error)
+     * is a parsing error)
      */
     public static AnyURIAttribute getInstance(Node root) throws URISyntaxException {
         return getInstance(root.getFirstChild().getNodeValue());
@@ -108,9 +109,8 @@ public class AnyURIAttribute extends AttributeValue {
     /**
      * Returns a new <code>AnyURIAttribute</code> that represents the xs:anyURI value indicated by
      * the <code>String</code> provided.
-     * 
+     *
      * @param value a string representing the desired value
-     * 
      * @return a new <code>AnyURIAttribute</code> representing the appropriate value
      */
     public static AnyURIAttribute getInstance(String value) throws URISyntaxException {
@@ -119,7 +119,7 @@ public class AnyURIAttribute extends AttributeValue {
 
     /**
      * Returns the <code>URI</code> value represented by this object.
-     * 
+     *
      * @return the <code>URI</code> value
      */
     public URI getValue() {
@@ -129,9 +129,8 @@ public class AnyURIAttribute extends AttributeValue {
     /**
      * Returns true if the input is an instance of this class and if its value equals the value
      * contained in this class.
-     * 
+     *
      * @param o the object to compare
-     * 
      * @return true if this object and the input represent the same value
      */
     public boolean equals(Object o) {
@@ -146,7 +145,7 @@ public class AnyURIAttribute extends AttributeValue {
     /**
      * Returns the hashcode value used to index and compare this object with others of the same
      * type. Typically this is the hashcode of the backing data object.
-     * 
+     *
      * @return the object's hashcode value
      */
     public int hashCode() {
@@ -155,7 +154,7 @@ public class AnyURIAttribute extends AttributeValue {
 
     /**
      * Converts to a String representation.
-     * 
+     *
      * @return the String representation
      */
     public String toString() {

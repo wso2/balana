@@ -39,37 +39,32 @@ import java.util.Date;
 public abstract class BasicEvaluationCtx implements EvaluationCtx {
 
     /**
+     * logger
+     */
+    private static Log logger = LogFactory.getLog(BasicEvaluationCtx.class);
+    /**
      * the cached current date, time, and date time,
      * which we may or may not be using depending on how this object was constructed
      */
     protected DateAttribute currentDate;
     protected TimeAttribute currentTime;
     protected DateTimeAttribute currentDateTime;
-
     /**
      * TODO what is this?
      */
     protected boolean useCachedEnvValues = false;
-
     /**
      * the DOM root the original RequestContext document
      */
     protected Node requestRoot;
-
     /**
      * Represents a XACML request made to the PDP
      */
     protected AbstractRequestCtx requestCtx;
-
     /**
      * PDP configurations
      */
     protected PDPConfig pdpConfig;
-
-    /**
-     * logger
-     */
-    private static Log logger = LogFactory.getLog(BasicEvaluationCtx.class);
 
     /**
      * Returns the DOM root of the original RequestType XML document.
@@ -82,6 +77,7 @@ public abstract class BasicEvaluationCtx implements EvaluationCtx {
 
     /**
      * TODO
+     *
      * @return
      */
     public boolean isSearching() {
@@ -162,26 +158,25 @@ public abstract class BasicEvaluationCtx implements EvaluationCtx {
     /**
      * Returns the attribute value(s) retrieved using the given XPath expression.
      *
-     * @param path the XPath expression to search
-     * @param type the type of the attribute value(s) to find
-     * @param category the category the attribute value(s) must be in
+     * @param path            the XPath expression to search
+     * @param type            the type of the attribute value(s) to find
+     * @param category        the category the attribute value(s) must be in
      * @param contextSelector the selector to find the context to apply XPath expression
-     *                       if this is null, applied for default content
-     * @param xpathVersion the version of XPath to use
-     *
+     *                        if this is null, applied for default content
+     * @param xpathVersion    the version of XPath to use
      * @return a result containing a bag either empty because no values were found or containing at
-     *         least one value, or status associated with an Indeterminate result
+     * least one value, or status associated with an Indeterminate result
      */
 
     public EvaluationResult getAttribute(String path, URI type, URI category,
-                                         URI contextSelector, String xpathVersion){
+                                         URI contextSelector, String xpathVersion) {
 
         if (pdpConfig.getAttributeFinder() != null) {
             return pdpConfig.getAttributeFinder().findAttribute(path, type, this,
-                                        xpathVersion);
+                    xpathVersion);
         } else {
             logger.warn("Context tried to invoke AttributeFinder but was " +
-                           "not configured with one");
+                    "not configured with one");
 
             return new EvaluationResult(BagAttribute.createEmptyBag(type));
         }
@@ -190,7 +185,7 @@ public abstract class BasicEvaluationCtx implements EvaluationCtx {
     /**
      * Private helper that figures out if we need to resolve new values, and returns either the
      * current moment (if we're not caching) or -1 (if we are caching)
-     * 
+     *
      * @return current moment as long value
      */
     private long dateTimeHelper() {
@@ -221,13 +216,12 @@ public abstract class BasicEvaluationCtx implements EvaluationCtx {
     /**
      * Private helper that calls the finder if it's non-null, or else returns an empty bag
      *
-     * @param type the type of the attribute value(s) to find
-     * @param id the id of the attribute value(s) to find
-     * @param issuer the issuer of the attribute value(s) to find or null
+     * @param type     the type of the attribute value(s) to find
+     * @param id       the id of the attribute value(s) to find
+     * @param issuer   the issuer of the attribute value(s) to find or null
      * @param category the category the attribute value(s) must be in
-     *
      * @return a result containing a bag either empty because no values were found or containing at
-     *         least one value, or status associated with an Indeterminate result
+     * least one value, or status associated with an Indeterminate result
      */
     protected EvaluationResult callHelper(URI type, URI id, String issuer, URI category) {
         if (pdpConfig.getAttributeFinder() != null) {
