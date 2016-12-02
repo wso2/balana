@@ -36,16 +36,16 @@ import java.util.List;
 /**
  * Represents the ObligationType XML type found in the context scheme in XACML 3.0
  */
-public class Obligation implements ObligationResult{
+public class Obligation implements ObligationResult {
 
     /**
-     *  Identifier that uniquely identify the Obligation
+     * Identifier that uniquely identify the Obligation
      */
     private URI obligationId;
 
     /**
      * <code>List</code> of <code>AttributeAssignment</code> that contains in
-     *  <code>Obligation</code>
+     * <code>Obligation</code>
      */
     private List<AttributeAssignment> assignments;
 
@@ -53,8 +53,8 @@ public class Obligation implements ObligationResult{
      * Constructor that creates a new <code>Obligation</code> based on
      * the given elements.
      *
-     * @param assignments <code>List</code> of <code>AttributeAssignment</code>
-     * @param obligationId  Identifier that uniquely identify the Obligation
+     * @param assignments  <code>List</code> of <code>AttributeAssignment</code>
+     * @param obligationId Identifier that uniquely identify the Obligation
      */
     public Obligation(List<AttributeAssignment> assignments, URI obligationId) {
         this.assignments = assignments;
@@ -64,9 +64,9 @@ public class Obligation implements ObligationResult{
     /**
      * creates a <code>Obligation</code> based on its DOM node.
      *
-     * @param root  the DOM root of the ObligationType XML type
-     * @return  an instance of an obligation
-     * @throws ParsingException  if the structure isn't valid
+     * @param root the DOM root of the ObligationType XML type
+     * @return an instance of an obligation
+     * @throws ParsingException if the structure isn't valid
      */
     public static Obligation getInstance(Node root) throws ParsingException {
 
@@ -89,9 +89,9 @@ public class Obligation implements ObligationResult{
 
         NodeList children = root.getChildNodes();
 
-        for(int i = 0; i < children.getLength(); i ++){
+        for (int i = 0; i < children.getLength(); i++) {
             Node child = children.item(i);
-            if("AttributeAssignment".equals(DOMHelper.getLocalName(child))){
+            if ("AttributeAssignment".equals(DOMHelper.getLocalName(child))) {
                 assignments.add(AttributeAssignment.getInstance(child));
             }
         }
@@ -105,12 +105,12 @@ public class Obligation implements ObligationResult{
      *
      * @param builder string stream into which the XML-encoded data is written
      */
-    public void encode(StringBuilder builder){
+    public void encode(StringBuilder builder) {
 
         builder.append("<Obligation ObligationId=\"").append(obligationId).append("\">");
 
-        if(assignments != null && assignments.size() > 0){
-            for(AttributeAssignment assignment : assignments){
+        if (assignments != null && assignments.size() > 0) {
+            for (AttributeAssignment assignment : assignments) {
                 assignment.encode(builder);
             }
         }
@@ -128,7 +128,15 @@ public class Obligation implements ObligationResult{
         return assignments;
     }
 
-
+    /**
+     * Returns the obligation id of the obligation object
+     *
+     * @return the obligation Id
+     */
+    public URI getObligationId() {
+        return obligationId;
+    }
+    
     /**
      * Encodes this <code>Obligation</code> into its XML form
      *
