@@ -46,9 +46,9 @@ import java.util.List;
 
 /**
  * Interface that all functions in the system must implement.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public interface Function extends Expression {
 
@@ -69,12 +69,11 @@ public interface Function extends Expression {
      * checking that the inputs that it will pass to the <code>Function</code> provided as the first
      * parameter are valid, ie. it must do a <code>checkInputs</code> on its sub-function when
      * <code>checkInputs</code> is called on the higher-order function.
-     * 
-     * @param inputs the <code>List</code> of inputs for the function
+     *
+     * @param inputs  the <code>List</code> of inputs for the function
      * @param context the representation of the request
-     * 
      * @return a result containing the <code>AttributeValue</code> computed when evaluating the
-     *         function, or <code>Status</code> specifying some error condition
+     * function, or <code>Status</code> specifying some error condition
      */
     public EvaluationResult evaluate(List<Evaluatable> inputs, EvaluationCtx context);
 
@@ -82,7 +81,7 @@ public interface Function extends Expression {
      * Returns the identifier of this function as known by the factories. In the case of the
      * standard XACML functions, this will be one of the URIs defined in the standard namespace.
      * This function must always return the complete namespace and identifier of this function.
-     * 
+     *
      * @return the function's identifier
      */
     public URI getIdentifier();
@@ -90,14 +89,14 @@ public interface Function extends Expression {
     /**
      * Provides the type of <code>AttributeValue</code> that this function returns from
      * <code>evaluate</code> in a successful evaluation.
-     * 
+     *
      * @return the type returned by this function
      */
     public URI getReturnType();
 
     /**
      * Tells whether this function will return a bag of values or just a single value.
-     * 
+     *
      * @return true if evaluation will return a bag, false otherwise
      */
     public boolean returnsBag();
@@ -106,12 +105,11 @@ public interface Function extends Expression {
      * Checks that the given inputs are of the right types, in the right order, and are the right
      * number for this function to evaluate. If the function cannot accept the inputs for
      * evaluation, an <code>IllegalArgumentException</code> is thrown.
-     * 
+     *
      * @param inputs a <code>List</code> of <code>Evaluatable</code>s, with the first argument being
-     *            a <code>Function</code> if this is a higher-order function
-     * 
+     *               a <code>Function</code> if this is a higher-order function
      * @throws IllegalArgumentException if the inputs do match what the function accepts for
-     *             evaluation
+     *                                  evaluation
      */
     public void checkInputs(List inputs) throws IllegalArgumentException;
 
@@ -124,12 +122,11 @@ public interface Function extends Expression {
      * designator or selector in its input list, but which passes the values from the derived bags
      * one at a time to the function, so the function doesn't have to deal with the bags that the
      * selector or designator generates.
-     * 
+     *
      * @param inputs a <code>List</code> of <code>Evaluatable</code>s, with the first argument being
-     *            a <code>Function</code> if this is a higher-order function
-     * 
+     *               a <code>Function</code> if this is a higher-order function
      * @throws IllegalArgumentException if the inputs do match what the function accepts for
-     *             evaluation
+     *                                  evaluation
      */
     public void checkInputsNoBag(List inputs) throws IllegalArgumentException;
 

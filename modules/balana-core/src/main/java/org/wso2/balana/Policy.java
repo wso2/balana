@@ -58,9 +58,9 @@ import org.w3c.dom.NodeList;
 /**
  * Represents one of the two top-level constructs in XACML, the PolicyType. This optionally contains
  * rules, which in turn contain most of the logic of a policy.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class Policy extends AbstractPolicy {
 
@@ -69,10 +69,10 @@ public class Policy extends AbstractPolicy {
 
     /**
      * Creates a new <code>Policy</code> with only the required elements.
-     * 
-     * @param id the policy identifier
+     *
+     * @param id           the policy identifier
      * @param combiningAlg the <code>CombiningAlgorithm</code> used on the rules in this set
-     * @param target the <code>AbstractTarget</code> for this policy
+     * @param target       the <code>AbstractTarget</code> for this policy
      */
     public Policy(URI id, RuleCombiningAlgorithm combiningAlg, AbstractTarget target) {
         this(id, null, combiningAlg, null, target, null, null, null);
@@ -80,14 +80,13 @@ public class Policy extends AbstractPolicy {
 
     /**
      * Creates a new <code>Policy</code> with only the required elements plus rules.
-     * 
-     * @param id the policy identifier
+     *
+     * @param id           the policy identifier
      * @param combiningAlg the <code>CombiningAlgorithm</code> used on the rules in this set
-     * @param target the <code>AbstractTarget</code> for this policy
-     * @param rules a list of <code>Rule</code> objects
-     * 
+     * @param target       the <code>AbstractTarget</code> for this policy
+     * @param rules        a list of <code>Rule</code> objects
      * @throws IllegalArgumentException if the <code>List</code> of rules contains an object that is
-     *             not a <code>Rule</code>
+     *                                  not a <code>Rule</code>
      */
     public Policy(URI id, RuleCombiningAlgorithm combiningAlg, AbstractTarget target, List<Rule> rules) {
         this(id, null, combiningAlg, null, target, null, rules, null);
@@ -96,64 +95,61 @@ public class Policy extends AbstractPolicy {
     /**
      * Creates a new <code>Policy</code> with the required elements plus a version, rules, and a
      * String description. Note that the version is an XACML 2.0 feature.
-     * 
-     * @param id the policy identifier
-     * @param version the policy version or null for the default (this must always be null for XACML
-     *            1.x policies)
+     *
+     * @param id           the policy identifier
+     * @param version      the policy version or null for the default (this must always be null for XACML
+     *                     1.x policies)
      * @param combiningAlg the <code>CombiningAlgorithm</code> used on the rules in this set
-     * @param description a <code>String</code> describing the policy
-     * @param target the <code>AbstractTarget</code> for this policy
-     * @param rules a list of <code>Rule</code> objects
-     * 
+     * @param description  a <code>String</code> describing the policy
+     * @param target       the <code>AbstractTarget</code> for this policy
+     * @param rules        a list of <code>Rule</code> objects
      * @throws IllegalArgumentException if the <code>List</code> of rules contains an object that is
-     *             not a <code>Rule</code>
+     *                                  not a <code>Rule</code>
      */
     public Policy(URI id, String version, RuleCombiningAlgorithm combiningAlg, String description,
-            AbstractTarget target, List<Rule> rules) {
+                  AbstractTarget target, List<Rule> rules) {
         this(id, version, combiningAlg, description, target, null, rules, null);
     }
 
     /**
      * Creates a new <code>Policy</code> with the required elements plus a version, rules, a String
      * description and policy defaults. Note that the version is an XACML 2.0 feature.
-     * 
-     * @param id the policy identifier
-     * @param version the policy version or null for the default (this must always be null for XACML
-     *            1.x policies)
-     * @param combiningAlg the <code>CombiningAlgorithm</code> used on the rules in this set
-     * @param description a <code>String</code> describing the policy
-     * @param target the <code>AbstractTarget</code> for this policy
+     *
+     * @param id             the policy identifier
+     * @param version        the policy version or null for the default (this must always be null for XACML
+     *                       1.x policies)
+     * @param combiningAlg   the <code>CombiningAlgorithm</code> used on the rules in this set
+     * @param description    a <code>String</code> describing the policy
+     * @param target         the <code>AbstractTarget</code> for this policy
      * @param defaultVersion the XPath version to use
-     * @param rules a list of <code>Rule</code> objects
-     * 
+     * @param rules          a list of <code>Rule</code> objects
      * @throws IllegalArgumentException if the <code>List</code> of rules contains an object that is
-     *             not a <code>Rule</code>
+     *                                  not a <code>Rule</code>
      */
     public Policy(URI id, String version, RuleCombiningAlgorithm combiningAlg, String description,
-            AbstractTarget target, String defaultVersion, List<Rule> rules) {
+                  AbstractTarget target, String defaultVersion, List<Rule> rules) {
         this(id, version, combiningAlg, description, target, defaultVersion, rules, null);
     }
 
     /**
      * Creates a new <code>Policy</code> with the required elements plus a version, rules, a String
      * description, policy defaults, and obligations. Note that the version is an XACML 2.0 feature.
-     * 
-     * @param id the policy identifier
-     * @param version the policy version or null for the default (this must always be null for XACML
-     *            1.x policies)
-     * @param combiningAlg the <code>CombiningAlgorithm</code> used on the rules in this set
-     * @param description a <code>String</code> describing the policy
-     * @param target the <code>AbstractTarget</code> for this policy
+     *
+     * @param id             the policy identifier
+     * @param version        the policy version or null for the default (this must always be null for XACML
+     *                       1.x policies)
+     * @param combiningAlg   the <code>CombiningAlgorithm</code> used on the rules in this set
+     * @param description    a <code>String</code> describing the policy
+     * @param target         the <code>AbstractTarget</code> for this policy
      * @param defaultVersion the XPath version to use
-     * @param rules a list of <code>Rule</code> objects
-     * @param obligations a set of <code>Obligations</code> objects
-     * 
+     * @param rules          a list of <code>Rule</code> objects
+     * @param obligations    a set of <code>Obligations</code> objects
      * @throws IllegalArgumentException if the <code>List</code> of rules contains an object that is
-     *             not a <code>Rule</code>
+     *                                  not a <code>Rule</code>
      */
     public Policy(URI id, String version, RuleCombiningAlgorithm combiningAlg, String description,
-            AbstractTarget target, String defaultVersion, List<Rule> rules,
-                                                            Set<AbstractObligation> obligations) {
+                  AbstractTarget target, String defaultVersion, List<Rule> rules,
+                  Set<AbstractObligation> obligations) {
         this(id, version, combiningAlg, description, target, defaultVersion, rules, obligations,
                 null);
     }
@@ -162,25 +158,24 @@ public class Policy extends AbstractPolicy {
      * Creates a new <code>Policy</code> with the required elements plus a version, rules, a String
      * description, policy defaults, obligations, and variable definitions. Note that the version
      * and definitions are XACML 2.0 features.
-     * 
-     * @param id the policy identifier
-     * @param version the policy version or null for the default (this must always be null for XACML
-     *            1.x policies)
-     * @param combiningAlg the <code>CombiningAlgorithm</code> used on the rules in this set
-     * @param description a <code>String</code> describing the policy
-     * @param target the <code>AbstractTarget</code> for this policy
+     *
+     * @param id             the policy identifier
+     * @param version        the policy version or null for the default (this must always be null for XACML
+     *                       1.x policies)
+     * @param combiningAlg   the <code>CombiningAlgorithm</code> used on the rules in this set
+     * @param description    a <code>String</code> describing the policy
+     * @param target         the <code>AbstractTarget</code> for this policy
      * @param defaultVersion the XPath version to use
-     * @param rules a list of <code>Rule</code> objects
-     * @param obligations a set of <code>Obligations</code> objects
-     * @param definitions a set of <code>VariableDefinition</code> objects that must provide all
-     *            definitions referenced by all <code>VariableReference</code>s in the policy
-     * 
+     * @param rules          a list of <code>Rule</code> objects
+     * @param obligations    a set of <code>Obligations</code> objects
+     * @param definitions    a set of <code>VariableDefinition</code> objects that must provide all
+     *                       definitions referenced by all <code>VariableReference</code>s in the policy
      * @throws IllegalArgumentException if the <code>List</code> of rules contains an object that is
-     *             not a <code>Rule</code>
+     *                                  not a <code>Rule</code>
      */
     public Policy(URI id, String version, RuleCombiningAlgorithm combiningAlg, String description,
-            AbstractTarget target, String defaultVersion, List<Rule> rules,
-                    Set<AbstractObligation> obligations, Set<VariableDefinition> definitions) {
+                  AbstractTarget target, String defaultVersion, List<Rule> rules,
+                  Set<AbstractObligation> obligations, Set<VariableDefinition> definitions) {
         super(id, version, combiningAlg, description, target, defaultVersion, obligations, null, null);
 
         List<CombinerElement> list = null;
@@ -207,31 +202,30 @@ public class Policy extends AbstractPolicy {
      * provide combining algorithm parameters, you need to use this constructor. Note that unlike
      * the other constructors in this class, the rules list is actually a list of
      * <code>CombinerElement</code>s used to match a rule with any combiner parameters it may have.
-     * 
-     * @param id the policy identifier
-     * @param version the policy version or null for the default (this must always be null for XACML
-     *            1.x policies)
-     * @param combiningAlg the <code>CombiningAlgorithm</code> used on the rules in this set
-     * @param description a <code>String</code> describing the policy or null if there is no
-     *            description
-     * @param target the <code>AbstractTarget</code> for this policy
+     *
+     * @param id             the policy identifier
+     * @param version        the policy version or null for the default (this must always be null for XACML
+     *                       1.x policies)
+     * @param combiningAlg   the <code>CombiningAlgorithm</code> used on the rules in this set
+     * @param description    a <code>String</code> describing the policy or null if there is no
+     *                       description
+     * @param target         the <code>AbstractTarget</code> for this policy
      * @param defaultVersion the XPath version to use or null if there is no default version
-     * @param ruleElements a list of <code>RuleCombinerElement</code> objects or null if there are
-     *            no rules
-     * @param obligations a set of <code>Obligations</code> objects or null if there are no
-     *            obligations
-     * @param definitions a set of <code>VariableDefinition</code> objects that must provide all
-     *            definitions referenced by all <code>VariableReference</code>s in the policy
-     * @param parameters the <code>List</code> of <code>CombinerParameter</code>s provided for
-     *            general use by the combining algorithm
-     * 
+     * @param ruleElements   a list of <code>RuleCombinerElement</code> objects or null if there are
+     *                       no rules
+     * @param obligations    a set of <code>Obligations</code> objects or null if there are no
+     *                       obligations
+     * @param definitions    a set of <code>VariableDefinition</code> objects that must provide all
+     *                       definitions referenced by all <code>VariableReference</code>s in the policy
+     * @param parameters     the <code>List</code> of <code>CombinerParameter</code>s provided for
+     *                       general use by the combining algorithm
      * @throws IllegalArgumentException if the <code>List</code> of rules contains an object that is
-     *             not a <code>RuleCombinerElement</code>
+     *                                  not a <code>RuleCombinerElement</code>
      */
     public Policy(URI id, String version, RuleCombiningAlgorithm combiningAlg, String description,
-            AbstractTarget target, String defaultVersion, List<CombinerElement> ruleElements,
-            Set<AbstractObligation> obligations, Set<VariableDefinition> definitions,
-            List<CombinerParameter> parameters) {
+                  AbstractTarget target, String defaultVersion, List<CombinerElement> ruleElements,
+                  Set<AbstractObligation> obligations, Set<VariableDefinition> definitions,
+                  List<CombinerParameter> parameters) {
 
         super(id, version, combiningAlg, description, target, defaultVersion, obligations, null,
                 parameters);
@@ -239,7 +233,7 @@ public class Policy extends AbstractPolicy {
         // check that the list contains only RuleCombinerElements
         if (ruleElements != null) {
             for (Object o : ruleElements) {
-                if (!(o instanceof RuleCombinerElement)){
+                if (!(o instanceof RuleCombinerElement)) {
                     throw new IllegalArgumentException("non-Rule in rules");
                 }
             }
@@ -259,8 +253,8 @@ public class Policy extends AbstractPolicy {
      * supposed to use a getInstance() method to construct from a Node, but since we want some
      * common code in the parent class, we need this functionality in a constructor.
      *
-     * @param root  the node to parse for the <code>Policy</code>
-     * the XACML policy, if null use default factories
+     * @param root the node to parse for the <code>Policy</code>
+     *             the XACML policy, if null use default factories
      * @throws ParsingException ParsingException if the PolicyType is invalid
      */
     private Policy(Node root) throws ParsingException {
@@ -268,7 +262,7 @@ public class Policy extends AbstractPolicy {
 
         List<Rule> rules = new ArrayList<Rule>();
         HashMap<String, List<CombinerParameter>> parameters =
-                                                new HashMap<String, List<CombinerParameter>>();
+                new HashMap<String, List<CombinerParameter>>();
         HashMap<String, Node> variableIds = new HashMap<String, Node>();
         PolicyMetaData metaData = getMetaData();
 
@@ -351,25 +345,12 @@ public class Policy extends AbstractPolicy {
     }
 
     /**
-     * Helper method that parses out a collection of combiner parameters.
-     */
-    private void parseParameters(List<CombinerParameter> parameters, Node root) throws ParsingException {
-        NodeList nodes = root.getChildNodes();
-
-        for (int i = 0; i < nodes.getLength(); i++) {
-            Node node = nodes.item(i);
-            if (DOMHelper.getLocalName(node).equals("CombinerParameter"))
-                parameters.add(CombinerParameter.getInstance(node));
-        }
-    }
-
-    /**
      * Creates an instance of a <code>Policy</code> object based on a DOM node. The node must be the
      * root of PolicyType XML object, otherwise an exception is thrown.
      *
      * @param root the DOM root of a PolicyType XML type
-     * the XACML policy, if null use default factories
-     * @return  a <code>Policy</code> object
+     *             the XACML policy, if null use default factories
+     * @return a <code>Policy</code> object
      * @throws ParsingException if the PolicyType is invalid
      */
     public static Policy getInstance(Node root) throws ParsingException {
@@ -383,8 +364,21 @@ public class Policy extends AbstractPolicy {
     }
 
     /**
+     * Helper method that parses out a collection of combiner parameters.
+     */
+    private void parseParameters(List<CombinerParameter> parameters, Node root) throws ParsingException {
+        NodeList nodes = root.getChildNodes();
+
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+            if (DOMHelper.getLocalName(node).equals("CombinerParameter"))
+                parameters.add(CombinerParameter.getInstance(node));
+        }
+    }
+
+    /**
      * Returns the variable definitions in this Policy.
-     * 
+     *
      * @return a <code>Set</code> of <code>VariableDefinition</code>s
      */
     public Set getVariableDefinitions() {
@@ -409,22 +403,22 @@ public class Policy extends AbstractPolicy {
      * @param builder string stream into which the XML-encoded data is written
      */
     public void encode(StringBuilder builder) {
-        
+
         String xacmlVersionId = metaData.getXACMLIdentifier();
 
         String version = getVersion();
 
-        builder.append("<Policy xmlns=\"" + xacmlVersionId + "\""  + " PolicyId=\"" + getId() +
+        builder.append("<Policy xmlns=\"" + xacmlVersionId + "\"" + " PolicyId=\"" + getId() +
                 "\"" + " Version=\"" + version + "").
                 append("\" RuleCombiningAlgId=\"").append(getCombiningAlg().getIdentifier().toString()).append("\">\n");
 
         String description = getDescription();
-        if (description != null){
+        if (description != null) {
             builder.append("<Description>").append(description).append("</Description>\n");
         }
 
         String xPathVersion = metaData.getXPathIdentifier();
-        if (xPathVersion != null){
+        if (xPathVersion != null) {
             builder.append("<PolicyDefaults><XPathVersion>").
                     append(xPathVersion).append("</XPathVersion></PolicyDefaults>\n");
         }

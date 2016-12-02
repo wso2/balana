@@ -18,12 +18,14 @@
 
 package org.wso2.balana;
 
-import org.wso2.balana.ctx.EvaluationCtx;import java.io.OutputStream;
+import org.wso2.balana.ctx.EvaluationCtx;
+
+import java.io.OutputStream;
 
 /**
  *
  */
-public interface ObligationResult  {
+public interface ObligationResult {
 
 
     /**

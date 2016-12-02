@@ -47,10 +47,10 @@ import java.util.*;
  * NOTE: This is the one standard attribute type that can't be created from the factory, since you
  * can't have this in an XML block (it is used only in return values & dynamic inputs). I think this
  * is right, but we may need to add some functionality to let this go into the factory.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
  * @author Steve Hanna
+ * @since 1.0
  */
 public class BagAttribute extends AttributeValue {
 
@@ -61,9 +61,9 @@ public class BagAttribute extends AttributeValue {
      * Creates a new <code>BagAttribute</code> that represents the <code>Collection</code> of
      * <code>AttributeValue</code>s supplied. If the set is null or empty, then the new bag is
      * empty.
-     * 
+     *
      * @param type the data type of all the attributes in the set
-     * @param bag a <code>List</code> of <code>AttributeValue</code>s
+     * @param bag  a <code>List</code> of <code>AttributeValue</code>s
      */
     public BagAttribute(URI type, List<AttributeValue> bag) {
         super(type);
@@ -99,19 +99,9 @@ public class BagAttribute extends AttributeValue {
     }
 
     /**
-     * Overrides the default method to always return true.
-     * 
-     * @return a value of true
-     */
-    public boolean isBag() {
-        return true;
-    }
-
-    /**
      * Convenience function that returns a bag with no elements
-     * 
+     *
      * @param type the types contained in the bag
-     * 
      * @return a new empty bag
      */
     public static BagAttribute createEmptyBag(URI type) {
@@ -119,9 +109,18 @@ public class BagAttribute extends AttributeValue {
     }
 
     /**
+     * Overrides the default method to always return true.
+     *
+     * @return a value of true
+     */
+    public boolean isBag() {
+        return true;
+    }
+
+    /**
      * A convenience function that returns whether or not the bag is empty (ie, whether or not the
      * size of the bag is zero)
-     * 
+     *
      * @return whether or not the bag is empty
      */
     public boolean isEmpty() {
@@ -130,7 +129,7 @@ public class BagAttribute extends AttributeValue {
 
     /**
      * Returns the number of elements in this bag
-     * 
+     *
      * @return the number of elements in this bag
      */
     public int size() {
@@ -142,9 +141,8 @@ public class BagAttribute extends AttributeValue {
      * only if this bag contains a value v such that (value==null ? v==null : value.equals(v)). Note
      * that this will only work correctly if the <code>AttributeValue</code> has overridden the
      * <code>equals</code> method.
-     * 
+     *
      * @param value the value to look for
-     * 
      * @return true if the value is in the bag
      */
     public boolean contains(AttributeValue value) {
@@ -155,9 +153,8 @@ public class BagAttribute extends AttributeValue {
      * Returns true if this bag contains all of the values of the specified bag. Note that this will
      * only work correctly if the <code>AttributeValue</code> type contained in the bag has
      * overridden the <code>equals</code> method.
-     * 
+     *
      * @param bag the bag to compare
-     * 
      * @return true if the input is a subset of this bag
      */
     public boolean containsAll(BagAttribute bag) {
@@ -169,6 +166,14 @@ public class BagAttribute extends AttributeValue {
      */
     public Iterator iterator() {
         return new ImmutableIterator(bag.iterator());
+    }
+
+    /**
+     * Because a bag cannot be included in a request/response or a policy, this will always throw an
+     * <code>UnsupportedOperationException</code>.
+     */
+    public String encode() {
+        throw new UnsupportedOperationException("Bags cannot be encoded");
     }
 
     /**
@@ -208,14 +213,6 @@ public class BagAttribute extends AttributeValue {
             throw new UnsupportedOperationException();
         }
 
-    }
-
-    /**
-     * Because a bag cannot be included in a request/response or a policy, this will always throw an
-     * <code>UnsupportedOperationException</code>.
-     */
-    public String encode() {
-        throw new UnsupportedOperationException("Bags cannot be encoded");
     }
 
 }

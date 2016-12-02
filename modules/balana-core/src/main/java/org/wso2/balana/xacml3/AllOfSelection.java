@@ -31,7 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- *  Represents AllOfType in the XACML 3.0 policy schema.
+ * Represents AllOfType in the XACML 3.0 policy schema.
  */
 public class AllOfSelection {
 
@@ -53,7 +53,7 @@ public class AllOfSelection {
     /**
      * creates a new <code>AllOfSelection</code> by parsing DOM node.
      *
-     * @param root DOM node
+     * @param root     DOM node
      * @param metaData policy meta data
      * @return <code>AllOfSelection</code>
      * @throws ParsingException throws, if the DOM node is invalid
@@ -69,7 +69,7 @@ public class AllOfSelection {
             }
         }
 
-        if(targetMatches.isEmpty()){
+        if (targetMatches.isEmpty()) {
             throw new ParsingException("AllOf must contain at least one Match");
         }
 
@@ -77,29 +77,27 @@ public class AllOfSelection {
     }
 
     /**
-     *
      * Determines whether this <code>AllOfSelection</code> matches the input request (whether it
      * is applicable).
      *
      * @param context the representation of the request
-     *
      * @return the result of trying to match the group with the context
      */
-    public MatchResult match(EvaluationCtx context){
+    public MatchResult match(EvaluationCtx context) {
 
         // there are specific matching elements, so prepare to iterate
         // through the list
         Status firstIndeterminateStatus = null;
         MatchResult result;
 
-        for (TargetMatch targetMatch : matches ) {
+        for (TargetMatch targetMatch : matches) {
             result = targetMatch.match(context);
-            if (result.getResult() == MatchResult.NO_MATCH){
+            if (result.getResult() == MatchResult.NO_MATCH) {
                 return result;
             }
 
-            if (result.getResult() == MatchResult.INDETERMINATE){
-                if(firstIndeterminateStatus == null){
+            if (result.getResult() == MatchResult.INDETERMINATE) {
+                if (firstIndeterminateStatus == null) {
                     firstIndeterminateStatus = result.getStatus();
                 }
             }
@@ -111,7 +109,7 @@ public class AllOfSelection {
             return new MatchResult(MatchResult.MATCH);
         else
             return new MatchResult(MatchResult.INDETERMINATE,
-                                   firstIndeterminateStatus);
+                    firstIndeterminateStatus);
 
     }
 
@@ -126,8 +124,8 @@ public class AllOfSelection {
 
         builder.append("<AllOf>\n");
 
-        if(matches != null){
-            for(TargetMatch match : matches){
+        if (matches != null) {
+            for (TargetMatch match : matches) {
                 match.encode(builder);
             }
         }

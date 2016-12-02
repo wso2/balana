@@ -42,7 +42,7 @@ import java.util.Set;
  * It is particularly useful at the top level in a policy structure to ensure that a
  * PDP will always return a definite "Permit" or "Deny"  result.
  */
-public class DenyUnlessPermitPolicyAlg extends PolicyCombiningAlgorithm{
+public class DenyUnlessPermitPolicyAlg extends PolicyCombiningAlgorithm {
 
     /**
      * The standard URN used to identify this algorithm
@@ -70,7 +70,7 @@ public class DenyUnlessPermitPolicyAlg extends PolicyCombiningAlgorithm{
     public DenyUnlessPermitPolicyAlg() {
         super(identifierURI);
 
-        if (earlyException != null){
+        if (earlyException != null) {
             throw earlyException;
         }
     }
@@ -91,7 +91,7 @@ public class DenyUnlessPermitPolicyAlg extends PolicyCombiningAlgorithm{
                 // we've seen, we always return PERMIT
                 if (value == AbstractResult.DECISION_PERMIT) {
                     return result;
-                } else if(value == AbstractResult.DECISION_DENY){
+                } else if (value == AbstractResult.DECISION_DENY) {
                     denyObligations.addAll(result.getObligations());
                     denyAdvices.addAll(result.getAdvices());
                 }
@@ -100,6 +100,6 @@ public class DenyUnlessPermitPolicyAlg extends PolicyCombiningAlgorithm{
 
         // if there is not any value of PERMIT. The return DENY
         return ResultFactory.getFactory().getResult(AbstractResult.DECISION_DENY, denyObligations,
-                                                                            denyAdvices, context);
+                denyAdvices, context);
     }
 }

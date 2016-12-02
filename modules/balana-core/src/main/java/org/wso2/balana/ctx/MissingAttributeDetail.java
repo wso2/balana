@@ -47,7 +47,7 @@ public class MissingAttributeDetail {
     /**
      * category of the Attributes element whether it is subject, action and etc
      */
-    private URI category;    
+    private URI category;
 
     /**
      * issuer of the attribute.   optional one
@@ -67,12 +67,12 @@ public class MissingAttributeDetail {
     /**
      * Creates a new <code>MissingAttributeDetail</code>
      *
-     * @param id the id of the attribute
-     * @param type the type of the attribute
-     * @param category category of the attributes elements whether it is subject, action and etc
-     * @param issuer the attribute's issuer or null if there is none
+     * @param id              the id of the attribute
+     * @param type            the type of the attribute
+     * @param category        category of the attributes elements whether it is subject, action and etc
+     * @param issuer          the attribute's issuer or null if there is none
      * @param attributeValues actual <code>List</code> of <code>AttributeValue</code>
-     * @param xacmlVersion xacml version
+     * @param xacmlVersion    xacml version
      */
     public MissingAttributeDetail(URI id, URI type, URI category, String issuer,
                                   List<AttributeValue> attributeValues, int xacmlVersion) {
@@ -87,14 +87,14 @@ public class MissingAttributeDetail {
     /**
      * Creates a new <code>MissingAttributeDetail</code>
      *
-     * @param id the id of the attribute
-     * @param type the type of the attribute
-     * @param category category of the attributes elements whether it is subject, action and etc
-     * @param attributeValues  actual <code>List</code> of <code>AttributeValue</code>
-     * @param xacmlVersion xacml version
+     * @param id              the id of the attribute
+     * @param type            the type of the attribute
+     * @param category        category of the attributes elements whether it is subject, action and etc
+     * @param attributeValues actual <code>List</code> of <code>AttributeValue</code>
+     * @param xacmlVersion    xacml version
      */
     public MissingAttributeDetail(URI id, URI type, URI category,
-                                   List<AttributeValue> attributeValues, int xacmlVersion) {
+                                  List<AttributeValue> attributeValues, int xacmlVersion) {
         this(id, type, category, null, attributeValues, xacmlVersion);
 
     }
@@ -102,32 +102,32 @@ public class MissingAttributeDetail {
     /**
      * Creates a new <code>MissingAttributeDetail</code>
      *
-     * @param id the id of the attribute
-     * @param type the type of the attribute
-     * @param category category of the attributes elements whether it is subject, action and etc
+     * @param id           the id of the attribute
+     * @param type         the type of the attribute
+     * @param category     category of the attributes elements whether it is subject, action and etc
      * @param xacmlVersion xacml version
      */
     public MissingAttributeDetail(URI id, URI type, URI category, int xacmlVersion) {
         this(id, type, category, null, null, xacmlVersion);
     }
-    
+
     /**
      * Creates an instance of an <code>MissingAttributeDetail</code> based on the root
      * DOM node of the XML data.
      *
-     * @param root the DOM root of the AttributeType XML type
+     * @param root     the DOM root of the AttributeType XML type
      * @param metaData policy meta data
-     * @return  a <code>MissingAttributeDetail</code>  object       
+     * @return a <code>MissingAttributeDetail</code>  object
      * @throws ParsingException throws ParsingException if the data is invalid
      */
     public static MissingAttributeDetail getInstance(Node root, PolicyMetaData metaData)
-                                                                        throws ParsingException {
+            throws ParsingException {
         URI id = null;
         URI type = null;
         URI category = null;
         String issuer = null;
         List<AttributeValue> values = new ArrayList<AttributeValue>();
-        int version  = metaData.getXACMLVersion();
+        int version = metaData.getXACMLVersion();
 
         AttributeFactory attrFactory = Balana.getInstance().getAttributeFactory();
 
@@ -155,9 +155,9 @@ public class MissingAttributeDetail {
         }
 
 
-        if(version == XACMLConstants.XACML_VERSION_3_0){
+        if (version == XACMLConstants.XACML_VERSION_3_0) {
             try {
-                category =  new URI(attrs.getNamedItem("IncludeInResult").getNodeValue());
+                category = new URI(attrs.getNamedItem("IncludeInResult").getNodeValue());
             } catch (Exception e) {
                 throw new ParsingException("Error parsing required attribute "
                         + "Category in MissingAttributeDetailType", e);
@@ -166,7 +166,7 @@ public class MissingAttributeDetail {
 
         try {
             Node issuerNode = attrs.getNamedItem("Issuer");
-            if (issuerNode != null){
+            if (issuerNode != null) {
                 issuer = issuerNode.getNodeValue();
             }
         } catch (Exception e) {
@@ -179,7 +179,7 @@ public class MissingAttributeDetail {
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
             if (DOMHelper.getLocalName(node).equals("AttributeValue")) {
-                if(version == XACMLConstants.XACML_VERSION_3_0){
+                if (version == XACMLConstants.XACML_VERSION_3_0) {
                     NamedNodeMap dataTypeAttribute = node.getAttributes();
                     try {
                         type = new URI(dataTypeAttribute.getNamedItem("DataType").getNodeValue());
@@ -204,36 +204,36 @@ public class MissingAttributeDetail {
      * Returns the encoded String from MissingAttributeDetail
      *
      * @return String
-     * @throws ParsingException if there are any issues, when parsing object in to Sting 
+     * @throws ParsingException if there are any issues, when parsing object in to Sting
      */
     public String getEncoded() throws ParsingException {
 
-        if(id == null){
+        if (id == null) {
             throw new ParsingException("Required AttributeId attribute is Null");
         }
 
-        if(type == null){
+        if (type == null) {
             throw new ParsingException("Required DataType attribute is Null");
         }
 
-        if(xacmlVersion == XACMLConstants.XACML_VERSION_3_0 && category == null){
+        if (xacmlVersion == XACMLConstants.XACML_VERSION_3_0 && category == null) {
             throw new ParsingException("Required Category attribute is Null");
         }
-        
+
         String encoded = "<MissingAttributeDetail AttributeId=\"" + id + "\" DataType=\"" + type + "\"";
 
-        if(xacmlVersion == XACMLConstants.XACML_VERSION_3_0){
+        if (xacmlVersion == XACMLConstants.XACML_VERSION_3_0) {
             encoded += " Category=\"" + category + "\"";
         }
 
-        if(issuer != null){
+        if (issuer != null) {
             encoded += " Issuer=\"" + issuer + "\"";
         }
 
         encoded += " >";
 
-        if(attributeValues != null && attributeValues.size() > 0){
-            for(AttributeValue value : attributeValues){
+        if (attributeValues != null && attributeValues.size() > 0) {
+            for (AttributeValue value : attributeValues) {
                 encoded += (value.encodeWithTags(true) + "\n");
             }
         }

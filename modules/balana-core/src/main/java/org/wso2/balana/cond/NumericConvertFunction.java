@@ -50,10 +50,10 @@ import java.util.Set;
  * integer-to-double). It takes one argument of the appropriate type, converts that argument to the
  * other type, and returns the result. If the argument is indeterminate, an indeterminate result is
  * returned.
- * 
- * @since 1.0
+ *
  * @author Steve Hanna
  * @author Seth Proctor
+ * @since 1.0
  */
 public class NumericConvertFunction extends FunctionBase {
 
@@ -73,10 +73,9 @@ public class NumericConvertFunction extends FunctionBase {
 
     /**
      * Creates a new <code>NumericConvertFunction</code> object.
-     * 
+     *
      * @param functionName the standard XACML name of the function to be handled by this object,
-     *            including the full namespace
-     * 
+     *                     including the full namespace
      * @throws IllegalArgumentException if the function is unknwon
      */
     public NumericConvertFunction(String functionName) {
@@ -98,7 +97,7 @@ public class NumericConvertFunction extends FunctionBase {
 
     /**
      * Returns a <code>Set</code> containing all the function identifiers supported by this class.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public static Set getSupportedIdentifiers() {
@@ -136,11 +135,11 @@ public class NumericConvertFunction extends FunctionBase {
 
     /**
      * Evaluate the function, using the specified parameters.
-     * 
-     * @param inputs a <code>List</code> of <code>Evaluatable</code> objects representing the
-     *            arguments passed to the function
+     *
+     * @param inputs  a <code>List</code> of <code>Evaluatable</code> objects representing the
+     *                arguments passed to the function
      * @param context an <code>EvaluationCtx</code> so that the <code>Evaluatable</code> objects can
-     *            be evaluated
+     *                be evaluated
      * @return an <code>EvaluationResult</code> representing the function's result
      */
     public EvaluationResult evaluate(List inputs, EvaluationCtx context) {
@@ -154,20 +153,20 @@ public class NumericConvertFunction extends FunctionBase {
         // Now that we have real values, perform the numeric conversion
         // operation in the manner appropriate for this function.
         switch (getFunctionId()) {
-        case ID_DOUBLE_TO_INTEGER: {
-            double arg0 = ((DoubleAttribute) argValues[0]).getValue();
-            long longValue = (long) arg0;
+            case ID_DOUBLE_TO_INTEGER: {
+                double arg0 = ((DoubleAttribute) argValues[0]).getValue();
+                long longValue = (long) arg0;
 
-            result = new EvaluationResult(new IntegerAttribute(longValue));
-            break;
-        }
-        case ID_INTEGER_TO_DOUBLE: {
-            long arg0 = ((IntegerAttribute) argValues[0]).getValue();
-            double doubleValue = (double) arg0;
+                result = new EvaluationResult(new IntegerAttribute(longValue));
+                break;
+            }
+            case ID_INTEGER_TO_DOUBLE: {
+                long arg0 = ((IntegerAttribute) argValues[0]).getValue();
+                double doubleValue = (double) arg0;
 
-            result = new EvaluationResult(new DoubleAttribute(doubleValue));
-            break;
-        }
+                result = new EvaluationResult(new DoubleAttribute(doubleValue));
+                break;
+            }
         }
 
         return result;

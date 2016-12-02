@@ -42,9 +42,9 @@ import java.net.URISyntaxException;
  * This is the standard Ordered Permit Overrides policy combining algorithm. It allows a single
  * evaluation of Permit to take precedence over any number of deny, not applicable or indeterminate
  * results. Note that this uses the regular Permit Overrides implementation since it is also orderd.
- * 
- * @since 1.1
+ *
  * @author seth proctor
+ * @since 1.1
  */
 public class OrderedPermitOverridesPolicyAlg extends PermitOverridesPolicyAlg {
 

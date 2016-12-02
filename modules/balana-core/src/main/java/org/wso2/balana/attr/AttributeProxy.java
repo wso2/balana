@@ -41,35 +41,30 @@ import org.w3c.dom.Node;
  * Used by the <code>AttributeFactory</code> to create new attributes. Typically a new proxy class
  * is created which in turn knows how to create a specific kind of attribute, and then this proxy
  * class is installed in the <code>AttributeFactory</code>.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public interface AttributeProxy {
 
     /**
      * Tries to create a new <code>AttributeValue</code> based on the given DOM root node.
-     * 
+     *
      * @param root the DOM root of some attribute data
-     * 
      * @return an <code>AttributeValue</code> representing the given data
-     * 
      * @throws Exception if the data couldn't be used (the exception is typically wrapping some
-     *             other exception)
+     *                   other exception)
      */
     public AttributeValue getInstance(Node root) throws Exception;
 
     /**
      * Tries to create a new <code>AttributeValue</code> based on the given String data.
      *
-     * @param value the text form of some attribute data
-     *
+     * @param value  the text form of some attribute data
      * @param params additional parameters that need to creates a value
-     * 
      * @return an <code>AttributeValue</code> representing the given data
-     *
      * @throws Exception if the data couldn't be used (the exception is typically wrapping some
-     *             other exception)
+     *                   other exception)
      */
-    public AttributeValue getInstance(String value, String[] params) throws Exception;    
+    public AttributeValue getInstance(String value, String[] params) throws Exception;
 }

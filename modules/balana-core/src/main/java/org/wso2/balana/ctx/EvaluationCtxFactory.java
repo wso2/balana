@@ -35,22 +35,11 @@ public class EvaluationCtxFactory {
      */
     private static volatile EvaluationCtxFactory factoryInstance;
 
-    
-    public EvaluationCtx getEvaluationCtx(AbstractRequestCtx requestCtx, PDPConfig pdpConfig)
-                                                                        throws ParsingException {
-
-        if(XACMLConstants.XACML_VERSION_3_0 == requestCtx.getXacmlVersion()){
-            return new XACML3EvaluationCtx((RequestCtx)requestCtx, pdpConfig);
-        } else {
-            return new XACML2EvaluationCtx((org.wso2.balana.ctx.xacml2.RequestCtx) requestCtx, pdpConfig);
-        }
-    }
-
     /**
      * Returns an instance of this factory. This method enforces a singleton model, meaning that
      * this always returns the same instance, creating the factory if it hasn't been requested
      * before.
-    *
+     *
      * @return the factory instance
      */
     public static EvaluationCtxFactory getFactory() {
@@ -64,5 +53,15 @@ public class EvaluationCtxFactory {
 
         return factoryInstance;
     }
-    
+
+    public EvaluationCtx getEvaluationCtx(AbstractRequestCtx requestCtx, PDPConfig pdpConfig)
+            throws ParsingException {
+
+        if (XACMLConstants.XACML_VERSION_3_0 == requestCtx.getXacmlVersion()) {
+            return new XACML3EvaluationCtx((RequestCtx) requestCtx, pdpConfig);
+        } else {
+            return new XACML2EvaluationCtx((org.wso2.balana.ctx.xacml2.RequestCtx) requestCtx, pdpConfig);
+        }
+    }
+
 }

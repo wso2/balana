@@ -45,9 +45,9 @@ import java.util.List;
 
 /**
  * The base type for all combining algorithms. It provides one method that must be implemented.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public abstract class CombiningAlgorithm {
 
@@ -56,7 +56,7 @@ public abstract class CombiningAlgorithm {
 
     /**
      * Constructor that takes the algorithm's identifier.
-     * 
+     *
      * @param identifier the algorithm's identifier
      */
     public CombiningAlgorithm(URI identifier) {
@@ -66,20 +66,19 @@ public abstract class CombiningAlgorithm {
     /**
      * Combines the results of the inputs based on the context to produce some unified result. This
      * is the one function of a combining algorithm.
-     * 
-     * @param context the representation of the request
+     *
+     * @param context    the representation of the request
      * @param parameters a (possibly empty) non-null <code>List</code> of
-     *            <code>CombinerParameter<code>s provided for general
+     *                   <code>CombinerParameter<code>s provided for general
      *                   use (for all pre-2.0 policies this must be empty)
-     * @param inputs a <code>List</code> of <code>CombinerElements</code>s to evaluate and combine
-     * 
+     * @param inputs     a <code>List</code> of <code>CombinerElements</code>s to evaluate and combine
      * @return a single unified result based on the combining logic
      */
     public abstract AbstractResult combine(EvaluationCtx context, List parameters, List inputs);
 
     /**
      * Returns the identifier for this algorithm.
-     * 
+     *
      * @return the algorithm's identifier
      */
     public URI getIdentifier() {

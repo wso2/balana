@@ -44,7 +44,7 @@ import java.util.List;
 public class Obligation extends AbstractObligation implements ObligationResult {
 
     /**
-     *  A <code>List</code> of  <code>Attribute</code>
+     * A <code>List</code> of  <code>Attribute</code>
      */
     private List<Attribute> assignments;
 
@@ -55,8 +55,8 @@ public class Obligation extends AbstractObligation implements ObligationResult {
      * AttributeAssignmentType are used.
      *
      * @param obligationId the obligation's id
-     * @param fulfillOn the effect denoting when to fulfill this obligation
-     * @param assignments a <code>List</code> of <code>Attribute</code>s
+     * @param fulfillOn    the effect denoting when to fulfill this obligation
+     * @param assignments  a <code>List</code> of <code>Attribute</code>s
      */
     public Obligation(URI obligationId, int fulfillOn, List<Attribute> assignments) {
         this.obligationId = obligationId;
@@ -68,18 +68,16 @@ public class Obligation extends AbstractObligation implements ObligationResult {
      * Creates an instance of <code>Obligation</code> based on the DOM root node.
      *
      * @param root the DOM root of the ObligationType XML type
-     *
      * @return an instance of an obligation
-     *
      * @throws ParsingException if the structure isn't valid
      */
     public static Obligation getInstance(Node root) throws ParsingException {
-        
+
         URI id;
         int fulfillOn;
         String effect;
         List<Attribute> assignments = new ArrayList<Attribute>();
-        
+
         AttributeFactory attrFactory = Balana.getInstance().getAttributeFactory();
         NamedNodeMap attrs = root.getAttributes();
 
@@ -112,7 +110,7 @@ public class Obligation extends AbstractObligation implements ObligationResult {
                             .getNodeValue());
                     AttributeValue attrValue = attrFactory.createValue(node);
                     assignments.add(new Attribute(attrId, null, null, attrValue,
-                                                                XACMLConstants.XACML_VERSION_2_0));
+                            XACMLConstants.XACML_VERSION_2_0));
                 } catch (URISyntaxException use) {
                     throw new ParsingException("Error parsing URI", use);
                 } catch (UnknownIdentifierException uie) {
@@ -170,5 +168,14 @@ public class Obligation extends AbstractObligation implements ObligationResult {
                     append(assignment.getValue().encode()).append("</AttributeAssignment>\n");
         }
         builder.append("</Obligation>");
+    }
+
+    /**
+     * Returns the obligation id of the obligation object
+     *
+     * @return the obligation Id
+     */
+    public URI getObligationId() {
+        return obligationId;
     }
 }

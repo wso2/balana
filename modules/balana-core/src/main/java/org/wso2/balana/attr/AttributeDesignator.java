@@ -93,27 +93,21 @@ public class AttributeDesignator extends AbstractDesignator {
 
     // helper array of strings
     static final private String[] targetTypes = {"Subject", "Resource", "Action", "Environment"};
-
+    // the logger we'll use for all messages
+    private static Log logger = LogFactory.getLog(AttributeDesignator.class);
     // the type of designator we are
     private int target;
-
     // required attributes
     private URI type;
     private URI id;
-
     // optional attribute
     private String issuer;
-
     // must resolution find something
     private boolean mustBePresent;
-
     // here we are defined a category
     // This is used only for Subject in XACML2.
     // but adding it for all designators
     private URI category;
-
-    // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(AttributeDesignator.class);
 
     /**
      * Creates a new <code>AttributeDesignator</code> without the optional issuer.
@@ -138,7 +132,7 @@ public class AttributeDesignator extends AbstractDesignator {
      * @throws IllegalArgumentException if the input target isn't a valid value
      */
     public AttributeDesignator(int target, URI type, URI id, boolean mustBePresent, String issuer)
-                                    throws IllegalArgumentException {
+            throws IllegalArgumentException {
         this(target, type, id, mustBePresent, null, null);
 
     }
@@ -171,7 +165,7 @@ public class AttributeDesignator extends AbstractDesignator {
     /**
      * Creates a new <code>AttributeDesignator</code> based on the DOM root of the XML data.
      *
-     * @param root     the DOM root of the AttributeDesignatorType XML type
+     * @param root the DOM root of the AttributeDesignatorType XML type
      * @return the designator
      * @throws ParsingException if the AttributeDesignatorType was invalid
      */
@@ -225,14 +219,14 @@ public class AttributeDesignator extends AbstractDesignator {
             // if it's for the Subject section, there's another attr
             if (target == SUBJECT_TARGET) {
                 Node scnode = attrs.getNamedItem("SubjectCategory");
-                if (scnode != null){
+                if (scnode != null) {
                     category = new URI(scnode.getNodeValue());
                 } else {
                     category = new URI(SUBJECT_CATEGORY_DEFAULT);
                 }
-            } else if (target == RESOURCE_TARGET){
+            } else if (target == RESOURCE_TARGET) {
                 category = new URI(XACMLConstants.RESOURCE_CATEGORY);
-            } else if (target == ACTION_TARGET){
+            } else if (target == ACTION_TARGET) {
                 category = new URI(XACMLConstants.ACTION_CATEGORY);
             } else if (target == ENVIRONMENT_TARGET) {
                 category = new URI(XACMLConstants.ENT_CATEGORY);
@@ -323,7 +317,7 @@ public class AttributeDesignator extends AbstractDesignator {
      *
      * @return true
      * @deprecated As of 2.0, you should use the <code>returnsBag</code> method from the
-     *             super-interface <code>Expression</code>.
+     * super-interface <code>Expression</code>.
      */
     public boolean evaluatesToBag() {
         return true;
@@ -344,7 +338,7 @@ public class AttributeDesignator extends AbstractDesignator {
      *
      * @param evaluationCtx the representation of the request
      * @return a result containing a bag either empty because no values were found or containing at
-     *         least one value, or status associated with an Indeterminate result
+     * least one value, or status associated with an Indeterminate result
      */
     public EvaluationResult evaluate(EvaluationCtx evaluationCtx) {
 
@@ -367,7 +361,7 @@ public class AttributeDesignator extends AbstractDesignator {
         }
 
         // if the lookup was indeterminate, then we return immediately
-        if(result != null){
+        if (result != null) {
             if (result.indeterminate())
                 return result;
 
@@ -385,7 +379,7 @@ public class AttributeDesignator extends AbstractDesignator {
                     code.add(Status.STATUS_MISSING_ATTRIBUTE);
                     ArrayList<MissingAttributeDetail> missingAttributes = new ArrayList<MissingAttributeDetail>();
                     MissingAttributeDetail missingAttribute = new MissingAttributeDetail(id, type,
-                                            category, issuer, null, XACMLConstants.XACML_VERSION_3_0);
+                            category, issuer, null, XACMLConstants.XACML_VERSION_3_0);
                     missingAttributes.add(missingAttribute);
                     StatusDetail detail = new StatusDetail(missingAttributes);
                     String message = "Couldn't find " + targetTypes[target]
@@ -411,13 +405,13 @@ public class AttributeDesignator extends AbstractDesignator {
             code.add(Status.STATUS_MISSING_ATTRIBUTE);
             ArrayList<MissingAttributeDetail> missingAttributes = new ArrayList<MissingAttributeDetail>();
             MissingAttributeDetail missingAttribute = new MissingAttributeDetail(id, type,
-                                    category, issuer, null, XACMLConstants.XACML_VERSION_3_0);
+                    category, issuer, null, XACMLConstants.XACML_VERSION_3_0);
             missingAttributes.add(missingAttribute);
             StatusDetail detail = new StatusDetail(missingAttributes);
             String message = "Couldn't find " + targetTypes[target]
                     + "AttributeDesignator attribute";
             return new EvaluationResult(new Status(code, message, detail));  //TODO
-    }
+        }
 
         // if we got here the bag wasn't empty, or mustBePresent was false,
         // so we just return the result
@@ -435,7 +429,7 @@ public class AttributeDesignator extends AbstractDesignator {
 
         builder.append("<").append(targetTypes[target]).append("AttributeDesignator");
 
-        if ((target == SUBJECT_TARGET) && (category != null)){
+        if ((target == SUBJECT_TARGET) && (category != null)) {
             builder.append(" SubjectCategory=\"").append(category.toString()).append("\"");
         }
 
@@ -445,7 +439,7 @@ public class AttributeDesignator extends AbstractDesignator {
         if (issuer != null)
             builder.append(" Issuer=\"").append(issuer).append("\"");
 
-        if (mustBePresent){
+        if (mustBePresent) {
             builder.append(" MustBePresent=\"true\"");
         }
 

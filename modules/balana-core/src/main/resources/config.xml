@@ -5,7 +5,9 @@
         <attributeFinderModule class="org.wso2.balana.finder.impl.SelectorModule"/>
         <policyFinderModule class="org.wso2.balana.finder.impl.FileBasedPolicyFinderModule">
             <set>
-                <string>/home/asela/Carbon/commons/commons/balana/src/test/resources/basic/3/policies/TestPolicy_0001.xml</string>
+                <string>
+                    /home/asela/Carbon/commons/commons/balana/src/test/resources/basic/3/policies/TestPolicy_0001.xml
+                </string>
             </set>
         </policyFinderModule>
     </pdp>

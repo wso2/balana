@@ -33,7 +33,7 @@ public class MultipleCtxResult {
     /**
      * A ,<code>Set</code> of <code>EvaluationCtx</code>
      */
-    private Set<EvaluationCtx>  evaluationCtxSet;
+    private Set<EvaluationCtx> evaluationCtxSet;
 
     /**
      * <code>Status<code>
@@ -48,17 +48,17 @@ public class MultipleCtxResult {
     /**
      * Constructs a <code>MultipleCtxResult</code> object with  required data
      *
-     * @param evaluationCtxSet  A ,<code>Set</code> of <code>EvaluationCtx</code>
+     * @param evaluationCtxSet A ,<code>Set</code> of <code>EvaluationCtx</code>
      */
     public MultipleCtxResult(Set<EvaluationCtx> evaluationCtxSet) {
         this(evaluationCtxSet, null, false);
     }
 
-     /**
+    /**
      * Constructs a <code>MultipleCtxResult</code> object with status error
      *
-      * @param status  <code>Status<code>
-      */
+     * @param status <code>Status<code>
+     */
     public MultipleCtxResult(Status status) {
         this(null, status, true);
     }
@@ -66,9 +66,9 @@ public class MultipleCtxResult {
     /**
      * Constructs a <code>MultipleCtxResult</code> object with  required data
      *
-     * @param evaluationCtxSet  A ,<code>Set</code> of <code>EvaluationCtx</code>
-     * @param status   <code>Status<code>
-     * @param indeterminate  whether any indeterminate has occurred or not
+     * @param evaluationCtxSet A ,<code>Set</code> of <code>EvaluationCtx</code>
+     * @param status           <code>Status<code>
+     * @param indeterminate    whether any indeterminate has occurred or not
      */
     public MultipleCtxResult(Set<EvaluationCtx> evaluationCtxSet, Status status, boolean indeterminate) {
         this.evaluationCtxSet = evaluationCtxSet;
@@ -81,7 +81,7 @@ public class MultipleCtxResult {
     }
 
     public Status getStatus() {
-        if(indeterminate){
+        if (indeterminate) {
             return status;
         } else {
             return null;

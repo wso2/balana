@@ -51,9 +51,9 @@ import java.util.List;
  * Note that this function allows any time ranges less than 24 hours. In other words, it is not
  * bound by normal day boundries (midnight GMT), but by the minimum time in the range. This means
  * that ranges like 9am-5pm are supported, as are ranges like 5pm-9am.
- * 
- * @since 2.0
+ *
  * @author seth proctor
+ * @since 2.0
  */
 public class TimeInRangeFunction extends FunctionBase {
 
@@ -86,11 +86,10 @@ public class TimeInRangeFunction extends FunctionBase {
      * for the second and/or third time value, then the timezone from the first time value is used.
      * This lets you say time-in-range(current-time, 9am, 5pm) and always have the evaluation happen
      * in your current-time timezone.
-     * 
-     * @param inputs a <code>List</code> of <code>Evaluatable</code> objects representing the
-     *            arguments passed to the function
+     *
+     * @param inputs  a <code>List</code> of <code>Evaluatable</code> objects representing the
+     *                arguments passed to the function
      * @param context the respresentation of the request
-     * 
      * @return an <code>EvaluationResult</code> containing true or false
      */
     public EvaluationResult evaluate(List inputs, EvaluationCtx context) {

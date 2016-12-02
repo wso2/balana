@@ -54,14 +54,14 @@ public abstract class AbstractRequestCtx {
      */
     public Node getDocumentRoot() {
         return documentRoot;
-    }    
-
-    public void setSearch(boolean isSearch) {
-        this.isSearch = isSearch;
     }
 
     public boolean isSearch() {
         return isSearch;
+    }
+
+    public void setSearch(boolean isSearch) {
+        this.isSearch = isSearch;
     }
 
     public int getXacmlVersion() {
@@ -73,9 +73,9 @@ public abstract class AbstractRequestCtx {
     }
 
     /**
-     *  Returns a <code>Set</code> containing <code>Attribute</code> objects.
+     * Returns a <code>Set</code> containing <code>Attribute</code> objects.
      *
-     * @return  the request' s all attributes as <code>Set</code>
+     * @return the request' s all attributes as <code>Set</code>
      */
     public Set<Attributes> getAttributesSet() {
         return attributesSet;
@@ -85,7 +85,7 @@ public abstract class AbstractRequestCtx {
      * Encodes this <code>AbstractRequestCtx</code> into its XML representation and writes this encoding to the given
      * <code>OutputStream</code> with indentation.
      *
-     * @param output a stream into which the XML-encoded data is written
+     * @param output   a stream into which the XML-encoded data is written
      * @param indenter an object that creates indentation strings
      */
     public abstract void encode(OutputStream output, Indenter indenter);
@@ -96,6 +96,6 @@ public abstract class AbstractRequestCtx {
      *
      * @param output a stream into which the XML-encoded data is written
      */
-    public abstract void encode(OutputStream output);    
+    public abstract void encode(OutputStream output);
 
 }

@@ -52,10 +52,10 @@ import java.util.Set;
 
 /**
  * Represents the response to a request made to the XACML PDP.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
  * @author Marco Barreno
+ * @since 1.0
  */
 public class ResponseCtx {
 
@@ -68,7 +68,7 @@ public class ResponseCtx {
     /**
      * Constructor that creates a new <code>ResponseCtx</code> with only a single
      * <code>Result</code> (a common case).
-     * 
+     *
      * @param result the single result in the response
      */
     public ResponseCtx(AbstractResult result) {
@@ -79,7 +79,7 @@ public class ResponseCtx {
     /**
      * Constructor that creates a new <code>ResponseCtx</code> with a <code>Set</code> of
      * <code>Result</code>s. The <code>Set</code> must be non-empty.
-     * 
+     *
      * @param results a <code>Set</code> of <code>Result</code> objects
      * @param version XACML version
      */
@@ -100,10 +100,10 @@ public class ResponseCtx {
     public static ResponseCtx getInstance(Node root) throws ParsingException {
         String requestCtxNs = root.getNamespaceURI();
 
-        if(requestCtxNs != null){
-            if(XACMLConstants.REQUEST_CONTEXT_3_0_IDENTIFIER.equals(requestCtxNs.trim())){
+        if (requestCtxNs != null) {
+            if (XACMLConstants.REQUEST_CONTEXT_3_0_IDENTIFIER.equals(requestCtxNs.trim())) {
                 return getInstance(root, XACMLConstants.XACML_VERSION_3_0);
-            } else if(XACMLConstants.REQUEST_CONTEXT_1_0_IDENTIFIER.equals(requestCtxNs.trim()) ||
+            } else if (XACMLConstants.REQUEST_CONTEXT_1_0_IDENTIFIER.equals(requestCtxNs.trim()) ||
                     XACMLConstants.REQUEST_CONTEXT_2_0_IDENTIFIER.equals(requestCtxNs.trim())) {
                 return getInstance(root, XACMLConstants.XACML_VERSION_2_0);
             } else {
@@ -120,7 +120,7 @@ public class ResponseCtx {
      * DOM root node. A <code>ParsingException</code> is thrown if the DOM
      * root doesn't represent a valid ResponseType.
      *
-     * @param root the DOM root of a ResponseType
+     * @param root    the DOM root of a ResponseType
      * @param version XACML version
      * @return a new <code>ResponseCtx</code>
      * @throws ParsingException if the node is invalid
@@ -132,7 +132,7 @@ public class ResponseCtx {
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
             if (DOMHelper.getLocalName(node).equals("Result")) {
-                if(version == XACMLConstants.XACML_VERSION_3_0){
+                if (version == XACMLConstants.XACML_VERSION_3_0) {
                     results.add(org.wso2.balana.ctx.xacml3.Result.getInstance(node));
                 } else {
                     results.add(Result.getInstance(node));
@@ -140,15 +140,15 @@ public class ResponseCtx {
             }
         }
 
-        if (results.size() == 0){
+        if (results.size() == 0) {
             throw new ParsingException("must have at least one Result");
         }
         return new ResponseCtx(results, version);
-    }    
+    }
 
     /**
      * Get the set of <code>Result</code>s from this response.
-     * 
+     *
      * @return a <code>Set</code> of results
      */
     public Set<AbstractResult> getResults() {
@@ -177,7 +177,7 @@ public class ResponseCtx {
 
         builder.append("<Response");
 
-        if(version == XACMLConstants.XACML_VERSION_3_0){
+        if (version == XACMLConstants.XACML_VERSION_3_0) {
             builder.append(" xmlns=\"urn:oasis:names:tc:xacml:3.0:core:schema:wd-17\"");
         }
 

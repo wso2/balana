@@ -42,9 +42,9 @@ import java.util.StringTokenizer;
  * also provides a simple set of comparison methods for matching against the constraints. Note that
  * this feature was introduced in XACML 2.0, which means that constraints are never used in pre-2.0
  * policy references.
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
 public class VersionConstraints {
 
@@ -62,10 +62,10 @@ public class VersionConstraints {
      * Creates a <code>VersionConstraints</code> with the three optional constraint strings. Each of
      * the three strings must conform to the VersionMatchType type defined in the XACML schema. Any
      * of the strings may be null to specify that the given constraint is not used.
-     * 
-     * @param version a matching constraint on the version or null
+     *
+     * @param version  a matching constraint on the version or null
      * @param earliest a lower-bound constraint on the version or null
-     * @param latest an upper-bound constraint on the version or null
+     * @param latest   an upper-bound constraint on the version or null
      */
     public VersionConstraints(String version, String earliest, String latest) {
         this.version = version;
@@ -74,53 +74,10 @@ public class VersionConstraints {
     }
 
     /**
-     * Returns the matching constraint string, which will be null if there is no constraint on
-     * matching the version.
-     * 
-     * @return the version constraint
-     */
-    public String getVersionConstraint() {
-        return version;
-    }
-
-    /**
-     * Returns the lower-bound constraint string, which will be null if there is no lower-bound
-     * constraint on the version.
-     * 
-     * @return the lower-bound constraint
-     */
-    public String getEarliestConstraint() {
-        return earliest;
-    }
-
-    /**
-     * Returns the upper-bound constraint string, which will be null if there is no upper-bound
-     * constraint on the version.
-     * 
-     * @return the upper-bound constraint
-     */
-    public String getLatestConstraint() {
-        return latest;
-    }
-
-    /**
-     * Checks if the given version string meets all three constraints.
-     * 
-     * @param version the version to compare, which is formatted as a VersionType XACML type
-     * 
-     * @return true if the given version meets all the constraints
-     */
-    public boolean meetsConstraint(String version) {
-        return (matches(version, this.version) && isEarlier(version, latest) && isLater(version,
-                earliest));
-    }
-
-    /**
      * Checks if the given version string matches the constraint string.
-     * 
-     * @param version the version string to check
+     *
+     * @param version    the version string to check
      * @param constraint a constraint string to use in matching
-     * 
      * @return true if the version string matches the constraint
      */
     public static boolean matches(String version, String constraint) {
@@ -129,10 +86,9 @@ public class VersionConstraints {
 
     /**
      * Checks if the given version string is less-than or equal-to the constraint string.
-     * 
-     * @param version the version string to check
+     *
+     * @param version    the version string to check
      * @param constraint a constraint string to use in matching
-     * 
      * @return true if the version string is earlier than the constraint
      */
     public static boolean isEarlier(String version, String constraint) {
@@ -141,10 +97,9 @@ public class VersionConstraints {
 
     /**
      * Checks if the given version string is greater-than or equal-to the constraint string.
-     * 
-     * @param version the version string to check
+     *
+     * @param version    the version string to check
      * @param constraint a constraint string to use in matching
-     * 
      * @return true if the version string is later than the constraint
      */
     public static boolean isLater(String version, String constraint) {
@@ -221,6 +176,47 @@ public class VersionConstraints {
 
         // we got through everything, so the constraint is met
         return true;
+    }
+
+    /**
+     * Returns the matching constraint string, which will be null if there is no constraint on
+     * matching the version.
+     *
+     * @return the version constraint
+     */
+    public String getVersionConstraint() {
+        return version;
+    }
+
+    /**
+     * Returns the lower-bound constraint string, which will be null if there is no lower-bound
+     * constraint on the version.
+     *
+     * @return the lower-bound constraint
+     */
+    public String getEarliestConstraint() {
+        return earliest;
+    }
+
+    /**
+     * Returns the upper-bound constraint string, which will be null if there is no upper-bound
+     * constraint on the version.
+     *
+     * @return the upper-bound constraint
+     */
+    public String getLatestConstraint() {
+        return latest;
+    }
+
+    /**
+     * Checks if the given version string meets all three constraints.
+     *
+     * @param version the version to compare, which is formatted as a VersionType XACML type
+     * @return true if the given version meets all the constraints
+     */
+    public boolean meetsConstraint(String version) {
+        return (matches(version, this.version) && isEarlier(version, latest) && isLater(version,
+                earliest));
     }
 
 }

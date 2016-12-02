@@ -47,9 +47,9 @@ import java.io.OutputStream;
 /**
  * Represents one input (a Rule, Policy, PolicySet, or reference) to a combining algorithm and
  * combiner parameters associated with that input.
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
 public abstract class CombinerElement {
 
@@ -62,7 +62,7 @@ public abstract class CombinerElement {
     /**
      * Constructor that only takes an element. No parameters are associated with this element when
      * combining.
-     * 
+     *
      * @param element a <code>PolicyTreeElement</code> to use in combining
      */
     public CombinerElement(PolicyTreeElement element) {
@@ -71,10 +71,10 @@ public abstract class CombinerElement {
 
     /**
      * Constructor that takes both the element to combine and its associated combiner parameters.
-     * 
-     * @param element a <code>PolicyTreeElement</code> to use in combining
+     *
+     * @param element    a <code>PolicyTreeElement</code> to use in combining
      * @param parameters a (possibly empty) non-null <code>List</code> of
-     *            <code>CombinerParameter<code>s provided for general
+     *                   <code>CombinerParameter<code>s provided for general
      *                   use (for all pre-2.0 policies this must be empty)
      */
     public CombinerElement(PolicyTreeElement element, List parameters) {
@@ -88,7 +88,7 @@ public abstract class CombinerElement {
 
     /**
      * Returns the <code>PolicyTreeElement</code> in this element.
-     * 
+     *
      * @return the <code>PolicyTreeElement</code>
      */
     public PolicyTreeElement getElement() {
@@ -97,7 +97,7 @@ public abstract class CombinerElement {
 
     /**
      * Returns the <code>CombinerParameter</code>s associated with this element.
-     * 
+     *
      * @return a <code>List</code> of <code>CombinerParameter</code>s
      */
     public List getParameters() {

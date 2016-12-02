@@ -35,12 +35,11 @@ import java.util.List;
  */
 public class AnyOfSelection {
 
+    private static Log logger = LogFactory.getLog(AnyOfSelection.class);
     /**
      *
      */
     private List<AllOfSelection> allOfSelections;
-
-    private static Log logger = LogFactory.getLog(AnyOfSelection.class);
 
 
     /**
@@ -50,7 +49,7 @@ public class AnyOfSelection {
      */
     public AnyOfSelection(List<AllOfSelection> allOfSelections) {
         if (allOfSelections == null)
-            this.allOfSelections =new ArrayList<AllOfSelection>();
+            this.allOfSelections = new ArrayList<AllOfSelection>();
         else
             this.allOfSelections = new ArrayList<AllOfSelection>(allOfSelections);
     }
@@ -58,11 +57,9 @@ public class AnyOfSelection {
     /**
      * creates a <code>AnyOfSelection</code> based on its DOM node.
      *
-     * @param root the node to parse for the AnyOfSelection
+     * @param root     the node to parse for the AnyOfSelection
      * @param metaData meta-date associated with the policy
-     *
      * @return a new <code>AnyOfSelection</code> constructed by parsing
-     *
      * @throws ParsingException if the DOM node is invalid
      */
     public static AnyOfSelection getInstance(Node root, PolicyMetaData metaData)
@@ -77,8 +74,8 @@ public class AnyOfSelection {
             }
         }
 
-        if(allOfSelections.isEmpty()){
-            throw new ParsingException("AnyOf must contain at least one AllOf");            
+        if (allOfSelections.isEmpty()) {
+            throw new ParsingException("AnyOf must contain at least one AllOf");
         }
 
         return new AnyOfSelection(allOfSelections);
@@ -89,7 +86,6 @@ public class AnyOfSelection {
      * is applicable).
      *
      * @param context the representation of the request
-     *
      * @return the result of trying to match the group with the context
      */
     public MatchResult match(EvaluationCtx context) {
@@ -108,7 +104,7 @@ public class AnyOfSelection {
             MatchResult result = group.match(context);
 
             // we only need one match, so if this matched, then we're done
-            if (result.getResult() == MatchResult.MATCH){
+            if (result.getResult() == MatchResult.MATCH) {
                 return result;
             }
             // if we didn't match then it was either a NO_MATCH or
@@ -123,11 +119,11 @@ public class AnyOfSelection {
 
         // if we got here, then none of the sub-matches passed, so
         // we have to see if we got any INDETERMINATE cases
-        if (firstIndeterminateStatus == null){
+        if (firstIndeterminateStatus == null) {
             return new MatchResult(MatchResult.NO_MATCH);
         } else {
             return new MatchResult(MatchResult.INDETERMINATE,
-                                   firstIndeterminateStatus);
+                    firstIndeterminateStatus);
         }
     }
 
@@ -141,8 +137,8 @@ public class AnyOfSelection {
 
         builder.append("<AnyOf>\n");
 
-        if(allOfSelections != null){
-            for(AllOfSelection allOfSelection : allOfSelections){
+        if (allOfSelections != null) {
+            for (AllOfSelection allOfSelection : allOfSelections) {
                 allOfSelection.encode(builder);
             }
         }

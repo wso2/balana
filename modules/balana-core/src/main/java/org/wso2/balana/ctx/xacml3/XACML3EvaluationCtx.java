@@ -42,67 +42,57 @@ import java.util.*;
 
 /**
  * This is implementation of XACML3 evaluation context
- *
  */
 public class XACML3EvaluationCtx extends BasicEvaluationCtx {
 
     /**
+     * logger
+     */
+    private static Log logger = LogFactory.getLog(XACML3EvaluationCtx.class);
+    /**
      * Attributes set of the request
      */
     private Set<Attributes> attributesSet;
-
     /**
      * multiple content selectors.
      */
     private Set<Attributes> multipleContentSelectors;
-
     /**
      * whether multiple attributes are present or not
      */
     private boolean multipleAttributes;
-
     /**
      * Set of policy references
      */
     private Set<PolicyReference> policyReferences;
-
     /**
      * attributes categorized as Map
-     *
+     * <p>
      * Category  --> Attributes Set
      */
     private Map<String, List<Attributes>> mapAttributes;
-
     /**
      * XACML3 request
      */
     private RequestCtx requestCtx;
-
     /**
      * XACML3 request scope. used with multiple resource profile
      */
     private Attribute resourceScopeAttribute;
-
     /**
      * XACML3 request scope. used with hierarchical resource
      */
     private int resourceScope;
-
     /**
      * XACML 3 request resource id.  used with hierarchical resource
      */
     private Attribute resourceId;
 
     /**
-     * logger
-     */
-    private static Log logger = LogFactory.getLog(XACML3EvaluationCtx.class);
-
-    /**
      * Creates a new <code>XACML3EvaluationCtx</code>
      *
-     * @param requestCtx  XACML3  RequestCtx
-     * @param pdpConfig PDP configurations
+     * @param requestCtx XACML3  RequestCtx
+     * @param pdpConfig  PDP configurations
      */
     public XACML3EvaluationCtx(RequestCtx requestCtx, PDPConfig pdpConfig) {
 
@@ -112,7 +102,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
         currentTime = null;
         currentDateTime = null;
 
-        mapAttributes = new HashMap<String, List<Attributes>> ();
+        mapAttributes = new HashMap<String, List<Attributes>>();
 
         attributesSet = requestCtx.getAttributesSet();
         this.pdpConfig = pdpConfig;
@@ -125,16 +115,16 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
 
         List<AttributeValue> attributeValues = new ArrayList<AttributeValue>();
         List<Attributes> attributesSet = mapAttributes.get(category.toString());
-        if(attributesSet != null && attributesSet.size() > 0){
-            Set<Attribute> attributeSet  = attributesSet.get(0).getAttributes();
-            for(Attribute attribute : attributeSet) {
-                if(attribute.getId().toString().equals(id.toString())
+        if (attributesSet != null && attributesSet.size() > 0) {
+            Set<Attribute> attributeSet = attributesSet.get(0).getAttributes();
+            for (Attribute attribute : attributeSet) {
+                if (attribute.getId().toString().equals(id.toString())
                         && attribute.getType().toString().equals(type.toString())
                         && (issuer == null || issuer.equals(attribute.getIssuer()))
-                        && attribute.getValue() != null){
+                        && attribute.getValue() != null) {
                     List<AttributeValue> attributeValueList = attribute.getValues();
                     for (AttributeValue attributeVal : attributeValueList) {
-                    	attributeValues.add(attributeVal);
+                        attributeValues.add(attributeVal);
                     }
                 }
             }
@@ -149,38 +139,38 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
 
 
     public EvaluationResult getAttribute(String path, URI type, URI category,
-                                         URI contextSelector, String xpathVersion){
+                                         URI contextSelector, String xpathVersion) {
 
-        if(pdpConfig.getAttributeFinder() == null){
+        if (pdpConfig.getAttributeFinder() == null) {
 
             logger.warn("Context tried to invoke AttributeFinder but was " +
-                           "not configured with one");
+                    "not configured with one");
             return new EvaluationResult(BagAttribute.createEmptyBag(type));
         }
 
         List<Attributes> attributesSet = null;
 
-        if(category != null){
+        if (category != null) {
             attributesSet = mapAttributes.get(category.toString());
         }
 
-        if(attributesSet != null && attributesSet.size() > 0){
-            Attributes attributes  = attributesSet.get(0);
+        if (attributesSet != null && attributesSet.size() > 0) {
+            Attributes attributes = attributesSet.get(0);
             Object content = attributes.getContent();
-            if(content instanceof Node){
+            if (content instanceof Node) {
                 Node root = (Node) content;
-                if(contextSelector != null && contextSelector.toString().trim().length() > 0){
-                    for(Attribute attribute : attributes.getAttributes()) {
-                        if(attribute.getId().equals(contextSelector)){
+                if (contextSelector != null && contextSelector.toString().trim().length() > 0) {
+                    for (Attribute attribute : attributes.getAttributes()) {
+                        if (attribute.getId().equals(contextSelector)) {
                             List<AttributeValue> values = attribute.getValues();
-                            for(AttributeValue value : values){
-                                if(value instanceof XPathAttribute){
-                                    XPathAttribute xPathAttribute = (XPathAttribute)value;
-                                    if(xPathAttribute.getXPathCategory().
-                                                                    equals(category.toString())){
+                            for (AttributeValue value : values) {
+                                if (value instanceof XPathAttribute) {
+                                    XPathAttribute xPathAttribute = (XPathAttribute) value;
+                                    if (xPathAttribute.getXPathCategory().
+                                            equals(category.toString())) {
                                         return pdpConfig.getAttributeFinder().findAttribute(path,
-                                                            xPathAttribute.getValue(), type,
-                                                            root, this, xpathVersion);
+                                                xPathAttribute.getValue(), type,
+                                                root, this, xpathVersion);
                                     }
                                 }
                             }
@@ -188,7 +178,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
                     }
                 } else {
                     return pdpConfig.getAttributeFinder().findAttribute(path, null, type,
-                                                         root, this, xpathVersion);
+                            root, this, xpathVersion);
                 }
             }
         }
@@ -212,12 +202,12 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
      * @return
      */
     private void setupAttributes(Set<Attributes> attributeSet, Map<String,
-                                            List<Attributes>> mapAttributes)  {
+            List<Attributes>> mapAttributes) {
         for (Attributes attributes : attributeSet) {
             String category = attributes.getCategory().toString();
-            for(Attribute attribute : attributes.getAttributes()){
-                if(XACMLConstants.RESOURCE_CATEGORY.equals(category)){
-                    if(XACMLConstants.RESOURCE_SCOPE_2_0.equals(attribute.getId().toString())){
+            for (Attribute attribute : attributes.getAttributes()) {
+                if (XACMLConstants.RESOURCE_CATEGORY.equals(category)) {
+                    if (XACMLConstants.RESOURCE_SCOPE_2_0.equals(attribute.getId().toString())) {
                         resourceScopeAttribute = attribute;
                         AttributeValue value = attribute.getValue();
                         if (value instanceof StringAttribute) {
@@ -233,15 +223,15 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
                         }
                     }
 
-                    if (XACMLConstants.RESOURCE_ID.equals(attribute.getId().toString())){
-                        if(resourceId == null) { //TODO  when there are more than one resource ids??
+                    if (XACMLConstants.RESOURCE_ID.equals(attribute.getId().toString())) {
+                        if (resourceId == null) { //TODO  when there are more than one resource ids??
                             resourceId = attribute;
                         }
                     }
                 }
 
-                if(attribute.getId().toString().equals(XACMLConstants.MULTIPLE_CONTENT_SELECTOR)){
-                    if(multipleContentSelectors == null){
+                if (attribute.getId().toString().equals(XACMLConstants.MULTIPLE_CONTENT_SELECTOR)) {
+                    if (multipleContentSelectors == null) {
                         multipleContentSelectors = new HashSet<Attributes>();
                     }
                     multipleContentSelectors.add(attributes);
@@ -252,7 +242,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
                 List<Attributes> set = mapAttributes.get(category);
                 set.add(attributes);
                 multipleAttributes = true;
-             } else {
+            } else {
                 List<Attributes> set = new ArrayList<Attributes>();
                 set.add(attributes);
                 mapAttributes.put(category, set);
@@ -260,16 +250,16 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
         }
     }
 
-    public MultipleCtxResult getMultipleEvaluationCtx()  {
+    public MultipleCtxResult getMultipleEvaluationCtx() {
 
         Set<EvaluationCtx> evaluationCtxSet = new HashSet<EvaluationCtx>();
-        MultiRequests multiRequests =  requestCtx.getMultiRequests();
+        MultiRequests multiRequests = requestCtx.getMultiRequests();
 
         // 1st check whether there is a multi request attribute
-        if(multiRequests != null){
+        if (multiRequests != null) {
 
             MultipleCtxResult result = processMultiRequestElement(this);
-            if(result.isIndeterminate()){
+            if (result.isIndeterminate()) {
                 return result;
             } else {
                 evaluationCtxSet.addAll(result.getEvaluationCtxSet());
@@ -277,13 +267,13 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
         }
 
         // 2nd check repeated values for category attribute
-        if(evaluationCtxSet.size() > 0){
+        if (evaluationCtxSet.size() > 0) {
             Set<EvaluationCtx> newSet = new HashSet<EvaluationCtx>(evaluationCtxSet);
-            for(EvaluationCtx evaluationCtx : newSet){
-                if(((XACML3EvaluationCtx)evaluationCtx).isMultipleAttributes()){
+            for (EvaluationCtx evaluationCtx : newSet) {
+                if (((XACML3EvaluationCtx) evaluationCtx).isMultipleAttributes()) {
                     evaluationCtxSet.remove(evaluationCtx);
-                    MultipleCtxResult result = processMultipleAttributes((XACML3EvaluationCtx)evaluationCtx);
-                    if(result.isIndeterminate()){
+                    MultipleCtxResult result = processMultipleAttributes((XACML3EvaluationCtx) evaluationCtx);
+                    if (result.isIndeterminate()) {
                         return result;
                     } else {
                         evaluationCtxSet.addAll(result.getEvaluationCtxSet());
@@ -291,9 +281,9 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
                 }
             }
         } else {
-            if(multipleAttributes){
+            if (multipleAttributes) {
                 MultipleCtxResult result = processMultipleAttributes(this);
-                if(result.isIndeterminate()){
+                if (result.isIndeterminate()) {
                     return result;
                 } else {
                     evaluationCtxSet.addAll(result.getEvaluationCtxSet());
@@ -304,20 +294,20 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
         // 3rd check for both scope and multiple-content-selector attributes. Spec does not mention
         // which one to pick when both are present, there for high priority has given to scope
         // attribute
-        if(evaluationCtxSet.size() > 0){
+        if (evaluationCtxSet.size() > 0) {
             Set<EvaluationCtx> newSet = new HashSet<EvaluationCtx>(evaluationCtxSet);
-            for(EvaluationCtx evaluationCtx : newSet){
-                if(((XACML3EvaluationCtx)evaluationCtx).getResourceScope() != XACMLConstants.SCOPE_IMMEDIATE){
+            for (EvaluationCtx evaluationCtx : newSet) {
+                if (((XACML3EvaluationCtx) evaluationCtx).getResourceScope() != XACMLConstants.SCOPE_IMMEDIATE) {
                     evaluationCtxSet.remove(evaluationCtx);
-                    MultipleCtxResult result = processHierarchicalAttributes((XACML3EvaluationCtx)evaluationCtx);
-                    if(result.isIndeterminate()){
+                    MultipleCtxResult result = processHierarchicalAttributes((XACML3EvaluationCtx) evaluationCtx);
+                    if (result.isIndeterminate()) {
                         return result;
                     } else {
                         evaluationCtxSet.addAll(result.getEvaluationCtxSet());
                     }
-                } else if(((XACML3EvaluationCtx)evaluationCtx).getMultipleContentSelectors() != null){
-                    MultipleCtxResult result = processMultipleContentSelectors((XACML3EvaluationCtx)evaluationCtx);
-                    if(result.isIndeterminate()){
+                } else if (((XACML3EvaluationCtx) evaluationCtx).getMultipleContentSelectors() != null) {
+                    MultipleCtxResult result = processMultipleContentSelectors((XACML3EvaluationCtx) evaluationCtx);
+                    if (result.isIndeterminate()) {
                         return result;
                     } else {
                         evaluationCtxSet.addAll(result.getEvaluationCtxSet());
@@ -325,16 +315,16 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
                 }
             }
         } else {
-            if(resourceScope != XACMLConstants.SCOPE_IMMEDIATE){
+            if (resourceScope != XACMLConstants.SCOPE_IMMEDIATE) {
                 MultipleCtxResult result = processHierarchicalAttributes(this);
-                if(result.isIndeterminate()){
+                if (result.isIndeterminate()) {
                     return result;
                 } else {
                     evaluationCtxSet.addAll(result.getEvaluationCtxSet());
                 }
-            } else if(multipleContentSelectors != null){
+            } else if (multipleContentSelectors != null) {
                 MultipleCtxResult result = processMultipleContentSelectors(this);
-                if(result.isIndeterminate()){
+                if (result.isIndeterminate()) {
                     return result;
                 } else {
                     evaluationCtxSet.addAll(result.getEvaluationCtxSet());
@@ -342,7 +332,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
             }
         }
 
-        if(evaluationCtxSet.size() > 0){
+        if (evaluationCtxSet.size() > 0) {
             return new MultipleCtxResult(evaluationCtxSet);
         } else {
             evaluationCtxSet.add(this);
@@ -356,38 +346,38 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
      * @param evaluationCtx <code>XACML3EvaluationCtx</code>
      * @return <code>MultipleCtxResult</code>
      */
-    private MultipleCtxResult processMultiRequestElement(XACML3EvaluationCtx evaluationCtx)  {
+    private MultipleCtxResult processMultiRequestElement(XACML3EvaluationCtx evaluationCtx) {
 
         Set<EvaluationCtx> children = new HashSet<EvaluationCtx>();
-        MultiRequests multiRequests =  requestCtx.getMultiRequests();
+        MultiRequests multiRequests = requestCtx.getMultiRequests();
 
-        if(multiRequests == null){
+        if (multiRequests == null) {
             return new MultipleCtxResult(children);
         }
 
-        Set<RequestReference> requestReferences =  multiRequests.getRequestReferences();
-        for(RequestReference reference :  requestReferences) {
-            Set<AttributesReference>  attributesReferences = reference.getReferences();
-            if(attributesReferences != null && attributesReferences.size() > 0){
+        Set<RequestReference> requestReferences = multiRequests.getRequestReferences();
+        for (RequestReference reference : requestReferences) {
+            Set<AttributesReference> attributesReferences = reference.getReferences();
+            if (attributesReferences != null && attributesReferences.size() > 0) {
                 Set<Attributes> attributes = new HashSet<Attributes>();
-                for(AttributesReference attributesReference : attributesReferences){
+                for (AttributesReference attributesReference : attributesReferences) {
                     String referenceId = attributesReference.getId();
-                    if(referenceId != null){
+                    if (referenceId != null) {
                         Attributes newAttributes = null;
-                        for(Attributes attribute : evaluationCtx.getAttributesSet()){
+                        for (Attributes attribute : evaluationCtx.getAttributesSet()) {
                             // check equal with reference id
-                            if(attribute.getId() != null && attribute.getId().equals(referenceId)){
+                            if (attribute.getId() != null && attribute.getId().equals(referenceId)) {
                                 newAttributes = attribute;
                             }
                         }
-                        if(newAttributes != null){
+                        if (newAttributes != null) {
                             attributes.add(newAttributes);
                         } else {
                             // This must be only for one result. But here it is used to create error for
                             List<String> code = new ArrayList<String>();
                             code.add(Status.STATUS_SYNTAX_ERROR);
                             return new MultipleCtxResult(new Status(code,
-                                                            "Invalid reference to attributes"));
+                                    "Invalid reference to attributes"));
                         }
                     }
                 }
@@ -412,13 +402,13 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
         Map<String, List<Attributes>> mapAttributes = evaluationCtx.getMapAttributes();
 
         Set<Set<Attributes>> tempRequestAttributes =
-                    new HashSet<Set<Attributes>>(Arrays.asList(evaluationCtx.getAttributesSet()));
+                new HashSet<Set<Attributes>>(Arrays.asList(evaluationCtx.getAttributesSet()));
 
-        for(Map.Entry<String, List<Attributes>> mapAttributesEntry : mapAttributes.entrySet()){
-            if(mapAttributesEntry.getValue().size() > 1){
+        for (Map.Entry<String, List<Attributes>> mapAttributesEntry : mapAttributes.entrySet()) {
+            if (mapAttributesEntry.getValue().size() > 1) {
                 Set<Set<Attributes>> temp = new HashSet<Set<Attributes>>();
-                for(Attributes attributesElement :  mapAttributesEntry.getValue()){
-                    for(Set<Attributes> tempRequestAttribute : tempRequestAttributes){
+                for (Attributes attributesElement : mapAttributesEntry.getValue()) {
+                    for (Set<Attributes> tempRequestAttribute : tempRequestAttributes) {
                         Set<Attributes> newSet = new HashSet<Attributes>(tempRequestAttribute);
                         newSet.removeAll(mapAttributesEntry.getValue());
                         newSet.add(attributesElement);
@@ -429,7 +419,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
             }
         }
 
-        for(Set<Attributes> ctx : tempRequestAttributes){
+        for (Set<Attributes> ctx : tempRequestAttributes) {
             RequestCtx requestCtx = new RequestCtx(ctx, null);
             children.add(new XACML3EvaluationCtx(requestCtx, pdpConfig));
         }
@@ -439,7 +429,6 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
 
 
     /**
-     *
      * @param evaluationCtx
      * @return
      */
@@ -449,42 +438,42 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
         Set<EvaluationCtx> children = new HashSet<EvaluationCtx>();
 
         Attribute resourceId = evaluationCtx.getResourceId();
-        if(resourceId != null){
+        if (resourceId != null) {
 
-            if(evaluationCtx.getResourceScope() == XACMLConstants.SCOPE_CHILDREN){
+            if (evaluationCtx.getResourceScope() == XACMLConstants.SCOPE_CHILDREN) {
                 resourceResult = pdpConfig.getResourceFinder().
-                                                findChildResources(resourceId.getValue(), evaluationCtx);
-            } else if(evaluationCtx.getResourceScope()  == XACMLConstants.SCOPE_DESCENDANTS) {
+                        findChildResources(resourceId.getValue(), evaluationCtx);
+            } else if (evaluationCtx.getResourceScope() == XACMLConstants.SCOPE_DESCENDANTS) {
                 resourceResult = pdpConfig.getResourceFinder().
-                                                findDescendantResources(resourceId.getValue(), evaluationCtx);
+                        findDescendantResources(resourceId.getValue(), evaluationCtx);
             } else {
-                logger.error("Unknown scope type: " );
+                logger.error("Unknown scope type: ");
                 //TODO
             }
         } else {
-             logger.error("ResourceId Attribute is NULL: " );
+            logger.error("ResourceId Attribute is NULL: ");
             // TODO
         }
 
-        if(resourceResult == null || resourceResult.isEmpty()){
-            logger.error("Resource Finder result is NULL: " );
+        if (resourceResult == null || resourceResult.isEmpty()) {
+            logger.error("Resource Finder result is NULL: ");
             // TODO
         } else {
             for (AttributeValue resource : resourceResult.getResources()) {
                 Set<Attributes> newSet = new HashSet<Attributes>(evaluationCtx.getAttributesSet());
                 Attributes resourceAttributes = null;
-                for(Attributes attributes : newSet){
-                    if(XACMLConstants.RESOURCE_CATEGORY.equals(attributes.getCategory().toString())){
+                for (Attributes attributes : newSet) {
+                    if (XACMLConstants.RESOURCE_CATEGORY.equals(attributes.getCategory().toString())) {
                         Set<Attribute> attributeSet = new HashSet<Attribute>(attributes.getAttributes());
                         attributeSet.remove(resourceScopeAttribute);
                         attributeSet.remove(resourceId);
-                        try{
+                        try {
                             Attribute attribute = new Attribute(new URI(XACMLConstants.RESOURCE_ID),
                                     resourceId.getIssuer(), null, resource, resourceId.isIncludeInResult(),
                                     XACMLConstants.XACML_VERSION_3_0);
                             attributeSet.add(attribute);
                             Attributes newAttributes = new Attributes(new URI(XACMLConstants.RESOURCE_CATEGORY),
-                                        (Node)attributes.getContent(), attributeSet, attributes.getId());
+                                    (Node) attributes.getContent(), attributeSet, attributes.getId());
                             newSet.add(newAttributes);
                             resourceAttributes = attributes;
                         } catch (URISyntaxException e) {
@@ -493,7 +482,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
                         break;
                     }
                 }
-                if(resourceAttributes != null){
+                if (resourceAttributes != null) {
                     newSet.remove(resourceAttributes);
                     children.add(new XACML3EvaluationCtx(new RequestCtx(newSet, null), pdpConfig));
                 }
@@ -505,7 +494,6 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
     }
 
     /**
-     *
      * @param evaluationCtx
      * @return
      */
@@ -514,33 +502,33 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
         Set<EvaluationCtx> children = new HashSet<EvaluationCtx>();
         Set<Attributes> newAttributesSet = new HashSet<Attributes>();
 
-        for(Attributes attributes : evaluationCtx.getMultipleContentSelectors()){
+        for (Attributes attributes : evaluationCtx.getMultipleContentSelectors()) {
             Set<Attribute> newAttributes = null;
             Attribute oldAttribute = null;
             Object content = attributes.getContent();
-            if(content != null && content instanceof Node){
+            if (content != null && content instanceof Node) {
                 Node root = (Node) content;
-                for(Attribute attribute : attributes.getAttributes()){
+                for (Attribute attribute : attributes.getAttributes()) {
                     oldAttribute = attribute;
-                    if(attribute.getId().toString().equals(XACMLConstants.MULTIPLE_CONTENT_SELECTOR)){
+                    if (attribute.getId().toString().equals(XACMLConstants.MULTIPLE_CONTENT_SELECTOR)) {
                         List<AttributeValue> values = attribute.getValues();
-                        for(AttributeValue value : values){
-                            if(value instanceof XPathAttribute){
-                                XPathAttribute xPathAttribute = (XPathAttribute)value;
-                                if(xPathAttribute.getXPathCategory().
-                                                    equals(attributes.getCategory().toString())){
+                        for (AttributeValue value : values) {
+                            if (value instanceof XPathAttribute) {
+                                XPathAttribute xPathAttribute = (XPathAttribute) value;
+                                if (xPathAttribute.getXPathCategory().
+                                        equals(attributes.getCategory().toString())) {
                                     Set<String> xPaths = getChildXPaths(root, xPathAttribute.getValue());
-                                    for(String xPath : xPaths){
+                                    for (String xPath : xPaths) {
                                         try {
                                             AttributeValue newValue = Balana.getInstance().getAttributeFactory().
-                                                createValue(value.getType(), xPath,
-                                                new String[] {xPathAttribute.getXPathCategory()});
+                                                    createValue(value.getType(), xPath,
+                                                            new String[]{xPathAttribute.getXPathCategory()});
                                             Attribute newAttribute =
-                                                new Attribute(new URI(XACMLConstants.CONTENT_SELECTOR),
-                                                attribute.getIssuer(), attribute.getIssueInstant(),
-                                                newValue, attribute.isIncludeInResult(),
-                                                XACMLConstants.XACML_VERSION_3_0);
-                                            if(newAttributes == null){
+                                                    new Attribute(new URI(XACMLConstants.CONTENT_SELECTOR),
+                                                            attribute.getIssuer(), attribute.getIssueInstant(),
+                                                            newValue, attribute.isIncludeInResult(),
+                                                            XACMLConstants.XACML_VERSION_3_0);
+                                            if (newAttributes == null) {
                                                 newAttributes = new HashSet<Attribute>();
                                             }
                                             newAttributes.add(newAttribute);
@@ -553,13 +541,13 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
                         }
                     }
                 }
-                if(newAttributes != null){
+                if (newAttributes != null) {
                     attributes.getAttributes().remove(oldAttribute);
-                    for(Attribute attribute : newAttributes){
+                    for (Attribute attribute : newAttributes) {
                         Set<Attribute> set = new HashSet<Attribute>(attributes.getAttributes());
                         set.add(attribute);
                         Attributes attr = new Attributes(attributes.getCategory(),
-                                                attributes.getContent(), set, attributes.getId());
+                                attributes.getContent(), set, attributes.getId());
                         newAttributesSet.add(attr);
                     }
                     evaluationCtx.getAttributesSet().remove(attributes);
@@ -567,7 +555,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
             }
         }
 
-        for(Attributes attributes : newAttributesSet){
+        for (Attributes attributes : newAttributesSet) {
             Set<Attributes> set = new HashSet<Attributes>(evaluationCtx.getAttributesSet());
             set.add(attributes);
             RequestCtx requestCtx = new RequestCtx(set, null);
@@ -583,30 +571,30 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
      * multiple resources (ie, a scope other than IMMEDIATE), and you need to keep changing only the
      * resource-id to evaluate the different effective requests.
      *
-     * @param resourceId  resourceId the new resource-id value
+     * @param resourceId    resourceId the new resource-id value
      * @param attributesSet a <code>Set</code> of <code>Attributes</code>
      */
     public void setResourceId(AttributeValue resourceId, Set<Attributes> attributesSet) {
 
-        for(Attributes attributes : attributesSet){
-            if(XACMLConstants.RESOURCE_CATEGORY.equals(attributes.getCategory().toString())){
+        for (Attributes attributes : attributesSet) {
+            if (XACMLConstants.RESOURCE_CATEGORY.equals(attributes.getCategory().toString())) {
                 Set<Attribute> attributeSet = attributes.getAttributes();
                 Set<Attribute> newSet = new HashSet<Attribute>(attributeSet);
                 Attribute resourceIdAttribute = null;
 
-                for (Attribute attribute : newSet){
-                    if(XACMLConstants.RESOURCE_ID.equals(attribute.getId().toString())){
+                for (Attribute attribute : newSet) {
+                    if (XACMLConstants.RESOURCE_ID.equals(attribute.getId().toString())) {
                         resourceIdAttribute = attribute;
                         attributeSet.remove(attribute);
-                    } else if(XACMLConstants.RESOURCE_SCOPE_2_0.equals(attribute.getId().toString())){
+                    } else if (XACMLConstants.RESOURCE_SCOPE_2_0.equals(attribute.getId().toString())) {
                         attributeSet.remove(attribute);
                     }
                 }
 
-                if(resourceIdAttribute != null) {
+                if (resourceIdAttribute != null) {
                     attributeSet.add(new Attribute(resourceIdAttribute.getId(), resourceIdAttribute.getIssuer(),
-                    resourceIdAttribute.getIssueInstant(), resourceId, resourceIdAttribute.isIncludeInResult(),
-                                                                XACMLConstants.XACML_VERSION_3_0));
+                            resourceIdAttribute.getIssueInstant(), resourceId, resourceIdAttribute.isIncludeInResult(),
+                            XACMLConstants.XACML_VERSION_3_0));
                 }
                 break;
             }
@@ -614,7 +602,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
         }
     }
 
-    private Set<String> getChildXPaths(Node root, String xPath){
+    private Set<String> getChildXPaths(Node root, String xPath) {
 
         Set<String> xPaths = new HashSet<String>();
         NamespaceContext namespaceContext = null;
@@ -622,11 +610,11 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
         XPathFactory factory = XPathFactory.newInstance();
         XPath xpath = factory.newXPath();
 
-        if(namespaceContext == null){
+        if (namespaceContext == null) {
 
             //see if the request root is in a namespace
             String namespace = null;
-            if(root != null){
+            if (root != null) {
                 namespace = root.getNamespaceURI();
             }
             // name spaces are used, so we need to lookup the correct
@@ -634,22 +622,22 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
             NamedNodeMap namedNodeMap = root.getAttributes();
 
             Map<String, String> nsMap = new HashMap<String, String>();
-            if(namedNodeMap != null){
+            if (namedNodeMap != null) {
                 for (int i = 0; i < namedNodeMap.getLength(); i++) {
                     Node n = namedNodeMap.item(i);
                     // we found the matching namespace, so get the prefix
                     // and then break out
                     String prefix = DOMHelper.getLocalName(n);
-                    String nodeValue= n.getNodeValue();
+                    String nodeValue = n.getNodeValue();
                     nsMap.put(prefix, nodeValue);
                 }
             }
 
             // if there is not any namespace is defined for content element, default XACML request
             //  name space would be there.
-            if(XACMLConstants.REQUEST_CONTEXT_3_0_IDENTIFIER.equals(namespace) ||
+            if (XACMLConstants.REQUEST_CONTEXT_3_0_IDENTIFIER.equals(namespace) ||
                     XACMLConstants.REQUEST_CONTEXT_2_0_IDENTIFIER.equals(namespace) ||
-                    XACMLConstants.REQUEST_CONTEXT_1_0_IDENTIFIER.equals(namespace)){
+                    XACMLConstants.REQUEST_CONTEXT_1_0_IDENTIFIER.equals(namespace)) {
                 nsMap.put("xacml", namespace);
             }
 
@@ -662,7 +650,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
         try {
             XPathExpression expression = xpath.compile(xPath);
             NodeList matches = (NodeList) expression.evaluate(root, XPathConstants.NODESET);
-            if(matches != null && matches.getLength() > 0){
+            if (matches != null && matches.getLength() > 0) {
 
                 for (int i = 0; i < matches.getLength(); i++) {
                     String text = null;
@@ -680,7 +668,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
                         // the data is in a child node
                         text = "/" + DOMHelper.getLocalName(node);
                     }
-                    String newXPath = '(' + xPath + ")[" + (i+1) + ']';
+                    String newXPath = '(' + xPath + ")[" + (i + 1) + ']';
                     xPaths.add(newXPath);
                 }
             }
@@ -700,7 +688,6 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
     }
 
     /**
-     *
      * @return
      */
     public Set<PolicyReference> getPolicyReferences() {
@@ -708,7 +695,6 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
     }
 
     /**
-     *
      * @param policyReferences
      */
     public void setPolicyReferences(Set<PolicyReference> policyReferences) {
@@ -716,11 +702,10 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
     }
 
     /**
-     *
      * @param category
      * @return
      */
-    public List<Attributes> getAttributes(String category){
+    public List<Attributes> getAttributes(String category) {
         return mapAttributes.get(category);
     }
 

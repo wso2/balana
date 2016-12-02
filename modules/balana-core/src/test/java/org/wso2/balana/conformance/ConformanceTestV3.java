@@ -36,95 +36,40 @@ import java.util.Set;
 
 
 /**
- *  This XACML 3.0 conformation test. But this is the correct tests published bu OASIS
+ * This XACML 3.0 conformation test. But this is the correct tests published bu OASIS
  */
 public class ConformanceTestV3 extends TestCase {
 
 
     /**
-     * Configuration store
-     */
-    private static ConfigurationStore store;
-
-    /**
      * directory name that states the test type
      */
-    private final static String ROOT_DIRECTORY  = "conformance";
-
+    private final static String ROOT_DIRECTORY = "conformance";
     /**
      * directory name that states XACML version
      */
-    private final static String VERSION_DIRECTORY  = "3";
-
+    private final static String VERSION_DIRECTORY = "3";
+    /**
+     * Configuration store
+     */
+    private static ConfigurationStore store;
     /**
      * the logger we'll use for all messages
      */
-	private static Log log = LogFactory.getLog(ConformanceTestV2.class);
-
-    @Override
-    public void setUp() throws Exception {
-
-        String configFile = (new File(".")).getCanonicalPath() + File.separator + TestConstants.CONFIG_FILE;
-        store = new ConfigurationStore(new File(configFile));
-    }
-
-
-    public void testConformanceTestA() throws Exception {
-
-        String policyNumber;
-
-        for(int i = 1; i < 29 ; i++){
-            
-            if(i < 10){
-                policyNumber = "00" + i;
-            } else if(9 < i && i < 100) {
-                policyNumber = "0" + i;
-            } else {
-                policyNumber = Integer.toString(i);
-            }
-
-            log.info("Conformance Test IIIA" + policyNumber + " is started");
-
-            String request = TestUtil.createRequest(ROOT_DIRECTORY, VERSION_DIRECTORY,
-                                                            "IIIA" + policyNumber + "Request.xacml3.xml");
-            if(request != null){
-                log.info("Request that is sent to the PDP :  " + request);
-                Set<String> policies = new HashSet<String>();
-                policies.add("IIIA" + policyNumber + "Policy.xacml3.xml");
-                ResponseCtx response = TestUtil.evaluate(getPDPNewInstance(policies), request);
-                if(response != null){
-                    ResponseCtx expectedResponseCtx = TestUtil.createResponse(ROOT_DIRECTORY,
-                                        VERSION_DIRECTORY, "IIIA" + policyNumber + "Response.xacml3.xml");
-                    log.info("Response that is received from the PDP :  " + response.encode());
-                    if(expectedResponseCtx != null){
-                       assertTrue(TestUtil.isMatching(response, expectedResponseCtx));
-                    } else {
-                        assertTrue("Response read from file is Null",false);
-                    }
-                } else {
-                    assertFalse("Response received PDP is Null",false);
-                }
-            } else {
-                assertTrue("Request read from file is Null", false);
-            }
-
-            log.info("Conformance Test IIIA" + policyNumber + " is finished");
-        }
-    }
-
+    private static Log log = LogFactory.getLog(ConformanceTestV2.class);
 
     /**
      * Returns a new PDP instance with new XACML policies
      *
-     * @param policies  Set of XACML policy file names
+     * @param policies Set of XACML policy file names
      * @return a  PDP instance
      */
-    private static PDP getPDPNewInstance(Set<String> policies){
+    private static PDP getPDPNewInstance(Set<String> policies) {
 
-        PolicyFinder finder= new PolicyFinder();
+        PolicyFinder finder = new PolicyFinder();
         Set<String> policyLocations = new HashSet<String>();
 
-        for(String policy : policies){
+        for (String policy : policies) {
             try {
                 String policyPath = (new File(".")).getCanonicalPath() + File.separator +
                         TestConstants.RESOURCE_PATH + File.separator + ROOT_DIRECTORY + File.separator +
@@ -132,7 +77,7 @@ public class ConformanceTestV3 extends TestCase {
                         File.separator + policy;
                 policyLocations.add(policyPath);
             } catch (IOException e) {
-               //ignore.
+                //ignore.
             }
         }
 
@@ -144,8 +89,58 @@ public class ConformanceTestV3 extends TestCase {
         Balana balana = Balana.getInstance();
         PDPConfig pdpConfig = balana.getPdpConfig();
         pdpConfig = new PDPConfig(pdpConfig.getAttributeFinder(), finder,
-                                                            pdpConfig.getResourceFinder(), false);
+                pdpConfig.getResourceFinder(), false);
         return new PDP(pdpConfig);
 
-    }    
+    }
+
+    @Override
+    public void setUp() throws Exception {
+
+        String configFile = (new File(".")).getCanonicalPath() + File.separator + TestConstants.CONFIG_FILE;
+        store = new ConfigurationStore(new File(configFile));
+    }
+
+    public void testConformanceTestA() throws Exception {
+
+        String policyNumber;
+
+        for (int i = 1; i < 29; i++) {
+
+            if (i < 10) {
+                policyNumber = "00" + i;
+            } else if (9 < i && i < 100) {
+                policyNumber = "0" + i;
+            } else {
+                policyNumber = Integer.toString(i);
+            }
+
+            log.info("Conformance Test IIIA" + policyNumber + " is started");
+
+            String request = TestUtil.createRequest(ROOT_DIRECTORY, VERSION_DIRECTORY,
+                    "IIIA" + policyNumber + "Request.xacml3.xml");
+            if (request != null) {
+                log.info("Request that is sent to the PDP :  " + request);
+                Set<String> policies = new HashSet<String>();
+                policies.add("IIIA" + policyNumber + "Policy.xacml3.xml");
+                ResponseCtx response = TestUtil.evaluate(getPDPNewInstance(policies), request);
+                if (response != null) {
+                    ResponseCtx expectedResponseCtx = TestUtil.createResponse(ROOT_DIRECTORY,
+                            VERSION_DIRECTORY, "IIIA" + policyNumber + "Response.xacml3.xml");
+                    log.info("Response that is received from the PDP :  " + response.encode());
+                    if (expectedResponseCtx != null) {
+                        assertTrue(TestUtil.isMatching(response, expectedResponseCtx));
+                    } else {
+                        assertTrue("Response read from file is Null", false);
+                    }
+                } else {
+                    assertFalse("Response received PDP is Null", false);
+                }
+            } else {
+                assertTrue("Request read from file is Null", false);
+            }
+
+            log.info("Conformance Test IIIA" + policyNumber + " is finished");
+        }
+    }
 }

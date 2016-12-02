@@ -1,4 +1,3 @@
-
 /*
  * @(#)BalanaTest.java
  *
@@ -48,7 +47,6 @@ public interface BalanaTest {
      * Runs the test.
      *
      * @param testPrefix the namespace containing this test
-     *
      * @return the number of failures that occured
      */
     public int run(String testPrefix);

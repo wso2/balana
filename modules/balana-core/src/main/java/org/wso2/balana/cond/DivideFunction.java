@@ -49,10 +49,10 @@ import java.util.Set;
  * A class that implements all the *-divide functions. It takes two operands of the appropriate type
  * and returns the quotient of the operands. If either of the operands is indeterminate, an
  * indeterminate result is returned.
- * 
- * @since 1.0
+ *
  * @author Steve Hanna
  * @author Seth Proctor
+ * @since 1.0
  */
 public class DivideFunction extends FunctionBase {
 
@@ -72,10 +72,9 @@ public class DivideFunction extends FunctionBase {
 
     /**
      * Creates a new <code>DivideFunction</code> object.
-     * 
+     *
      * @param functionName the standard XACML name of the function to be handled by this object,
-     *            including the full namespace
-     * 
+     *                     including the full namespace
      * @throws IllegalArgumentException if the function is unknown
      */
     public DivideFunction(String functionName) {
@@ -109,7 +108,7 @@ public class DivideFunction extends FunctionBase {
 
     /**
      * Returns a <code>Set</code> containing all the function identifiers supported by this class.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public static Set getSupportedIdentifiers() {
@@ -123,11 +122,11 @@ public class DivideFunction extends FunctionBase {
 
     /**
      * Evaluate the function, using the specified parameters.
-     * 
-     * @param inputs a <code>List</code> of <code>Evaluatable</code> objects representing the
-     *            arguments passed to the function
+     *
+     * @param inputs  a <code>List</code> of <code>Evaluatable</code> objects representing the
+     *                arguments passed to the function
      * @param context an <code>EvaluationCtx</code> so that the <code>Evaluatable</code> objects can
-     *            be evaluated
+     *                be evaluated
      * @return an <code>EvaluationResult</code> representing the function's result
      */
     public EvaluationResult evaluate(List inputs, EvaluationCtx context) {
@@ -141,34 +140,34 @@ public class DivideFunction extends FunctionBase {
         // Now that we have real values, perform the divide operation
         // in the manner appropriate for the type of the arguments.
         switch (getFunctionId()) {
-        case ID_INTEGER_DIVIDE: {
-            long dividend = ((IntegerAttribute) argValues[0]).getValue();
-            long divisor = ((IntegerAttribute) argValues[1]).getValue();
+            case ID_INTEGER_DIVIDE: {
+                long dividend = ((IntegerAttribute) argValues[0]).getValue();
+                long divisor = ((IntegerAttribute) argValues[1]).getValue();
 
-            if (divisor == 0) {
-                result = makeProcessingError("divide by zero");
+                if (divisor == 0) {
+                    result = makeProcessingError("divide by zero");
+                    break;
+                }
+
+                long quotient = dividend / divisor;
+
+                result = new EvaluationResult(new IntegerAttribute(quotient));
                 break;
             }
+            case ID_DOUBLE_DIVIDE: {
+                double dividend = ((DoubleAttribute) argValues[0]).getValue();
+                double divisor = ((DoubleAttribute) argValues[1]).getValue();
 
-            long quotient = dividend / divisor;
+                if (divisor == 0) {
+                    result = makeProcessingError("divide by zero");
+                    break;
+                }
 
-            result = new EvaluationResult(new IntegerAttribute(quotient));
-            break;
-        }
-        case ID_DOUBLE_DIVIDE: {
-            double dividend = ((DoubleAttribute) argValues[0]).getValue();
-            double divisor = ((DoubleAttribute) argValues[1]).getValue();
+                double quotient = dividend / divisor;
 
-            if (divisor == 0) {
-                result = makeProcessingError("divide by zero");
+                result = new EvaluationResult(new DoubleAttribute(quotient));
                 break;
             }
-
-            double quotient = dividend / divisor;
-
-            result = new EvaluationResult(new DoubleAttribute(quotient));
-            break;
-        }
         }
 
         return result;

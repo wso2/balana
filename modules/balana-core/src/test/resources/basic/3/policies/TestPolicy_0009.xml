@@ -2,7 +2,7 @@
         RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
         Version="1.0">
     <Description>Test policy 0009. XPath evaluation is done with respect to content element which would
-        be resulted from ContextSelectorId.  Then check for a matching value.
+        be resulted from ContextSelectorId. Then check for a matching value.
         Here content element has been bounded with custom namespace and prefix
     </Description>
     <PolicyDefaults>
@@ -22,16 +22,16 @@
         </AnyOf>
     </Target>
     <Rule RuleId="rule1" Effect="Permit">
-    <Description>Rule to match value in content element using XPath</Description>
+        <Description>Rule to match value in content element using XPath</Description>
         <Condition>
             <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
                 <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">bob@gmail.com</AttributeValue>
                 <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
                     <AttributeSelector MustBePresent="false"
-                            ContextSelectorId="urn:oasis:names:tc:xacml:3.0:content-selector"
-                            Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
-                            Path="//ak:email/text()"
-                            DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                                       ContextSelectorId="urn:oasis:names:tc:xacml:3.0:content-selector"
+                                       Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                                       Path="//ak:email/text()"
+                                       DataType="http://www.w3.org/2001/XMLSchema#string"/>
                 </Apply>
             </Apply>
         </Condition>

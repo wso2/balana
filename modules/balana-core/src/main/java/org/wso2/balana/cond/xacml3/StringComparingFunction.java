@@ -34,7 +34,7 @@ import java.util.Set;
  * The result shall be true if the second string begins with the first string, and false otherwise.
  */
 public class StringComparingFunction extends FunctionBase {
-    
+
     /**
      * Standard identifier for the string-starts-with function.
      */
@@ -54,7 +54,7 @@ public class StringComparingFunction extends FunctionBase {
      * Standard identifier for the anyURI-starts-with function.
      */
     public static final String NAME_ANY_URI_ENDS_WITH = FUNCTION_NS_3 + "anyURI-ends-with";
-        
+
     /**
      * Standard identifier for the string-starts-with function.
      */
@@ -83,8 +83,7 @@ public class StringComparingFunction extends FunctionBase {
      * Creates a new <code>AddFunction</code> object.
      *
      * @param functionName the standard XACML name of the function to be handled by this object,
-     *            including the full namespace
-     *
+     *                     including the full namespace
      * @throws IllegalArgumentException if the function is unknown
      */
     public StringComparingFunction(String functionName) {
@@ -94,22 +93,22 @@ public class StringComparingFunction extends FunctionBase {
 
     /**
      * Private helper that returns the internal identifier used for the given standard function.
-     * 
+     *
      * @param functionName function name
      * @return function id
      */
     private static int getId(String functionName) {
-        if (functionName.equals(NAME_STRING_START_WITH)){
+        if (functionName.equals(NAME_STRING_START_WITH)) {
             return ID_STRING_START_WITH;
-        } else if (functionName.equals(NAME_ANY_URI_START_WITH)){
+        } else if (functionName.equals(NAME_ANY_URI_START_WITH)) {
             return ID_ANY_URI_START_WITH;
-        } else if (functionName.equals(NAME_STRING_ENDS_WITH)){
+        } else if (functionName.equals(NAME_STRING_ENDS_WITH)) {
             return ID_STRING_ENDS_WITH;
-        } else if (functionName.equals(NAME_ANY_URI_ENDS_WITH)){
+        } else if (functionName.equals(NAME_ANY_URI_ENDS_WITH)) {
             return ID_ANY_URI_ENDS_WITH;
-        } else if (functionName.equals(NAME_STRING_CONTAIN)){
+        } else if (functionName.equals(NAME_STRING_CONTAIN)) {
             return ID_STRING_CONTAIN;
-        } else if (functionName.equals(NAME_ANY_URI_CONTAIN)){
+        } else if (functionName.equals(NAME_ANY_URI_CONTAIN)) {
             return ID_ANY_URI_CONTAIN;
         } else {
             throw new IllegalArgumentException("unknown start-with function " + functionName);
@@ -126,7 +125,7 @@ public class StringComparingFunction extends FunctionBase {
      */
     private static String getArgumentType(String functionName) {
         if (functionName.equals(NAME_STRING_START_WITH) || functionName.equals(NAME_STRING_ENDS_WITH)
-                || functionName.equals(NAME_STRING_CONTAIN)){
+                || functionName.equals(NAME_STRING_CONTAIN)) {
             return StringAttribute.identifier;
         } else {
             return AnyURIAttribute.identifier;
@@ -163,21 +162,21 @@ public class StringComparingFunction extends FunctionBase {
 
         int id = getFunctionId();
 
-        if(id == ID_STRING_START_WITH || id == ID_ANY_URI_START_WITH){
+        if (id == ID_STRING_START_WITH || id == ID_ANY_URI_START_WITH) {
             // do not want to check for anyURI and String data types. As both attribute values would
             // returns String data type after encode() is done,
             return EvaluationResult.getInstance(argValues[1].encode().
-                                                            startsWith(argValues[0].encode()));
-        } else if(id == ID_STRING_ENDS_WITH || id == ID_ANY_URI_ENDS_WITH){
+                    startsWith(argValues[0].encode()));
+        } else if (id == ID_STRING_ENDS_WITH || id == ID_ANY_URI_ENDS_WITH) {
             // do not want to check for anyURI and String data types. As both attribute values would
             // returns String data type after encode() is done,
             return EvaluationResult.getInstance(argValues[1].encode().
-                                                            endsWith(argValues[0].encode()));
+                    endsWith(argValues[0].encode()));
         } else {
             // do not want to check for anyURI and String data types. As both attribute values would
             // returns String data type after encode() is done,
             return EvaluationResult.getInstance(argValues[1].encode().
-                                                            contains(argValues[0].encode()));
+                    contains(argValues[0].encode()));
         }
     }
 }

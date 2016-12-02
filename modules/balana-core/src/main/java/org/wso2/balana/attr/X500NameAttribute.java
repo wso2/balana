@@ -43,10 +43,10 @@ import org.w3c.dom.Node;
 
 /**
  * Representation of an X500 Name.
- * 
- * @since 1.0
+ *
  * @author Marco Barreno
  * @author Seth Proctor
+ * @since 1.0
  */
 public class X500NameAttribute extends AttributeValue {
 
@@ -54,10 +54,6 @@ public class X500NameAttribute extends AttributeValue {
      * Official name of this type
      */
     public static final String identifier = "urn:oasis:names:tc:xacml:1.0:data-type:x500Name";
-
-    // the actual value being stored
-    private X500Principal value;
-
     /**
      * URI version of name for this type
      * <p>
@@ -66,7 +62,6 @@ public class X500NameAttribute extends AttributeValue {
      * should be reported properly if it ever does.
      */
     private static URI identifierURI;
-
     /**
      * RuntimeException that wraps an Exception thrown during the creation of identifierURI, null if
      * none.
@@ -85,11 +80,16 @@ public class X500NameAttribute extends AttributeValue {
             earlyException = new IllegalArgumentException();
             earlyException.initCause(e);
         }
-    };
+    }
+
+    // the actual value being stored
+    private X500Principal value;
+
+    ;
 
     /**
      * Creates a new <code>X500NameAttribute</code> that represents the value supplied.
-     * 
+     *
      * @param value the X500 Name to be represented
      */
     public X500NameAttribute(X500Principal value) {
@@ -104,7 +104,7 @@ public class X500NameAttribute extends AttributeValue {
     /**
      * Returns a new <codeX500NameAttribute</code> that represents the X500 Name at a particular DOM
      * node.
-     * 
+     *
      * @param root the <code>Node</code> that contains the desired value
      * @return a new <code>X500NameAttribute</code> representing the appropriate value
      * @throws IllegalArgumentException if value is improperly specified
@@ -116,7 +116,7 @@ public class X500NameAttribute extends AttributeValue {
     /**
      * Returns a new <code>X500NameAttribute</code> that represents the X500 Name value indicated by
      * the string provided.
-     * 
+     *
      * @param value a string representing the desired value
      * @return a new <code>X500NameAttribute</code> representing the appropriate value
      * @throws IllegalArgumentException if value is improperly specified
@@ -127,7 +127,7 @@ public class X500NameAttribute extends AttributeValue {
 
     /**
      * Returns the name value represented by this object
-     * 
+     *
      * @return the name
      */
     public X500Principal getValue() {
@@ -143,9 +143,8 @@ public class X500NameAttribute extends AttributeValue {
      * slightly different procedure. In practice, it is expected that this difference will not be
      * noticeable. For more details, refer to the javadoc for <code>X500Principal.equals()</code>
      * and the XACML specification.
-     * 
+     *
      * @param o the object to compare
-     * 
      * @return true if this object and the input represent the same value
      */
     public boolean equals(Object o) {
@@ -160,7 +159,7 @@ public class X500NameAttribute extends AttributeValue {
     /**
      * Returns the hashcode value used to index and compare this object with others of the same
      * type. Typically this is the hashcode of the backing data object.
-     * 
+     *
      * @return the object's hashcode value
      */
     public int hashCode() {

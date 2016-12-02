@@ -41,7 +41,6 @@ public class ObligationExpression extends AbstractObligation {
     /**
      * <code>List</code> of <code>AttributeAssignmentExpression</code> that contains in
      * <code>ObligationExpression</code>
-     *
      */
     private List<AttributeAssignmentExpression> expressions;
 
@@ -50,7 +49,7 @@ public class ObligationExpression extends AbstractObligation {
      * Constructor that creates a new <code>ObligationExpression</code> based on
      * the given elements.
      *
-     * @param fulfillOn  effect that will cause this obligation to be included in a response 
+     * @param fulfillOn    effect that will cause this obligation to be included in a response
      * @param expressions  <code>List</code> of <code>AttributeAssignmentExpression</code>
      * @param obligationId Identifier that uniquely identify ObligationExpression element
      */
@@ -62,11 +61,11 @@ public class ObligationExpression extends AbstractObligation {
     }
 
     /**
-     *  creates a <code>ObligationExpression</code> based on its DOM node.
+     * creates a <code>ObligationExpression</code> based on its DOM node.
      *
-     * @param root root the node to parse for the ObligationExpression
-     * @param metaData  meta-date associated with the policy
-     * @return  a new <code>ObligationExpression</code> constructed by parsing
+     * @param root     root the node to parse for the ObligationExpression
+     * @param metaData meta-date associated with the policy
+     * @return a new <code>ObligationExpression</code> constructed by parsing
      * @throws ParsingException if the DOM node is invalid
      */
     public static ObligationExpression getInstance(Node root, PolicyMetaData metaData)
@@ -100,9 +99,9 @@ public class ObligationExpression extends AbstractObligation {
                     "ObligationExpressionType", e);
         }
 
-        if("Permit".equals(effect)){
+        if ("Permit".equals(effect)) {
             fulfillOn = Result.DECISION_PERMIT;
-        } else if("Deny".equals(effect)){
+        } else if ("Deny".equals(effect)) {
             fulfillOn = Result.DECISION_DENY;
         } else {
             throw new ParsingException("Invalid FulfillOn : " + effect);
@@ -110,9 +109,9 @@ public class ObligationExpression extends AbstractObligation {
 
         NodeList children = root.getChildNodes();
 
-        for(int i = 0; i < children.getLength(); i ++){
+        for (int i = 0; i < children.getLength(); i++) {
             Node child = children.item(i);
-            if("AttributeAssignmentExpression".equals(DOMHelper.getLocalName(child))){
+            if ("AttributeAssignmentExpression".equals(DOMHelper.getLocalName(child))) {
                 expressions.add(AttributeAssignmentExpression.getInstance(child, metaData));
             }
         }
@@ -124,10 +123,10 @@ public class ObligationExpression extends AbstractObligation {
     @Override
     public ObligationResult evaluate(EvaluationCtx ctx) {
         List<AttributeAssignment> assignments = new ArrayList<AttributeAssignment>();
-        for(AttributeAssignmentExpression expression : expressions){
+        for (AttributeAssignmentExpression expression : expressions) {
             Set<AttributeAssignment> assignmentSet = expression.evaluate(ctx);
-            if(assignmentSet != null && assignmentSet.size() > 0){
-                assignments.addAll(assignmentSet);    
+            if (assignmentSet != null && assignmentSet.size() > 0) {
+                assignments.addAll(assignmentSet);
             }
         }
         return new Obligation(assignments, obligationId);

@@ -46,23 +46,16 @@ import java.util.Set;
 /**
  * This class represents the collection of <code>Attribute</code>s associated with a particular
  * subject.
- * 
- * @since 1.1
+ *
  * @author seth proctor
+ * @since 1.1
  */
 public class Subject {
-
-    // the subject's category
-    private URI category;
-
-    // the attributes associated with the subject
-    private Set attributes;
 
     /**
      * <code>URI</code> form of the default subject category
      */
     public static final URI DEFAULT_CATEGORY;
-
     // the exception thrown if the default category was invalid
     private static RuntimeException earlyException = null;
 
@@ -84,9 +77,14 @@ public class Subject {
         DEFAULT_CATEGORY = defaultURI;
     }
 
+    // the subject's category
+    private URI category;
+    // the attributes associated with the subject
+    private Set attributes;
+
     /**
      * Creates a new collection of subject attributes using the default subject cateorgy.
-     * 
+     *
      * @param attributes a non-null <code>Set</code> of <code>Attribute</code> objects
      */
     public Subject(Set attributes) {
@@ -98,8 +96,8 @@ public class Subject {
 
     /**
      * Creates a new collection of subject attributes using the given subject category.
-     * 
-     * @param category the subject category or null for the default category
+     *
+     * @param category   the subject category or null for the default category
      * @param attributes a non-null <code>Set</code> of <code>Attribute</code> objects
      */
     public Subject(URI category, Set attributes) {
@@ -113,7 +111,7 @@ public class Subject {
 
     /**
      * Returns the category of this subject's attributes.
-     * 
+     *
      * @return the category
      */
     public URI getCategory() {
@@ -122,7 +120,7 @@ public class Subject {
 
     /**
      * Returns the <code>Attribute</code>s associated with this subject.
-     * 
+     *
      * @return the immutable <code>Set</code> of <code>Attribute</code>s
      */
     public Set getAttributes() {

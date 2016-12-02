@@ -49,9 +49,10 @@ public class MultiRequests {
 
     /**
      * creates a <code>MultiRequests</code> based on its DOM node.
-     * @param root  root the node to parse for the AttributeAssignment
-     * @return  a new <code>MultiRequests</code> constructed by parsing
-     * @throws ParsingException  if the DOM node is invalid
+     *
+     * @param root root the node to parse for the AttributeAssignment
+     * @return a new <code>MultiRequests</code> constructed by parsing
+     * @throws ParsingException if the DOM node is invalid
      */
     public static MultiRequests getInstance(Node root) throws ParsingException {
 
@@ -66,13 +67,13 @@ public class MultiRequests {
         NodeList nodes = root.getChildNodes();
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
-            if ("RequestReference".equals(DOMHelper.getLocalName(node))){
+            if ("RequestReference".equals(DOMHelper.getLocalName(node))) {
                 Set<AttributesReference> attributesReferences = new HashSet<AttributesReference>();
                 RequestReference requestReference = new RequestReference();
                 NodeList childNodes = node.getChildNodes();
-                for(int j = 0; j < childNodes.getLength(); j++){
+                for (int j = 0; j < childNodes.getLength(); j++) {
                     Node childNode = childNodes.item(j);
-                    if("AttributesReference".equals(DOMHelper.getLocalName(childNode))){
+                    if ("AttributesReference".equals(DOMHelper.getLocalName(childNode))) {
                         AttributesReference attributesReference = new AttributesReference();
                         NamedNodeMap nodeAttributes = childNode.getAttributes();
                         try {
@@ -86,7 +87,7 @@ public class MultiRequests {
                     }
                 }
 
-                if(attributesReferences.isEmpty()){
+                if (attributesReferences.isEmpty()) {
                     throw new ParsingException("RequestReference must contain at least one " +
                             "AttributesReferenceType");
                 }
@@ -95,7 +96,7 @@ public class MultiRequests {
             }
         }
 
-        if(requestReferences.isEmpty()){
+        if (requestReferences.isEmpty()) {
             throw new ParsingException("MultiRequests must contain at least one RequestReferenceType");
         }
 

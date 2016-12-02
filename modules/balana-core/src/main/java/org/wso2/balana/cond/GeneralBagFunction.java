@@ -51,9 +51,9 @@ import java.util.Set;
 /**
  * Specific <code>BagFunction</code> class that supports all of the general-purpose bag functions:
  * type-one-and-only, type-bag-size, and type-bag.
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public class GeneralBagFunction extends BagFunction {
 
@@ -108,16 +108,17 @@ public class GeneralBagFunction extends BagFunction {
                 IntegerAttribute.identifier, false));
         paramMap.put(NAME_BASE_BAG, new BagParameters(ID_BASE_BAG, null, false, -1, null, true));
 
-    };
+    }
+
+    ;
 
     /**
      * Constructor that is used to create one of the general-purpose standard bag functions. The
      * name supplied must be one of the standard XACML functions supported by this class, including
      * the full namespace, otherwise an exception is thrown. Look in <code>BagFunction</code> for
      * details about the supported names.
-     * 
+     *
      * @param functionName the name of the function to create
-     * 
      * @throws IllegalArgumentException if the function is unknown
      */
     public GeneralBagFunction(String functionName) {
@@ -130,9 +131,9 @@ public class GeneralBagFunction extends BagFunction {
      * Constructor that is used to create instances of general-purpose bag functions for new
      * (non-standard) datatypes. This is equivalent to using the <code>getInstance</code> methods in
      * <code>BagFunction</code> and is generally only used by the run-time configuration code.
-     * 
+     *
      * @param functionName the name of the new function
-     * @param datatype the full identifier for the supported datatype
+     * @param datatype     the full identifier for the supported datatype
      * @param functionType which kind of Bag function, based on the <code>NAME_BASE_*</code> fields
      */
     public GeneralBagFunction(String functionName, String datatype, String functionType) {
@@ -214,7 +215,7 @@ public class GeneralBagFunction extends BagFunction {
 
     /**
      * Returns a <code>Set</code> containing all the function identifiers supported by this class.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public static Set getSupportedIdentifiers() {
@@ -223,11 +224,11 @@ public class GeneralBagFunction extends BagFunction {
 
     /**
      * Evaluate the function, using the specified parameters.
-     * 
-     * @param inputs a <code>List</code> of <code>Evaluatable</code> objects representing the
-     *            arguments passed to the function
+     *
+     * @param inputs  a <code>List</code> of <code>Evaluatable</code> objects representing the
+     *                arguments passed to the function
      * @param context an <code>EvaluationCtx</code> so that the <code>Evaluatable</code> objects can
-     *            be evaluated
+     *                be evaluated
      * @return an <code>EvaluationResult</code> representing the function's result
      */
     public EvaluationResult evaluate(List inputs, EvaluationCtx context) {
@@ -243,36 +244,36 @@ public class GeneralBagFunction extends BagFunction {
 
         switch (getFunctionId()) {
 
-        // *-one-and-only takes a single bag and returns a
-        // single value of baseType
-        case ID_BASE_ONE_AND_ONLY: {
-            BagAttribute bag = (BagAttribute) (argValues[0]);
+            // *-one-and-only takes a single bag and returns a
+            // single value of baseType
+            case ID_BASE_ONE_AND_ONLY: {
+                BagAttribute bag = (BagAttribute) (argValues[0]);
 
-            if (bag.size() != 1)
-                return makeProcessingError(getFunctionName() + " expects "
-                        + "a bag that contains a single " + "element, got a bag with " + bag.size()
-                        + " elements");
+                if (bag.size() != 1)
+                    return makeProcessingError(getFunctionName() + " expects "
+                            + "a bag that contains a single " + "element, got a bag with " + bag.size()
+                            + " elements");
 
-            attrResult = (AttributeValue) (bag.iterator().next());
-            break;
-        }
+                attrResult = (AttributeValue) (bag.iterator().next());
+                break;
+            }
 
             // *-size takes a single bag and returns an integer
-        case ID_BASE_BAG_SIZE: {
-            BagAttribute bag = (BagAttribute) (argValues[0]);
+            case ID_BASE_BAG_SIZE: {
+                BagAttribute bag = (BagAttribute) (argValues[0]);
 
-            attrResult = new IntegerAttribute(bag.size());
-            break;
-        }
+                attrResult = new IntegerAttribute(bag.size());
+                break;
+            }
 
             // *-bag takes any number of elements of baseType and
             // returns a bag containing those elements
-        case ID_BASE_BAG: {
-            List<AttributeValue> argsList = Arrays.asList(argValues);
+            case ID_BASE_BAG: {
+                List<AttributeValue> argsList = Arrays.asList(argValues);
 
-            attrResult = new BagAttribute(getReturnType(), argsList);
-            break;
-        }
+                attrResult = new BagAttribute(getReturnType(), argsList);
+                break;
+            }
         }
 
         return new EvaluationResult(attrResult);
@@ -290,7 +291,7 @@ public class GeneralBagFunction extends BagFunction {
         public boolean returnsBag;
 
         public BagParameters(int id, String arg, boolean argIsBag, int params, String returnType,
-                boolean returnsBag) {
+                             boolean returnsBag) {
             this.id = id;
             this.arg = arg;
             this.argIsBag = argIsBag;

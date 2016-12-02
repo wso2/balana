@@ -1,5 +1,5 @@
-<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
-        xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="TestPolicy0006"
+<Policy xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+        xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="TestPolicy0006"
         RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
         Version="1.0">
     <Description>Test Policy 0015 : string-equal-ignore-case test</Description>

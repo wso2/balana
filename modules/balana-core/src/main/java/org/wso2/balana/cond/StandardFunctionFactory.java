@@ -62,9 +62,9 @@ import java.util.Set;
  * <code>FunctionFactory</code>) populated with the standard functions from
  * <code>getStandardFunctions</code> or you can use <code>getNewFactoryProxy</code> to get a proxy
  * containing a new, modifiable set of factories.
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public class StandardFunctionFactory extends BaseFunctionFactory {
 
@@ -85,13 +85,11 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
     // the static sets of supported identifiers for each XACML version
     private static Set supportedV1Functions;
     private static Set supportedV2Functions;
-
+    // the logger we'll use for all messages
+    private static Log logger = LogFactory.getLog(StandardFunctionFactory.class);
     // the set/map used by each singleton factory instance
     private Set supportedFunctions = null;
     private Map supportedAbstractFunctions = null;
-
-    // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(StandardFunctionFactory.class);
 
     /**
      * Creates a new StandardFunctionFactory, making sure that the default maps are initialized
@@ -147,7 +145,7 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
         // add condition function TimeInRange
         conditionFunctions.add(new TimeInRangeFunction());
         // add condition function IPInRange
-        conditionFunctions.add(new IPInRangeFunction());        
+        conditionFunctions.add(new IPInRangeFunction());
         // add condition functions from BagFunction
         conditionFunctions.addAll((new ConditionBagFunctionCluster()).getSupportedFunctions());
         // add condition functions from SetFunction
@@ -206,9 +204,9 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
         // add the XACML 3.0 start with functions
         generalFunctions.addAll((new SubStringFunctionCluster()).getSupportedFunctions());
         // add the XACML 3.0 start with functions
-        generalFunctions.addAll((new StringCreationFunctionCluster()).getSupportedFunctions());  
+        generalFunctions.addAll((new StringCreationFunctionCluster()).getSupportedFunctions());
         // add the XACML 3.0 start with functions
-        generalFunctions.addAll((new XPathFunctionCluster()).getSupportedFunctions());  
+        generalFunctions.addAll((new XPathFunctionCluster()).getSupportedFunctions());
 
         generalAbstractFunctions = new HashMap<URI, FunctionProxy>(conditionAbstractFunctions); // TODO
 
@@ -226,7 +224,7 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
      * matching. This method enforces a singleton model, meaning that this always returns the same
      * instance, creating the factory if it hasn't been requested before. This is the default model
      * used by the <code>FunctionFactory</code>, ensuring quick access to this factory.
-     * 
+     *
      * @return a <code>FunctionFactory</code> for target functions
      */
     public static StandardFunctionFactory getTargetFactory() {
@@ -249,7 +247,7 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
      * enforces a singleton model, meaning that this always returns the same instance, creating the
      * factory if it hasn't been requested before. This is the default model used by the
      * <code>FunctionFactory</code>, ensuring quick access to this factory.
-     * 
+     *
      * @return a <code>FunctionFactory</code> for condition functions
      */
     public static StandardFunctionFactory getConditionFactory() {
@@ -272,7 +270,7 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
      * this always returns the same instance, creating the factory if it hasn't been requested
      * before. This is the default model used by the <code>FunctionFactory</code>, ensuring quick
      * access to this factory.
-     * 
+     *
      * @return a <code>FunctionFactory</code> for all functions
      */
     public static StandardFunctionFactory getGeneralFactory() {
@@ -293,12 +291,10 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
      * Returns the identifiers supported for the given version of XACML. Because this factory
      * supports identifiers from all versions of the XACML specifications, this method is useful for
      * getting a list of which specific identifiers are supported by a given version of XACML.
-     * 
+     *
      * @param xacmlVersion a standard XACML identifier string, as provided in
-     *            <code>PolicyMetaData</code>
-     * 
+     *                     <code>PolicyMetaData</code>
      * @return a <code>Set</code> of identifiers
-     * 
      * @throws UnknownIdentifierException if the version string is unknown
      */
     public static Set getStandardFunctions(String xacmlVersion) {
@@ -309,7 +305,7 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
     /**
      * Returns the set of abstract functions that this standard factory supports as a mapping of
      * identifier to proxy.
-     * 
+     *
      * @return a <code>Map</code> mapping <code>URI</code>s to <code>FunctionProxy</code>s
      */
     public static Map getStandardAbstractFunctions(String xacmlVersion) {
@@ -321,7 +317,7 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
      * A convenience method that returns a proxy containing newly created instances of
      * <code>BaseFunctionFactory</code>s that are correctly supersetted and contain the standard
      * functions and abstract functions. These factories allow adding support for new functions.
-     * 
+     *
      * @return a new proxy containing new factories supporting the standard functions
      */
     public static FunctionFactoryProxy getNewFactoryProxy() {
@@ -344,9 +340,8 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
     /**
      * Always throws an exception, since support for new functions may not be added to a standard
      * factory.
-     * 
+     *
      * @param function the <code>Function</code> to add to the factory
-     * 
      * @throws UnsupportedOperationException always
      */
     public void addFunction(Function function) throws IllegalArgumentException {
@@ -357,10 +352,9 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
     /**
      * Always throws an exception, since support for new functions may not be added to a standard
      * factory.
-     * 
-     * @param proxy the <code>FunctionProxy</code> to add to the factory
+     *
+     * @param proxy    the <code>FunctionProxy</code> to add to the factory
      * @param identity the function's identifier
-     * 
      * @throws UnsupportedOperationException always
      */
     public void addAbstractFunction(FunctionProxy proxy, URI identity)

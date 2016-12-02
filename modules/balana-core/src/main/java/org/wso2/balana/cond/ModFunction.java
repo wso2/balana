@@ -47,10 +47,10 @@ import java.util.Set;
 /**
  * A class that implements the integer-mod function. It takes two integer operands and returns the
  * remainder. If either of the operands is indeterminate, an indeterminate result is returned.
- * 
- * @since 1.0
+ *
  * @author Steve Hanna
  * @author Seth Proctor
+ * @since 1.0
  */
 public class ModFunction extends FunctionBase {
 
@@ -61,10 +61,9 @@ public class ModFunction extends FunctionBase {
 
     /**
      * Creates a new <code>ModFunction</code> object.
-     * 
+     *
      * @param functionName the standard XACML name of the function to be handled by this object,
-     *            including the full namespace
-     * 
+     *                     including the full namespace
      * @throws IllegalArgumentException if the function is unknown
      */
     public ModFunction(String functionName) {
@@ -77,7 +76,7 @@ public class ModFunction extends FunctionBase {
 
     /**
      * Returns a <code>Set</code> containing all the function identifiers supported by this class.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public static Set getSupportedIdentifiers() {
@@ -90,11 +89,11 @@ public class ModFunction extends FunctionBase {
 
     /**
      * Evaluate the function, using the specified parameters.
-     * 
-     * @param inputs a <code>List</code> of <code>Evaluatable</code> objects representing the
-     *            arguments passed to the function
+     *
+     * @param inputs  a <code>List</code> of <code>Evaluatable</code> objects representing the
+     *                arguments passed to the function
      * @param context an <code>EvaluationCtx</code> so that the <code>Evaluatable</code> objects can
-     *            be evaluated
+     *                be evaluated
      * @return an <code>EvaluationResult</code> representing the function's result
      */
     public EvaluationResult evaluate(List inputs, EvaluationCtx context) {

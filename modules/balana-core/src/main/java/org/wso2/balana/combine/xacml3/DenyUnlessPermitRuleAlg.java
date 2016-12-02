@@ -36,7 +36,7 @@ import java.util.Set;
 
 /**
  * This is the standard Deny unless permit rule combining algorithm. This algorithm is intended for
- * those cases where a permit decision should have priority over a deny decision, 
+ * those cases where a permit decision should have priority over a deny decision,
  * and an "Indeterminate" or "NotApplicable" must never be the result.
  * It is particularly useful at the top level in a policy structure to ensure that a
  * PDP will always return a definite "Permit" or "Deny"  result.
@@ -69,7 +69,7 @@ public class DenyUnlessPermitRuleAlg extends RuleCombiningAlgorithm {
     public DenyUnlessPermitRuleAlg() {
         super(identifierURI);
 
-        if (earlyException != null){
+        if (earlyException != null) {
             throw earlyException;
         }
     }
@@ -89,7 +89,7 @@ public class DenyUnlessPermitRuleAlg extends RuleCombiningAlgorithm {
 
         List<ObligationResult> denyObligations = new ArrayList<ObligationResult>();
         List<Advice> denyAdvices = new ArrayList<Advice>();
-        
+
         for (Object ruleElement : ruleElements) {
             Rule rule = ((RuleCombinerElement) (ruleElement)).getRule();
             AbstractResult result = rule.evaluate(context);
@@ -99,7 +99,7 @@ public class DenyUnlessPermitRuleAlg extends RuleCombiningAlgorithm {
             // we've seen, we always return PERMIT
             if (value == AbstractResult.DECISION_PERMIT) {
                 return result;
-            } else if(value == AbstractResult.DECISION_DENY){
+            } else if (value == AbstractResult.DECISION_DENY) {
                 denyObligations.addAll(result.getObligations());
                 denyAdvices.addAll(result.getAdvices());
             }
@@ -107,6 +107,6 @@ public class DenyUnlessPermitRuleAlg extends RuleCombiningAlgorithm {
 
         // if there is not any value of PERMIT. The return DENY
         return ResultFactory.getFactory().getResult(AbstractResult.DECISION_DENY, denyObligations,
-                                                                            denyAdvices, context);
+                denyAdvices, context);
     }
 }

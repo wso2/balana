@@ -43,16 +43,16 @@ import java.io.OutputStream;
 
 /**
  * This interface represents the expression type in the XACML 2.0 schema.
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
 public interface Expression {
 
     /**
      * Returns the type of the expression. This may be the data type of an
      * <code>AttributeValue</code>, the return type of a <code>Function</code>, etc.
-     * 
+     *
      * @return the attribute type of the referenced expression
      */
     public URI getType();

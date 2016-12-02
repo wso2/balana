@@ -27,7 +27,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 /**
- *  Represents RequestDefaultsType XML type found in the context schema in XACML 3.0. 
+ * Represents RequestDefaultsType XML type found in the context schema in XACML 3.0.
  */
 public class RequestDefaults {
 
@@ -40,7 +40,7 @@ public class RequestDefaults {
      * Constructor that creates a new <code>RequestDefaults</code> based on
      * the given elements.
      *
-     * @param xPathVersion  XPath version as <code>String</code>
+     * @param xPathVersion XPath version as <code>String</code>
      */
     public RequestDefaults(String xPathVersion) {
         this.xPathVersion = xPathVersion;
@@ -49,10 +49,10 @@ public class RequestDefaults {
     /**
      * creates a <code>RequestDefaults</code> based on its DOM node.
      *
-     * @param root  root the node to parse for the RequestDefaults
-     * @return  a new <code>RequestDefaults</code> constructed by parsing
+     * @param root root the node to parse for the RequestDefaults
+     * @return a new <code>RequestDefaults</code> constructed by parsing
      */
-    public static RequestDefaults getInstance(Node root){
+    public static RequestDefaults getInstance(Node root) {
 
         String xPathVersion = null;
 
@@ -60,7 +60,7 @@ public class RequestDefaults {
 
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
-            if ("XPathVersion".equals(DOMHelper.getLocalName(node))){
+            if ("XPathVersion".equals(DOMHelper.getLocalName(node))) {
                 xPathVersion = node.getFirstChild().getNodeValue();
             }
         }
@@ -79,7 +79,6 @@ public class RequestDefaults {
     }
 
 
-
     /**
      * Encodes this <code>RequestDefaults</code> into its XML representation and writes this encoding to the given
      * <code>OutputStream</code> with no indentation.
@@ -94,7 +93,7 @@ public class RequestDefaults {
      * Encodes this <code>RequestDefaults</code> into its XML representation and writes this encoding to the given
      * <code>OutputStream</code> with indentation.
      *
-     * @param output a stream into which the XML-encoded data is written
+     * @param output   a stream into which the XML-encoded data is written
      * @param indenter an object that creates indentation strings
      */
     public void encode(OutputStream output, Indenter indenter) {
@@ -104,12 +103,12 @@ public class RequestDefaults {
 
         out.println(indent + "<RequestDefaults>");
 
-        if(xPathVersion != null){
+        if (xPathVersion != null) {
             indenter.in();
-            out.println(indent + "<XPathVersion>"  + xPathVersion + "</XPathVersion>");
+            out.println(indent + "<XPathVersion>" + xPathVersion + "</XPathVersion>");
             indenter.out();
         }
-        
+
         out.println(indent + "</RequestDefaults>");
     }
 }

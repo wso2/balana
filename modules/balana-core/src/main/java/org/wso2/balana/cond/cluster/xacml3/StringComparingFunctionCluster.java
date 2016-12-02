@@ -33,8 +33,8 @@ public class StringComparingFunctionCluster implements FunctionCluster {
     public Set<Function> getSupportedFunctions() {
 
         Set<Function> set = new HashSet<Function>();
-        
-        for (String identifier : StringComparingFunction.getSupportedIdentifiers()){
+
+        for (String identifier : StringComparingFunction.getSupportedIdentifiers()) {
             set.add(new StringComparingFunction(identifier));
         }
         return set;

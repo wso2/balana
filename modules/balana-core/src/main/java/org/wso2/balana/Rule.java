@@ -66,9 +66,9 @@ import org.wso2.balana.xacml3.ObligationExpression;
 /**
  * Represents the RuleType XACML type. This has a target for matching, and encapsulates the
  * condition and all sub-operations that make up the heart of most policies.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class Rule implements PolicyTreeElement {
 
@@ -88,21 +88,21 @@ public class Rule implements PolicyTreeElement {
 
     /**
      * Creates a new <code>Rule</code> object for XACML 1.x and 2.0.
-     * 
-     * @param id the rule's identifier
-     * @param effect the effect to return if the rule applies (either Pemit or Deny) as specified in
-     *            <code>Result</code>
-     * @param description a textual description, or null
-     * @param target the rule's target, or null if the target is to be inherited from the
-     *            encompassing policy
-     * @param condition the rule's condition, or null if there is none
-     * @param obligationExpressions  the rule's ObligationExpressions
-     * @param adviceExpressions   the rule's AdviceExpressions
-     * @param xacmlVersion xacml version
+     *
+     * @param id                    the rule's identifier
+     * @param effect                the effect to return if the rule applies (either Pemit or Deny) as specified in
+     *                              <code>Result</code>
+     * @param description           a textual description, or null
+     * @param target                the rule's target, or null if the target is to be inherited from the
+     *                              encompassing policy
+     * @param condition             the rule's condition, or null if there is none
+     * @param obligationExpressions the rule's ObligationExpressions
+     * @param adviceExpressions     the rule's AdviceExpressions
+     * @param xacmlVersion          xacml version
      */
     public Rule(URI id, int effect, String description, AbstractTarget target, Condition condition,
                 Set<AbstractObligation> obligationExpressions, Set<AdviceExpression> adviceExpressions,
-                                                                                int xacmlVersion) {
+                int xacmlVersion) {
         idAttr = id;
         effectAttr = effect;
         this.description = description;
@@ -115,21 +115,20 @@ public class Rule implements PolicyTreeElement {
 
     /**
      * Creates a new <code>Rule</code> object for XACML 1.x only.
-     * 
+     *
+     * @param id           the rule's identifier
+     * @param effect       the effect to return if the rule applies (either Pemit or Deny) as specified in
+     *                     <code>Result</code>
+     * @param description  a textual description, or null
+     * @param target       the rule's target, or null if the target is to be inherited from the
+     *                     encompassing policy
+     * @param condition    the rule's condition, or null if there is none
+     * @param xacmlVersion xacml version
      * @deprecated As of 2.0 you should use the Constructor that accepts the new
-     *             <code>Condition</code> class.
-     * 
-     * @param id the rule's identifier
-     * @param effect the effect to return if the rule applies (either Pemit or Deny) as specified in
-     *            <code>Result</code>
-     * @param description a textual description, or null
-     * @param target the rule's target, or null if the target is to be inherited from the
-     *            encompassing policy
-     * @param condition the rule's condition, or null if there is none
-     * @param xacmlVersion  xacml version
+     * <code>Condition</code> class.
      */
     public Rule(URI id, int effect, String description, AbstractTarget target, Apply condition,
-                                                                                int xacmlVersion) {
+                int xacmlVersion) {
         idAttr = id;
         effectAttr = effect;
         this.description = description;
@@ -142,16 +141,15 @@ public class Rule implements PolicyTreeElement {
     /**
      * Creates a new <code>Rule</code> object for XACML 1.x only.
      *
-     * @deprecated As of 2.0 you should use the Constructor that accepts the new
-     *             <code>Condition</code> class.
-     *
-     * @param id the rule's identifier
-     * @param effect the effect to return if the rule applies (either Pemit or Deny) as specified in
-     *            <code>Result</code>
+     * @param id          the rule's identifier
+     * @param effect      the effect to return if the rule applies (either Pemit or Deny) as specified in
+     *                    <code>Result</code>
      * @param description a textual description, or null
-     * @param target the rule's target, or null if the target is to be inherited from the
-     *            encompassing policy
-     * @param condition the rule's condition, or null if there is none
+     * @param target      the rule's target, or null if the target is to be inherited from the
+     *                    encompassing policy
+     * @param condition   the rule's condition, or null if there is none
+     * @deprecated As of 2.0 you should use the Constructor that accepts the new
+     * <code>Condition</code> class.
      */
     public Rule(URI id, int effect, String description, AbstractTarget target, Condition condition) {
         idAttr = id;
@@ -160,19 +158,18 @@ public class Rule implements PolicyTreeElement {
         this.target = target;
         this.condition = new Condition(condition.getFunction(), condition.getChildren());
     }
+
     /**
      * Returns a new instance of the <code>Rule</code> class based on a DOM node. The node must be
      * the root of an XML RuleType.
-     * 
-     * @deprecated As of 2.0 you should avoid using this method and should instead use the version
-     *             that takes a <code>PolicyMetaData</code> instance. This method will only work for
-     *             XACML 1.x policies.
-     * 
-     * @param root the DOM root of a RuleType XML type
+     *
+     * @param root         the DOM root of a RuleType XML type
      * @param xpathVersion the XPath version to use in any selectors or XPath functions, or null if
-     *            this is unspecified (ie, not supplied in the defaults section of the policy)
-     * 
+     *                     this is unspecified (ie, not supplied in the defaults section of the policy)
      * @throws ParsingException if the RuleType is invalid
+     * @deprecated As of 2.0 you should avoid using this method and should instead use the version
+     * that takes a <code>PolicyMetaData</code> instance. This method will only work for
+     * XACML 1.x policies.
      */
     public static Rule getInstance(Node root, String xpathVersion) throws ParsingException {
         return getInstance(root, new PolicyMetaData(XACMLConstants.XACML_1_0_IDENTIFIER,
@@ -182,13 +179,12 @@ public class Rule implements PolicyTreeElement {
     /**
      * Returns a new instance of the <code>Rule</code> class based on a DOM node. The node must be
      * the root of an XML RuleType.
-     * 
-     * @param root the DOM root of a RuleType XML type
+     *
+     * @param root     the DOM root of a RuleType XML type
      * @param metaData the meta-data associated with this Rule's policy
-     * @param manager the <code>VariableManager</code> used to connect
-     *            <code>VariableReference</code>s to their cooresponding
-     *            <code>VariableDefinition<code>s
-     * 
+     * @param manager  the <code>VariableManager</code> used to connect
+     *                 <code>VariableReference</code>s to their cooresponding
+     *                 <code>VariableDefinition<code>s
      * @throws ParsingException if the RuleType is invalid
      */
     public static Rule getInstance(Node root, PolicyMetaData metaData, VariableManager manager)
@@ -228,23 +224,23 @@ public class Rule implements PolicyTreeElement {
             String cname = DOMHelper.getLocalName(child);
 
             if (cname.equals("Description")) {
-                if(child.getFirstChild() != null){
+                if (child.getFirstChild() != null) {
                     description = child.getFirstChild().getNodeValue();
                 }
             } else if (cname.equals("Target")) {
                 target = TargetFactory.getFactory().getTarget(child, metaData);
             } else if (cname.equals("Condition")) {
                 condition = Condition.getInstance(child, metaData, manager);
-            } else if("ObligationExpressions".equals(cname)){
+            } else if ("ObligationExpressions".equals(cname)) {
                 NodeList nodes = child.getChildNodes();
                 for (int j = 0; j < nodes.getLength(); j++) {
                     Node node = nodes.item(j);
-                    if ("ObligationExpression".equals(DOMHelper.getLocalName(node))){
+                    if ("ObligationExpression".equals(DOMHelper.getLocalName(node))) {
                         obligationExpressions.add(ObligationFactory.getFactory().
                                 getObligation(node, metaData));
                     }
                 }
-            } else if("AdviceExpressions".equals(cname)){
+            } else if ("AdviceExpressions".equals(cname)) {
                 NodeList nodes = child.getChildNodes();
                 for (int j = 0; j < nodes.getLength(); j++) {
                     Node node = nodes.item(j);
@@ -255,13 +251,13 @@ public class Rule implements PolicyTreeElement {
         }
 
         return new Rule(id, effect, description, target, condition, obligationExpressions,
-                                                    adviceExpressions, metaData.getXACMLVersion());
+                adviceExpressions, metaData.getXACMLVersion());
     }
 
     /**
      * Returns the effect that this <code>Rule</code> will return from the evaluate method (Permit
      * or Deny) if the request applies.
-     * 
+     *
      * @return a decision effect, as defined in <code>Result</code>
      */
     public int getEffect() {
@@ -270,7 +266,7 @@ public class Rule implements PolicyTreeElement {
 
     /**
      * Returns the id of this <code>Rule</code>
-     * 
+     *
      * @return the rule id
      */
     public URI getId() {
@@ -279,7 +275,7 @@ public class Rule implements PolicyTreeElement {
 
     /**
      * Returns the given description of this <code>Rule</code> or null if there is no description
-     * 
+     *
      * @return the description or null
      */
     public String getDescription() {
@@ -288,7 +284,7 @@ public class Rule implements PolicyTreeElement {
 
     /**
      * Returns the target for this <code>Rule</code> or null if there is no target
-     * 
+     *
      * @return the rule's target
      */
     public AbstractTarget getTarget() {
@@ -298,7 +294,7 @@ public class Rule implements PolicyTreeElement {
     /**
      * Since a rule is always a leaf in a policy tree because it can have no children, this always
      * returns an empty <code>List</code>.
-     * 
+     *
      * @return a <code>List</code> with no elements
      */
     public List getChildren() {
@@ -307,7 +303,7 @@ public class Rule implements PolicyTreeElement {
 
     /**
      * Returns the condition for this <code>Rule</code> or null if there is no condition
-     * 
+     *
      * @return the rule's condition
      */
     public Condition getCondition() {
@@ -319,9 +315,8 @@ public class Rule implements PolicyTreeElement {
      * <code>Target</code>. Note that unlike the matching done by the <code>evaluate</code> method,
      * if the <code>Target</code> is missing than this will return Indeterminate. This lets you
      * write your own custom matching routines for rules but lets evaluation proceed normally.
-     * 
+     *
      * @param context the representation of the request
-     * 
      * @return the result of trying to match this rule and the request
      */
     public MatchResult match(EvaluationCtx context) {
@@ -345,9 +340,8 @@ public class Rule implements PolicyTreeElement {
      * inherits its parent's target. In the event that this <code>Rule</code> has no
      * <code>Target</code> then the match is assumed to be true, since evaluating a policy tree to
      * this level required the parent's target to match.
-     * 
+     *
      * @param context the representation of the request we're evaluating
-     * 
      * @return the result of the evaluation
      */
     public AbstractResult evaluate(EvaluationCtx context) {
@@ -356,23 +350,23 @@ public class Rule implements PolicyTreeElement {
         // parent policy, so we skip the matching step assuming we wouldn't
         // be here unless the parent matched
         MatchResult match = null;
-        
+
         if (target != null) {
 
             match = target.match(context);
             int result = match.getResult();
 
             // if the target didn't match, then this Rule doesn't apply
-            if (result == MatchResult.NO_MATCH){
+            if (result == MatchResult.NO_MATCH) {
                 return ResultFactory.getFactory().getResult(Result.DECISION_NOT_APPLICABLE, context);
             }
 
             // if the target was indeterminate, we can't go on
-            if (result == MatchResult.INDETERMINATE){
+            if (result == MatchResult.INDETERMINATE) {
 
                 // defines extended indeterminate results with XACML 3.0
-                if(xacmlVersion == XACMLConstants.XACML_VERSION_3_0){
-                    if(effectAttr == AbstractResult.DECISION_PERMIT){
+                if (xacmlVersion == XACMLConstants.XACML_VERSION_3_0) {
+                    if (effectAttr == AbstractResult.DECISION_PERMIT) {
                         return ResultFactory.getFactory().getResult(Result.DECISION_INDETERMINATE_PERMIT,
                                 match.getStatus(), context);
                     } else {
@@ -387,10 +381,10 @@ public class Rule implements PolicyTreeElement {
         }
 
         // if there's no condition, then we just return the effect
-        if (condition == null){
+        if (condition == null) {
             // if any obligations or advices are defined, evaluates them and return
-            return  ResultFactory.getFactory().getResult(effectAttr, processObligations(context),
-                                                        processAdvices(context), context);
+            return ResultFactory.getFactory().getResult(effectAttr, processObligations(context),
+                    processAdvices(context), context);
         }
 
         // otherwise we evaluate the condition
@@ -399,27 +393,27 @@ public class Rule implements PolicyTreeElement {
         if (result.indeterminate()) {
 
             // defines extended indeterminate results with XACML 3.0
-            if(xacmlVersion == XACMLConstants.XACML_VERSION_3_0){
-                if(effectAttr == AbstractResult.DECISION_PERMIT){
+            if (xacmlVersion == XACMLConstants.XACML_VERSION_3_0) {
+                if (effectAttr == AbstractResult.DECISION_PERMIT) {
                     return ResultFactory.getFactory().getResult(Result.DECISION_INDETERMINATE_PERMIT,
                             result.getStatus(), context);
                 } else {
                     return ResultFactory.getFactory().getResult(Result.DECISION_INDETERMINATE_DENY,
-                           result.getStatus(), context);
+                            result.getStatus(), context);
                 }
             }
 
             // if it was INDETERMINATE, then that's what we return
             return ResultFactory.getFactory().getResult(Result.DECISION_INDETERMINATE,
-                                                                       result.getStatus(), context);
+                    result.getStatus(), context);
         } else {
             // otherwise we return the effect on true, and NA on false
             BooleanAttribute bool = (BooleanAttribute) (result.getAttributeValue());
 
             if (bool.getValue()) {
                 // if any obligations or advices are defined, evaluates them and return
-                return  ResultFactory.getFactory().getResult(effectAttr, processObligations(context),
-                                                            processAdvices(context), context);
+                return ResultFactory.getFactory().getResult(effectAttr, processObligations(context),
+                        processAdvices(context), context);
             } else {
                 return ResultFactory.getFactory().getResult(Result.DECISION_NOT_APPLICABLE, context);
             }
@@ -432,12 +426,12 @@ public class Rule implements PolicyTreeElement {
      * @param evaluationCtx context of a single policy evaluation
      * @return list of <code>ObligationResult</code> or null
      */
-    private List<ObligationResult> processObligations(EvaluationCtx evaluationCtx){
+    private List<ObligationResult> processObligations(EvaluationCtx evaluationCtx) {
 
-        if(obligationExpressions != null && obligationExpressions.size() > 0){
-            List<ObligationResult>  results = new ArrayList<ObligationResult>();
-            for(AbstractObligation obligationExpression : obligationExpressions){
-                if(obligationExpression.getFulfillOn() == effectAttr) {
+        if (obligationExpressions != null && obligationExpressions.size() > 0) {
+            List<ObligationResult> results = new ArrayList<ObligationResult>();
+            for (AbstractObligation obligationExpression : obligationExpressions) {
+                if (obligationExpression.getFulfillOn() == effectAttr) {
                     results.add(obligationExpression.evaluate(evaluationCtx));
 
                 }
@@ -453,11 +447,11 @@ public class Rule implements PolicyTreeElement {
      * @param evaluationCtx context of a single policy evaluation
      * @return set of <code>Advice</code> or null
      */
-    private List<Advice> processAdvices(EvaluationCtx evaluationCtx){
-        if(adviceExpressions != null && adviceExpressions.size() > 0){
-            List<Advice>  advices = new ArrayList<Advice>();
-            for(AdviceExpression adviceExpression : adviceExpressions){
-                if(adviceExpression.getAppliesTo() == effectAttr) {
+    private List<Advice> processAdvices(EvaluationCtx evaluationCtx) {
+        if (adviceExpressions != null && adviceExpressions.size() > 0) {
+            List<Advice> advices = new ArrayList<Advice>();
+            for (AdviceExpression adviceExpression : adviceExpressions) {
+                if (adviceExpression.getAppliesTo() == effectAttr) {
                     advices.add(adviceExpression.evaluate(evaluationCtx));
                 }
             }
@@ -476,40 +470,40 @@ public class Rule implements PolicyTreeElement {
                 AbstractResult.DECISIONS[effectAttr] + "\"  >\n");
 
 
-        if (description != null){
+        if (description != null) {
             builder.append("<Description>").append(description).append("</Description>\n");
         }
 
-        if(target != null){
+        if (target != null) {
             target.encode(builder);
         }
 
-        if(condition != null){
+        if (condition != null) {
             condition.encode(builder);
         }
 
-        if(obligationExpressions != null && obligationExpressions.size() > 0){
+        if (obligationExpressions != null && obligationExpressions.size() > 0) {
 
-            if(xacmlVersion == XACMLConstants.XACML_VERSION_3_0){
+            if (xacmlVersion == XACMLConstants.XACML_VERSION_3_0) {
                 builder.append("<Obligations>\n");
             } else {
                 builder.append("<ObligationExpressions>\n");
             }
 
-            for(AbstractObligation expression : obligationExpressions){
+            for (AbstractObligation expression : obligationExpressions) {
                 expression.encode(builder);
             }
 
-            if(xacmlVersion == XACMLConstants.XACML_VERSION_3_0){
+            if (xacmlVersion == XACMLConstants.XACML_VERSION_3_0) {
                 builder.append("</Obligations>\n");
             } else {
                 builder.append("</ObligationExpressions>\n");
             }
         }
 
-        if(adviceExpressions != null && adviceExpressions.size() > 0){
+        if (adviceExpressions != null && adviceExpressions.size() > 0) {
             builder.append("<AdviceExpressions>");
-            for(AdviceExpression expression : adviceExpressions){
+            for (AdviceExpression expression : adviceExpressions) {
                 expression.encode(builder);
             }
             builder.append("</AdviceExpressions>\n");

@@ -48,17 +48,11 @@ import org.wso2.balana.ctx.Status;
  * resolve an attribute is not an error case for the code, merely for the evaluation, and represents
  * normal operation. Separate exception types will be added later to represent errors in pdp
  * operation.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class EvaluationResult {
-
-    //
-    private boolean wasInd;
-    private AttributeValue value;
-    private Status status;
-    private MatchResult matchResult;
 
     /**
      * Single instances of EvaluationResults with false and true BooleanAttributes in them. This
@@ -67,11 +61,16 @@ public class EvaluationResult {
      */
     private static EvaluationResult falseBooleanResult;
     private static EvaluationResult trueBooleanResult;
+    //
+    private boolean wasInd;
+    private AttributeValue value;
+    private Status status;
+    private MatchResult matchResult;
 
     /**
      * Constructor that creates an <code>EvaluationResult</code> containing a single
      * <code>AttributeValue</code>
-     * 
+     *
      * @param value the attribute value
      */
     public EvaluationResult(AttributeValue value) {
@@ -83,7 +82,7 @@ public class EvaluationResult {
     /**
      * Constructor that creates an <code>EvaluationResult</code> of Indeterminate, including Status
      * data.
-     * 
+     *
      * @param status the error information
      */
     public EvaluationResult(Status status) {
@@ -91,46 +90,10 @@ public class EvaluationResult {
         this.value = null;
         this.status = status;
     }
-    
-
-    public MatchResult getMatchResult() {
-        return matchResult;
-    }
-
-    public void setMatchResult(MatchResult matchResult) {
-        this.matchResult = matchResult;
-    }
-
-    /**
-     * Returns true if the result was indeterminate
-     * 
-     * @return true if there was an error
-     */
-    public boolean indeterminate() {
-        return wasInd;
-    }
-
-    /**
-     * Returns the attribute value, or null if there was an error
-     * 
-     * @return the attribute value or null
-     */
-    public AttributeValue getAttributeValue() {
-        return value;
-    }
-
-    /**
-     * Returns the status if there was an error, or null it no error occurred
-     * 
-     * @return the status or null
-     */
-    public Status getStatus() {
-        return status;
-    }
 
     /**
      * Returns an <code>EvaluationResult</code> that represents the boolean value provided.
-     * 
+     *
      * @param value a boolean representing the desired value
      * @return an <code>EvaluationResult</code> representing the appropriate value
      */
@@ -143,7 +106,7 @@ public class EvaluationResult {
 
     /**
      * Returns an <code>EvaluationResult</code> that represents a false value.
-     * 
+     *
      * @return an <code>EvaluationResult</code> representing a false value
      */
     public static EvaluationResult getFalseInstance() {
@@ -155,7 +118,7 @@ public class EvaluationResult {
 
     /**
      * Returns an <code>EvaluationResult</code> that represents a true value.
-     * 
+     *
      * @return an <code>EvaluationResult</code> representing a true value
      */
     public static EvaluationResult getTrueInstance() {
@@ -163,5 +126,40 @@ public class EvaluationResult {
             trueBooleanResult = new EvaluationResult(BooleanAttribute.getTrueInstance());
         }
         return trueBooleanResult;
+    }
+
+    public MatchResult getMatchResult() {
+        return matchResult;
+    }
+
+    public void setMatchResult(MatchResult matchResult) {
+        this.matchResult = matchResult;
+    }
+
+    /**
+     * Returns true if the result was indeterminate
+     *
+     * @return true if there was an error
+     */
+    public boolean indeterminate() {
+        return wasInd;
+    }
+
+    /**
+     * Returns the attribute value, or null if there was an error
+     *
+     * @return the attribute value or null
+     */
+    public AttributeValue getAttributeValue() {
+        return value;
+    }
+
+    /**
+     * Returns the status if there was an error, or null it no error occurred
+     *
+     * @return the status or null
+     */
+    public Status getStatus() {
+        return status;
     }
 }

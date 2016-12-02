@@ -49,16 +49,16 @@ import java.util.List;
 
 /**
  * Specific version of <code>CombinerElement</code> used for policy combining.
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
 public class PolicyCombinerElement extends CombinerElement {
 
     /**
      * Constructor that only takes an <code>AbstractPolicy</code. No parameters are associated with
      * this <code>AbstractPolicy</code> when combining.
-     * 
+     *
      * @param policy an <code>AbstractPolicy</code> to use in combining
      */
     public PolicyCombinerElement(AbstractPolicy policy) {
@@ -68,10 +68,10 @@ public class PolicyCombinerElement extends CombinerElement {
     /**
      * Constructor that takes both the <code>AbstractPolicy</code> to combine and its associated
      * combiner parameters.
-     * 
-     * @param policy an <code>AbstractPolicy</code> to use in combining
+     *
+     * @param policy     an <code>AbstractPolicy</code> to use in combining
      * @param parameters a (possibly empty) non-null <code>List</code> of
-     *            <code>CombinerParameter<code>s provided for general
+     *                   <code>CombinerParameter<code>s provided for general
      *                   use (for all pre-2.0 policies this must be empty)
      */
     public PolicyCombinerElement(AbstractPolicy policy, List parameters) {
@@ -80,7 +80,7 @@ public class PolicyCombinerElement extends CombinerElement {
 
     /**
      * Returns the <code>AbstractPolicy</code> in this element.
-     * 
+     *
      * @return the element's <code>AbstractPolicy</code>
      */
     public AbstractPolicy getPolicy() {
@@ -117,7 +117,7 @@ public class PolicyCombinerElement extends CombinerElement {
 
     /**
      * Private helper that encodes the parameters based on the type
-     * 
+     *
      * @param builder
      * @param prefix
      * @param id

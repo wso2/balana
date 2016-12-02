@@ -51,6 +51,43 @@ public class TestXPathV3 extends TestCase {
      */
     private static Log log = LogFactory.getLog(TestFunctionV3.class);
 
+    /**
+     * Returns a new PDP instance with new XACML policies
+     *
+     * @param policies Set of XACML policy file names
+     * @return a  PDP instance
+     */
+
+    private static PDP getPDPNewInstance(Set<String> policies) {
+
+        PolicyFinder finder = new PolicyFinder();
+        Set<String> policyLocations = new HashSet<String>();
+
+        for (String policy : policies) {
+            try {
+                String policyPath = (new File(".")).getCanonicalPath() + File.separator +
+                        TestConstants.RESOURCE_PATH + File.separator + ROOT_DIRECTORY + File.separator +
+                        VERSION_DIRECTORY + File.separator + TestConstants.POLICY_DIRECTORY +
+                        File.separator + policy;
+                policyLocations.add(policyPath);
+            } catch (IOException e) {
+                //ignore.
+            }
+        }
+
+        FileBasedPolicyFinderModule testPolicyFinderModule = new FileBasedPolicyFinderModule(policyLocations);
+        Set<PolicyFinderModule> policyModules = new HashSet<PolicyFinderModule>();
+        policyModules.add(testPolicyFinderModule);
+        finder.setModules(policyModules);
+
+        Balana balana = Balana.getInstance();
+        PDPConfig pdpConfig = balana.getPdpConfig();
+        pdpConfig = new PDPConfig(pdpConfig.getAttributeFinder(), finder,
+                pdpConfig.getResourceFinder(), true);
+        return new PDP(pdpConfig);
+
+    }
+
     public void testBasicTest0001() throws Exception {
 
         String reqResNo;
@@ -90,7 +127,6 @@ public class TestXPathV3 extends TestCase {
             log.info("Basic Test 0007 is finished");
         }
     }
-
 
     public void testBasicTest0002() throws Exception {
 
@@ -250,43 +286,6 @@ public class TestXPathV3 extends TestCase {
 
             log.info("Basic Test 0011 is finished");
         }
-    }
-
-    /**
-     * Returns a new PDP instance with new XACML policies
-     *
-     * @param policies Set of XACML policy file names
-     * @return a  PDP instance
-     */
-
-    private static PDP getPDPNewInstance(Set<String> policies) {
-
-        PolicyFinder finder = new PolicyFinder();
-        Set<String> policyLocations = new HashSet<String>();
-
-        for (String policy : policies) {
-            try {
-                String policyPath = (new File(".")).getCanonicalPath() + File.separator +
-                        TestConstants.RESOURCE_PATH + File.separator + ROOT_DIRECTORY + File.separator +
-                        VERSION_DIRECTORY + File.separator + TestConstants.POLICY_DIRECTORY +
-                        File.separator + policy;
-                policyLocations.add(policyPath);
-            } catch (IOException e) {
-                //ignore.
-            }
-        }
-
-        FileBasedPolicyFinderModule testPolicyFinderModule = new FileBasedPolicyFinderModule(policyLocations);
-        Set<PolicyFinderModule> policyModules = new HashSet<PolicyFinderModule>();
-        policyModules.add(testPolicyFinderModule);
-        finder.setModules(policyModules);
-
-        Balana balana = Balana.getInstance();
-        PDPConfig pdpConfig = balana.getPdpConfig();
-        pdpConfig = new PDPConfig(pdpConfig.getAttributeFinder(), finder,
-                pdpConfig.getResourceFinder(), true);
-        return new PDP(pdpConfig);
-
     }
 
 }

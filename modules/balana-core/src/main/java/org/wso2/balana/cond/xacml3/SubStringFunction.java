@@ -35,49 +35,48 @@ import java.util.Set;
  */
 public class SubStringFunction extends FunctionBase {
 
-	/**
-	 * Standard identifier for the string-sub string function.
-	 */
-	public static final String NAME_STRING_SUB_STRING = FUNCTION_NS_3 + "string-substring";
+    /**
+     * Standard identifier for the string-sub string function.
+     */
+    public static final String NAME_STRING_SUB_STRING = FUNCTION_NS_3 + "string-substring";
 
     /**
      * Standard identifier for the any uri sub string function.
      */
-	public static final String NAME_ANY_URI_SUB_STRING = FUNCTION_NS_3 + "anyURI-substring";
+    public static final String NAME_ANY_URI_SUB_STRING = FUNCTION_NS_3 + "anyURI-substring";
 
     /**
      * private identifiers for the supported functions
      */
-	private static final int ID_STRING_SUB_STRING = 0;
+    private static final int ID_STRING_SUB_STRING = 0;
 
     /**
      * private identifiers for the supported functions
      */
-	private static final int ID_ANY_URI_SUB_STRING = 1;
+    private static final int ID_ANY_URI_SUB_STRING = 1;
 
-	/**
-	 * Creates a new <code>StringFunction</code> object.
-	 *
-	 * @param functionName the standard XACML name of the function to be handled by this object,
-	 *            including the full namespace
-	 *
-	 * @throws IllegalArgumentException if the function is unknown
-	 */
-	public SubStringFunction(String functionName) {
-		super(functionName, getId(functionName), getArgumentType(functionName), false, 3,
-				StringAttribute.identifier, false);
-	}
+    /**
+     * Creates a new <code>StringFunction</code> object.
+     *
+     * @param functionName the standard XACML name of the function to be handled by this object,
+     *                     including the full namespace
+     * @throws IllegalArgumentException if the function is unknown
+     */
+    public SubStringFunction(String functionName) {
+        super(functionName, getId(functionName), getArgumentType(functionName), false, 3,
+                StringAttribute.identifier, false);
+    }
 
     /**
      * Private helper that returns the internal identifier used for the given standard function.
-     * 
+     *
      * @param functionName function name
      * @return function id
      */
     private static int getId(String functionName) {
-        if (functionName.equals(NAME_STRING_SUB_STRING)){
+        if (functionName.equals(NAME_STRING_SUB_STRING)) {
             return ID_STRING_SUB_STRING;
-        } else if (functionName.equals(NAME_ANY_URI_SUB_STRING)){
+        } else if (functionName.equals(NAME_ANY_URI_SUB_STRING)) {
             return ID_ANY_URI_SUB_STRING;
         } else {
             throw new IllegalArgumentException("unknown divide function " + functionName);
@@ -88,30 +87,30 @@ public class SubStringFunction extends FunctionBase {
      * Private helper that returns the type used for the given standard function. Note that this
      * doesn't check on the return value since the method always is called after getId, so we assume
      * that the function is present.
-     * 
+     *
      * @param functionName function name
      * @return identifier of the Data type
      */
     private static String getArgumentType(String functionName) {
-        if (functionName.equals(NAME_STRING_SUB_STRING)){
+        if (functionName.equals(NAME_STRING_SUB_STRING)) {
             return StringAttribute.identifier;
         } else {
             return AnyURIAttribute.identifier;
         }
     }
 
-	/**
-	 * Returns a <code>Set</code> containing all the function identifiers supported by this class.
-	 *
-	 * @return a <code>Set</code> of <code>String</code>s
-	 */
-	public static Set<String> getSupportedIdentifiers() {
+    /**
+     * Returns a <code>Set</code> containing all the function identifiers supported by this class.
+     *
+     * @return a <code>Set</code> of <code>String</code>s
+     */
+    public static Set<String> getSupportedIdentifiers() {
 
-		Set<String> set = new HashSet<String>();
-		set.add(NAME_STRING_SUB_STRING);
-		set.add(NAME_ANY_URI_SUB_STRING);
-		return set;
-	}
+        Set<String> set = new HashSet<String>();
+        set.add(NAME_STRING_SUB_STRING);
+        set.add(NAME_ANY_URI_SUB_STRING);
+        return set;
+    }
 
 
     public EvaluationResult evaluate(List<Evaluatable> inputs, EvaluationCtx context) {
@@ -124,7 +123,7 @@ public class SubStringFunction extends FunctionBase {
         }
 
         String processedString = argValues[0].encode().substring(Integer.parseInt(argValues[1].encode()),
-                                                        Integer.parseInt(argValues[2].encode()));
+                Integer.parseInt(argValues[2].encode()));
 
         return new EvaluationResult(new StringAttribute(processedString));
     }

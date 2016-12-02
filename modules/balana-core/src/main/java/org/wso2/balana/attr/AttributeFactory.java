@@ -50,10 +50,10 @@ import org.wso2.balana.XACMLConstants;
  * This is an abstract factory class for creating XACML attribute values. There may be any number of
  * factories available in the system, though there is always one default factory used by the core
  * code.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
  * @author Marco Barreno
+ * @since 1.0
  */
 public abstract class AttributeFactory {
 
@@ -80,7 +80,9 @@ public abstract class AttributeFactory {
         registeredFactories.put(XACMLConstants.XACML_3_0_IDENTIFIER, proxy);
 
         defaultFactoryProxy = proxy;
-    };
+    }
+
+    ;
 
     /**
      * Default constructor. Used only by subclasses.
@@ -92,7 +94,7 @@ public abstract class AttributeFactory {
     /**
      * Returns the default factory. Depending on the default factory's implementation, this may
      * return a singleton instance or new instances with each invokation.
-     * 
+     *
      * @return the default <code>AttributeFactory</code>
      */
     public static final AttributeFactory getInstance() {
@@ -104,11 +106,9 @@ public abstract class AttributeFactory {
      * like, and then retrieve them through this interface, but a factory may only be registered
      * once using a given identifier. By default, the standard XACML 1.0 and 2.0 identifiers are
      * regsietered to provide the standard factory.
-     * 
+     *
      * @param identifier the identifier for a factory
-     * 
      * @return an <code>AttributeFactory</code>
-     * 
      * @throws UnknownIdentifierException if the given identifier isn't registered
      */
     public static final AttributeFactory getInstance(String identifier)
@@ -125,7 +125,7 @@ public abstract class AttributeFactory {
     /**
      * Sets the default factory. This does not register the factory proxy as an identifiable
      * factory.
-     * 
+     *
      * @param proxy the <code>AttributeFactoryProxy</code> to set as the new default factory proxy
      */
     public static final void setDefaultFactory(AttributeFactoryProxy proxy) {
@@ -136,10 +136,9 @@ public abstract class AttributeFactory {
      * Registers the given factory proxy with the given identifier. If the identifier is already
      * used, then this throws an exception. If the identifier is not already used, then it will
      * always be bound to the given proxy.
-     * 
+     *
      * @param identifier the identifier for the proxy
-     * @param proxy the <code>AttributeFactoryProxy</code> to register with the given identifier
-     * 
+     * @param proxy      the <code>AttributeFactoryProxy</code> to register with the given identifier
      * @throws IllegalArgumentException if the identifier is already used
      */
     public static final void registerFactory(String identifier, AttributeFactoryProxy proxy)
@@ -157,17 +156,16 @@ public abstract class AttributeFactory {
      * Adds a proxy to the factory, which in turn will allow new attribute types to be created using
      * the factory. Typically the proxy is provided as an anonymous class that simply calls the
      * getInstance methods (or something similar) of some <code>AttributeValue</code> class.
-     * 
-     * @param id the name of the attribute type
+     *
+     * @param id    the name of the attribute type
      * @param proxy the proxy used to create new attributes of the given type
-     * 
      * @throws IllegalArgumentException if the given id is already in use
      */
     public abstract void addDatatype(String id, AttributeProxy proxy);
 
     /**
      * Returns the datatype identifiers supported by this factory.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public abstract Set getSupportedDatatypes();
@@ -177,41 +175,35 @@ public abstract class AttributeFactory {
      * present in the node as an XAML attribute named <code>DataType</code>, as is the case with the
      * AttributeValueType in the policy schema. The value is assumed to be the first child of this
      * node.
-     * 
+     *
      * @param root the DOM root of an attribute value
-     * 
      * @return a new <code>AttributeValue</code>
-     * 
      * @throws UnknownIdentifierException if the type in the node isn't known to the factory
-     * @throws ParsingException if the node is invalid or can't be parsed by the appropriate proxy
+     * @throws ParsingException           if the node is invalid or can't be parsed by the appropriate proxy
      */
     public abstract AttributeValue createValue(Node root) throws UnknownIdentifierException,
             ParsingException;
 
     /**
      * Creates a value based on the given DOM root node and data type.
-     * 
-     * @param root the DOM root of an attribute value
+     *
+     * @param root     the DOM root of an attribute value
      * @param dataType the type of the attribute
-     * 
      * @return a new <code>AttributeValue</code>
-     * 
      * @throws UnknownIdentifierException if the data type isn't known to the factory
-     * @throws ParsingException if the node is invalid or can't be parsed by the appropriate proxy
+     * @throws ParsingException           if the node is invalid or can't be parsed by the appropriate proxy
      */
     public abstract AttributeValue createValue(Node root, URI dataType)
             throws UnknownIdentifierException, ParsingException;
 
     /**
      * Creates a value based on the given DOM root node and data type.
-     * 
+     *
      * @param root the DOM root of an attribute value
      * @param type the type of the attribute
-     * 
      * @return a new <code>AttributeValue</code>
-     * 
      * @throws UnknownIdentifierException if the type isn't known to the factory
-     * @throws ParsingException if the node is invalid or can't be parsed by the appropriate proxy
+     * @throws ParsingException           if the node is invalid or can't be parsed by the appropriate proxy
      */
     public abstract AttributeValue createValue(Node root, String type)
             throws UnknownIdentifierException, ParsingException;
@@ -222,29 +214,27 @@ public abstract class AttributeFactory {
      * value into an Attribute class.
      *
      * @param dataType the type of the attribute
-     * @param value the text-encoded representation of an attribute's value
+     * @param value    the text-encoded representation of an attribute's value
      * @return a new <code>AttributeValue</code>
-     *
      * @throws UnknownIdentifierException if the data type isn't known to the factory
-     * @throws ParsingException if the text is invalid or can't be parsed by the appropriate proxy
+     * @throws ParsingException           if the text is invalid or can't be parsed by the appropriate proxy
      */
     public AttributeValue createValue(URI dataType, String value)
             throws UnknownIdentifierException, ParsingException {
-        return createValue(dataType, value, null);    
+        return createValue(dataType, value, null);
     }
-    
+
     /**
      * Creates a value based on the given data type and text-encoded value. Used primarily by code
      * that does an XPath query to get an attribute value, and then needs to turn the resulting
      * value into an Attribute class.
-     * 
+     *
      * @param dataType the type of the attribute
-     * @param value the text-encoded representation of an attribute's value
-     * @param params additional parameters that need to creates a value
+     * @param value    the text-encoded representation of an attribute's value
+     * @param params   additional parameters that need to creates a value
      * @return a new <code>AttributeValue</code>
-     * 
      * @throws UnknownIdentifierException if the data type isn't known to the factory
-     * @throws ParsingException if the text is invalid or can't be parsed by the appropriate proxy
+     * @throws ParsingException           if the text is invalid or can't be parsed by the appropriate proxy
      */
     public abstract AttributeValue createValue(URI dataType, String value, String[] params)
             throws UnknownIdentifierException, ParsingException;

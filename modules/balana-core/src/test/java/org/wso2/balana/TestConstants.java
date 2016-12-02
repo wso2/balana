@@ -25,17 +25,17 @@ import java.io.File;
  */
 public class TestConstants {
 
-    public static final String RESOURCE_PATH =  "src" + File.separator + "test" + File.separator +
-                                                "resources" + File.separator;
+    public static final String RESOURCE_PATH = "src" + File.separator + "test" + File.separator +
+            "resources" + File.separator;
 
     public static final String POLICY_DIRECTORY = "policies";
 
-    public static final String REQUEST_DIRECTORY =  "requests";
+    public static final String REQUEST_DIRECTORY = "requests";
 
-    public static final String RESPONSE_DIRECTORY =  "responses";
+    public static final String RESPONSE_DIRECTORY = "responses";
 
     public static final String CONFIG_DIRECTORY = "src" + File.separator + "main" + File.separator +
-                                                "resources" + File.separator;
+            "resources" + File.separator;
 
-    public static final String CONFIG_FILE =  CONFIG_DIRECTORY + "config.xml";
+    public static final String CONFIG_FILE = CONFIG_DIRECTORY + "config.xml";
 }

@@ -46,9 +46,9 @@ import java.io.ByteArrayOutputStream;
  * <code>ftp://ftp.isi.edu/in-notes/rfc2045.txt</code></a>.
  * <p>
  * All methods of this class are static and thread-safe.
- * 
- * @since 1.0
+ *
  * @author Anne Anderson
+ * @since 1.0
  */
 class Base64 {
     /*
@@ -63,52 +63,37 @@ class Base64 {
     private static final char LF = 0x0a; /* line feed character */
     private static final char ALTLF = 0x13; /* line feed on some systems */
     private static final char CR = 0x0d; /* carriage-return character */
-
-    /*
-     * The character used to pad out a 4-character Base64-encoded block, or "quantum".
-     */
-    private static char PAD = '=';
-
     /*
      * String used for BASE64 encoding and decoding.
-     * 
+     *
      * For index values 0-63, the character at each index is the Base-64 encoded value of the index
      * value. Index values beyond 63 are never referenced during encoding, but are used in this
      * implementation to help in decoding. The character at index 64 is the Base64 pad character
      * '='.
-     * 
+     *
      * Charaters in index positions 0-64 MUST NOT be moved or altered, as this will break the
      * implementation.
-     * 
+     *
      * The characters after index 64 are white space characters that should be ignored in
      * Base64-encoded input strings while doing decoding. Note that the white-space character set
      * should include values used on various platforms, since a Base64-encoded value may have been
      * generated on a non-Java platform. The values included here are those used in Java and in C.
-     * 
+     *
      * The white-space character set may be modified without affecting the implementation of the
      * encoding algorithm.
      */
     private static final String BASE64EncodingString = "ABCDEFGHIJ" + "KLMNOPQRST" + "UVWXYZabcd"
             + "efghijklmn" + "opqrstuvwx" + "yz01234567" + "89+/" + "=" + SPACE + ETX + VTAB + FF
             + HTAB + LF + ALTLF + CR;
-
     // Index of pad character in Base64EncodingString
     private static final int PAD_INDEX = 64;
-
     /*
      * The character in Base64EncodingString with the maximum character value in Unicode.
      */
     private static final int MAX_BASE64_CHAR = 'z';
-
-    /*
-     * Array for mapping encoded characters to decoded values. This array is initialized when needed
-     * by calling initDecodeArray(). Only includes entries up to MAX_BASE64_CHAR.
-     */
-    private static int[] Base64DecodeArray = null;
-
     /*
      * State values used for decoding a quantum of four encoded input characters as follows.
-     * 
+     *
      * Initial state: NO_CHARS_DECODED NO_CHARS_DECODED: no characters have been decoded on encoded
      * char: decode char into output quantum; new state: ONE_CHAR_DECODED otherwise: Exception
      * ONE_CHAR_DECODED: one character has been decoded on encoded char: decode char into output
@@ -120,7 +105,7 @@ class Base64 {
      * quantum bytes 0-1 to output; new state: PAD_FOUR_READ PAD_THREE_READ: pad character has been
      * read as 3rd of 4 chars on pad: new state: PAD_FOUR_READ otherwise: Exception PAD_FOUR_READ:
      * pad character has been read as 4th of 4 char on any char: Exception
-     * 
+     *
      * The valid terminal states are NO_CHARS_DECODED and PAD_FOUR_READ.
      */
     private static final int NO_CHARS_DECODED = 0;
@@ -129,12 +114,20 @@ class Base64 {
     private static final int THREE_CHARS_DECODED = 3;
     private static final int PAD_THREE_READ = 5;
     private static final int PAD_FOUR_READ = 6;
-
     /**
      * The maximum number of groups that should be encoded onto a single line (so we don't exceed 76
      * characters per line).
      */
     private static final int MAX_GROUPS_PER_LINE = 76 / 4;
+    /*
+     * The character used to pad out a 4-character Base64-encoded block, or "quantum".
+     */
+    private static char PAD = '=';
+    /*
+     * Array for mapping encoded characters to decoded values. This array is initialized when needed
+     * by calling initDecodeArray(). Only includes entries up to MAX_BASE64_CHAR.
+     */
+    private static int[] Base64DecodeArray = null;
 
     /**
      * Encodes the input byte array into a Base64-encoded <code>String</code>. The output
@@ -142,9 +135,8 @@ class Base64 {
      * <p>
      * <b>WARNING</b>: If the input byte array is modified while encoding is in progress, the output
      * is undefined.
-     * 
+     *
      * @param binaryValue the byte array to be encoded
-     * 
      * @return the Base64-encoded <code>String</code>
      */
     public static String encode(byte[] binaryValue) {
@@ -227,20 +219,18 @@ class Base64 {
      * If the <code>ignoreBadChars</code> parameter is <code>true</code>, characters that are not
      * allowed in a BASE64-encoded string are ignored. Otherwise, they cause an
      * <code>IOException</code> to be raised.
-     * 
-     * @param encoded a <code>String</code> containing a Base64-encoded value
+     *
+     * @param encoded        a <code>String</code> containing a Base64-encoded value
      * @param ignoreBadChars If <code>true</code>, bad characters are ignored. Otherwise, they cause
-     *            an <code>IOException</code> to be raised.
-     * 
+     *                       an <code>IOException</code> to be raised.
      * @return a byte array containing the decoded value
-     * 
      * @throws IOException if the input <code>String</code> is not a valid Base64-encoded value
      */
     public static byte[] decode(String encoded, boolean ignoreBadChars) throws IOException {
         int encodedLen = encoded.length();
         int maxBytes = (encodedLen / 4) * 3; /* Maximum possible output bytes */
         ByteArrayOutputStream ba = /* Buffer for decoded output */
-        new ByteArrayOutputStream(maxBytes);
+                new ByteArrayOutputStream(maxBytes);
         byte[] quantum = new byte[3]; /* one output quantum */
 
         // ensure Base64DecodeArray is initialized
@@ -274,49 +264,49 @@ class Base64 {
 
             // Handle valid characters
             switch (state) {
-            case NO_CHARS_DECODED:
-                if (decodedChar == PAD_INDEX) {
-                    throw new IOException("Pad character in invalid position");
-                }
-                quantum[0] = (byte) ((decodedChar << 2) & 0xFC);
-                state = ONE_CHAR_DECODED;
-                break;
-            case ONE_CHAR_DECODED:
-                if (decodedChar == PAD_INDEX) {
-                    throw new IOException("Pad character in invalid position");
-                }
-                quantum[0] = (byte) (quantum[0] | ((decodedChar >> 4) & 0x3));
-                quantum[1] = (byte) ((decodedChar << 4) & 0xF0);
-                state = TWO_CHARS_DECODED;
-                break;
-            case TWO_CHARS_DECODED:
-                if (decodedChar == PAD_INDEX) {
-                    ba.write(quantum, 0, 1);
-                    state = PAD_THREE_READ;
-                } else {
-                    quantum[1] = (byte) (quantum[1] | ((decodedChar >> 2) & 0x0F));
-                    quantum[2] = (byte) ((decodedChar << 6) & 0xC0);
-                    state = THREE_CHARS_DECODED;
-                }
-                break;
-            case THREE_CHARS_DECODED:
-                if (decodedChar == PAD_INDEX) {
-                    ba.write(quantum, 0, 2);
+                case NO_CHARS_DECODED:
+                    if (decodedChar == PAD_INDEX) {
+                        throw new IOException("Pad character in invalid position");
+                    }
+                    quantum[0] = (byte) ((decodedChar << 2) & 0xFC);
+                    state = ONE_CHAR_DECODED;
+                    break;
+                case ONE_CHAR_DECODED:
+                    if (decodedChar == PAD_INDEX) {
+                        throw new IOException("Pad character in invalid position");
+                    }
+                    quantum[0] = (byte) (quantum[0] | ((decodedChar >> 4) & 0x3));
+                    quantum[1] = (byte) ((decodedChar << 4) & 0xF0);
+                    state = TWO_CHARS_DECODED;
+                    break;
+                case TWO_CHARS_DECODED:
+                    if (decodedChar == PAD_INDEX) {
+                        ba.write(quantum, 0, 1);
+                        state = PAD_THREE_READ;
+                    } else {
+                        quantum[1] = (byte) (quantum[1] | ((decodedChar >> 2) & 0x0F));
+                        quantum[2] = (byte) ((decodedChar << 6) & 0xC0);
+                        state = THREE_CHARS_DECODED;
+                    }
+                    break;
+                case THREE_CHARS_DECODED:
+                    if (decodedChar == PAD_INDEX) {
+                        ba.write(quantum, 0, 2);
+                        state = PAD_FOUR_READ;
+                    } else {
+                        quantum[2] = (byte) (quantum[2] | decodedChar);
+                        ba.write(quantum, 0, 3);
+                        state = NO_CHARS_DECODED;
+                    }
+                    break;
+                case PAD_THREE_READ:
+                    if (decodedChar != PAD_INDEX) {
+                        throw new IOException("Missing pad character");
+                    }
                     state = PAD_FOUR_READ;
-                } else {
-                    quantum[2] = (byte) (quantum[2] | decodedChar);
-                    ba.write(quantum, 0, 3);
-                    state = NO_CHARS_DECODED;
-                }
-                break;
-            case PAD_THREE_READ:
-                if (decodedChar != PAD_INDEX) {
-                    throw new IOException("Missing pad character");
-                }
-                state = PAD_FOUR_READ;
-                break;
-            case PAD_FOUR_READ:
-                throw new IOException("Invalid input follows pad character");
+                    break;
+                case PAD_FOUR_READ:
+                    throw new IOException("Invalid input follows pad character");
             }
         }
 

@@ -53,9 +53,9 @@ import java.util.List;
 /**
  * This is the standard First Applicable rule combining algorithm. It looks through the set of
  * rules, finds the first one that applies, and returns that evaluation result.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class FirstApplicableRuleAlg extends RuleCombiningAlgorithm {
 
@@ -91,12 +91,11 @@ public class FirstApplicableRuleAlg extends RuleCombiningAlgorithm {
 
     /**
      * Applies the combining rule to the set of rules based on the evaluation context.
-     * 
-     * @param context the context from the request
-     * @param parameters a (possibly empty) non-null <code>List</code> of
-     *            <code>CombinerParameter<code>s
+     *
+     * @param context      the context from the request
+     * @param parameters   a (possibly empty) non-null <code>List</code> of
+     *                     <code>CombinerParameter<code>s
      * @param ruleElements the rules to combine
-     * 
      * @return the result of running the combining algorithm
      */
     public AbstractResult combine(EvaluationCtx context, List parameters, List ruleElements) {

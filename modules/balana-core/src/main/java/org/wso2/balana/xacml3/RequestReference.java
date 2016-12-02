@@ -21,7 +21,7 @@ package org.wso2.balana.xacml3;
 import java.util.Set;
 
 /**
- * Represents the RequestReferenceType XML type found in the context schema in XACML 3.0 
+ * Represents the RequestReferenceType XML type found in the context schema in XACML 3.0
  */
 public class RequestReference {
 

@@ -66,9 +66,9 @@ import java.util.Set;
  * evaluation), but does allow it. Any caching, as well as details of which time to use (time at the
  * PEP, PDP, etc.) is taken care of by the <code>EvaluationCtx</code> which is used to supply the
  * current values.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class CurrentEnvModule extends AttributeFinderModule {
 
@@ -89,7 +89,7 @@ public class CurrentEnvModule extends AttributeFinderModule {
 
     /**
      * Returns true always because this module supports designators.
-     * 
+     *
      * @return true always
      */
     public boolean isDesignatorSupported() {
@@ -99,7 +99,7 @@ public class CurrentEnvModule extends AttributeFinderModule {
     /**
      * Returns a <code>Set</code> with a single <code>String</code> specifying that environment
      * attributes are supported by this module.
-     * 
+     *
      * @return a <code>Set</code> with <code>AttributeDesignator</code> included
      */
     public Set<String> getSupportedCategories() {
@@ -111,22 +111,21 @@ public class CurrentEnvModule extends AttributeFinderModule {
     /**
      * Used to get the current time, date, or dateTime. If one of those values isn't being asked
      * for, or if the types are wrong, then an empty bag is returned.
-     * 
+     *
      * @param attributeType the datatype of the attributes to find, which must be time, date, or
-     *            dateTime for this module to resolve a value
-     * @param attributeId the identifier of the attributes to find, which must be one of the three
-     *            ENVIRONMENT_* fields for this module to resolve a value
-     * @param issuer the issuer of the attributes, or null if unspecified
-     * @param category the category of the attribute 
-     * @param context the representation of the request data
-     * 
+     *                      dateTime for this module to resolve a value
+     * @param attributeId   the identifier of the attributes to find, which must be one of the three
+     *                      ENVIRONMENT_* fields for this module to resolve a value
+     * @param issuer        the issuer of the attributes, or null if unspecified
+     * @param category      the category of the attribute
+     * @param context       the representation of the request data
      * @return the result of attribute retrieval, which will be a bag with a single attribute, an
-     *         empty bag, or an error
+     * empty bag, or an error
      */
     public EvaluationResult findAttribute(URI attributeType, URI attributeId, String issuer,
-            URI category, EvaluationCtx context) {
+                                          URI category, EvaluationCtx context) {
         // we only know about environment attributes
-        if (!XACMLConstants.ENT_CATEGORY.equals(category.toString())){
+        if (!XACMLConstants.ENT_CATEGORY.equals(category.toString())) {
             return new EvaluationResult(BagAttribute.createEmptyBag(attributeType));
         }
         // figure out which attribute we're looking for

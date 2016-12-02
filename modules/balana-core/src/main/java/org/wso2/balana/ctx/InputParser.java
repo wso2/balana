@@ -57,31 +57,23 @@ import org.xml.sax.SAXParseException;
 /**
  * A package-private helper that provides a single static routine for parsing input based on the
  * context schema.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class InputParser implements ErrorHandler {
 
-    // the schema file, if provided
-    private File schemaFile;
-
-    // the single reference, which is null unless a schema file is provided
-    private static InputParser ipReference = null;
-
     // the property string to set to turn on validation
     private static final String CONTEXT_SCHEMA_PROPERTY = "com.sun.xacml.ContextSchema";
-
-    // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(InputParser.class);
+    private static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+    private static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
+    private static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
 
     // standard strings for setting validation
-
-    private static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
-
-    private static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
-
-    private static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
+    // the single reference, which is null unless a schema file is provided
+    private static InputParser ipReference = null;
+    // the logger we'll use for all messages
+    private static Log logger = LogFactory.getLog(InputParser.class);
 
     /**
      * Look for the property that names the schema, and if it exists get the file name and create a
@@ -92,7 +84,12 @@ public class InputParser implements ErrorHandler {
 
         if (schemaName != null)
             ipReference = new InputParser(new File(schemaName));
-    };
+    }
+
+    // the schema file, if provided
+    private File schemaFile;
+
+    ;
 
     /**
      * Constructor that takes the schema file.
@@ -103,12 +100,10 @@ public class InputParser implements ErrorHandler {
 
     /**
      * Tries to Parse the given output as a Context document.
-     * 
-     * @param input the stream to parse
+     *
+     * @param input    the stream to parse
      * @param rootTage either "Request" or "Response"
-     * 
      * @return the root node of the request/response
-     * 
      * @throws ParsingException if a problem occurred parsing the document
      */
     public static Node parseInput(InputStream input, String rootTag) throws ParsingException {
@@ -154,7 +149,7 @@ public class InputParser implements ErrorHandler {
 
     /**
      * Standard handler routine for the XML parsing.
-     * 
+     *
      * @param exception information on what caused the problem
      */
     public void warning(SAXParseException exception) throws SAXException {
@@ -165,9 +160,8 @@ public class InputParser implements ErrorHandler {
 
     /**
      * Standard handler routine for the XML parsing.
-     * 
+     *
      * @param exception information on what caused the problem
-     * 
      * @throws SAXException always to halt parsing on errors
      */
     public void error(SAXParseException exception) throws SAXException {
@@ -180,9 +174,8 @@ public class InputParser implements ErrorHandler {
 
     /**
      * Standard handler routine for the XML parsing.
-     * 
+     *
      * @param exception information on what caused the problem
-     * 
      * @throws SAXException always to halt parsing on errors
      */
     public void fatalError(SAXParseException exception) throws SAXException {

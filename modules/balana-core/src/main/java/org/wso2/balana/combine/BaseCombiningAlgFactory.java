@@ -53,9 +53,9 @@ import java.util.Set;
  * that most people will initialize these factories up-front, and then start processing without ever
  * modifying the factories. If you need these mutual operations to be thread-safe, then you should
  * write a wrapper class that implements the right synchronization.
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public class BaseCombiningAlgFactory extends CombiningAlgFactory {
 
@@ -71,11 +71,10 @@ public class BaseCombiningAlgFactory extends CombiningAlgFactory {
 
     /**
      * Constructor that configures this factory with an initial set of supported algorithms.
-     * 
+     *
      * @param algorithms a <code>Set</code> of </code>CombiningAlgorithm</code>s
-     * 
      * @throws IllegalArgumentException if any elements of the set are not
-     *             </code>CombiningAlgorithm</code>s
+     *                                  </code>CombiningAlgorithm</code>s
      */
     public BaseCombiningAlgFactory(Set algorithms) {
         algMap = new HashMap();
@@ -95,9 +94,8 @@ public class BaseCombiningAlgFactory extends CombiningAlgFactory {
     /**
      * Adds a combining algorithm to the factory. This single instance will be returned to anyone
      * who asks the factory for an algorithm with the id given here.
-     * 
+     *
      * @param alg the combining algorithm to add
-     * 
      * @throws IllegalArgumentException if the algId is already registered
      */
     public void addAlgorithm(CombiningAlgorithm alg) {
@@ -113,7 +111,7 @@ public class BaseCombiningAlgFactory extends CombiningAlgFactory {
 
     /**
      * Returns the algorithm identifiers supported by this factory.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public Set getSupportedAlgorithms() {
@@ -122,11 +120,9 @@ public class BaseCombiningAlgFactory extends CombiningAlgFactory {
 
     /**
      * Tries to return the correct combinging algorithm based on the given algorithm ID.
-     * 
+     *
      * @param algId the identifier by which the algorithm is known
-     * 
      * @return a combining algorithm
-     * 
      * @throws UnknownIdentifierException algId is unknown
      */
     public CombiningAlgorithm createAlgorithm(URI algId) throws UnknownIdentifierException {

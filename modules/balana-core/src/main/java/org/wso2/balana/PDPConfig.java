@@ -43,10 +43,10 @@ import org.wso2.balana.finder.ResourceFinder;
  * This class is used as a container that holds configuration information for the PDP, which
  * includes the <code>AttributeFinder</code>, <code>PolicyFinder</code>, and
  * <code>ResourceFinder</code> that the PDP should use.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
  * @author Marco Barreno
+ * @since 1.0
  */
 public class PDPConfig {
 
@@ -57,7 +57,7 @@ public class PDPConfig {
     private PolicyFinder policyFinder;
 
     //
-    private ResourceFinder resourceFinder;    
+    private ResourceFinder resourceFinder;
 
     //
     private boolean multipleRequestHandle;
@@ -66,30 +66,30 @@ public class PDPConfig {
      * Constructor that creates a <code>PDPConfig</code> from components.
      *
      * @param attributeFinder the <code>AttributeFinder</code> that the PDP should use, or null if
-     *            it shouldn't use any
-     * @param policyFinder the <code>PolicyFinder</code> that the PDP should use, or null if it
-     *            shouldn't use any
-     * @param resourceFinder the <code>ResourceFinder</code> that the PDP should use, or null if it
-     *            shouldn't use any
+     *                        it shouldn't use any
+     * @param policyFinder    the <code>PolicyFinder</code> that the PDP should use, or null if it
+     *                        shouldn't use any
+     * @param resourceFinder  the <code>ResourceFinder</code> that the PDP should use, or null if it
+     *                        shouldn't use any
      */
     public PDPConfig(AttributeFinder attributeFinder, PolicyFinder policyFinder,
-            ResourceFinder resourceFinder) {
+                     ResourceFinder resourceFinder) {
         this(attributeFinder, policyFinder, resourceFinder, true);
     }
 
     /**
      * Constructor that creates a <code>PDPConfig</code> from components.
-     * 
-     * @param attributeFinder the <code>AttributeFinder</code> that the PDP should use, or null if
-     *            it shouldn't use any
-     * @param policyFinder the <code>PolicyFinder</code> that the PDP should use, or null if it
-     *            shouldn't use any
-     * @param resourceFinder the <code>ResourceFinder</code> that the PDP should use, or null if it
-     *            shouldn't use any
+     *
+     * @param attributeFinder       the <code>AttributeFinder</code> that the PDP should use, or null if
+     *                              it shouldn't use any
+     * @param policyFinder          the <code>PolicyFinder</code> that the PDP should use, or null if it
+     *                              shouldn't use any
+     * @param resourceFinder        the <code>ResourceFinder</code> that the PDP should use, or null if it
+     *                              shouldn't use any
      * @param multipleRequestHandle whether PDP capable of handling multiple requests or not
      */
     public PDPConfig(AttributeFinder attributeFinder, PolicyFinder policyFinder,
-            ResourceFinder resourceFinder, boolean multipleRequestHandle) {
+                     ResourceFinder resourceFinder, boolean multipleRequestHandle) {
         if (attributeFinder != null)
             this.attributeFinder = attributeFinder;
         else
@@ -110,7 +110,7 @@ public class PDPConfig {
 
     /**
      * Returns the <code>AttributeFinder</code> that was configured, or null if none was configured
-     * 
+     *
      * @return the <code>AttributeFinder</code> or null
      */
     public AttributeFinder getAttributeFinder() {
@@ -119,7 +119,7 @@ public class PDPConfig {
 
     /**
      * Returns the <code>PolicyFinder</code> that was configured, or null if none was configured
-     * 
+     *
      * @return the <code>PolicyFinder</code> or null
      */
     public PolicyFinder getPolicyFinder() {
@@ -128,7 +128,7 @@ public class PDPConfig {
 
     /**
      * Returns the <code>ResourceFinder</code> that was configured, or null if none was configured
-     * 
+     *
      * @return the <code>ResourceFinder</code> or null
      */
     public ResourceFinder getResourceFinder() {

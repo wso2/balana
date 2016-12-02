@@ -54,22 +54,23 @@ public class AttributeAssignmentExpression {
     private URI category;
 
     /**
-     *  issuer of the AttributeAssignment
+     * issuer of the AttributeAssignment
      */
     private String issuer;
 
     /**
-     *  <code>Expression</code> that contains in <code>AttributeAssignmentExpression</code>
+     * <code>Expression</code> that contains in <code>AttributeAssignmentExpression</code>
      */
     private Expression expression;
 
     /**
      * Constructor that creates a new <code>AttributeAssignmentExpression</code> based on
      * the given elements.
-     * @param attributeId   attribute id of the AttributeAssignmentExpression element
-     * @param category category of the AttributeAssignmentExpression element whether it is subject, action and etc
+     *
+     * @param attributeId attribute id of the AttributeAssignmentExpression element
+     * @param category    category of the AttributeAssignmentExpression element whether it is subject, action and etc
      * @param expression  <code>Expression</code> that contains in <code>AttributeAssignmentExpression</code>
-     * @param issuer issuer of the AttributeAssignment
+     * @param issuer      issuer of the AttributeAssignment
      */
     public AttributeAssignmentExpression(URI attributeId, URI category, Expression expression,
                                          String issuer) {
@@ -80,10 +81,10 @@ public class AttributeAssignmentExpression {
     }
 
     /**
-     *  creates a <code>AttributeAssignmentExpression</code> based on its DOM node.
+     * creates a <code>AttributeAssignmentExpression</code> based on its DOM node.
      *
-     * @param root  root the node to parse for the AttributeAssignment
-     * @param metaData  meta-date associated with the policy
+     * @param root     root the node to parse for the AttributeAssignment
+     * @param metaData meta-date associated with the policy
      * @return a new <code>AttributeAssignmentExpression</code> constructed by parsing
      * @throws ParsingException if the DOM node is invalid
      */
@@ -92,7 +93,7 @@ public class AttributeAssignmentExpression {
 
         URI attributeId;
         URI category = null;
-        String issuer= null;
+        String issuer = null;
         Expression expression = null;
 
         if (!DOMHelper.getLocalName(root).equals("AttributeAssignmentExpression")) {
@@ -111,12 +112,12 @@ public class AttributeAssignmentExpression {
 
         try {
             Node categoryNode = nodeAttributes.getNamedItem("Category");
-            if(categoryNode != null){
+            if (categoryNode != null) {
                 category = new URI(categoryNode.getNodeValue());
             }
 
             Node issuerNode = nodeAttributes.getNamedItem("Issuer");
-            if(issuerNode != null){
+            if (issuerNode != null) {
                 issuer = issuerNode.getNodeValue();
             }
         } catch (Exception e) {
@@ -127,14 +128,14 @@ public class AttributeAssignmentExpression {
         NodeList children = root.getChildNodes();
 
         // there can be only one expression  TODO  error when more than one expression
-        for(int i = 0; i < children.getLength(); i ++){
+        for (int i = 0; i < children.getLength(); i++) {
             if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
                 expression = ExpressionHandler.parseExpression(children.item(i), metaData, null);
                 break;
             }
         }
 
-        if(expression == null){
+        if (expression == null) {
             throw new ParsingException("AttributeAssignmentExpression must contain at least one " +
                     "Expression Type");
         }
@@ -146,29 +147,29 @@ public class AttributeAssignmentExpression {
      * evaluates <code>Expression</code> element and create new <code>Set</code> of
      * <code>AttributeAssignment</code>
      *
-     * @param ctx  <code>EvaluationCtx</code>
+     * @param ctx <code>EvaluationCtx</code>
      * @return <code>Set</code> of <code>AttributeAssignment</code>
      */
     public Set<AttributeAssignment> evaluate(EvaluationCtx ctx) {
-        
-        Set<AttributeAssignment> values = new HashSet<AttributeAssignment>();
-        EvaluationResult result = ((Evaluatable)expression).evaluate(ctx);
 
-        if(result == null || result.indeterminate()){
+        Set<AttributeAssignment> values = new HashSet<AttributeAssignment>();
+        EvaluationResult result = ((Evaluatable) expression).evaluate(ctx);
+
+        if (result == null || result.indeterminate()) {
             return null;
         }
         // TODO when indetermine  policy also must be indetermine
         AttributeValue attributeValue = result.getAttributeValue();
 
-        if(attributeValue != null){
-            if(attributeValue.isBag()) {
-                if(((BagAttribute)attributeValue).size() > 0 ){
-                    Iterator iterator = ((BagAttribute)attributeValue).iterator();
-                    while(iterator.hasNext()){
+        if (attributeValue != null) {
+            if (attributeValue.isBag()) {
+                if (((BagAttribute) attributeValue).size() > 0) {
+                    Iterator iterator = ((BagAttribute) attributeValue).iterator();
+                    while (iterator.hasNext()) {
                         AttributeValue bagValue = (AttributeValue) iterator.next();
                         AttributeAssignment assignment =
                                 new AttributeAssignment(attributeId, bagValue.getType(), category,
-                                                                        bagValue.encode(), issuer);
+                                        bagValue.encode(), issuer);
 
                         values.add(assignment);
                     }
@@ -178,7 +179,7 @@ public class AttributeAssignmentExpression {
             } else {
                 AttributeAssignment assignment =
                         new AttributeAssignment(attributeId, attributeValue.getType(),
-                                                category, attributeValue.encode(), issuer);
+                                category, attributeValue.encode(), issuer);
                 values.add(assignment);
             }
         }
@@ -192,14 +193,14 @@ public class AttributeAssignmentExpression {
      *
      * @param builder string stream into which the XML-encoded data is written
      */
-    public void encode(StringBuilder builder){
+    public void encode(StringBuilder builder) {
 
         builder.append("<AttributeAssignmentExpression AttributeId=\"" + attributeId + "\"");
 
-        if(category != null){
+        if (category != null) {
             builder.append(" Category=\"" + category + "\"");
         }
-        if(issuer != null){
+        if (issuer != null) {
             builder.append(" Issuer=\"" + issuer + "\"");
         }
         builder.append(" >\n");

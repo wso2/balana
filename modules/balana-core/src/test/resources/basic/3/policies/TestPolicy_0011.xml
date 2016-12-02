@@ -2,7 +2,7 @@
         RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
         Version="1.0">
     <Description>Test policy 0011. XPath evaluation is done with respect to content element which would
-        be resulted from ContextSelectorId.  Then check for a matching value.
+        be resulted from ContextSelectorId. Then check for a matching value.
         Here content element has been bounded with custom namespace and prefix.
         This is same as Test policy 0010, But here XPath has been defined to selects from the root node
     </Description>

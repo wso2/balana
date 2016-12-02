@@ -31,7 +31,7 @@ public class StringConversionFunctionCluster implements FunctionCluster {
 
     public Set<Function> getSupportedFunctions() {
         Set<Function> set = new HashSet<Function>();
-        for (String identifier : StringConversionFunction.getSupportedIdentifiers()){
+        for (String identifier : StringConversionFunction.getSupportedIdentifiers()) {
             set.add(new StringConversionFunction(identifier));
         }
         return set;

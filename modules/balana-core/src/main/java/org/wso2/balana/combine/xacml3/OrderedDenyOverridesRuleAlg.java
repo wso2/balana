@@ -54,7 +54,7 @@ public class OrderedDenyOverridesRuleAlg extends DenyOverridesRuleAlg {
     public OrderedDenyOverridesRuleAlg() {
         super(identifierURI);
 
-        if (earlyException != null){
+        if (earlyException != null) {
             throw earlyException;
         }
     }

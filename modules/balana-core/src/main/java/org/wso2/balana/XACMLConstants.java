@@ -30,7 +30,7 @@ public class XACMLConstants {
     public static final String RESOURCE_ID = "urn:oasis:names:tc:xacml:1.0:resource:resource-id";
 
     /**
-     * The standard URI for listing a resource's scope  in XACML 1.0 
+     * The standard URI for listing a resource's scope  in XACML 1.0
      */
     public static final String RESOURCE_SCOPE_1_0 = "urn:oasis:names:tc:xacml:1.0:resource:scope";
 
@@ -56,30 +56,30 @@ public class XACMLConstants {
     public static final int SCOPE_DESCENDANTS = 2;
 
     public static final String MULTIPLE_CONTENT_SELECTOR = "urn:oasis:names:tc:xacml:3.0:profile:" +
-                                                                        "multiple:content-selector";
+            "multiple:content-selector";
 
     public static final String CONTENT_SELECTOR = "urn:oasis:names:tc:xacml:3.0:content-selector";
 
-    public final static String ATTRIBUTES_ELEMENT =  "Attributes";
+    public final static String ATTRIBUTES_ELEMENT = "Attributes";
 
-    public final static String MULTI_REQUESTS =  "MultiRequests";
+    public final static String MULTI_REQUESTS = "MultiRequests";
 
-    public final static String REQUEST_DEFAULTS =  "RequestDefaults";
+    public final static String REQUEST_DEFAULTS = "RequestDefaults";
 
-    public final static String ATTRIBUTE_ELEMENT =  "Attribute";
+    public final static String ATTRIBUTE_ELEMENT = "Attribute";
 
-    public final static String ATTRIBUTES_CATEGORY =  "Category";
+    public final static String ATTRIBUTES_CATEGORY = "Category";
 
-    public final static String ATTRIBUTES_ID =  "id";
+    public final static String ATTRIBUTES_ID = "id";
 
-    public final static String RETURN_POLICY_LIST =  "ReturnPolicyIdList";
+    public final static String RETURN_POLICY_LIST = "ReturnPolicyIdList";
 
-    public final static String COMBINE_DECISION =  "CombinedDecision";
-    
-    public final static String ATTRIBUTES_CONTENT =  "Content";
+    public final static String COMBINE_DECISION = "CombinedDecision";
 
-    public final static String RESOURCE_CONTENT =  "ResourceContent";
-    
+    public final static String ATTRIBUTES_CONTENT = "Content";
+
+    public final static String RESOURCE_CONTENT = "ResourceContent";
+
     public static final String RESOURCE_CATEGORY = "urn:oasis:names:tc:xacml:3.0:attribute-category:resource";
 
     public static final String SUBJECT_CATEGORY = "urn:oasis:names:tc:xacml:1.0:subject-category:access-subject";
@@ -94,7 +94,7 @@ public class XACMLConstants {
 
     public static final String REQUEST_CONTEXT_3_0_IDENTIFIER = "urn:oasis:names:tc:xacml:3.0:core:schema:wd-17";
 
-    public static final String ANY  = "Any";
+    public static final String ANY = "Any";
 
     /**
      * XACML 1.0 identifier
@@ -131,5 +131,5 @@ public class XACMLConstants {
      * Version identifier for XACML 3.0
      */
     public static final int XACML_VERSION_3_0 = 3;
-    
+
 }

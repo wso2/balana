@@ -83,7 +83,7 @@ public class RequestCtx extends AbstractRequestCtx {
      * Constructor that creates a <code>RequestCtx</code> from components.
      *
      * @param attributesSet a <code>Set</code> of <code>Attributes</code>s
-     * @param documentRoot  the root node of the DOM tree for this request 
+     * @param documentRoot  the root node of the DOM tree for this request
      * @throws IllegalArgumentException if the inputs are not well formed
      */
     public RequestCtx(Set<Attributes> attributesSet, Node documentRoot) {
@@ -121,8 +121,7 @@ public class RequestCtx extends AbstractRequestCtx {
      *
      * @param root the node to parse for the <code>RequestCtx</code>
      * @return a new <code>RequestCtx</code> constructed by parsing
-     * @throws org.wso2.balana.ParsingException
-     *          if the DOM node is invalid
+     * @throws org.wso2.balana.ParsingException if the DOM node is invalid
      */
     public static RequestCtx getInstance(Node root) throws ParsingException {
 
@@ -236,7 +235,7 @@ public class RequestCtx extends AbstractRequestCtx {
      * Encodes this  <code>AbstractRequestCtx</code>  into its XML representation and writes this encoding to the given
      * <code>OutputStream</code> with indentation.
      *
-     * @param output a stream into which the XML-encoded data is written
+     * @param output   a stream into which the XML-encoded data is written
      * @param indenter an object that creates indentation strings
      */
     public void encode(OutputStream output, Indenter indenter) {
@@ -245,21 +244,21 @@ public class RequestCtx extends AbstractRequestCtx {
         PrintStream out = new PrintStream(output);
 
         out.println(indent + "<Request xmlns=\"" + XACMLConstants.REQUEST_CONTEXT_3_0_IDENTIFIER +
-                "\" ReturnPolicyIdList=\"" + returnPolicyIdList + "\" CombinedDecision=\"" + 
-                combinedDecision +   "\" >");
+                "\" ReturnPolicyIdList=\"" + returnPolicyIdList + "\" CombinedDecision=\"" +
+                combinedDecision + "\" >");
 
         indenter.in();
 
-        for(Attributes attributes : attributesSet){
+        for (Attributes attributes : attributesSet) {
             out.println(attributes.encode());
         }
 
-        if(defaults != null){
+        if (defaults != null) {
             defaults.encode(output, indenter);
         }
 
-        if(multiRequests != null){
-           // multiRequests 
+        if (multiRequests != null) {
+            // multiRequests
         }
 
         indenter.out();

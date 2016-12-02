@@ -44,9 +44,9 @@ import java.net.URISyntaxException;
  * This is the standard Ordered Deny Overrides rule combining algorithm. It allows a single
  * evaluation of Deny to take precedence over any number of permit, not applicable or indeterminate
  * results. Note that this uses the regular Deny Overrides implementation since it is also orderd.
- * 
- * @since 1.1
+ *
  * @author seth proctor
+ * @since 1.1
  */
 public class OrderedDenyOverridesRuleAlg extends DenyOverridesRuleAlg {
 

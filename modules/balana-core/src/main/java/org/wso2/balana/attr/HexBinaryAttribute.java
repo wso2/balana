@@ -46,9 +46,9 @@ import org.w3c.dom.Node;
 /**
  * Representation of an xsi:hexBinary value. This class supports parsing xsi:hexBinary values. All
  * objects of this class are immutable and all methods of the class are thread-safe.
- * 
- * @since 1.0
+ *
  * @author Steve Hanna
+ * @since 1.0
  */
 public class HexBinaryAttribute extends AttributeValue {
     /**
@@ -83,7 +83,9 @@ public class HexBinaryAttribute extends AttributeValue {
             earlyException = new IllegalArgumentException();
             earlyException.initCause(e);
         }
-    };
+    }
+
+    ;
 
     /**
      * The actual binary value that this object represents.
@@ -97,7 +99,7 @@ public class HexBinaryAttribute extends AttributeValue {
 
     /**
      * Creates a new <code>HexBinaryAttribute</code> that represents the byte [] value supplied.
-     * 
+     *
      * @param value the <code>byte []</code> value to be represented
      */
     public HexBinaryAttribute(byte[] value) {
@@ -115,10 +117,10 @@ public class HexBinaryAttribute extends AttributeValue {
     /**
      * Returns a new <code>HexBinaryAttribute</code> that represents the xsi:hexBinary at a
      * particular DOM node.
-     * 
+     *
      * @param root the <code>Node</code> that contains the desired value
      * @return a new <code>HexBinaryAttribute</code> representing the appropriate value
-     * @exception ParsingException if a parsing error occurs
+     * @throws ParsingException if a parsing error occurs
      */
     public static HexBinaryAttribute getInstance(Node root) throws ParsingException {
         return getInstance(root.getFirstChild().getNodeValue());
@@ -127,10 +129,10 @@ public class HexBinaryAttribute extends AttributeValue {
     /**
      * Returns a new <code>HexBinaryAttribute</code> that represents the xsi:hexBinary value
      * indicated by the string provided.
-     * 
+     *
      * @param value a string representing the desired value
      * @return a new <code>HexBinaryAttribute</code> representing the desired value
-     * @exception ParsingException if a parsing error occurs
+     * @throws ParsingException if a parsing error occurs
      */
     public static HexBinaryAttribute getInstance(String value) throws ParsingException {
         byte[] bytes = hexToBin(value);
@@ -139,50 +141,6 @@ public class HexBinaryAttribute extends AttributeValue {
             throw new ParsingException("Couldn't parse purported " + "hex string: " + value);
 
         return new HexBinaryAttribute(bytes);
-    }
-
-    /**
-     * Returns the <code>byte []</code> value represented by this object. Note that this value is
-     * cloned before returning to prevent unauthorized modifications.
-     * 
-     * @return the <code>byte []</code> value
-     */
-    public byte[] getValue() {
-        return (byte[]) value.clone();
-    }
-
-    /**
-     * Returns the hashcode value used to index and compare this object with others of the same
-     * type. Typically this is the hashcode of the backing data object.
-     * 
-     * @return the object's hashcode value
-     */
-    public int hashCode() {
-        int code = (int) (value[0]);
-
-        for (int i = 1; i < value.length; i++) {
-            code *= 31;
-            code += (int) (value[i]);
-        }
-
-        return code;
-    }
-
-    /**
-     * Returns true if the input is an instance of this class and if its value equals the value
-     * contained in this class.
-     * 
-     * @param o the object to compare
-     * 
-     * @return true if this object and the input represent the same value
-     */
-    public boolean equals(Object o) {
-        if (!(o instanceof HexBinaryAttribute))
-            return false;
-
-        HexBinaryAttribute other = (HexBinaryAttribute) o;
-
-        return Arrays.equals(value, other.value);
     }
 
     /**
@@ -209,7 +167,7 @@ public class HexBinaryAttribute extends AttributeValue {
     /**
      * Parse a hex string, returning a new byte array containing the value. Return null in case of a
      * parsing error.
-     * 
+     *
      * @param hex the hex string
      * @return a new byte array containing the value (or null)
      */
@@ -234,7 +192,7 @@ public class HexBinaryAttribute extends AttributeValue {
 
     /**
      * Return the hex character for a particular nibble (half a byte).
-     * 
+     *
      * @param nibble a value 0-15
      * @return hex character for that nibble (using A-F for 10-15)
      */
@@ -252,7 +210,7 @@ public class HexBinaryAttribute extends AttributeValue {
     /**
      * Return a straight hexadecimal conversion of a byte array. This is a String containing only
      * hex digits.
-     * 
+     *
      * @param bytes the byte array
      * @return the hex version
      */
@@ -271,8 +229,51 @@ public class HexBinaryAttribute extends AttributeValue {
     }
 
     /**
+     * Returns the <code>byte []</code> value represented by this object. Note that this value is
+     * cloned before returning to prevent unauthorized modifications.
+     *
+     * @return the <code>byte []</code> value
+     */
+    public byte[] getValue() {
+        return (byte[]) value.clone();
+    }
+
+    /**
+     * Returns the hashcode value used to index and compare this object with others of the same
+     * type. Typically this is the hashcode of the backing data object.
+     *
+     * @return the object's hashcode value
+     */
+    public int hashCode() {
+        int code = (int) (value[0]);
+
+        for (int i = 1; i < value.length; i++) {
+            code *= 31;
+            code += (int) (value[i]);
+        }
+
+        return code;
+    }
+
+    /**
+     * Returns true if the input is an instance of this class and if its value equals the value
+     * contained in this class.
+     *
+     * @param o the object to compare
+     * @return true if this object and the input represent the same value
+     */
+    public boolean equals(Object o) {
+        if (!(o instanceof HexBinaryAttribute))
+            return false;
+
+        HexBinaryAttribute other = (HexBinaryAttribute) o;
+
+        return Arrays.equals(value, other.value);
+    }
+
+    /**
      * Returns a String representation.
-     * 
+     *
      * @return the String representation
      */
     public String toString() {

@@ -60,9 +60,9 @@ import java.util.Set;
  * create a new <code>BaseCombiningAlgFactory</code> (or some other <code>CombiningAlgFactory</code>
  * ) and configure it with the standard algorithms using <code>getStandardAlgorithms</code> (or, in
  * the case of <code>BaseAttributeFactory</code>, by providing the datatypes in the constructor).
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public class StandardCombiningAlgFactory extends BaseCombiningAlgFactory {
 
@@ -165,7 +165,7 @@ public class StandardCombiningAlgFactory extends BaseCombiningAlgFactory {
      * this always returns the same instance, creating the factory if it hasn't been requested
      * before. This is the default model used by the <code>CombiningAlgFactory</code>, ensuring
      * quick access to this factory.
-     * 
+     *
      * @return the factory instance
      */
     public static StandardCombiningAlgFactory getFactory() {
@@ -188,7 +188,7 @@ public class StandardCombiningAlgFactory extends BaseCombiningAlgFactory {
      * you want to create a new factory that extends the set of supported algorithms). In general,
      * you should use <code>getFactory</code> which is more efficient and enforces a singleton
      * pattern.
-     * 
+     *
      * @return a new factory supporting the standard algorithms
      */
     public static CombiningAlgFactory getNewFactory() {
@@ -203,18 +203,16 @@ public class StandardCombiningAlgFactory extends BaseCombiningAlgFactory {
      * Returns the identifiers supported for the given version of XACML. Because this factory
      * supports identifiers from all versions of the XACML specifications, this method is useful for
      * getting a list of which specific identifiers are supported by a given version of XACML.
-     * 
+     *
      * @param xacmlVersion a standard XACML identifier string, as provided in
-     *            <code>PolicyMetaData</code>
-     * 
+     *                     <code>PolicyMetaData</code>
      * @return a <code>Set</code> of identifiers
-     * 
      * @throws UnknownIdentifierException if the version string is unknown
      */
     public static Set getStandardAlgorithms(String xacmlVersion) throws UnknownIdentifierException {
         if (xacmlVersion.equals(XACMLConstants.XACML_1_0_IDENTIFIER)
                 || xacmlVersion.equals(XACMLConstants.XACML_2_0_IDENTIFIER) ||
-                xacmlVersion.equals(XACMLConstants.XACML_3_0_IDENTIFIER)){
+                xacmlVersion.equals(XACMLConstants.XACML_3_0_IDENTIFIER)) {
             return supportedAlgIds;
         }
 
@@ -224,9 +222,8 @@ public class StandardCombiningAlgFactory extends BaseCombiningAlgFactory {
     /**
      * Throws an <code>UnsupportedOperationException</code> since you are not allowed to modify what
      * a standard factory supports.
-     * 
+     *
      * @param alg the combining algorithm to add
-     * 
      * @throws UnsupportedOperationException always
      */
     public void addAlgorithm(CombiningAlgorithm alg) {

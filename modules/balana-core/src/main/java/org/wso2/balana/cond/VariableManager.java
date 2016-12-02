@@ -61,9 +61,9 @@ import org.w3c.dom.NodeList;
  * for the internal parsing routines. Also, note that the operations on this class are not
  * thread-safe. Typically this doesn't matter, since the code doesn't support using more than one
  * thread to parse a single Policy.
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
 public class VariableManager {
 
@@ -84,17 +84,17 @@ public class VariableManager {
      * Note that the use of a DOM node may change to an arbitrary interface, so that you could use
      * your own mechanism, but this is still being hashed out. This interface will be forzed before
      * a 2.0 release.
-     * 
+     *
      * @param variableIds a <code>Map</code> from an identifier to the <code>Node</code> that is the
-     *            root of the cooresponding variable definition, or null
-     * @param metaData the meta-data associated with the containing policy
+     *                    root of the cooresponding variable definition, or null
+     * @param metaData    the meta-data associated with the containing policy
      */
     public VariableManager(Map variableIds, PolicyMetaData metaData) {
         idMap = new HashMap();
 
         Iterator it = variableIds.entrySet().iterator();
         while (it.hasNext()) {
-            Object key = ((Entry)it.next()).getKey();
+            Object key = ((Entry) it.next()).getKey();
             Node node = (Node) (variableIds.get(key));
             idMap.put(key, new VariableState(null, node, null, false, false));
         }
@@ -110,11 +110,9 @@ public class VariableManager {
      * all retrieved definitions are cached, and once this manager has started parsing a definition
      * it will never try parsing that definition again. If the definition cannot be retrieved, then
      * an exception is thrown.
-     * 
+     *
      * @param variableId the definition's identifier
-     * 
      * @return the identified definition
-     * 
      * @throws ProcessingException if the definition cannot be resolved
      */
     public VariableDefinition getDefinition(String variableId) {
@@ -202,13 +200,11 @@ public class VariableManager {
      * Returns the datatype that the identified definition's expression resolves to on evaluation.
      * Note that this method makes every attempt to discover this value, including parsing dependent
      * definitions if needed and possible.
-     * 
+     *
      * @param variableId the identifier for the definition
-     * 
      * @return the datatype that the identified definition's expression evaluates to
-     * 
      * @throws ProcessingException if the identifier is not supported or if the result cannot be
-     *             resolved
+     *                             resolved
      */
     public URI getVariableType(String variableId) {
         VariableState state = (VariableState) (idMap.get(variableId));
@@ -239,13 +235,11 @@ public class VariableManager {
      * Returns true if the identified definition's expression resolves to a bag on evaluation. Note
      * that this method makes every attempt to discover this value, including parsing dependent
      * definitions if needed and possible.
-     * 
+     *
      * @param variableId the identifier for the definition
-     * 
      * @return true if the identified definition's expression evaluates to a bag
-     * 
      * @throws ProcessingException if the identifier is not supported or if the result cannot be
-     *             resolved
+     *                             resolved
      */
     public boolean returnsBag(String variableId) {
         VariableState state = (VariableState) (idMap.get(variableId));
@@ -301,7 +295,7 @@ public class VariableManager {
         }
 
         public VariableState(VariableDefinition definition, Node rootNode, URI type,
-                boolean returnsBag, boolean handled) {
+                             boolean returnsBag, boolean handled) {
             this.definition = definition;
             this.rootNode = rootNode;
             this.type = type;

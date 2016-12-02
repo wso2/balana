@@ -49,8 +49,8 @@ import java.util.List;
  * rule. This interface is used to interact with these node types in a general way. Note that rules
  * are leaf nodes in a policy tree as they never contain children.
  *
- * @since 1.1
  * @author seth proctor
+ * @since 1.1
  */
 public interface PolicyTreeElement {
 
@@ -90,7 +90,6 @@ public interface PolicyTreeElement {
      * rules for matching are different depending on the type of element being matched.
      *
      * @param context the representation of the request
-     *
      * @return the result of trying to match this element and the request
      */
     public MatchResult match(EvaluationCtx context);
@@ -101,7 +100,6 @@ public interface PolicyTreeElement {
      * evaluated.
      *
      * @param context the representation of the request we're evaluating
-     *
      * @return the result of the evaluation
      */
     public AbstractResult evaluate(EvaluationCtx context);

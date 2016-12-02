@@ -50,9 +50,9 @@ import org.w3c.dom.NodeList;
  * pre-define any number of expression blocks for general use. Note that it's legal (though not
  * usually useful) to define expressions that don't get referenced within the Policy. It is illegal
  * to have more than one definition with the same identifier within a Policy.
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
 public class VariableDefinition {
 
@@ -64,7 +64,7 @@ public class VariableDefinition {
 
     /**
      * Creates a new <code>VariableDefinition</code> with the given identifier and expression.
-     * 
+     *
      * @param variableId the identifier for this definition
      * @param expression the expression defined here
      */
@@ -76,15 +76,14 @@ public class VariableDefinition {
     /**
      * Returns a new instance of the <code>VariableDefinition</code> class based on a DOM node. The
      * node must be the root of an XML VariableDefinitionType.
-     * 
-     * @param root the DOM root of a VariableDefinitionType XML type
+     *
+     * @param root     the DOM root of a VariableDefinitionType XML type
      * @param metaData the meta-data associated with the containing policy
-     * @param manager <code>VariableManager</code> used to connect references to this definition
-     * 
+     * @param manager  <code>VariableManager</code> used to connect references to this definition
      * @throws ParsingException if the VariableDefinitionType is invalid
      */
     public static VariableDefinition getInstance(Node root, PolicyMetaData metaData,
-            VariableManager manager) throws ParsingException {
+                                                 VariableManager manager) throws ParsingException {
         String variableId = root.getAttributes().getNamedItem("VariableId").getNodeValue();
 
         // get the first element, which is the expression node
@@ -102,7 +101,7 @@ public class VariableDefinition {
 
     /**
      * Returns the identifier for this definition.
-     * 
+     *
      * @return the definition's identifier
      */
     public String getVariableId() {
@@ -111,7 +110,7 @@ public class VariableDefinition {
 
     /**
      * Returns the expression provided by this definition.
-     * 
+     *
      * @return the definition's expression
      */
     public Expression getExpression() {

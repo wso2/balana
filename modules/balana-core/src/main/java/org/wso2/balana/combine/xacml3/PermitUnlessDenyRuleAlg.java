@@ -36,11 +36,11 @@ import java.util.Set;
 
 /**
  * This is the standard Deny unless permit rule combining algorithm. This algorithm is intended for
- * those cases where a deny decision should have priority over a permit decision, and an "Indeterminate" or  
+ * those cases where a deny decision should have priority over a permit decision, and an "Indeterminate" or
  * "NotApplicable" must never be the result. It is particularly useful at the top level
  * in a policy structure to ensure that a PDP will always return a definite "Permit" or "Deny" result.
  */
-public class PermitUnlessDenyRuleAlg extends RuleCombiningAlgorithm{
+public class PermitUnlessDenyRuleAlg extends RuleCombiningAlgorithm {
 
     /**
      * The standard URI used to identify this algorithm
@@ -68,7 +68,7 @@ public class PermitUnlessDenyRuleAlg extends RuleCombiningAlgorithm{
     public PermitUnlessDenyRuleAlg() {
         super(identifierURI);
 
-        if (earlyException != null){
+        if (earlyException != null) {
             throw earlyException;
         }
     }
@@ -87,7 +87,7 @@ public class PermitUnlessDenyRuleAlg extends RuleCombiningAlgorithm{
     public AbstractResult combine(EvaluationCtx context, List parameters, List ruleElements) {
 
         List<ObligationResult> permitObligations = new ArrayList<ObligationResult>();
-        List<Advice> permitAdvices= new ArrayList<Advice>();
+        List<Advice> permitAdvices = new ArrayList<Advice>();
 
         for (Object ruleElement : ruleElements) {
             Rule rule = ((RuleCombinerElement) (ruleElement)).getRule();
@@ -98,7 +98,7 @@ public class PermitUnlessDenyRuleAlg extends RuleCombiningAlgorithm{
             // we've seen, we always return DENY
             if (value == AbstractResult.DECISION_DENY) {
                 return result;
-            } else if(value == AbstractResult.DECISION_PERMIT){
+            } else if (value == AbstractResult.DECISION_PERMIT) {
                 permitObligations.addAll(result.getObligations());
                 permitAdvices.addAll(result.getAdvices());
             }
@@ -106,6 +106,6 @@ public class PermitUnlessDenyRuleAlg extends RuleCombiningAlgorithm{
 
         // if there is not any value of DENY. The return PERMIT
         return ResultFactory.getFactory().getResult(AbstractResult.DECISION_PERMIT,
-                                                    permitObligations, permitAdvices, context);
+                permitObligations, permitAdvices, context);
     }
 }

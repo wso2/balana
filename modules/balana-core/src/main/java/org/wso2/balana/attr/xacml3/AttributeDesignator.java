@@ -39,24 +39,20 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 
+ *
  */
 public class AttributeDesignator extends AbstractDesignator {
 
+    // the logger we'll use for all messages
+    private static Log logger = LogFactory.getLog(AttributeDesignator.class);
     // required attributes
     private URI type;
     private URI id;
-
     // optional attribute
     private String issuer;
-
     // must resolution find something
     private boolean mustBePresent;
-
     private URI category;
-
-    // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(AttributeDesignator.class);
 
 
     /**
@@ -94,7 +90,7 @@ public class AttributeDesignator extends AbstractDesignator {
     /**
      * Creates a new <code>AttributeDesignator</code> based on the DOM root of the XML data.
      *
-     * @param root  the DOM root of the AttributeDesignatorType XML type
+     * @param root the DOM root of the AttributeDesignatorType XML type
      * @return the designator
      * @throws ParsingException if the AttributeDesignatorType was invalid
      */
@@ -144,7 +140,7 @@ public class AttributeDesignator extends AbstractDesignator {
 
         try {
             Node node = attrs.getNamedItem("Issuer");
-            if (node != null){
+            if (node != null) {
                 issuer = node.getNodeValue();
             }
         } catch (Exception e) {
@@ -176,7 +172,7 @@ public class AttributeDesignator extends AbstractDesignator {
     }
 
     /**
-     * Returns the category for this designator. 
+     * Returns the category for this designator.
      *
      * @return the category
      */
@@ -216,7 +212,7 @@ public class AttributeDesignator extends AbstractDesignator {
      *
      * @return true
      * @deprecated As of 2.0, you should use the <code>returnsBag</code> method from the
-     *             super-interface <code>Expression</code>.
+     * super-interface <code>Expression</code>.
      */
     public boolean evaluatesToBag() {
         return true;
@@ -237,7 +233,7 @@ public class AttributeDesignator extends AbstractDesignator {
      *
      * @param context the representation of the request
      * @return a result containing a bag either empty because no values were found or containing at
-     *         least one value, or status associated with an Indeterminate result
+     * least one value, or status associated with an Indeterminate result
      */
     public EvaluationResult evaluate(EvaluationCtx context) {
         EvaluationResult result = null;
@@ -246,7 +242,7 @@ public class AttributeDesignator extends AbstractDesignator {
         result = context.getAttribute(type, id, issuer, category);
 
         // if the lookup was indeterminate, then we return immediately
-        if (result.indeterminate()){
+        if (result.indeterminate()) {
             return result;
         }
         BagAttribute bag = (BagAttribute) (result.getAttributeValue());
@@ -264,7 +260,7 @@ public class AttributeDesignator extends AbstractDesignator {
 
                 ArrayList<MissingAttributeDetail> missingAttributes = new ArrayList<MissingAttributeDetail>();
                 MissingAttributeDetail missingAttribute = new MissingAttributeDetail(id, type,
-                                        category, issuer, null, XACMLConstants.XACML_VERSION_3_0);
+                        category, issuer, null, XACMLConstants.XACML_VERSION_3_0);
                 missingAttributes.add(missingAttribute);
                 StatusDetail detail = new StatusDetail(missingAttributes);
 
@@ -308,13 +304,13 @@ public class AttributeDesignator extends AbstractDesignator {
         if (issuer != null) {
             builder.append(" Issuer=\"").append(issuer).append("\"");
         }
-        
+
         if (mustBePresent) {
             builder.append(" MustBePresent=\"true\"");
         } else {
             builder.append(" MustBePresent=\"false\"");
         }
-        
+
         builder.append("/>\n");
     }
 

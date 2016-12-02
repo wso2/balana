@@ -37,15 +37,15 @@ package org.wso2.balana.attr;
 
 /**
  * A simple proxy interface used to install new <code>AttributeFactory</code>s.
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public interface AttributeFactoryProxy {
 
     /**
      * Returns an instance of the <code>AttributeFactory</code> for which this is a proxy.
-     * 
+     *
      * @return an <code>AttributeFactory</code> instance
      */
     public AttributeFactory getFactory();

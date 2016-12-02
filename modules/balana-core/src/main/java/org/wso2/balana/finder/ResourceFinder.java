@@ -65,23 +65,20 @@ import java.util.List;
  * methods without context will be called when this finder is called without the context). In
  * practice this means that the methods with context will always get invoked, since this is what the
  * default PDP implementation calls.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class ResourceFinder {
 
-    // the list of all modules
-    private List<ResourceFinderModule> allModules;
-
-    // the list of child modules
-    private List<ResourceFinderModule> childModules;
-
-    // the list of descendant modules
-    private List<ResourceFinderModule> descendantModules;
-
     // the logger we'll use for all messages
     private static Log logger = LogFactory.getLog(ResourceFinder.class);
+    // the list of all modules
+    private List<ResourceFinderModule> allModules;
+    // the list of child modules
+    private List<ResourceFinderModule> childModules;
+    // the list of descendant modules
+    private List<ResourceFinderModule> descendantModules;
 
     /**
      * Default constructor.
@@ -95,7 +92,7 @@ public class ResourceFinder {
     /**
      * Returns the ordered <code>List</code> of <code>ResourceFinderModule</code>s used by this
      * class to find resources.
-     * 
+     *
      * @return a <code>List</code> of <code>ResourceFinderModule</code>s
      */
     public List<ResourceFinderModule> getModules() {
@@ -105,7 +102,7 @@ public class ResourceFinder {
     /**
      * Sets the ordered <code>List</code> of <code>ResourceFinderModule</code>s used by this class
      * to find resources. The ordering will be maintained.
-     * 
+     *
      * @param modules a code>List</code> of <code>ResourceFinderModule</code>s
      */
     public void setModules(List<ResourceFinderModule> modules) {
@@ -130,14 +127,13 @@ public class ResourceFinder {
      * Finds Resource Ids using the Children scope, and returns all resolved identifiers as well as
      * any errors that occurred. If no modules can handle the given Resource Id, then an empty
      * result is returned.
-     * 
+     *
      * @param parentResourceId the root of the resources
-     * @param context the representation of the request data
-     * 
+     * @param context          the representation of the request data
      * @return the result of looking for child resources
      */
     public ResourceFinderResult findChildResources(AttributeValue parentResourceId,
-            EvaluationCtx context) {
+                                                   EvaluationCtx context) {
         Iterator it = childModules.iterator();
 
         while (it.hasNext()) {
@@ -162,15 +158,13 @@ public class ResourceFinder {
      * Finds Resource Ids using the Children scope, and returns all resolved identifiers as well as
      * any errors that occurred. If no modules can handle the given Resource Id, then an empty
      * result is returned.
-     * 
-     * @deprecated As of version 1.2, replaced by
-     *             {@link #findChildResources(AttributeValue,EvaluationCtx)}. This version does not
-     *             provide the evaluation context to the modules, and will be removed in a future
-     *             release.
-     * 
+     *
      * @param parentResourceId the root of the resources
-     * 
      * @return the result of looking for child resources
+     * @deprecated As of version 1.2, replaced by
+     * {@link #findChildResources(AttributeValue, EvaluationCtx)}. This version does not
+     * provide the evaluation context to the modules, and will be removed in a future
+     * release.
      */
     public ResourceFinderResult findChildResources(AttributeValue parentResourceId) {
         Iterator it = childModules.iterator();
@@ -197,14 +191,13 @@ public class ResourceFinder {
      * Finds Resource Ids using the Descendants scope, and returns all resolved identifiers as well
      * as any errors that occurred. If no modules can handle the given Resource Id, then an empty
      * result is returned.
-     * 
+     *
      * @param parentResourceId the root of the resources
-     * @param context the representation of the request data
-     * 
+     * @param context          the representation of the request data
      * @return the result of looking for descendant resources
      */
     public ResourceFinderResult findDescendantResources(AttributeValue parentResourceId,
-            EvaluationCtx context) {
+                                                        EvaluationCtx context) {
         Iterator it = descendantModules.iterator();
 
         while (it.hasNext()) {
@@ -229,15 +222,13 @@ public class ResourceFinder {
      * Finds Resource Ids using the Descendants scope, and returns all resolved identifiers as well
      * as any errors that occurred. If no modules can handle the given Resource Id, then an empty
      * result is returned.
-     * 
-     * @deprecated As of version 1.2, replaced by
-     *             {@link #findDescendantResources(AttributeValue,EvaluationCtx)}. This version does
-     *             not provide the evaluation context to the modules, and will be removed in a
-     *             future release.
-     * 
+     *
      * @param parentResourceId the root of the resources
-     * 
      * @return the result of looking for child resources
+     * @deprecated As of version 1.2, replaced by
+     * {@link #findDescendantResources(AttributeValue, EvaluationCtx)}. This version does
+     * not provide the evaluation context to the modules, and will be removed in a
+     * future release.
      */
     public ResourceFinderResult findDescendantResources(AttributeValue parentResourceId) {
         Iterator it = descendantModules.iterator();

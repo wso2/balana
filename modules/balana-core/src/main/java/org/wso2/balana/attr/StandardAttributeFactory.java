@@ -59,9 +59,9 @@ import java.util.Set;
  * create a new <code>BaseAttributeFactory</code> (or some other <code>AttributeFactory</code>) and
  * configure it with the standard datatypes using <code>addStandardDatatypes</code> (or, in the case
  * of <code>BaseAttributeFactory</code>, by providing the datatypes in the constructor).
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public class StandardAttributeFactory extends BaseAttributeFactory {
 
@@ -134,7 +134,7 @@ public class StandardAttributeFactory extends BaseAttributeFactory {
      * this always returns the same instance, creating the factory if it hasn't been requested
      * before. This is the default model used by the <code>AttributeFactory</code>, ensuring quick
      * access to this factory.
-     * 
+     *
      * @return the factory instance
      */
     public static StandardAttributeFactory getFactory() {
@@ -157,7 +157,7 @@ public class StandardAttributeFactory extends BaseAttributeFactory {
      * you want to create a new factory that extends the set of supported datatypes). In general,
      * you should use <code>getFactory</code> which is more efficient and enforces a singleton
      * pattern.
-     * 
+     *
      * @return a new factory supporting the standard datatypes
      */
     public static AttributeFactory getNewFactory() {
@@ -172,12 +172,10 @@ public class StandardAttributeFactory extends BaseAttributeFactory {
      * Returns the identifiers supported for the given version of XACML. Because this factory
      * supports identifiers from all versions of the XACML specifications, this method is useful for
      * getting a list of which specific identifiers are supported by a given version of XACML.
-     * 
+     *
      * @param xacmlVersion a standard XACML identifier string, as provided in
-     *            <code>PolicyMetaData</code>
-     * 
+     *                     <code>PolicyMetaData</code>
      * @return a <code>Set</code> of identifiers
-     * 
      * @throws UnknownIdentifierException if the version string is unknown
      */
     public static Set getStandardDatatypes(String xacmlVersion) throws UnknownIdentifierException {
@@ -185,7 +183,7 @@ public class StandardAttributeFactory extends BaseAttributeFactory {
             return supportedV1Identifiers;
         } else if (xacmlVersion.equals(XACMLConstants.XACML_2_0_IDENTIFIER)) {
             return supportedV2Identifiers;
-        } else if(xacmlVersion.equals(XACMLConstants.XACML_3_0_IDENTIFIER)){
+        } else if (xacmlVersion.equals(XACMLConstants.XACML_3_0_IDENTIFIER)) {
             return supportedV3Identifiers;
         }
 
@@ -195,10 +193,9 @@ public class StandardAttributeFactory extends BaseAttributeFactory {
     /**
      * Throws an <code>UnsupportedOperationException</code> since you are not allowed to modify what
      * a standard factory supports.
-     * 
-     * @param id the name of the attribute type
+     *
+     * @param id    the name of the attribute type
      * @param proxy the proxy used to create new attributes of the given type
-     * 
      * @throws UnsupportedOperationException always
      */
     public void addDatatype(String id, AttributeProxy proxy) {

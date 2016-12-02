@@ -37,15 +37,15 @@ package org.wso2.balana.combine;
 
 /**
  * A simple proxy interface used to install new <code>CombiningAlgFactory</code>s.
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public interface CombiningAlgFactoryProxy {
 
     /**
      * Returns an instance of the <code>CombiningAlgFactory</code> for which this is a proxy.
-     * 
+     *
      * @return a <code>CombiningAlgFactory</code> instance
      */
     public CombiningAlgFactory getFactory();

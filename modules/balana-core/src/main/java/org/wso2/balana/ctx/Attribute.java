@@ -54,9 +54,9 @@ import org.w3c.dom.NodeList;
 
 /**
  * Represents the AttributeType XML type found in the context schema.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class Attribute {
 
@@ -88,7 +88,7 @@ public class Attribute {
     private DateTimeAttribute issueInstant = null;
 
     /**
-     * a <code>List</code> of <code>AttributeValue</code>  
+     * a <code>List</code> of <code>AttributeValue</code>
      */
     private List<AttributeValue> attributeValues;
 
@@ -98,46 +98,46 @@ public class Attribute {
      * Creates a new <code>Attribute</code> of the type specified in the given
      * <code>AttributeValue</code>.for XACML 3 with one  <code>AttributeValue</code>
      *
-     * @param id the id of the attribute
-     * @param issuer the attribute's issuer or null if there is none
-     * @param issueInstant the moment when the attribute was issued, or null if it's unspecified
-     * @param value the actual value associated with the attribute meta-data
-     * @param includeInResult  whether to include this attribute in the result.
-     * @param version XACML version
+     * @param id              the id of the attribute
+     * @param issuer          the attribute's issuer or null if there is none
+     * @param issueInstant    the moment when the attribute was issued, or null if it's unspecified
+     * @param value           the actual value associated with the attribute meta-data
+     * @param includeInResult whether to include this attribute in the result.
+     * @param version         XACML version
      */
     public Attribute(URI id, String issuer, DateTimeAttribute issueInstant, AttributeValue value,
-                      boolean includeInResult, int version) {
-        this(id, value.getType(), issuer, issueInstant, Arrays.asList(value), includeInResult,version);
+                     boolean includeInResult, int version) {
+        this(id, value.getType(), issuer, issueInstant, Arrays.asList(value), includeInResult, version);
     }
 
     /**
      * Creates a new <code>Attribute</code>  for XACML 2 and XACML 1.X with one <code>AttributeValue</code>
      *
-     * @param id the id of the attribute
-     * @param issuer the attribute's issuer or null if there is none
+     * @param id           the id of the attribute
+     * @param issuer       the attribute's issuer or null if there is none
      * @param issueInstant the moment when the attribute was issued, or null if it's unspecified
-     * @param value actual <code>List</code> of <code>AttributeValue</code>  associated with
-     * @param version XACML version
+     * @param value        actual <code>List</code> of <code>AttributeValue</code>  associated with
+     * @param version      XACML version
      */
     public Attribute(URI id, String issuer, DateTimeAttribute issueInstant, AttributeValue value,
-                                                                                    int version) {
+                     int version) {
 
         this(id, value.getType(), issuer, issueInstant, Arrays.asList(value), false, version);
     }
 
     /**
      * Creates a new <code>Attribute</code>
-     * 
-     * @param id the id of the attribute
-     * @param type the type of the attribute
-     * @param issuer the attribute's issuer or null if there is none
-     * @param issueInstant the moment when the attribute was issued, or null if it's unspecified
+     *
+     * @param id              the id of the attribute
+     * @param type            the type of the attribute
+     * @param issuer          the attribute's issuer or null if there is none
+     * @param issueInstant    the moment when the attribute was issued, or null if it's unspecified
      * @param attributeValues actual <code>List</code> of <code>AttributeValue</code>  associated with
      * @param includeInResult whether to include this attribute in the result.
-     * @param xacmlVersion xacml version
+     * @param xacmlVersion    xacml version
      */
     public Attribute(URI id, URI type, String issuer, DateTimeAttribute issueInstant,
-            List<AttributeValue> attributeValues, boolean includeInResult, int xacmlVersion) {
+                     List<AttributeValue> attributeValues, boolean includeInResult, int xacmlVersion) {
         this.id = id;
         this.type = type;
         this.issuer = issuer;
@@ -151,7 +151,7 @@ public class Attribute {
     /**
      * Creates an instance of an <code>Attribute</code> based on the root DOM node of the XML data.
      *
-     * @param root the DOM root of the AttributeType XML type
+     * @param root    the DOM root of the AttributeType XML type
      * @param version XACML version
      * @return the attribute
      * @throws ParsingException throws ParsingException if the data is invalid
@@ -162,10 +162,10 @@ public class Attribute {
         String issuer = null;
         DateTimeAttribute issueInstant = null;
         List<AttributeValue> values = new ArrayList<AttributeValue>();
-        boolean includeInResult = false ;
+        boolean includeInResult = false;
 
 
-        AttributeFactory attributeFactory =  Balana.getInstance().getAttributeFactory();
+        AttributeFactory attributeFactory = Balana.getInstance().getAttributeFactory();
 
         // First check that we're really parsing an Attribute
         if (!DOMHelper.getLocalName(root).equals("Attribute")) {
@@ -182,7 +182,7 @@ public class Attribute {
                     + "AttributeId in AttributeType", e);
         }
 
-        if(!(version == XACMLConstants.XACML_VERSION_3_0)){
+        if (!(version == XACMLConstants.XACML_VERSION_3_0)) {
             try {
                 type = new URI(attrs.getNamedItem("DataType").getNodeValue());
             } catch (Exception e) {
@@ -191,25 +191,25 @@ public class Attribute {
             }
         }
 
-        if(version == XACMLConstants.XACML_VERSION_3_0){
+        if (version == XACMLConstants.XACML_VERSION_3_0) {
             try {
                 String includeInResultString = attrs.getNamedItem("IncludeInResult").getNodeValue();
-                if("true".equals(includeInResultString)){
+                if ("true".equals(includeInResultString)) {
                     includeInResult = true;
                 }
             } catch (Exception e) {
                 throw new ParsingException("Error parsing required attribute "
                         + "IncludeInResult in AttributeType", e);
-            }            
+            }
         }
 
         try {
             Node issuerNode = attrs.getNamedItem("Issuer");
             if (issuerNode != null)
                 issuer = issuerNode.getNodeValue();
-            if(!(version == XACMLConstants.XACML_VERSION_3_0)){
+            if (!(version == XACMLConstants.XACML_VERSION_3_0)) {
                 Node instantNode = attrs.getNamedItem("IssueInstant");
-                if (instantNode != null){
+                if (instantNode != null) {
                     issueInstant = DateTimeAttribute.getInstance(instantNode.getNodeValue());
                 }
             }
@@ -223,7 +223,7 @@ public class Attribute {
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
             if (DOMHelper.getLocalName(node).equals("AttributeValue")) {
-                if(version == XACMLConstants.XACML_VERSION_3_0){
+                if (version == XACMLConstants.XACML_VERSION_3_0) {
                     NamedNodeMap dataTypeAttribute = node.getAttributes();
                     try {
                         type = new URI(dataTypeAttribute.getNamedItem("DataType").getNodeValue());
@@ -233,7 +233,7 @@ public class Attribute {
                     }
                 }
 
-                try {                    
+                try {
                     values.add(attributeFactory.createValue(node, type));
                 } catch (UnknownIdentifierException uie) {
                     throw new ParsingException(uie.getMessage(), uie);
@@ -242,7 +242,7 @@ public class Attribute {
         }
 
         // make sure we got a value
-        if (values.size() < 1){
+        if (values.size() < 1) {
             throw new ParsingException("Attribute must contain a value");
         }
         return new Attribute(id, type, issuer, issueInstant, values, includeInResult, version);
@@ -250,7 +250,7 @@ public class Attribute {
 
     /**
      * Returns the id of this attribute
-     * 
+     *
      * @return the attribute id
      */
     public URI getId() {
@@ -259,7 +259,7 @@ public class Attribute {
 
     /**
      * Returns the data type of this attribute
-     * 
+     *
      * @return the attribute's data type
      */
     public URI getType() {
@@ -268,7 +268,7 @@ public class Attribute {
 
     /**
      * Returns the issuer of this attribute, or null if no issuer was named
-     * 
+     *
      * @return the issuer or null
      */
     public String getIssuer() {
@@ -277,7 +277,7 @@ public class Attribute {
 
     /**
      * Returns the moment at which the attribute was issued, or null if no issue time was provided
-     * 
+     *
      * @return the time of issuance or null
      */
     public DateTimeAttribute getIssueInstant() {
@@ -287,7 +287,7 @@ public class Attribute {
     /**
      * Returns whether attribute must be present in response or not
      *
-     * @return  true/false
+     * @return true/false
      */
     public boolean isIncludeInResult() {
         return includeInResult;
@@ -296,7 +296,7 @@ public class Attribute {
     /**
      * <code>List</code> of <code>AttributeValue</code>  of this attribute,
      * or null if no value was included
-     * 
+     *
      * @return the attribute' s value or null
      */
     public List<AttributeValue> getValues() {
@@ -312,7 +312,7 @@ public class Attribute {
      */
     public AttributeValue getValue() {
 
-        if(attributeValues != null){
+        if (attributeValues != null) {
             return attributeValues.get(0);
         }
         return null;
@@ -341,11 +341,11 @@ public class Attribute {
 
         builder.append("<Attribute AttributeId=\"").append(id.toString()).append("\"");
 
-        if((xacmlVersion == XACMLConstants.XACML_VERSION_3_0)){
+        if ((xacmlVersion == XACMLConstants.XACML_VERSION_3_0)) {
             builder.append(" IncludeInResult=\"").append(includeInResult).append("\"");
         } else {
             builder.append(" DataType=\"").append(type.toString()).append("\"");
-            if (issueInstant != null){
+            if (issueInstant != null) {
                 builder.append(" IssueInstant=\"").append(issueInstant.encode()).append("\"");
             }
         }
@@ -356,8 +356,8 @@ public class Attribute {
 
         builder.append(">\n");
 
-        if(attributeValues != null && attributeValues.size() > 0){
-            for(AttributeValue value : attributeValues){
+        if (attributeValues != null && attributeValues.size() > 0) {
+            for (AttributeValue value : attributeValues) {
                 value.encode(builder);
             }
         }

@@ -37,7 +37,7 @@ public class DefaultNamespaceContext implements NamespaceContext {
 
     public String getNamespaceURI(String prefix) {
 
-        if(prefix != null){
+        if (prefix != null) {
             return nsMap.get(prefix);
         }
         return XMLConstants.NULL_NS_URI;

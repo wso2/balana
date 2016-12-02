@@ -42,11 +42,11 @@ import org.w3c.dom.Node;
 /**
  * Representation of an xsi:double value. This class supports parsing xsi:double values. All objects
  * of this class are immutable and all methods of the class are thread-safe.
- * 
- * @since 1.0
+ *
  * @author Marco Barreno
  * @author Seth Proctor
  * @author Steve Hanna
+ * @since 1.0
  */
 public class DoubleAttribute extends AttributeValue {
     /**
@@ -81,7 +81,9 @@ public class DoubleAttribute extends AttributeValue {
             earlyException = new IllegalArgumentException();
             earlyException.initCause(e);
         }
-    };
+    }
+
+    ;
 
     /**
      * The actual double value that this object represents.
@@ -90,7 +92,7 @@ public class DoubleAttribute extends AttributeValue {
 
     /**
      * Creates a new <code>DoubleAttribute</code> that represents the double value supplied.
-     * 
+     *
      * @param value the <code>double</code> value to be represented
      */
     public DoubleAttribute(double value) {
@@ -106,10 +108,10 @@ public class DoubleAttribute extends AttributeValue {
     /**
      * Returns a new <code>DoubleAttribute</code> that represents the xsi:double at a particular DOM
      * node.
-     * 
+     *
      * @param root the <code>Node</code> that contains the desired value
      * @return a new <code>DoubleAttribute</code> representing the appropriate value (null if there
-     *         is a parsing error)
+     * is a parsing error)
      * @throws NumberFormatException if the string form is not a double
      */
     public static DoubleAttribute getInstance(Node root) throws NumberFormatException {
@@ -119,10 +121,10 @@ public class DoubleAttribute extends AttributeValue {
     /**
      * Returns a new <code>DoubleAttribute</code> that represents the xsi:double value indicated by
      * the string provided.
-     * 
+     *
      * @param value a string representing the desired value
      * @return a new <code>DoubleAttribute</code> representing the desired value (null if there is a
-     *         parsing error)
+     * parsing error)
      * @throws NumberFormatException if the value is not a double
      */
     public static DoubleAttribute getInstance(String value) {
@@ -137,7 +139,7 @@ public class DoubleAttribute extends AttributeValue {
 
     /**
      * Returns the <code>double</code> value represented by this object.
-     * 
+     *
      * @return the <code>double</code> value
      */
     public double getValue() {
@@ -147,9 +149,8 @@ public class DoubleAttribute extends AttributeValue {
     /**
      * Returns true if the input is an instance of this class and if its value equals the value
      * contained in this class.
-     * 
+     *
      * @param o the object to compare
-     * 
      * @return true if this object and the input represent the same value
      */
     public boolean equals(Object o) {
@@ -178,7 +179,7 @@ public class DoubleAttribute extends AttributeValue {
     /**
      * Returns the hashcode value used to index and compare this object with others of the same
      * type. Typically this is the hashcode of the backing data object.
-     * 
+     *
      * @return the object's hashcode value
      */
     public int hashCode() {

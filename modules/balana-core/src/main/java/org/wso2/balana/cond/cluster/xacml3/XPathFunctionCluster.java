@@ -32,7 +32,7 @@ public class XPathFunctionCluster implements FunctionCluster {
     public Set<Function> getSupportedFunctions() {
 
         Set<Function> set = new HashSet<Function>();
-        for (String identifier : XPathFunction.getSupportedIdentifiers()){
+        for (String identifier : XPathFunction.getSupportedIdentifiers()) {
             set.add(new XPathFunction(identifier));
         }
         return set;

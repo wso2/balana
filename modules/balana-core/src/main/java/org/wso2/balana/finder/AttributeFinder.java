@@ -64,23 +64,20 @@ import org.w3c.dom.Node;
  * Note that unlike the PolicyFinder, this class doesn't always need to use every module it has to
  * find a value. The ordering is maintained, however, so it will always start with the first module,
  * and proceed in order until it finds a value or runs out of modules.
- * 
- * @since 1.0
+ *
  * @author Seth Proctor
+ * @since 1.0
  */
 public class AttributeFinder {
 
-    // the list of all modules
-    private List<AttributeFinderModule> allModules;
-
-    //
-    private List<AttributeFinderModule> designatorModules;
-
-    //
-    private List<AttributeFinderModule> selectorModules;
-
     // the logger we'll use for all messages
     private static Log logger = LogFactory.getLog(AttributeFinder.class);
+    // the list of all modules
+    private List<AttributeFinderModule> allModules;
+    //
+    private List<AttributeFinderModule> designatorModules;
+    //
+    private List<AttributeFinderModule> selectorModules;
 
     /**
      * Default constructor.
@@ -94,7 +91,7 @@ public class AttributeFinder {
     /**
      * Returns the ordered <code>List</code> of <code>AttributeFinderModule</code>s used by this
      * class to find attribute values.
-     * 
+     *
      * @return a <code>List</code> of <code>AttributeFinderModule</code>s
      */
     public List<AttributeFinderModule> getModules() {
@@ -104,7 +101,7 @@ public class AttributeFinder {
     /**
      * Sets the ordered <code>List</code> of <code>AttributeFinderModule</code>s used by this class
      * to find attribute values. The ordering will be maintained.
-     * 
+     *
      * @param modules a <code>List</code> of <code>AttributeFinderModule</code>s
      */
     public void setModules(List<AttributeFinderModule> modules) {
@@ -129,18 +126,17 @@ public class AttributeFinder {
      * Tries to find attribute values based on the given designator data. The result, if successful,
      * will always contain a <code>BagAttribute</code>, even if only one value was found. If no
      * values were found, but no other error occurred, an empty bag is returned.
-     * 
+     *
      * @param attributeType the datatype of the attributes to find
-     * @param attributeId the identifier of the attributes to find
-     * @param issuer the issuer of the attributes, or null if unspecified
-     * @param category the category of the attribute if the designatorType is SUBJECT_TARGET,
-     *            otherwise null
-     * @param context the representation of the request data
-     * 
+     * @param attributeId   the identifier of the attributes to find
+     * @param issuer        the issuer of the attributes, or null if unspecified
+     * @param category      the category of the attribute if the designatorType is SUBJECT_TARGET,
+     *                      otherwise null
+     * @param context       the representation of the request data
      * @return the result of attribute retrieval, which will be a bag of attributes or an error
      */
     public EvaluationResult findAttribute(URI attributeType, URI attributeId, String issuer,
-            URI category, EvaluationCtx context) {
+                                          URI category, EvaluationCtx context) {
         Iterator it = designatorModules.iterator();
 
         // start with empty list of Attribute ValuesS
@@ -152,10 +148,10 @@ public class AttributeFinder {
 
             // see if the module supports this type, note: if supportedIds and supportedCategories are null
             // it implies that the module will resolve any type attributes
-            if(module.getSupportedIds() != null && module.getSupportedCategories() != null){
+            if (module.getSupportedIds() != null && module.getSupportedCategories() != null) {
                 if (!module.getSupportedCategories().contains(category.toString()) ||
-                        !module.getSupportedIds().contains(attributeId.toString())){
-                       continue;
+                        !module.getSupportedIds().contains(attributeId.toString())) {
+                    continue;
                 }
             }
 
@@ -183,7 +179,7 @@ public class AttributeFinder {
         }
 
         // check whether we were able to find any attributes, if not return an empty bag
-        if (attributeValues.isEmpty()){
+        if (attributeValues.isEmpty()) {
             // if we got here then there were no errors but there were also no
             // matches
             if (logger.isDebugEnabled()) {
@@ -192,19 +188,18 @@ public class AttributeFinder {
 
         }
 
-        return new EvaluationResult(new BagAttribute(attributeType,attributeValues));
+        return new EvaluationResult(new BagAttribute(attributeType, attributeValues));
     }
 
     /**
      * Tries to find attribute values based on the given selector data. The result, if successful,
      * must always contain a <code>BagAttribute</code>, even if only one value was found. If no
      * values were found, but no other error occurred, an empty bag is returned.
-     * 
-     * @param contextPath the XPath expression to search against
+     *
+     * @param contextPath   the XPath expression to search against
      * @param attributeType the datatype of the attributes to find
-     * @param context the representation of the request data
-     * @param xpathVersion the XPath version to use
-     * 
+     * @param context       the representation of the request data
+     * @param xpathVersion  the XPath version to use
      * @return the result of attribute retrieval, which will be a bag of attributes or an error
      */
     public EvaluationResult findAttribute(String contextPath, URI attributeType,
@@ -249,7 +244,7 @@ public class AttributeFinder {
             }
         }
 
-        return new EvaluationResult(new BagAttribute(attributeType,attributeValues));
+        return new EvaluationResult(new BagAttribute(attributeType, attributeValues));
     }
 
     /**
@@ -257,17 +252,16 @@ public class AttributeFinder {
      * must always contain a <code>BagAttribute</code>, even if only one value was found. If no
      * values were found, but no other error occurred, an empty bag is returned.
      *
-     * @param contextPath the XPath expression to search against
+     * @param contextPath     the XPath expression to search against
      * @param contextSelector select the context to evaluate
-     * @param attributeType the datatype of the attributes to find
-     * @param root root XML node
-     * @param context the representation of the request data
-     * @param xpathVersion the XPath version to use
-     *
+     * @param attributeType   the datatype of the attributes to find
+     * @param root            root XML node
+     * @param context         the representation of the request data
+     * @param xpathVersion    the XPath version to use
      * @return the result of attribute retrieval, which will be a bag of attributes or an error
-     */    
+     */
     public EvaluationResult findAttribute(String contextPath, String contextSelector, URI attributeType,
-                        Node root, EvaluationCtx context, String xpathVersion) {
+                                          Node root, EvaluationCtx context, String xpathVersion) {
 
         Iterator it = selectorModules.iterator();
 
@@ -279,7 +273,7 @@ public class AttributeFinder {
             AttributeFinderModule module = (AttributeFinderModule) (it.next());
 
             // see if the module can find an attribute value
-            EvaluationResult result = module.findAttribute(contextPath, 
+            EvaluationResult result = module.findAttribute(contextPath,
                     attributeType, contextSelector, root, context, xpathVersion);
 
             // if there was an error, we stop right away
@@ -309,7 +303,7 @@ public class AttributeFinder {
             }
         }
 
-        return new EvaluationResult(new BagAttribute(attributeType,attributeValues));
+        return new EvaluationResult(new BagAttribute(attributeType, attributeValues));
     }
 
 }

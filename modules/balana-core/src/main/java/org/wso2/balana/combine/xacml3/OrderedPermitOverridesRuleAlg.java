@@ -26,7 +26,6 @@ import java.net.URISyntaxException;
  * It allows a single evaluation of Permit to take precedence over any number of deny,
  * not applicable or indeterminate results. Note that this uses the regular Permit Overrides
  * implementation since it is also ordered.
- *
  */
 public class OrderedPermitOverridesRuleAlg extends PermitOverridesRuleAlg {
 
@@ -56,7 +55,7 @@ public class OrderedPermitOverridesRuleAlg extends PermitOverridesRuleAlg {
     public OrderedPermitOverridesRuleAlg() {
         super(identifierURI);
 
-        if (earlyException != null){
+        if (earlyException != null) {
             throw earlyException;
         }
     }

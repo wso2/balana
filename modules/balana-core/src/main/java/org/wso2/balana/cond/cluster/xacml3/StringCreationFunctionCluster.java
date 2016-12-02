@@ -33,7 +33,7 @@ public class StringCreationFunctionCluster implements FunctionCluster {
     public Set<Function> getSupportedFunctions() {
 
         Set<Function> set = new HashSet<Function>();
-        for (String identifier : StringCreationFunction.getSupportedIdentifiers()){
+        for (String identifier : StringCreationFunction.getSupportedIdentifiers()) {
             set.add(new StringCreationFunction(identifier));
         }
         return set;

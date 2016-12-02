@@ -54,10 +54,10 @@ import java.util.Set;
  * This function evaluates the arguments one at a time, starting with the first one. As soon as the
  * result of the function can be determined, evaluation stops and that result is returned. During
  * this process, if any argument evaluates to indeterminate, an indeterminate result is returned.
- * 
- * @since 1.0
+ *
  * @author Steve Hanne
  * @author Seth Proctor
+ * @since 1.0
  */
 public class NOfFunction extends FunctionBase {
 
@@ -68,10 +68,9 @@ public class NOfFunction extends FunctionBase {
 
     /**
      * Creates a new <code>NOfFunction</code> object.
-     * 
+     *
      * @param functionName the standard XACML name of the function to be handled by this object,
-     *            including the full namespace
-     * 
+     *                     including the full namespace
      * @throws IllegalArgumentException if the function is unknown
      */
     public NOfFunction(String functionName) {
@@ -83,7 +82,7 @@ public class NOfFunction extends FunctionBase {
 
     /**
      * Returns a <code>Set</code> containing all the function identifiers supported by this class.
-     * 
+     *
      * @return a <code>Set</code> of <code>String</code>s
      */
     public static Set getSupportedIdentifiers() {
@@ -96,11 +95,11 @@ public class NOfFunction extends FunctionBase {
 
     /**
      * Evaluate the function, using the specified parameters.
-     * 
-     * @param inputs a <code>List</code> of <code>Evaluatable</code> objects representing the
-     *            arguments passed to the function
+     *
+     * @param inputs  a <code>List</code> of <code>Evaluatable</code> objects representing the
+     *                arguments passed to the function
      * @param context an <code>EvaluationCtx</code> so that the <code>Evaluatable</code> objects can
-     *            be evaluated
+     *                be evaluated
      * @return an <code>EvaluationResult</code> representing the function's result
      */
     public EvaluationResult evaluate(List inputs, EvaluationCtx context) {

@@ -43,9 +43,9 @@ import org.w3c.dom.Node;
 
 /**
  * A proxy class that is provided mainly for the run-time configuration code to use.
- * 
- * @since 1.2
+ *
  * @author Seth Proctor
+ * @since 1.2
  */
 public class StringAttributeProxy extends AbstractAttributeProxy {
 

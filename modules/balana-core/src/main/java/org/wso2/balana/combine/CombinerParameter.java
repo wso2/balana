@@ -51,9 +51,9 @@ import org.w3c.dom.Node;
 /**
  * Represents a single named parameter to a combining algorithm. Parameters are only used by XACML
  * 2.0 and later policies.
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
 public class CombinerParameter {
 
@@ -65,8 +65,8 @@ public class CombinerParameter {
 
     /**
      * Creates a new CombinerParameter.
-     * 
-     * @param name the parameter's name
+     *
+     * @param name  the parameter's name
      * @param value the parameter's value
      */
     public CombinerParameter(String name, AttributeValue value) {
@@ -77,11 +77,10 @@ public class CombinerParameter {
     /**
      * Returns a new instance of the <code>CombinerParameter</code> class based on a DOM node. The
      * node must be the root of an XML CombinerParameterType.
-     * 
+     *
      * @param root the DOM root of a CombinerParameterType XML type
-     * 
-     * @throws ParsingException if the CombinerParameterType is invalid
      * @return an instance of <code>CombinerParameter</code>
+     * @throws ParsingException if the CombinerParameterType is invalid
      */
     public static CombinerParameter getInstance(Node root) throws ParsingException {
         // get the name, which is a required attribute
@@ -102,7 +101,7 @@ public class CombinerParameter {
 
     /**
      * Returns the name of this parameter.
-     * 
+     *
      * @return the name of this parameter
      */
     public String getName() {
@@ -111,7 +110,7 @@ public class CombinerParameter {
 
     /**
      * Returns the value provided by this parameter.
-     * 
+     *
      * @return the value provided by this parameter
      */
     public AttributeValue getValue() {
