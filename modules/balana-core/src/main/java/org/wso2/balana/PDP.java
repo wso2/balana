@@ -168,6 +168,43 @@ public class PDP {
 		}
     }
 
+    /**
+     * Attempts to evaluate the request against the policies known to this PDP. This is really the
+     * core method of the entire XACML specification, and for most people will provide what you
+     * want. If you need any special handling, you should look at the version of this method that
+     * takes an <code>EvaluationCtx</code>.
+     * <p>
+     * Note that if the request is somehow invalid (it was missing a required attribute, it was
+     * using an unsupported scope, etc), then the result will be a decision of INDETERMINATE.
+     *
+     * @param request the request to evaluate
+     *
+     * @return a ResponseCtx response paired to the request
+     */
+    public ResponseCtx evaluateReturnResponseCtx(String request) {
+
+        AbstractRequestCtx  requestCtx;
+        ResponseCtx responseCtx;
+
+        try {
+            requestCtx = RequestCtxFactory.getFactory().getRequestCtx(request.replaceAll(">\\s+<", "><"));
+            responseCtx = evaluate(requestCtx);
+        } catch (ParsingException e) {
+            String error = "Invalid request  : " + e.getMessage();
+            logger.error(error);
+            // there was something wrong with the request, so we return
+            // Indeterminate with a status of syntax error...though this
+            // may change if a more appropriate status type exists
+            ArrayList<String> code = new ArrayList<String>();
+            code.add(Status.STATUS_SYNTAX_ERROR);
+            Status status = new Status(code, error);
+            //As invalid request, by default XACML 3.0 response is created.
+            responseCtx = new ResponseCtx(new Result(AbstractResult.DECISION_INDETERMINATE, status));
+        }
+
+        return responseCtx;
+    }
+
 	/**
 	 * Uses the given <code>EvaluationCtx</code> against the available policies to determine a
 	 * response. If you are starting with a standard XACML Request, then you should use the version

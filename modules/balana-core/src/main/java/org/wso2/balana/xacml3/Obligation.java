@@ -136,7 +136,7 @@ public class Obligation implements ObligationResult {
     public URI getObligationId() {
         return obligationId;
     }
-    
+
     /**
      * Encodes this <code>Obligation</code> into its XML form
      *
