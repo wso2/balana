@@ -20,7 +20,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.wso2.balana.*;
+import org.wso2.balana.AbstractPolicy;
+import org.wso2.balana.DOMHelper;
+import org.wso2.balana.MatchResult;
+import org.wso2.balana.Policy;
+import org.wso2.balana.PolicyMetaData;
+import org.wso2.balana.PolicyReference;
+import org.wso2.balana.PolicySet;
+import org.wso2.balana.VersionConstraints;
 import org.wso2.balana.combine.PolicyCombiningAlgorithm;
 import org.wso2.balana.combine.xacml2.DenyOverridesPolicyAlg;
 import org.wso2.balana.ctx.EvaluationCtx;
@@ -30,14 +37,18 @@ import org.wso2.balana.finder.PolicyFinderModule;
 import org.wso2.balana.finder.PolicyFinderResult;
 import org.wso2.balana.utils.Utils;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * This is file based policy repository.  Policies can be inside the directory in a file system.
@@ -181,12 +192,15 @@ public class FileBasedPolicyFinderModule extends PolicyFinderModule{
                 continue;
             }
 
-            if(file.isDirectory()){
+            if (file.isDirectory()) {
                 String[] files = file.list();
-                for(String policyFile : files){
-                    File fileLocation = new File(policyLocation + File.separator + policyFile);
-                    if(!fileLocation.isDirectory()){
-                        loadPolicy(policyLocation + File.separator + policyFile, finder);
+                if (files != null) {
+                    for (String policyFileLocation : files) {
+                        File policyFile = new File(policyLocation + File.separator + policyFileLocation);
+                        // we check for hidden files to avoid hidden OS files.
+                        if (!policyFile.isDirectory() && !policyFile.isHidden()) {
+                            loadPolicy(policyLocation + File.separator + policyFileLocation, finder);
+                        }
                     }
                 }
             } else {
