@@ -72,21 +72,35 @@
     </dependencies>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.jvnet.maven.incrementalbuild</groupId>
+                    <artifactId>incremental-build-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>incremental-build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.jvnet.maven.incrementalbuild</groupId>
-                <artifactId>incremental-build-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>incremental-build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <include>**/*BaseTestCase.java</include>
+                    </includes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.felix</groupId>
@@ -115,15 +129,6 @@
                         </Import-Package>
                         <DynamicImport-Package>*</DynamicImport-Package>
                     </instructions>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <includes>
-                        <include>**/*BaseTestCase.java</include>
-                    </includes>
                 </configuration>
             </plugin>
         </plugins>
