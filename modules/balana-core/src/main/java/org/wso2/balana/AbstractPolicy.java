@@ -176,17 +176,13 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
         else
             this.version = version;
 
-        String namespaceUri = null;
-        if (this.version.equals("1.0")) {
-            namespaceUri = XACMLConstants.XACML_1_0_IDENTIFIER;
+        String namespaceUri = XACMLConstants.XACML_3_0_IDENTIFIER;
+        if (target != null) {
+            if (target instanceof org.wso2.balana.xacml2.Target) {
+                namespaceUri = XACMLConstants.XACML_2_0_IDENTIFIER;
+            }
         }
-        else if (this.version.equals("2.0")) {
-            namespaceUri = XACMLConstants.XACML_2_0_IDENTIFIER;
-        }
-        else if (this.version.equals("3.0")) {
-            namespaceUri = XACMLConstants.XACML_3_0_IDENTIFIER;
-        }        
-        
+
         metaData = new PolicyMetaData(namespaceUri, defaultVersion);
 
         if (obligationExpressions == null)
