@@ -121,6 +121,11 @@ public class TargetMatchGroup {
      */
     public MatchResult match(EvaluationCtx context) {
         MatchResult result = null;
+        
+        if (matches.isEmpty()) {
+            // nothing in target, return match
+            return new MatchResult(MatchResult.MATCH);
+        }
 
         for (TargetMatch targetMatch : matches) {
             result = targetMatch.match(context);
