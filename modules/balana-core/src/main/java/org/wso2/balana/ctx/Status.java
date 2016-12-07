@@ -117,7 +117,7 @@ public class Status {
      *            is the major code
      * @param message a message to include with the code
      */
-    public Status(List code, String message) {
+    public Status(List<String> code, String message) {
         this(code, message, null);
     }
 
@@ -288,7 +288,7 @@ public class Status {
      * @param iterator
      * @param builder
      */
-    private void encodeStatusCode(Iterator iterator, StringBuilder builder) {
+    private void encodeStatusCode(Iterator<String> iterator, StringBuilder builder) {
 
         String code = (String) (iterator.next());
 
