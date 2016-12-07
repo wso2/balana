@@ -545,7 +545,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
                                             }
                                             newAttributes.add(newAttribute);
                                         } catch (Exception e) {
-                                            e.printStackTrace();  // TODO
+                                            logger.error(e);  // TODO
                                         }
                                     }
                                 }
