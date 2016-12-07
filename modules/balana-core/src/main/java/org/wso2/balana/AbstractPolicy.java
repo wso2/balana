@@ -47,9 +47,7 @@ import org.wso2.balana.xacml3.AdviceExpression;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-
 import java.net.URI;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -178,8 +176,18 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
         else
             this.version = version;
 
-        // FIXME: this needs to fill in the meta-data correctly
-        metaData = null;
+        String namespaceUri = null;
+        if (this.version.equals("1.0")) {
+            namespaceUri = XACMLConstants.XACML_1_0_IDENTIFIER;
+        }
+        else if (this.version.equals("2.0")) {
+            namespaceUri = XACMLConstants.XACML_2_0_IDENTIFIER;
+        }
+        else if (this.version.equals("3.0")) {
+            namespaceUri = XACMLConstants.XACML_3_0_IDENTIFIER;
+        }        
+        
+        metaData = new PolicyMetaData(namespaceUri, defaultVersion);
 
         if (obligationExpressions == null)
             this.obligationExpressions = new HashSet<AbstractObligation>();

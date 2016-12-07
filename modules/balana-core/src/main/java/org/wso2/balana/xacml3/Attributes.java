@@ -210,9 +210,7 @@ public class Attributes {
         builder.append("<Attributes Category=\"").append(category.toString()).append("\">");
 
         for(Attribute attribute : attributes){
-            if(attribute.isIncludeInResult()){
-                attribute.encode(builder);
-            }
+            attribute.encode(builder);
         }
         if (content != null) {
         // TODO

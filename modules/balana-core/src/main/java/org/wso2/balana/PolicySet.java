@@ -39,14 +39,11 @@ import org.wso2.balana.combine.CombinerElement;
 import org.wso2.balana.combine.CombinerParameter;
 import org.wso2.balana.combine.PolicyCombinerElement;
 import org.wso2.balana.combine.PolicyCombiningAlgorithm;
-
 import org.wso2.balana.finder.PolicyFinder;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-
 import java.net.URI;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -392,21 +389,25 @@ public class PolicySet extends AbstractPolicy {
      * @param builder string stream into which the XML-encoded data is written
      */
     public void encode(StringBuilder builder) {
+        String xacmlVersionId = metaData.getXACMLIdentifier();
 
-        builder.append("<PolicySet PolicySetId=\"").append(getId().toString()).
-                append("\" PolicyCombiningAlgId=\"").
+        String version = getVersion();
+
+        builder.append("<PolicySet xmlns=\"").append(xacmlVersionId).append("\" PolicySetId=\"").
+                append(getId().toString()).append("\" PolicyCombiningAlgId=\"").
                 append(getCombiningAlg().getIdentifier().toString()).append("\">\n");
 
         String description = getDescription();
         if (description != null){
             builder.append("<Description>").append(description).append("</Description>\n");
         }
-        
-        String version = getDefaultVersion();
-        if (version != null){
-            builder.append("<PolicySetDefaults><XPathVersion>").append(version).
-                    append("</XPathVersion></PolicySetDefaults>\n");
+
+        String xPathVersion = metaData.getXPathIdentifier();
+        if (xPathVersion != null){
+            builder.append("<PolicySetDefaults><XPathVersion>").
+                    append(xPathVersion).append("</XPathVersion></PolicySetDefaults>\n");
         }
+
         getTarget().encode(builder);
         encodeCommonElements(builder);
 

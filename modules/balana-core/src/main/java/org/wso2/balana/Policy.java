@@ -414,9 +414,9 @@ public class Policy extends AbstractPolicy {
 
         String version = getVersion();
 
-        builder.append("<Policy xmlns=\"" + xacmlVersionId + "\""  + " PolicyId=\"" + getId() +
-                "\"" + " Version=\"" + version + "").
-                append("\" RuleCombiningAlgId=\"").append(getCombiningAlg().getIdentifier().toString()).append("\">\n");
+        builder.append("<Policy xmlns=\"").append(xacmlVersionId).append("\" PolicyId=\"").append(getId().toString()).
+                append("\" Version=\"").append(version).append("\" RuleCombiningAlgId=\"").
+                append(getCombiningAlg().getIdentifier().toString()).append("\">\n");
 
         String description = getDescription();
         if (description != null){

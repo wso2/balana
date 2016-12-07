@@ -290,7 +290,7 @@ public class Status {
      */
     private void encodeStatusCode(Iterator<String> iterator, StringBuilder builder) {
 
-        String code = (String) (iterator.next());
+        String code = iterator.next();
 
         if (iterator.hasNext()) {
             builder.append("<StatusCode Value=\"").append(code).append("\">");
