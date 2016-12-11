@@ -57,11 +57,6 @@ public abstract class BasicEvaluationCtx implements EvaluationCtx {
     protected Node requestRoot;
 
     /**
-     * Represents a XACML request made to the PDP
-     */
-    protected AbstractRequestCtx requestCtx;
-
-    /**
      * PDP configurations
      */
     protected PDPConfig pdpConfig;
@@ -155,9 +150,7 @@ public abstract class BasicEvaluationCtx implements EvaluationCtx {
             return new DateTimeAttribute(new Date(millis));
     }
 
-    public AbstractRequestCtx getRequestCtx() {
-        return requestCtx;
-    }
+    public abstract AbstractRequestCtx getRequestCtx();
 
     /**
      * Returns the attribute value(s) retrieved using the given XPath expression.

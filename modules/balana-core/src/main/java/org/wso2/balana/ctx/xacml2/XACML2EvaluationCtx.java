@@ -18,11 +18,7 @@
 
 package org.wso2.balana.ctx.xacml2;
 
-import org.w3c.dom.Node;
 import org.wso2.balana.*;
-import org.wso2.balana.attr.DateAttribute;
-import org.wso2.balana.attr.DateTimeAttribute;
-import org.wso2.balana.attr.TimeAttribute;
 import org.wso2.balana.cond.EvaluationResult;
 import org.wso2.balana.ctx.*;
 import org.wso2.balana.finder.ResourceFinderResult;
@@ -54,9 +50,6 @@ public class XACML2EvaluationCtx extends BasicEvaluationCtx {
 
     private int xacmlVersion;
 
-    // the DOM root the original RequestContext document
-    private Node requestRoot;
-
     // the 4 maps that contain the attribute data
     private HashMap subjectMap;
     private HashMap resourceMap;
@@ -66,21 +59,12 @@ public class XACML2EvaluationCtx extends BasicEvaluationCtx {
     // the resource and its scope
     private AttributeValue resourceId;
     private int scope;
-
-    // the cached current date, time, and datetime, which we may or may
-    // not be using depending on how this object was constructed
-    private DateAttribute currentDate;
-    private TimeAttribute currentTime;
-    private DateTimeAttribute currentDateTime;
-    private boolean useCachedEnvValues;
+    
+    private RequestCtx requestCtx;
 
     //private Set<ObligationResult>  obligationResults;
 
     //private Set<Advice>  advices;
-
-    private MultipleCtxResult multipleCtxResult;
-
-    private RequestCtx requestCtx;
 
     // the logger we'll use for all messages
 
