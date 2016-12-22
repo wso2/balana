@@ -56,7 +56,7 @@
             <dependency>
                 <groupId>org.wso2.balana</groupId>
                 <artifactId>org.wso2.balana</artifactId>
-                <version>${balana.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
@@ -71,18 +71,17 @@
             <dependency>
                 <groupId>org.wso2.balana</groupId>
                 <artifactId>org.wso2.balana.utils</artifactId>
-                <version>${balana.version}</version>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <properties>
-        <balana.version>${project.version}</balana.version>
         <commons-logging.version>1.2</commons-logging.version>
         <junit.version>4.8.2</junit.version>
         <imp.pkg.version.javax.xml>[0.0.0,1.0.0)</imp.pkg.version.javax.xml>
-        <exp.pkg.version.balana>${balana.version}</exp.pkg.version.balana>
-        <imp.pkg.version.balana>${balana.version}</imp.pkg.version.balana>
+        <exp.pkg.version.balana>${project.version}</exp.pkg.version.balana>
+        <imp.pkg.version.balana>[1.1.0, 2.0.0)</imp.pkg.version.balana>
         <imp.pkg.version.javax.xml.parsers>[0.0.0, 1.0.0)</imp.pkg.version.javax.xml.parsers>
         <commons-logging.osgi.version.range>[1.2,2.0)</commons-logging.osgi.version.range>
         <xercesImpl.version>2.8.1.wso2v2</xercesImpl.version>
