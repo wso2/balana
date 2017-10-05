@@ -1,0 +1,42 @@
+<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17">
+    <Result>
+        <Decision>Permit</Decision>
+        <Status>
+            <StatusCode Value="urn:oasis:names:tc:xacml:1.0:status:ok"/>
+        </Status>
+        <Obligations>
+            <Obligation ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA001:obligation-1">
+                <AttributeAssignment AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA001:assignment1"
+                                     DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+                <AttributeAssignment AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA001:assignment2"
+                                     DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+            </Obligation>
+            <Obligation ObligationId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA001:obligation-2">
+                <AttributeAssignment AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA001:assignment1"
+                                     DataType="http://www.w3.org/2001/XMLSchema#string">assignment1</AttributeAssignment>
+                <AttributeAssignment AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA001:assignment2"
+                                     DataType="http://www.w3.org/2001/XMLSchema#string">assignment2</AttributeAssignment>
+            </Obligation>
+        </Obligations>
+        <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+            <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" IncludeInResult="true">
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+            </Attribute>
+        </Attributes>
+        <Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+            <Attribute AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:age" IncludeInResult="true">
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">45</AttributeValue>
+            </Attribute>
+            <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" IncludeInResult="true">
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Julius Hibbert</AttributeValue>
+            </Attribute>
+        </Attributes>
+        <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment">
+            <Attribute AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:bart-simpson-age"
+                       IncludeInResult="true">
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">10</AttributeValue>
+            </Attribute>
+        </Attributes>
+        <PolicyIdentifierList><PolicyIdReference>urn:oasis:names:tc:xacml:2.0:conformance-test:IIIA001:policy</PolicyIdReference></PolicyIdentifierList>
+    </Result>
+</Response>

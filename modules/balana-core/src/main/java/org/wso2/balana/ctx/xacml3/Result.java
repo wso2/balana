@@ -322,6 +322,13 @@ public class Result extends AbstractResult{
             builder.append("</AssociatedAdvice>");
         }
 
+        // encode the attributes
+        if (attributes != null && attributes.size() != 0) {
+            for (Attributes attribute : attributes) {
+                attribute.encode(builder);
+            }
+        }
+
         // encode the policy, policySet references
         if (policyReferences != null  && policyReferences.size() != 0) {
             builder.append("<PolicyIdentifierList>");
@@ -331,13 +338,6 @@ public class Result extends AbstractResult{
             }
 
             builder.append("</PolicyIdentifierList>");
-        }
-
-        // encode the attributes
-        if (attributes != null  && attributes.size() != 0) {
-            for(Attributes attribute : attributes){
-                attribute.encode(builder);
-            }
         }
 
         // finish it off
