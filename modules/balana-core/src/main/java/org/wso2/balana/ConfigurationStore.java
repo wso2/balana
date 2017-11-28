@@ -488,7 +488,6 @@ public class ConfigurationStore {
             conditionFactory = new BaseFunctionFactory(generalFactory);
             targetFactory = new BaseFunctionFactory(conditionFactory);
 
-            proxy = new BasicFunctionFactoryProxy(targetFactory, conditionFactory, generalFactory);
         }
 
         // go through and load the three sections, putting the loaded
@@ -515,6 +514,9 @@ public class ConfigurationStore {
                 functionParserHelper(child, generalFactory);
             }
         }
+
+        proxy = new BasicFunctionFactoryProxy(targetFactory, conditionFactory, generalFactory);
+        FunctionFactory.setDefaultFactory(proxy);
 
         return proxy;
     }
