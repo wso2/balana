@@ -18,7 +18,6 @@
 package org.wso2.balana.advance;
 
 import junit.framework.TestCase;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.balana.*;
@@ -29,16 +28,8 @@ import org.wso2.balana.finder.impl.FileBasedPolicyFinderModule;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.xml.XMLConstants;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
 
 /**
  * Multiple decision profile test cases
@@ -48,17 +39,17 @@ public class AdvanceTestV3 extends TestCase {
     /**
      * directory name that states the test type
      */
-    private final static String ROOT_DIRECTORY = "advance";
+    private final static String ROOT_DIRECTORY  = "advance";
 
     /**
      * directory name that states XACML version
      */
-    private final static String VERSION_DIRECTORY = "3";
+    private final static String VERSION_DIRECTORY  = "3";
 
     /**
      * the logger we'll use for all messages
      */
-    private static Log log = LogFactory.getLog(AdvanceTestV3.class);
+	private static Log log = LogFactory.getLog(AdvanceTestV3.class);
 
     public void testAdvanceTest0001() throws Exception {
 
@@ -67,30 +58,30 @@ public class AdvanceTestV3 extends TestCase {
         policies.add("TestPolicy_0002.xml");
         log.info("Advance Test 0002 is started. This test is for Jira IDENTITY-416");
 
-        for (int i = 1; i < 2; i++) {
+        for(int i = 1; i < 2 ; i++){
 
-            if (i < 10) {
+            if(i < 10){
                 reqResNo = "0" + i;
             } else {
                 reqResNo = Integer.toString(i);
             }
 
             String request = TestUtil.createRequest(ROOT_DIRECTORY, VERSION_DIRECTORY,
-                    "request_0002_" + reqResNo + ".xml");
-            if (request != null) {
+                                                        "request_0002_" + reqResNo + ".xml");
+            if(request != null){
                 log.info("Request that is sent to the PDP :  " + request);
                 ResponseCtx response = TestUtil.evaluate(getPDPNewInstance(policies), request);
-                if (response != null) {
+                if(response != null){
                     log.info("Response that is received from the PDP :  " + response.encode());
                     ResponseCtx expectedResponseCtx = TestUtil.createResponse(ROOT_DIRECTORY,
-                            VERSION_DIRECTORY, "response_0002_" + reqResNo + ".xml");
-                    if (expectedResponseCtx != null) {
+                                    VERSION_DIRECTORY, "response_0002_" + reqResNo + ".xml");
+                    if(expectedResponseCtx != null){
                         assertTrue(TestUtil.isMatching(response, expectedResponseCtx));
                     } else {
-                        assertTrue("Response read from file is Null", false);
+                        assertTrue("Response read from file is Null",false);
                     }
                 } else {
-                    assertFalse("Response received PDP is Null", false);
+                    assertFalse("Response received PDP is Null",false);
                 }
             } else {
                 assertTrue("Request read from file is Null", false);
@@ -107,9 +98,9 @@ public class AdvanceTestV3 extends TestCase {
         policies.add("TestPolicy_0003.xml");
         log.info("Advance Test 0003 is started. This test is for Jira COMMONS-97");
 
-        for (int i = 1; i < 2; i++) {
+        for(int i = 1; i < 2 ; i++){
 
-            if (i < 10) {
+            if(i < 10){
                 reqResNo = "0" + i;
             } else {
                 reqResNo = Integer.toString(i);
@@ -117,20 +108,20 @@ public class AdvanceTestV3 extends TestCase {
 
             String request = TestUtil.createRequest(ROOT_DIRECTORY, VERSION_DIRECTORY,
                     "request_0003_" + reqResNo + ".xml");
-            if (request != null) {
+            if(request != null){
                 log.info("Request that is sent to the PDP :  " + request);
                 ResponseCtx response = TestUtil.evaluate(getPDPNewInstance(policies), request);
-                if (response != null) {
+                if(response != null){
                     log.info("Response that is received from the PDP :  " + response.encode());
                     ResponseCtx expectedResponseCtx = TestUtil.createResponse(ROOT_DIRECTORY,
                             VERSION_DIRECTORY, "response_0003_" + reqResNo + ".xml");
-                    if (expectedResponseCtx != null) {
+                    if(expectedResponseCtx != null){
                         assertTrue(TestUtil.isMatching(response, expectedResponseCtx));
                     } else {
-                        assertTrue("Response read from file is Null", false);
+                        assertTrue("Response read from file is Null",false);
                     }
                 } else {
-                    assertFalse("Response received PDP is Null", false);
+                    assertFalse("Response received PDP is Null",false);
                 }
             } else {
                 assertTrue("Request read from file is Null", false);
@@ -140,59 +131,18 @@ public class AdvanceTestV3 extends TestCase {
         }
     }
 
-
-    public void testAdvanceTest0004() throws Exception {
-
-        String reqResNo;
-        Set<String> policies = new HashSet<String>();
-        policies.add("TestPolicy_0004.xml");
-        log.info("Advance Test 0004 is started. This test is for Jira https://github.com/wso2/balana/issues/73");
-
-        String request = TestUtil.createRequest(ROOT_DIRECTORY, VERSION_DIRECTORY,
-                "request_0004_01.xml");
-        if (request != null) {
-            log.info("Request that is sent to the PDP :  " + request);
-            ResponseCtx response = TestUtil.evaluate(getPDPNewInstance(policies), request);
-            if (response != null) {
-                log.info("Response that is received from the PDP :  " + response.encode());
-                ResponseCtx expectedResponseCtx = TestUtil.createResponse(ROOT_DIRECTORY,
-                        VERSION_DIRECTORY, "response_0004_01.xml");
-                validate(response);
-                if (expectedResponseCtx != null) {
-                    assertTrue(TestUtil.isMatching(response, expectedResponseCtx));
-                } else {
-                    assertTrue("Response read from file is Null", false);
-                }
-            } else {
-                assertFalse("Response received PDP is Null", false);
-            }
-        } else {
-            assertTrue("Request read from file is Null", false);
-        }
-
-        log.info("Advance Test 0004 is finished");
-
-    }
-
-    private static void validate(ResponseCtx ctx) throws Exception {
-        SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema schema = factory.newSchema(new Source[]{new StreamSource(AdvanceTestV3.class.getResource("/xsd/xacml-core-v3-schema-wd-17.xsd").toExternalForm())});
-        Validator validator = schema.newValidator();
-        validator.validate(new StreamSource(new StringReader(ctx.encode())));
-    }
-
     /**
      * Returns a new PDP instance with new XACML policies
      *
-     * @param policies Set of XACML policy file names
+     * @param policies  Set of XACML policy file names
      * @return a  PDP instance
      */
-    private static PDP getPDPNewInstance(Set<String> policies) {
+    private static PDP getPDPNewInstance(Set<String> policies){
 
-        PolicyFinder finder = new PolicyFinder();
+        PolicyFinder finder= new PolicyFinder();
         Set<String> policyLocations = new HashSet<String>();
 
-        for (String policy : policies) {
+        for(String policy : policies){
             try {
                 String policyPath = (new File(".")).getCanonicalPath() + File.separator +
                         TestConstants.RESOURCE_PATH + File.separator + ROOT_DIRECTORY + File.separator +
@@ -200,7 +150,7 @@ public class AdvanceTestV3 extends TestCase {
                         File.separator + policy;
                 policyLocations.add(policyPath);
             } catch (IOException e) {
-                //ignore.
+               //ignore.
             }
         }
 
@@ -212,7 +162,7 @@ public class AdvanceTestV3 extends TestCase {
         Balana balana = Balana.getInstance();
         PDPConfig pdpConfig = balana.getPdpConfig();
         pdpConfig = new PDPConfig(pdpConfig.getAttributeFinder(), finder,
-                pdpConfig.getResourceFinder(), true);
+                                                            pdpConfig.getResourceFinder(), true);
         return new PDP(pdpConfig);
 
     }
