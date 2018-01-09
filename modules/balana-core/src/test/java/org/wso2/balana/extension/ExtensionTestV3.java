@@ -87,14 +87,14 @@ public class ExtensionTestV3 extends TestCase {
         PDP pdp = new PDP(pdpConfig);
 
         String request = createRequest(ExtensionTestV3.class.getResource("/extension/requests/request_0001_01.xml").getPath());
-        if(request != null){
+        if(request != null) {
             log.info("Request that is sent to the PDP :  "+ request);
             ResponseCtx response = TestUtil.evaluate(pdp, request);
-            if(response != null){
+            if(response != null) {
                 log.info("Response that is received from the PDP :  " + response.encode());
                 String respFilePath = ExtensionTestV3.class.getResource("/extension/responses/response_0001_01.xml").getPath();
                 ResponseCtx expectedResponseCtx = createResponse(respFilePath);
-                if(expectedResponseCtx != null){
+                if(expectedResponseCtx != null) {
                     assertTrue(TestUtil.isMatching(response, expectedResponseCtx));
                 } else {
                     assertTrue("Response read from file is Null",false);
@@ -109,7 +109,7 @@ public class ExtensionTestV3 extends TestCase {
 
     private ResponseCtx createResponse(String filePath) {
 
-        try{
+        try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setIgnoringComments(true);
             factory.setNamespaceAware(true);
@@ -117,17 +117,17 @@ public class ExtensionTestV3 extends TestCase {
             DocumentBuilder db = factory.newDocumentBuilder();
             Document doc = db.parse(new FileInputStream(filePath));
             return ResponseCtx.getInstance(doc.getDocumentElement());
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Error while reading expected response from file ", e);
         }
 
         return null;
     }
 
-    private static String createRequest(String filePath){
+    private static String createRequest(String filePath) {
 
         StringWriter writer = null;
-        try{
+        try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setIgnoringComments(true);
             factory.setNamespaceAware(true);
@@ -140,10 +140,10 @@ public class ExtensionTestV3 extends TestCase {
             Transformer transformer = tf.newTransformer();
             transformer.transform(domSource, result);
             return writer.toString();
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Error while reading expected response from file ", e);
         } finally {
-            if(writer != null){
+            if(writer != null) {
                 try {
                     writer.close();
                 } catch (IOException e) {
