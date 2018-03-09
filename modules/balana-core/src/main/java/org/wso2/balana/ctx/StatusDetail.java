@@ -57,6 +57,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.wso2.balana.utils.Utils;
 import org.xml.sax.SAXException;
 
 /**
@@ -147,15 +148,12 @@ public class StatusDetail {
         try {
             String text = "<?xml version=\"1.0\"?>\n";
             byte[] bytes = (text + encoded).getBytes();
-            DocumentBuilder db = Balana.getInstance().getBuilder().newDocumentBuilder();
+            DocumentBuilderFactory documentBuilderFactory = Utils.getSecuredDocumentBuilderFactory();
+            DocumentBuilder db = documentBuilderFactory.newDocumentBuilder();
             Document doc = db.parse(new ByteArrayInputStream(bytes));
             return doc.getDocumentElement();
-        } catch (ParserConfigurationException e) {
-            throw new ParsingException("invalid XML for status detail");
-        } catch (SAXException e) {
-            throw new ParsingException("invalid XML for status detail");
-        } catch (IOException e) {
-            throw new ParsingException("invalid XML for status detail");
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            throw new ParsingException("invalid XML for status detail", e);
         }
     }
 
