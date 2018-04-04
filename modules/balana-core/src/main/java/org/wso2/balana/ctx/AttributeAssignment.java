@@ -168,7 +168,7 @@ public class AttributeAssignment extends AttributeValue {
             builder.append("\" Issuer=\"").append(issuer).append("\"");
         }
 
-        builder.append(">\n");
+        builder.append(">");
 
         if(content != null){
             builder.append(content);
