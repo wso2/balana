@@ -12,5 +12,5 @@ If user name is given as "alice". Policy with two  "Permit" rules  and three "De
 
 If user name is given as "peter". Policy with two  "Permit" rules and two "Deny"  rules and one "Not Applicable" rule would be applied. Therefore fine result would be "Deny"
 
-More details - http://xacmlinfo.com/2012/12/18/extending-balana-custom-combining-algorithms/
+More details - http://xacmlinfo.org/2012/12/18/extending-balana-custom-combining-algorithms/
 
