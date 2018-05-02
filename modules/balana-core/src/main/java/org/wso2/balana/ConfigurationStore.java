@@ -79,6 +79,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -487,7 +488,6 @@ public class ConfigurationStore {
             conditionFactory = new BaseFunctionFactory(generalFactory);
             targetFactory = new BaseFunctionFactory(conditionFactory);
 
-            proxy = new BasicFunctionFactoryProxy(targetFactory, conditionFactory, generalFactory);
         }
 
         // go through and load the three sections, putting the loaded
@@ -514,6 +514,9 @@ public class ConfigurationStore {
                 functionParserHelper(child, generalFactory);
             }
         }
+
+        proxy = new BasicFunctionFactoryProxy(targetFactory, conditionFactory, generalFactory);
+        FunctionFactory.setDefaultFactory(proxy);
 
         return proxy;
     }
@@ -605,7 +608,7 @@ public class ConfigurationStore {
             }
         } else {
             // parse the arguments to the constructor
-            Set args = null;
+            Set<Object> args = null;
             try {
                 args = getArgs(root);
             } catch (IllegalArgumentException iae) {
@@ -674,8 +677,8 @@ public class ConfigurationStore {
      * supports String and Set, but it's trivial to add support for other types should that be
      * needed. Right now, it's not clear that there's any need for other types.
      */
-    private Set getArgs(Node root) {
-        Set args = new HashSet();
+    private Set<Object> getArgs(Node root) {
+        Set<Object> args = new LinkedHashSet<>();
         NodeList children = root.getChildNodes();
 
         for (int i = 0; i < children.getLength(); i++) {

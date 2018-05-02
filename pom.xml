@@ -30,7 +30,7 @@
     <artifactId>balana</artifactId>
     <packaging>pom</packaging>
     <name>WSO2 Balana Open source XACML implementation of WSO2</name>
-    <version>1.1.3-SNAPSHOT</version>
+    <version>1.1.7-SNAPSHOT</version>
     <description>
         This is the pom file that defines the build process for the WSO2 Balana. Balana is XACML
         open source project which is based on the sunxacml http://sunxacml.sourceforge.net/ under the license
@@ -92,8 +92,8 @@
         <incremental-build.plugin.version>1.3</incremental-build.plugin.version>
         <maven.buildnumber.plugin.version>1.4</maven.buildnumber.plugin.version>
 
-        <src.java.version>1.7</src.java.version>
-        <target.java.version>1.7</target.java.version>
+        <src.java.version>1.8</src.java.version>
+        <target.java.version>1.8</target.java.version>
     </properties>
 
 
@@ -171,6 +171,31 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>wso2-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration> <!-- add this to disable checking -->
+                                    <additionalparam>-Xdoclint:none</additionalparam>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <scm>
         <url>https://github.com/wso2/balana.git</url>
