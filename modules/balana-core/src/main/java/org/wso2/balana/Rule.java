@@ -467,7 +467,9 @@ public class Rule implements PolicyTreeElement {
     }
 
     public String encode() {
-        return null; // TODO.
+        StringBuilder sb = new StringBuilder();
+        encode(sb);
+        return sb.toString();
     }
 
     public void encode(StringBuilder builder) {
