@@ -1,0 +1,62 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicyId="TestPolicy0001"
+        RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
+        Version="1.0">
+    <Description>Advance Test policy 0004. This has been written for jira COMMONS-97.
+        Use case : Users who is from asela.com can only see read patient data whose registered email is
+        from asela.com domain. Advice is returned with patient id of the permitted patient data.
+        First XPath evaluation is done with respect to multiple:content-selector. This would creates
+        the multiple XACML request. Then each XACML request is evaluated with Attribute selector.
+        Here content element has been bounded with custom namespace and prefix
+    </Description>
+    <PolicyDefaults>
+        <XPathVersion>http://www.w3.org/TR/1999/REC-xpath-19991116</XPathVersion>
+    </PolicyDefaults>
+    <Target>
+        <AnyOf>
+            <AllOf>
+                <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+                    <AttributeDesignator MustBePresent="false"
+                                         Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+                                         AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+                                         DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                </Match>
+            </AllOf>
+        </AnyOf>
+    </Target>
+    <VariableDefinition VariableId="subject-match">
+        <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">bob</AttributeValue>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+                <AttributeDesignator MustBePresent="false"
+                                     Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+                                     AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+                                     DataType="http://www.w3.org/2001/XMLSchema#string"/>
+            </Apply>
+        </Apply>
+    </VariableDefinition>
+    <VariableDefinition VariableId="resource-match">
+        <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">foo/foo1</AttributeValue>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+                <AttributeDesignator MustBePresent="false"
+                                     Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                                     AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+                                     DataType="http://www.w3.org/2001/XMLSchema#string"/>
+            </Apply>
+        </Apply>
+    </VariableDefinition>
+    <Rule RuleId="rule1" Effect="Permit">
+        <Description>Rule to match value in content element using XPath</Description>
+        <Target/>
+        <Condition>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+                <VariableReference VariableId="subject-match"/>
+                <VariableReference VariableId="resource-match"/>
+            </Apply>
+        </Condition>
+    </Rule>
+    <Rule RuleId="rule2" Effect="Deny">
+        <Description>Deny rule</Description>
+    </Rule>
+</Policy>
