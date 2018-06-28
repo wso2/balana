@@ -115,6 +115,9 @@ public class AllOfSelection {
 
     }
 
+    public List<TargetMatch> getMatches() {
+        return matches;
+    }
 
     /**
      * Encodes this <code>AnyOfSelection</code> into its XML form and writes this out to the provided

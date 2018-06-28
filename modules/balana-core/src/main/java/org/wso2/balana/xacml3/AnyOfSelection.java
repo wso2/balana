@@ -131,6 +131,10 @@ public class AnyOfSelection {
         }
     }
 
+    public List<AllOfSelection> getAllOfSelections() {
+        return allOfSelections;
+    }
+    
     /**
      * Encodes this <code>AnyOfSelection</code> into its XML form and writes this out to the provided
      * <code>StringBuilder<code>
