@@ -184,6 +184,12 @@ public class PermitOverridesPolicyAlg extends PolicyCombiningAlgorithm{
             return ResultFactory.getFactory().getResult(AbstractResult.DECISION_DENY,
                                                         denyObligations, denyAdvices, context);
         }
+
+        if(atLeastOneErrorD){
+            return ResultFactory.getFactory().getResult(AbstractResult.DECISION_INDETERMINATE_DENY,
+                    firstIndeterminateResultD.getStatus(), context);
+        }
+
         // if we hit this point, then none of the rules actually applied
         // to us, so we return NOT_APPLICABLE
         return ResultFactory.getFactory().getResult(AbstractResult.DECISION_NOT_APPLICABLE, context);
