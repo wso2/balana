@@ -165,27 +165,26 @@ public class PermitOverridesPolicyAlg extends PolicyCombiningAlgorithm{
             }
         }
 
-        if(atLeastOneErrorDP){
+        if (atLeastOneErrorDP) {
             return firstIndeterminateResultDP;
         }
 
-        if (atLeastOneErrorP && (atLeastOneErrorD || atLeastOneDeny)){
-
+        if (atLeastOneErrorP && (atLeastOneErrorD || atLeastOneDeny)) {
             return ResultFactory.getFactory().getResult(AbstractResult.DECISION_INDETERMINATE_DENY_OR_PERMIT,
-                                                   firstIndeterminateResultP.getStatus(), context);
+                    firstIndeterminateResultP.getStatus(), context);
         }
 
-        if(atLeastOneErrorP){
+        if (atLeastOneErrorP) {
             return ResultFactory.getFactory().getResult(AbstractResult.DECISION_INDETERMINATE_PERMIT,
-                                                   firstIndeterminateResultP.getStatus(), context);
+                    firstIndeterminateResultP.getStatus(), context);
         }
 
         if (atLeastOneDeny) {
             return ResultFactory.getFactory().getResult(AbstractResult.DECISION_DENY,
-                                                        denyObligations, denyAdvices, context);
+                    denyObligations, denyAdvices, context);
         }
 
-        if(atLeastOneErrorD){
+        if (atLeastOneErrorD) {
             return ResultFactory.getFactory().getResult(AbstractResult.DECISION_INDETERMINATE_DENY,
                     firstIndeterminateResultD.getStatus(), context);
         }
