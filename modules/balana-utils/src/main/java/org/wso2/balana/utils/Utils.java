@@ -60,7 +60,8 @@ public class Utils {
         DOMSource domSource = new DOMSource(doc);
         StringWriter writer = new StringWriter();
         StreamResult result = new StreamResult(writer);
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        //TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        TransformerFactory transformerFactory = TransformerFactory.newInstance("org.apache.xalan.processor.TransformerFactoryImpl",null);
         Transformer transformer = transformerFactory.newTransformer();
         transformer.transform(domSource, result);
         return writer.toString().substring(writer.toString().indexOf('>') + 1);
