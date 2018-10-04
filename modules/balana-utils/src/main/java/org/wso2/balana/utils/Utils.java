@@ -60,7 +60,11 @@ public class Utils {
         DOMSource domSource = new DOMSource(doc);
         StringWriter writer = new StringWriter();
         StreamResult result = new StreamResult(writer);
-        TransformerFactory transformerFactory = TransformerFactory.newInstance("org.apache.xalan.processor.TransformerFactoryImpl",null);
+        String transformerFactoryClassName = System.getProperty("org.wso2.balana.TransformerFactory");
+        if(transformerFactoryClassName == null) {
+            transformerFactoryClassName = "org.apache.xalan.processor.TransformerFactoryImpl";
+        }
+        TransformerFactory transformerFactory = TransformerFactory.newInstance(transformerFactoryClassName, null);
         Transformer transformer = transformerFactory.newTransformer();
         transformer.transform(domSource, result);
         return writer.toString().substring(writer.toString().indexOf('>') + 1);
