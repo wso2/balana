@@ -56,14 +56,14 @@ private static void initBalana() {
 2) Install Apache Maven 3.x.x(https://maven.apache.org/download.cgi#)
 3) Get a clone from https://github.com/wso2/balana.git or download the source
 4) Run ``mvn clean install`` from balana directory
-5) Move to balana/modules/balana-samples/<selected sample>
+5) Move to balana/modules/balana-samples/`<selected sample>`
 6) Execute run script
 
 Here are the samples included.
 
-* [kmarket-trading-sample](modules/balana-samples/kmarket-trading-sample/README.md)
-* [hierarchical-resource](modules/balana-samples/hierarchical-resource/README.md)
-* [custom-combining-algo](modules/balana-samples/custom-combining-algo/README.md)
-* [web-page-image-filtering](modules/balana-samples/web-page-image-filtering/README.md)
+* [kmarket-trading-sample](modules/balana-samples/kmarket-trading-sample)
+* [hierarchical-resource](modules/balana-samples/hierarchical-resource)
+* [custom-combining-algo](modules/balana-samples/custom-combining-algo)
+* [web-page-image-filtering](modules/balana-samples/web-page-image-filtering)
 
 
