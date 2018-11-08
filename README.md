@@ -18,7 +18,7 @@ Balana is WSO2's open source implementation of the XACML specification building 
 
 [3] http://www.apache.org/licenses/LICENSE-2.0
 
-###### Specifications Supported by Balana
+##### Specifications Supported by Balana
 Balana supports the XACML 3.0, 2.0, 1.1 and 1.0 specifications.
 
 ### Installation
@@ -51,5 +51,19 @@ private static void initBalana() {
     }
 ```
 
+### Running Samples
+1) Install Java SE Development Kit 1.8
+2) Install Apache Maven 3.x.x(https://maven.apache.org/download.cgi#)
+3) Get a clone from https://github.com/wso2/balana.git or download the source
+4) Run ``mvn clean install`` from balana directory
+5) Move to balana/modules/balana-samples/<selected sample>
+6) Execute run script
+
+Here are the samples included.
+
+* [kmarket-trading-sample](modules/balana-samples/kmarket-trading-sample/README.md)
+* [hierarchical-resource](modules/balana-samples/hierarchical-resource/README.md)
+* [custom-combining-algo](modules/balana-samples/custom-combining-algo/README.md)
+* [web-page-image-filtering](modules/balana-samples/web-page-image-filtering/README.md)
 
 
