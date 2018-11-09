@@ -10,13 +10,10 @@ WSO2 Balana Implementation
 ---
 
 ## Welcome to WSO2 Balana
-Balana is WSO2's open source implementation of the XACML specification building on Sun's XACML Implementation[1]. As the name suggests Balana(the fortress) is a powerful entitlement engine to externalize authorization from your applications. With it's modular architecture you can easily develop a fully fledged entitlement solution in no time.
+Balana is WSO2's open source implementation of the XACML specification[1] building on Sun's XACML Implementation[2]. As the name suggests Balana(the fortress) is a powerful entitlement engine to externalize authorization from your applications. With it's modular architecture you can easily develop a fully fledged entitlement solution in no time.
 
-[1] http://sunxacml.sourceforge.net/
-
-[2] http://sunxacml.sourceforge.net/license.txt
-
-[3] http://www.apache.org/licenses/LICENSE-2.0
+[1] http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html
+[2] http://sunxacml.sourceforge.net/
 
 ##### Specifications Supported by Balana
 Balana supports the XACML 3.0, 2.0, 1.1 and 1.0 specifications.
@@ -65,5 +62,16 @@ Here are the samples included.
 * [hierarchical-resource](modules/balana-samples/hierarchical-resource)
 * [custom-combining-algo](modules/balana-samples/custom-combining-algo)
 * [web-page-image-filtering](modules/balana-samples/web-page-image-filtering)
+
+
+###License
+License of Sun's XACML implementation can be found at here [1]. But WSO2 Balana implementation is released under Apache2 license [2].
+
+[1] http://sunxacml.sourceforge.net/license.txt
+
+[2] http://www.apache.org/licenses/LICENSE-2.0
+
+
+
 
 
