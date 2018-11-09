@@ -65,7 +65,8 @@ Here are the samples included.
 * [web-page-image-filtering](modules/balana-samples/web-page-image-filtering)
 
 
-###License
+### License
+
 License of Sun's XACML implementation can be found at here [1]. But WSO2 Balana implementation is released under Apache2 license [2].
 
 [1] http://sunxacml.sourceforge.net/license.txt
