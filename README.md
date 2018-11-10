@@ -10,20 +10,12 @@ WSO2 Balana Implementation
 ---
 
 ## Welcome to WSO2 Balana
-Balana is WSO2's open source implementation of the XACML specification building on Sun's XACML Implementation[1]. As the name suggests Balana(the fortress) is a powerful entitlement engine to externalize authorization from your applications. With it's modular architecture you can easily develop a fully fledged entitlement solution in no time.
+Balana is WSO2's open source implementation of the XACML specification building on [Sun's XACML Implementation](http://sunxacml.sourceforge.net/). As the name suggests Balana(the fortress) is a powerful entitlement engine to externalize authorization from your applications. With it's modular architecture you can easily develop a fully fledged entitlement solution in no time.
 
-[1] http://sunxacml.sourceforge.net/
 
 #### Specifications Supported by Balana
-Balana supports the XACML 3.0[1], 2.0[2], 1.1[3] and 1.0[4] specifications.
+Balana supports the [XACML 3.0](http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html), [2.0](https://docs.oasis-open.org/xacml/2.0/access_control-xacml-2.0-core-spec-os.pdf), [1.1](https://d9db56472fd41226d193-1e5e0d4b7948acaf6080b0dce0b35ed5.ssl.cf1.rackcdn.com/committees/xacml/repository/cs-xacml-specification-1.1.pdf) and [1.0](https://www.oasis-open.org/committees/download.php/2406/oasis-xacml-1.0.pdf) specifications.
 
-[1] http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html
-
-[2] https://docs.oasis-open.org/xacml/2.0/access_control-xacml-2.0-core-spec-os.pdf
-
-[3] https://d9db56472fd41226d193-1e5e0d4b7948acaf6080b0dce0b35ed5.ssl.cf1.rackcdn.com/committees/xacml/repository/cs-xacml-specification-1.1.pdf
-
-[4] https://www.oasis-open.org/committees/download.php/2406/oasis-xacml-1.0.pdf
 
 ### Installation
 Add the following dependency to your pom.
@@ -73,13 +65,4 @@ Here are the samples included.
 
 ### License
 
-License of Sun's XACML implementation can be found at here [1]. But WSO2 Balana implementation is released under Apache2 license [2].
-
-[1] http://sunxacml.sourceforge.net/license.txt
-
-[2] http://www.apache.org/licenses/LICENSE-2.0
-
-
-
-
-
+License of Sun's XACML implementation can be found at [here](http://sunxacml.sourceforge.net/license.txt). But WSO2 Balana implementation is released under [Apache2 license](http://www.apache.org/licenses/LICENSE-2.0).
