@@ -1,12 +1,12 @@
 /*
- *  Copyright (c) WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
- *  WSO2 Inc. licenses this file to you under the Apache License,
- *  Version 2.0 (the "License"); you may not use this file except
- *  in compliance with the License.
- *  You may obtain a copy of the License at
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
@@ -23,14 +23,12 @@ import org.wso2.balana.attr.StringAttribute;
 import org.wso2.balana.cond.EvaluationResult;
 import org.wso2.balana.ctx.EvaluationCtx;
 import org.wso2.balana.finder.AttributeFinderModule;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 /**
  * Sample attribute finder module. Actually this must be the point that calls to K-Market user store
  * and retrieve the customer attributes.  But here we are not talking any user store and values has
@@ -69,20 +67,19 @@ public class SampleAttributeFinderModule extends AttributeFinderModule{
                                           URI category, EvaluationCtx context) {
         String roleName = null;
         List<AttributeValue> attributeValues = new ArrayList<AttributeValue>();
-
         EvaluationResult result = context.getAttribute(attributeType, defaultSubjectId, issuer, category);
+
         if(result != null && result.getAttributeValue() != null && result.getAttributeValue().isBag()){
+
             BagAttribute bagAttribute = (BagAttribute) result.getAttributeValue();
             if(bagAttribute.size() > 0){
                 String userName = ((AttributeValue) bagAttribute.iterator().next()).encode();
                 roleName = findRole(userName);
             }
         }
-
         if (roleName != null) {
             attributeValues.add(new StringAttribute(roleName));
         }
-
         return new EvaluationResult(new BagAttribute(attributeType, attributeValues));
     }
 
@@ -101,7 +98,6 @@ public class SampleAttributeFinderModule extends AttributeFinderModule{
         } else if(userName.equals("peter")){
             return "gold";
         }
-
         return null;
     }
 }

@@ -1,12 +1,12 @@
 /*
- *  Copyright (c) WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
- *  WSO2 Inc. licenses this file to you under the Apache License,
- *  Version 2.0 (the "License"); you may not use this file except
- *  in compliance with the License.
- *  You may obtain a copy of the License at
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
@@ -25,7 +25,6 @@ import org.wso2.balana.PDPConfig;
 import org.wso2.balana.finder.AttributeFinder;
 import org.wso2.balana.finder.AttributeFinderModule;
 import org.wso2.balana.finder.impl.FileBasedPolicyFinderModule;
-
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -33,17 +32,19 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * It is an utility class to do some configuration settings and string generation jobs for KMarket sample.
+ * @see  <a href="https://github.com/wso2/balana/tree/master/modules/balana-samples/kmarket-trading-sample">KMarket sample</a>.
+ * */
 public class Utilities {
 
     private static Map<String,String> priceMap = new HashMap<String, String>();
-
     private static Map<String,String> idMap = new HashMap<String, String>();
-
     private static Balana balana;
-
+    /**
+     * Initialize the data.
+     * */
     protected static void initData(){
-
         idMap.put("1" , "Food");
         idMap.put("2" , "Drink");
         idMap.put("3" , "Fruit");
@@ -57,8 +58,10 @@ public class Utilities {
         priceMap.put("Medicine" , "50");
     }
 
+    /**
+     * Initialize the balana instance..
+     * */
     protected static void initBalana(){
-
         try{
             // using file based policy repository. so set the policy location as system property
             String policyLocation = (new File(".")).getCanonicalPath() + File.separator + "resources";
@@ -70,15 +73,22 @@ public class Utilities {
         balana = Balana.getInstance();
     }
 
+    /**
+     * Calculates the total price.
+     * @param productName name of the product.
+     * @param amount    amount of the product.
+     * */
     public static int calculateTotal(String productName, int amount){
-
         String priceString = priceMap.get(productName);
         return Integer.parseInt(priceString)*amount;
-
     }
 
     /**
      * According to given request parameters, it creates a XACML Request as String.
+     * @param userName  who creates XACML request.
+     * @param resource  which product is intended.
+     * @param amount    amount of the product.
+     * @param totalAmount   total amount for the intended product.
      * */
     public static String createXACMLRequest(String userName, String resource, int amount, int totalAmount){
 
@@ -109,6 +119,9 @@ public class Utilities {
                 "</Request>";
     }
 
+    /**
+     * Generates new Policy Decision Point instance.
+     * */
     protected static PDP getPDPNewInstance(){
 
         PDPConfig pdpConfig = balana.getPdpConfig();
@@ -122,6 +135,12 @@ public class Utilities {
         return new PDP(new PDPConfig(attributeFinder, pdpConfig.getPolicyFinder(), null, true));
     }
 
+    /**
+     * Parser for the XACML response.
+     * @param response XACML response in String.
+     * @exception IOException  Error in closing input stream of XACML response
+     * @exception Exception DOM of request element can not be created from String
+     * */
     public static Element getXacmlResponse(String response) {
 
         ByteArrayInputStream inputStream;
@@ -146,5 +165,4 @@ public class Utilities {
         }
         return doc.getDocumentElement();
     }
-
 }
