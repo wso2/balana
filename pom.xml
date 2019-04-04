@@ -78,7 +78,7 @@
 
     <properties>
         <commons-logging.version>1.2</commons-logging.version>
-        <junit.version>4.8.2</junit.version>
+        <junit.version>4.12</junit.version>
         <imp.pkg.version.javax.xml>[0.0.0,1.0.0)</imp.pkg.version.javax.xml>
         <exp.pkg.version.balana>${project.version}</exp.pkg.version.balana>
         <imp.pkg.version.balana>[1.1.0, 2.0.0)</imp.pkg.version.balana>
