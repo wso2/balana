@@ -5,7 +5,7 @@ WSO2 Balana Implementation
 
 |  Branch | Build Status |
 | :------------ |:-------------
-| master      | [![Build Status](https://wso2.org/jenkins/buildStatus/icon?job=forked-dependencies/wso2-balana)](https://wso2.org/jenkins/job/forked-dependencies/wso2-balana) |
+| master      | [![Build Status](https://wso2.org/jenkins/buildStatus/icon?job=forked-dependencies/balana)](https://wso2.org/jenkins/job/forked-dependencies/job/balana) |
 
 ---
 
