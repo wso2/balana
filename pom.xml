@@ -91,6 +91,7 @@
         <compiler.plugin.version>3.8.1</compiler.plugin.version>
         <incremental-build.plugin.version>1.3.1</incremental-build.plugin.version>
         <maven.buildnumber.plugin.version>1.4</maven.buildnumber.plugin.version>
+        <jacoco.version>0.7.9</jacoco.version>
 
         <src.java.version>1.8</src.java.version>
         <target.java.version>1.8</target.java.version>
