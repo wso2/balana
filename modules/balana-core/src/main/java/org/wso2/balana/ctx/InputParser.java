@@ -73,7 +73,7 @@ public class InputParser implements ErrorHandler {
     private static final String CONTEXT_SCHEMA_PROPERTY = "com.sun.xacml.ContextSchema";
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(InputParser.class);
+    private static final Log logger = LogFactory.getLog(InputParser.class);
 
     // standard strings for setting validation
 

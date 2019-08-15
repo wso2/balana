@@ -37,7 +37,7 @@ import java.util.UUID;
  */
 public class BasicPolicyHelper {
 
-    private static Log log = LogFactory.getLog(BasicPolicyHelper.class);
+    private static final Log log = LogFactory.getLog(BasicPolicyHelper.class);
 
     public static Element createPolicyElement(BasicPolicyDTO basicPolicyDTO, Document doc)
                                                                     throws PolicyBuilderException {

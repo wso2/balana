@@ -91,7 +91,7 @@ public class PolicyFinder {
     /**
      * the logger we'll use for all messages
      */
-    private static Log logger = LogFactory.getLog(PolicyFinder.class);
+    private static final Log logger = LogFactory.getLog(PolicyFinder.class);
 
     /**
      * Default constructor that creates a <code>PDPConfig</code> from components.

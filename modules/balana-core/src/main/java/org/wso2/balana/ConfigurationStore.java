@@ -138,7 +138,7 @@ public class ConfigurationStore {
     private ClassLoader loader;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(ConfigurationStore.class);
+    private static final Log logger = LogFactory.getLog(ConfigurationStore.class);
 
     /**
      * Default constructor. This constructor uses the <code>PDP_CONFIG_PROPERTY</code> property to

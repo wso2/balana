@@ -64,7 +64,7 @@ public abstract class BasicEvaluationCtx implements EvaluationCtx {
     /**
      * logger
      */
-    private static Log logger = LogFactory.getLog(BasicEvaluationCtx.class);
+    private static final Log logger = LogFactory.getLog(BasicEvaluationCtx.class);
 
     /**
      * Returns the DOM root of the original RequestType XML document.

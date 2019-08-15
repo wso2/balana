@@ -80,7 +80,7 @@ public class AttributeFinder {
     private List<AttributeFinderModule> selectorModules;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(AttributeFinder.class);
+    private static final Log logger = LogFactory.getLog(AttributeFinder.class);
 
     /**
      * Default constructor.

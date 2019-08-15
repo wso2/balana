@@ -64,7 +64,7 @@ import java.util.Set;
  */
 public class TestUtil {
 
-    private static Log log = LogFactory.getLog(TestUtil.class);
+    private static final Log log = LogFactory.getLog(TestUtil.class);
 
     /**
      * Checks matching of result that got from PDP and expected response from a file.

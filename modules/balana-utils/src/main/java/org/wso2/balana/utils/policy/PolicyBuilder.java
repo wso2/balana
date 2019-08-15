@@ -42,7 +42,7 @@ public class PolicyBuilder {
 
     private static PolicyBuilder policyBuilder;
 
-    private static Log log = LogFactory.getLog(PolicyBuilder.class);
+    private static final Log log = LogFactory.getLog(PolicyBuilder.class);
 
     /**
      * Get a PolicyBuilder instance. This method will return an
