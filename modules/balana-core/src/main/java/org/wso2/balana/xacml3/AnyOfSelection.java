@@ -40,7 +40,7 @@ public class AnyOfSelection {
      */
     private List<AllOfSelection> allOfSelections;
 
-    private static Log logger = LogFactory.getLog(AnyOfSelection.class);
+    private static final Log logger = LogFactory.getLog(AnyOfSelection.class);
 
 
     /**

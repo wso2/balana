@@ -34,7 +34,7 @@ import java.util.UUID;
  */
 public class PolicyUtils {
 
-    private static Log log = LogFactory.getLog(PolicyUtils.class);
+    private static final Log log = LogFactory.getLog(PolicyUtils.class);
 
     /**
      * This method creates a policy element of the XACML policy

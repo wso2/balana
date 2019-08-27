@@ -43,7 +43,7 @@ public class Utils {
     /**
      * Logger instance
      */
-    private static Log logger = LogFactory.getLog(Utils.class);
+    private static final Log logger = LogFactory.getLog(Utils.class);
 
     /**
      * Defines XML Entity Expansion Limit

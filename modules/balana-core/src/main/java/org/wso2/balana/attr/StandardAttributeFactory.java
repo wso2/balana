@@ -77,7 +77,7 @@ public class StandardAttributeFactory extends BaseAttributeFactory {
     private static Set supportedV3Identifiers;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(StandardAttributeFactory.class);
+    private static final Log logger = LogFactory.getLog(StandardAttributeFactory.class);
 
     /**
      * Private constructor that sets up proxies for all of the standard datatypes.

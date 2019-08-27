@@ -103,7 +103,7 @@ public class PolicyReference extends AbstractPolicy {
     private PolicyMetaData parentMetaData;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(PolicyReference.class);
+    private static final Log logger = LogFactory.getLog(PolicyReference.class);
 
     /**
      * Creates a new <code>PolicyReference</code> instance. This has no constraints on version

@@ -76,7 +76,7 @@ public class StandardCombiningAlgFactory extends BaseCombiningAlgFactory {
     private static Set supportedAlgIds;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(StandardCombiningAlgFactory.class);
+    private static final Log logger = LogFactory.getLog(StandardCombiningAlgFactory.class);
 
     /**
      * Default constructor.

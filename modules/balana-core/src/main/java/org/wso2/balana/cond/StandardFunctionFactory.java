@@ -91,7 +91,7 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
     private Map supportedAbstractFunctions = null;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(StandardFunctionFactory.class);
+    private static final Log logger = LogFactory.getLog(StandardFunctionFactory.class);
 
     /**
      * Creates a new StandardFunctionFactory, making sure that the default maps are initialized

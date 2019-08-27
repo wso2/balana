@@ -93,7 +93,7 @@ public class Balana {
     /**
      * Logger instance
      */
-    private static Log logger = LogFactory.getLog(Balana.class);
+    private static final Log logger = LogFactory.getLog(Balana.class);
 
     /**
      * This constructor creates the Balana engine instance. First, it loads all configuration

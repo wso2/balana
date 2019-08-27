@@ -77,7 +77,7 @@ public class PDP {
     /**
      * the logger we'll use for all messages
      */
-    private static Log logger = LogFactory.getLog(PDP.class);
+    private static final Log logger = LogFactory.getLog(PDP.class);
 
     /**
      * Constructs a new <code>PDP</code> object with the given configuration information.

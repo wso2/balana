@@ -51,7 +51,7 @@ public class BasicTestV3 extends TestCase {
     /**
      * the logger we'll use for all messages
      */
-	private static Log log = LogFactory.getLog(BasicTestV3.class);
+	private static final Log log = LogFactory.getLog(BasicTestV3.class);
 
     public void testBasicTest0001() throws Exception {
 

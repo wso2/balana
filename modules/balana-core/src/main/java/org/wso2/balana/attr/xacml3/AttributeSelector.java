@@ -59,7 +59,7 @@ public class AttributeSelector extends AbstractAttributeSelector {
     /**
      * the logger we'll use for all messages
      */
-    private static Log logger = LogFactory.getLog(AttributeSelector.class);
+    private static final Log logger = LogFactory.getLog(AttributeSelector.class);
 
 
 

@@ -48,7 +48,7 @@ public class RequestCtxFactory {
     /**
      *  the logger we'll use for all messages
      */
-    private static Log log = LogFactory.getLog(RequestCtxFactory.class);
+    private static final Log log = LogFactory.getLog(RequestCtxFactory.class);
 
     /**
      *  Returns instance of <code>AbstractRequestCtx</code> based one the XACML version.

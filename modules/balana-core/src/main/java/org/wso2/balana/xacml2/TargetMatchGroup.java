@@ -66,7 +66,7 @@ public class TargetMatchGroup {
     private int matchType;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(TargetMatchGroup.class);
+    private static final Log logger = LogFactory.getLog(TargetMatchGroup.class);
 
 
     /**

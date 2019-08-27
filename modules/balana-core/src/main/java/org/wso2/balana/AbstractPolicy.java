@@ -105,7 +105,7 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
     private String envPolicyValue;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(AbstractPolicy.class);
+    private static final Log logger = LogFactory.getLog(AbstractPolicy.class);
 
     /**
      * Constructor used by <code>PolicyReference</code>, which supplies its own values for the

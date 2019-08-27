@@ -51,7 +51,7 @@ public class TestMultipleRequestV3 extends TestCase {
     /**
      * the logger we'll use for all messages
      */
-    private static Log log = LogFactory.getLog(TestFunctionV3.class);
+    private static final Log log = LogFactory.getLog(TestFunctionV3.class);
 
     public void testBasicTest0001() throws Exception {
 

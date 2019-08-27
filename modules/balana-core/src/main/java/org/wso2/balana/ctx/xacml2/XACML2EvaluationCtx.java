@@ -68,7 +68,7 @@ public class XACML2EvaluationCtx extends BasicEvaluationCtx {
 
     // the logger we'll use for all messages
 
-    private static Log logger = LogFactory.getLog(XACML2EvaluationCtx.class);
+    private static final Log logger = LogFactory.getLog(XACML2EvaluationCtx.class);
 
     public XACML2EvaluationCtx() {
         

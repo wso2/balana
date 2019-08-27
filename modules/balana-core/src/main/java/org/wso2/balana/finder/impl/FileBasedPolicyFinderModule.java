@@ -68,7 +68,7 @@ public class FileBasedPolicyFinderModule extends PolicyFinderModule {
     /**
      * the logger we'll use for all messages
      */
-    private static Log log = LogFactory.getLog(FileBasedPolicyFinderModule.class);
+    private static final Log log = LogFactory.getLog(FileBasedPolicyFinderModule.class);
 
     public static final String POLICY_DIR_PROPERTY = "org.wso2.balana.PolicyDirectory";
 

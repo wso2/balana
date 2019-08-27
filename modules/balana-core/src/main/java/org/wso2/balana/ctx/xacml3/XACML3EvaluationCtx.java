@@ -96,7 +96,7 @@ public class XACML3EvaluationCtx extends BasicEvaluationCtx {
     /**
      * logger
      */
-    private static Log logger = LogFactory.getLog(XACML3EvaluationCtx.class);
+    private static final Log logger = LogFactory.getLog(XACML3EvaluationCtx.class);
 
     /**
      * Creates a new <code>XACML3EvaluationCtx</code>
