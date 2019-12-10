@@ -40,6 +40,7 @@ import org.apache.commons.logging.LogFactory;
 import org.wso2.balana.UnknownIdentifierException;
 
 import org.wso2.balana.cond.cluster.*;
+import org.wso2.balana.cond.cluster.HigherOrderFunctionCluster;
 import org.wso2.balana.cond.cluster.xacml3.*;
 
 import java.net.URI;
@@ -154,6 +155,7 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
         conditionFunctions.addAll((new ConditionSetFunctionCluster()).getSupportedFunctions());
         // add condition functions from HigherOrderFunction
         conditionFunctions.addAll((new HigherOrderFunctionCluster()).getSupportedFunctions());
+        conditionFunctions.addAll((new XACML3HigherOrderFunctionCluster()).getSupportedFunctions());
 
         conditionAbstractFunctions = new HashMap<URI, FunctionProxy>(targetAbstractFunctions);// TODO ??
     }
