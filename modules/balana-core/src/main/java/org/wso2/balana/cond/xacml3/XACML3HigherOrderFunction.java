@@ -36,6 +36,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -58,7 +59,7 @@ public class XACML3HigherOrderFunction implements Function {
     private static final int ID_ANY_OF_ANY = 2;
 
     // Internal mapping of names to ids.
-    private static HashMap<String, Integer> idMap;
+    private final static Map<String, Integer> idMap;
 
     private int functionId;
     private URI identifier;
@@ -70,15 +71,14 @@ public class XACML3HigherOrderFunction implements Function {
         try {
             returnTypeURI = new URI(BooleanAttribute.identifier);
         } catch (URISyntaxException e) {
-            earlyException = new IllegalArgumentException();
-            earlyException.initCause(e);
+            earlyException = new IllegalArgumentException(e);
         }
 
-        idMap = new HashMap<String, Integer>();
-
-        idMap.put(NAME_ANY_OF, Integer.valueOf(ID_ANY_OF));
-        idMap.put(NAME_ALL_OF, Integer.valueOf(ID_ALL_OF));
-        idMap.put(NAME_ANY_OF_ANY, Integer.valueOf(ID_ANY_OF_ANY));
+        Map<String, Integer> nameIdMap = new HashMap<>();
+        nameIdMap.put(NAME_ANY_OF, Integer.valueOf(ID_ANY_OF));
+        nameIdMap.put(NAME_ALL_OF, Integer.valueOf(ID_ALL_OF));
+        nameIdMap.put(NAME_ANY_OF_ANY, Integer.valueOf(ID_ANY_OF_ANY));
+        idMap = Collections.unmodifiableMap(nameIdMap);
     }
 
     /**
@@ -99,8 +99,8 @@ public class XACML3HigherOrderFunction implements Function {
         // Setup the URI form of this function's identity.
         try {
             identifier = new URI(functionName);
-        } catch (URISyntaxException use) {
-            throw new IllegalArgumentException("Invalid URI");
+        } catch (URISyntaxException e) {
+            throw new IllegalArgumentException("Invalid URI", e);
         }
     }
 
@@ -120,8 +120,9 @@ public class XACML3HigherOrderFunction implements Function {
         Object[] list = inputs.toArray();
 
         // First, check that we got the right number of parameters.
-        if (list.length < 2)
+        if (list.length < 2) {
             throw new IllegalArgumentException("requires more than two inputs");
+        }
 
         // Try to cast the first element into a function.
         Function function = null;
@@ -166,7 +167,7 @@ public class XACML3HigherOrderFunction implements Function {
             }
         } else {
             // The remaining arguments are either primitive data types or bags of primitive types.
-            if (args.size() > 0 && bagArgs.size() > 0) {
+            if (!args.isEmpty() && !bagArgs.isEmpty()) {
                 throw new IllegalArgumentException("The arguments can be are either primitive data types or " +
                         "bags of primitive types. " + getIdentifier());
             }
