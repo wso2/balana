@@ -1,4 +1,6 @@
 language: java
+jdk:
+  - openjdk8
 cache:
   directories:
   - .autoconf
