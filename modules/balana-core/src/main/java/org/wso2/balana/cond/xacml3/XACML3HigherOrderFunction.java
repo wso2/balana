@@ -69,7 +69,7 @@ public class XACML3HigherOrderFunction implements Function {
     static {
         try {
             returnTypeURI = new URI(BooleanAttribute.identifier);
-        } catch (Exception e) {
+        } catch (URISyntaxException e) {
             earlyException = new IllegalArgumentException();
             earlyException.initCause(e);
         }

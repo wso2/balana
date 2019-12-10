@@ -31,11 +31,11 @@ import java.util.Set;
  */
 public class XACML3HigherOrderFunctionCluster implements FunctionCluster {
 
+    @Override
     public Set<Function> getSupportedFunctions() {
 
         Set<Function> set = new HashSet<>();
         Iterator it = XACML3HigherOrderFunction.getSupportedIdentifiers().iterator();
-
         while (it.hasNext()) {
             set.add(new XACML3HigherOrderFunction((String) (it.next())));
         }
