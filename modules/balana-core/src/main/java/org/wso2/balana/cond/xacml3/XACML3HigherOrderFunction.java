@@ -26,7 +26,6 @@ import org.wso2.balana.cond.EvaluationResult;
 import org.wso2.balana.cond.Expression;
 import org.wso2.balana.cond.Function;
 import org.wso2.balana.cond.FunctionBase;
-import org.wso2.balana.cond.VariableReference;
 import org.wso2.balana.ctx.EvaluationCtx;
 
 import java.net.URI;
@@ -59,7 +58,7 @@ public class XACML3HigherOrderFunction implements Function {
     private static final int ID_ANY_OF_ANY = 2;
 
     // Internal mapping of names to ids.
-    private final static Map<String, Integer> idMap;
+    private final static Map<String, Integer> ID_MAP;
 
     private int functionId;
     private URI identifier;
@@ -78,7 +77,7 @@ public class XACML3HigherOrderFunction implements Function {
         nameIdMap.put(NAME_ANY_OF, Integer.valueOf(ID_ANY_OF));
         nameIdMap.put(NAME_ALL_OF, Integer.valueOf(ID_ALL_OF));
         nameIdMap.put(NAME_ANY_OF_ANY, Integer.valueOf(ID_ANY_OF_ANY));
-        idMap = Collections.unmodifiableMap(nameIdMap);
+        ID_MAP = Collections.unmodifiableMap(nameIdMap);
     }
 
     /**
@@ -90,7 +89,7 @@ public class XACML3HigherOrderFunction implements Function {
     public XACML3HigherOrderFunction(String functionName) {
 
         // Try to get the function's identifier.
-        Integer i = (Integer) (idMap.get(functionName));
+        Integer i = (Integer) (ID_MAP.get(functionName));
         if (i == null) {
             throw new IllegalArgumentException("Unknown function: " + functionName);
         }
@@ -111,7 +110,7 @@ public class XACML3HigherOrderFunction implements Function {
      */
     public static Set getSupportedIdentifiers() {
 
-        return Collections.unmodifiableSet(idMap.keySet());
+        return Collections.unmodifiableSet(ID_MAP.keySet());
     }
 
     @Override
@@ -173,7 +172,7 @@ public class XACML3HigherOrderFunction implements Function {
             }
             // The expression SHALL be evaluated as if the function named in the <Function> argument was applied
             // between every tuple of the cross product on all bags and the primitive values.
-            if (args.size() > 0) {
+            if (!args.isEmpty()) {
                 validateAnyOfAnyInput(args, function);
             } else {
                 validateAnyOfAnyInput(bagArgs, function);
@@ -267,7 +266,7 @@ public class XACML3HigherOrderFunction implements Function {
         // combined using “urn:oasis:names:tc:xacml:1.0:function:or”
 
         EvaluationResult result = new EvaluationResult(BooleanAttribute.getInstance(false));
-        if (args.size() > 0) {
+        if (!args.isEmpty()) {
             for (int i = 0; i < args.size() - 1; i++) {
                 AttributeValue value = args.get(i);
                 List<AttributeValue> bagValue = new ArrayList<>();
@@ -280,7 +279,7 @@ public class XACML3HigherOrderFunction implements Function {
             }
             return new EvaluationResult(BooleanAttribute.getInstance(false));
         }
-        if (bagArgs.size() > 0) {
+        if (!bagArgs.isEmpty()) {
             for (int i = 0; i < bagArgs.size(); i++) {
                 for (int j = i + 1; j < bagArgs.size(); j++) {
                     Iterator iIterator = bagArgs.get(i).iterator();
