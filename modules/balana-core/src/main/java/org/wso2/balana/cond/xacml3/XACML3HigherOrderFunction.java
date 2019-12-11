@@ -74,9 +74,9 @@ public class XACML3HigherOrderFunction implements Function {
         }
 
         Map<String, Integer> nameIdMap = new HashMap<>();
-        nameIdMap.put(NAME_ANY_OF, Integer.valueOf(ID_ANY_OF));
-        nameIdMap.put(NAME_ALL_OF, Integer.valueOf(ID_ALL_OF));
-        nameIdMap.put(NAME_ANY_OF_ANY, Integer.valueOf(ID_ANY_OF_ANY));
+        nameIdMap.put(NAME_ANY_OF, ID_ANY_OF);
+        nameIdMap.put(NAME_ALL_OF, ID_ALL_OF);
+        nameIdMap.put(NAME_ANY_OF_ANY, ID_ANY_OF_ANY);
         ID_MAP = Collections.unmodifiableMap(nameIdMap);
     }
 
@@ -89,11 +89,11 @@ public class XACML3HigherOrderFunction implements Function {
     public XACML3HigherOrderFunction(String functionName) {
 
         // Try to get the function's identifier.
-        Integer i = (Integer) (ID_MAP.get(functionName));
+        Integer i = ID_MAP.get(functionName);
         if (i == null) {
             throw new IllegalArgumentException("Unknown function: " + functionName);
         }
-        functionId = i.intValue();
+        functionId = i;
 
         // Setup the URI form of this function's identity.
         try {
@@ -124,7 +124,7 @@ public class XACML3HigherOrderFunction implements Function {
         }
 
         // Try to cast the first element into a function.
-        Function function = null;
+        Function function;
 
         if (list[0] instanceof Function) {
             function = (Function) (list[0]);
@@ -225,7 +225,7 @@ public class XACML3HigherOrderFunction implements Function {
             if (result.getAttributeValue().returnsBag()) {
                 bagArgs.add((BagAttribute) (result.getAttributeValue()));
             } else {
-                args.add((AttributeValue) (result.getAttributeValue()));
+                args.add(result.getAttributeValue());
             }
         }
 

@@ -27,6 +27,7 @@ import org.wso2.balana.attr.StringAttribute;
 import org.wso2.balana.cond.Apply;
 import org.wso2.balana.cond.EqualFunction;
 import org.wso2.balana.cond.EvaluationResult;
+import org.wso2.balana.cond.Expression;
 import org.wso2.balana.cond.GeneralBagFunction;
 import org.wso2.balana.cond.xacml3.XACML3HigherOrderFunction;
 
@@ -44,14 +45,12 @@ import static org.wso2.balana.utils.Constants.PolicyConstants.XACMLData.FUNCTION
  */
 public class XACML3HigherOrderFunctionTest extends TestCase {
 
-    private static Log log = LogFactory.getLog(XACML3HigherOrderFunctionTest.class);
-
     public void testCheckInputs() {
 
         XACML3HigherOrderFunction anyOfFunction = new XACML3HigherOrderFunction(NAME_ANY_OF);
         XACML3HigherOrderFunction allOfFunction = new XACML3HigherOrderFunction(NAME_ALL_OF);
 
-        List inputs = new ArrayList();
+        List<Expression> inputs = new ArrayList();
         inputs.add(new EqualFunction(NAME_STRING_EQUAL));
         inputs.add(new StringAttribute("Paul"));
         inputs.add(new StringAttribute("John"));
@@ -117,7 +116,7 @@ public class XACML3HigherOrderFunctionTest extends TestCase {
         XACML3HigherOrderFunction anyOfFunction = new XACML3HigherOrderFunction(NAME_ANY_OF);
         XACML3HigherOrderFunction allOfFunction = new XACML3HigherOrderFunction(NAME_ALL_OF);
 
-        List inputs = new ArrayList();
+        List<Expression> inputs = new ArrayList();
         inputs.add(new EqualFunction(NAME_STRING_EQUAL));
         inputs.add(new StringAttribute("Paul"));
         inputs.add(new StringAttribute("John"));
