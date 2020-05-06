@@ -49,6 +49,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import org.wso2.balana.utils.Utils;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -72,7 +73,7 @@ public class InputParser implements ErrorHandler {
     private static final String CONTEXT_SCHEMA_PROPERTY = "com.sun.xacml.ContextSchema";
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(InputParser.class);
+    private static final Log logger = LogFactory.getLog(InputParser.class);
 
     // standard strings for setting validation
 
@@ -114,7 +115,7 @@ public class InputParser implements ErrorHandler {
         NodeList nodes = null;
 
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory factory = Utils.getSecuredDocumentBuilderFactory();
             factory.setIgnoringComments(true);
 
             DocumentBuilder builder = null;

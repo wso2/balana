@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -57,6 +58,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.wso2.balana.utils.Utils;
 import org.xml.sax.SAXException;
 
 /**
@@ -147,15 +149,12 @@ public class StatusDetail {
         try {
             String text = "<?xml version=\"1.0\"?>\n";
             byte[] bytes = (text + encoded).getBytes();
-            DocumentBuilder db = Balana.getInstance().getBuilder().newDocumentBuilder();
+            DocumentBuilderFactory documentBuilderFactory = Utils.getSecuredDocumentBuilderFactory();
+            DocumentBuilder db = documentBuilderFactory.newDocumentBuilder();
             Document doc = db.parse(new ByteArrayInputStream(bytes));
             return doc.getDocumentElement();
-        } catch (ParserConfigurationException e) {
-            throw new ParsingException("invalid XML for status detail");
-        } catch (SAXException e) {
-            throw new ParsingException("invalid XML for status detail");
-        } catch (IOException e) {
-            throw new ParsingException("invalid XML for status detail");
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            throw new ParsingException("invalid XML for status detail", e);
         }
     }
 
@@ -170,7 +169,9 @@ public class StatusDetail {
 
         StringWriter sw = new StringWriter();
         try {
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            TransformerFactory factory = TransformerFactory.newInstance();
+            factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            Transformer transformer = factory.newTransformer();
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.transform(new DOMSource(node), new StreamResult(sw));

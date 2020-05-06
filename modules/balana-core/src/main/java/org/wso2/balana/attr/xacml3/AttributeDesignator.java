@@ -56,7 +56,7 @@ public class AttributeDesignator extends AbstractDesignator {
     private URI category;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(AttributeDesignator.class);
+    private static final Log logger = LogFactory.getLog(AttributeDesignator.class);
 
 
     /**

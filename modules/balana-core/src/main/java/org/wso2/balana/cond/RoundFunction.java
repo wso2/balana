@@ -35,14 +35,15 @@
 
 package org.wso2.balana.cond;
 
-import org.wso2.balana.ctx.EvaluationCtx;
-
-import org.wso2.balana.attr.AttributeValue;
-import org.wso2.balana.attr.DoubleAttribute;
-
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.wso2.balana.attr.AttributeValue;
+import org.wso2.balana.attr.DoubleAttribute;
+import org.wso2.balana.ctx.EvaluationCtx;
 
 /**
  * A class that implements the round function. It takes one double operand, rounds that value to an
@@ -108,19 +109,8 @@ public class RoundFunction extends FunctionBase {
 
         // Now that we have real values, perform the round operation
         double arg = ((DoubleAttribute) argValues[0]).getValue();
-        double roundValue = Math.round(arg);
+        BigDecimal roundValue = new BigDecimal(arg);
 
-        // Make it round half even, not round nearest
-        double lower = Math.floor(arg);
-        double higher = lower + 1;
-
-        if ((arg - lower) == (higher - arg)) {
-            if ((lower % 2) == 0)
-                roundValue = lower;
-            else
-                roundValue = higher;
-        }
-
-        return new EvaluationResult(new DoubleAttribute(roundValue));
+        return new EvaluationResult(new DoubleAttribute(roundValue.setScale(0, RoundingMode.HALF_EVEN).doubleValue()));
     }
 }

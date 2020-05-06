@@ -68,7 +68,7 @@ public class Target extends AbstractTarget {
     private int xacmlVersion;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(Target.class);
+    private static final Log logger = LogFactory.getLog(Target.class);
 
     /**
      * Constructor that creates an XACML 1.x <code>Target</code> from components. Each of the

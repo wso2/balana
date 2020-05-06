@@ -83,7 +83,7 @@ public class AttributeSelector extends AbstractAttributeSelector {
     private Node policyRoot;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(AttributeSelector.class);
+    private static final Log logger = LogFactory.getLog(AttributeSelector.class);
 
     /**
      * Creates a new <code>AttributeSelector</code> with no policy root.

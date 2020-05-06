@@ -8,7 +8,7 @@
  *
  *   1. Redistribution of source code must retain the above copyright notice,
  *      this list of conditions and the following disclaimer.
- * 
+ *
  *   2. Redistribution in binary form must reproduce the above copyright
  *      notice, this list of conditions and the following disclaimer in the
  *      documentation and/or other materials provided with the distribution.
@@ -16,7 +16,7 @@
  * Neither the name of Sun Microsystems, Inc. or the names of contributors may
  * be used to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * This software is provided "AS IS," without a warranty of any kind. ALL
  * EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND WARRANTIES, INCLUDING
  * ANY IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
@@ -35,32 +35,26 @@
 
 package org.wso2.balana.cond;
 
-import org.wso2.balana.ctx.EvaluationCtx;
-import org.wso2.balana.Indenter;
+import org.w3c.dom.Node;
 import org.wso2.balana.ParsingException;
 import org.wso2.balana.PolicyMetaData;
 import org.wso2.balana.ProcessingException;
-
-import java.io.OutputStream;
-import java.io.PrintStream;
+import org.wso2.balana.ctx.EvaluationCtx;
 
 import java.net.URI;
-
 import java.util.Collections;
 import java.util.List;
-
-import org.w3c.dom.Node;
 
 /**
  * This class supports the VariableReferenceType type introuced in XACML 2.0. It allows an
  * expression to reference a variable definition. If there is no such definition then the Policy is
  * invalid. A reference can be included anywwhere in an expression where the referenced expression
  * would be valid.
- * 
- * @since 2.0
+ *
  * @author Seth Proctor
+ * @since 2.0
  */
-public class VariableReference implements Expression {
+public class VariableReference implements Expression, Evaluatable {
 
     // the identifier used to resolve the reference
     private String variableId;
@@ -76,7 +70,7 @@ public class VariableReference implements Expression {
      * build policies only for the sake of encoding or displaying them. This constructor will not
      * create a reference that can be followed to its associated definition, so it cannot be used in
      * evaluation.
-     * 
+     *
      * @param variableId the reference identifier
      */
     public VariableReference(String variableId) {
@@ -87,7 +81,7 @@ public class VariableReference implements Expression {
      * Constructor that takes the definition referenced by this class. If you're building policies
      * programatically, this is typically the form you use. It does make the connection from
      * reference to definition, so this will result in an evaluatable reference.
-     * 
+     *
      * @param definition the definition this class references
      */
     public VariableReference(VariableDefinition definition) {
@@ -99,10 +93,10 @@ public class VariableReference implements Expression {
      * Constructor that takes the reference identifier and a manager. This is typically only used by
      * parsing code, since the manager is used to handle out-of-order definitions and circular
      * references.
-     * 
+     *
      * @param variableId the reference identifier
-     * @param manager a <code>VariableManager</code> used to handle the dependencies between
-     *            references and definitions during parsing
+     * @param manager    a <code>VariableManager</code> used to handle the dependencies between
+     *                   references and definitions during parsing
      */
     public VariableReference(String variableId, VariableManager manager) {
         this.variableId = variableId;
@@ -112,16 +106,15 @@ public class VariableReference implements Expression {
     /**
      * Returns a new instance of the <code>VariableReference</code> class based on a DOM node. The
      * node must be the root of an XML VariableReferenceType.
-     * 
-     * @param root the DOM root of a VariableReferenceType XML type
+     *
+     * @param root     the DOM root of a VariableReferenceType XML type
      * @param metaData the meta-data associated with the containing policy
-     * @param manager the <code>VariableManager</code> used to connect this reference to its
-     *            definition
-     * 
+     * @param manager  the <code>VariableManager</code> used to connect this reference to its
+     *                 definition
      * @throws ParsingException if the VariableReferenceType is invalid
      */
     public static VariableReference getInstance(Node root, PolicyMetaData metaData,
-            VariableManager manager) throws ParsingException {
+                                                VariableManager manager) throws ParsingException {
         // pretty easy, since there's just an attribute...
         String variableId = root.getAttributes().getNamedItem("VariableId").getNodeValue();
 
@@ -133,7 +126,7 @@ public class VariableReference implements Expression {
 
     /**
      * Returns the reference identifier.
-     * 
+     *
      * @return the reference's identifier
      */
     public String getVariableId() {
@@ -143,7 +136,7 @@ public class VariableReference implements Expression {
     /**
      * Returns the <code>VariableDefinition</code> referenced by this class, or null if the
      * definition cannot be resolved.
-     * 
+     *
      * @return the referenced definition or null
      */
     public VariableDefinition getReferencedDefinition() {
@@ -163,9 +156,8 @@ public class VariableReference implements Expression {
      * Evaluates the referenced expression using the given context, and either returns an error or a
      * resulting value. If this doesn't reference an evaluatable expression (eg, a single Function)
      * then this will throw an exception.
-     * 
+     *
      * @param context the representation of the request
-     * 
      * @return the result of evaluation
      */
     public EvaluationResult evaluate(EvaluationCtx context) {
@@ -182,9 +174,8 @@ public class VariableReference implements Expression {
 
     /**
      * Returns the type of the referenced expression.
-     * 
+     *
      * @return the attribute return type of the referenced expression
-     * 
      * @throws ProcessingException if the type couldn't be resolved
      */
     public URI getType() {
@@ -204,9 +195,8 @@ public class VariableReference implements Expression {
 
     /**
      * Tells whether evaluation will return a bag or a single value.
-     * 
+     *
      * @return true if evaluation will return a bag, false otherwise
-     * 
      * @throws ProcessingException if the return type couldn't be resolved
      */
     public boolean returnsBag() {
@@ -223,13 +213,11 @@ public class VariableReference implements Expression {
 
     /**
      * Tells whether evaluation will return a bag or a single value.
-     * 
+     *
      * @return true if evaluation will return a bag, false otherwise
-     * 
-     * @deprecated As of 2.0, you should use the <code>returnsBag</code> method from the
-     *             super-interface <code>Expression</code>.
-     * 
      * @throws ProcessingException if the return type couldn't be resolved
+     * @deprecated As of 2.0, you should use the <code>returnsBag</code> method from the
+     * super-interface <code>Expression</code>.
      */
     public boolean evaluatesToBag() {
         return returnsBag();
@@ -240,7 +228,7 @@ public class VariableReference implements Expression {
      * that the referenced definition may still have children, so tools may want to treat these as
      * children of this reference, but must take care since circular references could create a tree
      * of infinite depth.
-     * 
+     *
      * @return an empty <code>List</code>
      */
     public List getChildren() {

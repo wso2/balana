@@ -127,7 +127,7 @@ public class StringComparingFunction extends FunctionBase {
     private static String getArgumentType(String functionName) {
         if (functionName.equals(NAME_STRING_START_WITH) || functionName.equals(NAME_STRING_ENDS_WITH)
                 || functionName.equals(NAME_STRING_CONTAIN)){
-            return IntegerAttribute.identifier;
+            return StringAttribute.identifier;
         } else {
             return AnyURIAttribute.identifier;
         }

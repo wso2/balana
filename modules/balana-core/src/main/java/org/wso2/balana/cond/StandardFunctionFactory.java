@@ -8,7 +8,7 @@
  *
  *   1. Redistribution of source code must retain the above copyright notice,
  *      this list of conditions and the following disclaimer.
- * 
+ *
  *   2. Redistribution in binary form must reproduce the above copyright
  *      notice, this list of conditions and the following disclaimer in the
  *      documentation and/or other materials provided with the distribution.
@@ -16,7 +16,7 @@
  * Neither the name of Sun Microsystems, Inc. or the names of contributors may
  * be used to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * This software is provided "AS IS," without a warranty of any kind. ALL
  * EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND WARRANTIES, INCLUDING
  * ANY IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
@@ -39,8 +39,35 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.balana.UnknownIdentifierException;
 
-import org.wso2.balana.cond.cluster.*;
-import org.wso2.balana.cond.cluster.xacml3.*;
+import org.wso2.balana.cond.cluster.AbsFunctionCluster;
+import org.wso2.balana.cond.cluster.AddFunctionCluster;
+import org.wso2.balana.cond.cluster.ComparisonFunctionCluster;
+import org.wso2.balana.cond.cluster.ConditionBagFunctionCluster;
+import org.wso2.balana.cond.cluster.ConditionSetFunctionCluster;
+import org.wso2.balana.cond.cluster.DateMathFunctionCluster;
+import org.wso2.balana.cond.cluster.DivideFunctionCluster;
+import org.wso2.balana.cond.cluster.EqualFunctionCluster;
+import org.wso2.balana.cond.cluster.FloorFunctionCluster;
+import org.wso2.balana.cond.cluster.GeneralBagFunctionCluster;
+import org.wso2.balana.cond.cluster.GeneralSetFunctionCluster;
+import org.wso2.balana.cond.cluster.HigherOrderFunctionCluster;
+import org.wso2.balana.cond.cluster.LogicalFunctionCluster;
+import org.wso2.balana.cond.cluster.MatchFunctionCluster;
+import org.wso2.balana.cond.cluster.ModFunctionCluster;
+import org.wso2.balana.cond.cluster.MultiplyFunctionCluster;
+import org.wso2.balana.cond.cluster.NOfFunctionCluster;
+import org.wso2.balana.cond.cluster.NotFunctionCluster;
+import org.wso2.balana.cond.cluster.NumericConvertFunctionCluster;
+import org.wso2.balana.cond.cluster.RoundFunctionCluster;
+import org.wso2.balana.cond.cluster.StringFunctionCluster;
+import org.wso2.balana.cond.cluster.StringNormalizeFunctionCluster;
+import org.wso2.balana.cond.cluster.SubtractFunctionCluster;
+import org.wso2.balana.cond.cluster.xacml3.StringComparingFunctionCluster;
+import org.wso2.balana.cond.cluster.xacml3.StringConversionFunctionCluster;
+import org.wso2.balana.cond.cluster.xacml3.StringCreationFunctionCluster;
+import org.wso2.balana.cond.cluster.xacml3.SubStringFunctionCluster;
+import org.wso2.balana.cond.cluster.xacml3.XACML3HigherOrderFunctionCluster;
+import org.wso2.balana.cond.cluster.xacml3.XPathFunctionCluster;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -62,7 +89,7 @@ import java.util.Set;
  * <code>FunctionFactory</code>) populated with the standard functions from
  * <code>getStandardFunctions</code> or you can use <code>getNewFactoryProxy</code> to get a proxy
  * containing a new, modifiable set of factories.
- * 
+ *
  * @since 1.2
  * @author Seth Proctor
  */
@@ -91,7 +118,7 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
     private Map supportedAbstractFunctions = null;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(StandardFunctionFactory.class);
+    private static final Log logger = LogFactory.getLog(StandardFunctionFactory.class);
 
     /**
      * Creates a new StandardFunctionFactory, making sure that the default maps are initialized
@@ -146,12 +173,15 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
 
         // add condition function TimeInRange
         conditionFunctions.add(new TimeInRangeFunction());
+        // add condition function IPInRange
+        conditionFunctions.add(new IPInRangeFunction());
         // add condition functions from BagFunction
         conditionFunctions.addAll((new ConditionBagFunctionCluster()).getSupportedFunctions());
         // add condition functions from SetFunction
         conditionFunctions.addAll((new ConditionSetFunctionCluster()).getSupportedFunctions());
         // add condition functions from HigherOrderFunction
         conditionFunctions.addAll((new HigherOrderFunctionCluster()).getSupportedFunctions());
+        conditionFunctions.addAll((new XACML3HigherOrderFunctionCluster()).getSupportedFunctions());
 
         conditionAbstractFunctions = new HashMap<URI, FunctionProxy>(targetAbstractFunctions);// TODO ??
     }
@@ -204,9 +234,9 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
         // add the XACML 3.0 start with functions
         generalFunctions.addAll((new SubStringFunctionCluster()).getSupportedFunctions());
         // add the XACML 3.0 start with functions
-        generalFunctions.addAll((new StringCreationFunctionCluster()).getSupportedFunctions());  
+        generalFunctions.addAll((new StringCreationFunctionCluster()).getSupportedFunctions());
         // add the XACML 3.0 start with functions
-        generalFunctions.addAll((new XPathFunctionCluster()).getSupportedFunctions());  
+        generalFunctions.addAll((new XPathFunctionCluster()).getSupportedFunctions());
 
         generalAbstractFunctions = new HashMap<URI, FunctionProxy>(conditionAbstractFunctions); // TODO
 
@@ -224,7 +254,7 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
      * matching. This method enforces a singleton model, meaning that this always returns the same
      * instance, creating the factory if it hasn't been requested before. This is the default model
      * used by the <code>FunctionFactory</code>, ensuring quick access to this factory.
-     * 
+     *
      * @return a <code>FunctionFactory</code> for target functions
      */
     public static StandardFunctionFactory getTargetFactory() {
@@ -247,7 +277,7 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
      * enforces a singleton model, meaning that this always returns the same instance, creating the
      * factory if it hasn't been requested before. This is the default model used by the
      * <code>FunctionFactory</code>, ensuring quick access to this factory.
-     * 
+     *
      * @return a <code>FunctionFactory</code> for condition functions
      */
     public static StandardFunctionFactory getConditionFactory() {
@@ -270,7 +300,7 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
      * this always returns the same instance, creating the factory if it hasn't been requested
      * before. This is the default model used by the <code>FunctionFactory</code>, ensuring quick
      * access to this factory.
-     * 
+     *
      * @return a <code>FunctionFactory</code> for all functions
      */
     public static StandardFunctionFactory getGeneralFactory() {
@@ -291,12 +321,12 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
      * Returns the identifiers supported for the given version of XACML. Because this factory
      * supports identifiers from all versions of the XACML specifications, this method is useful for
      * getting a list of which specific identifiers are supported by a given version of XACML.
-     * 
+     *
      * @param xacmlVersion a standard XACML identifier string, as provided in
      *            <code>PolicyMetaData</code>
-     * 
+     *
      * @return a <code>Set</code> of identifiers
-     * 
+     *
      * @throws UnknownIdentifierException if the version string is unknown
      */
     public static Set getStandardFunctions(String xacmlVersion) {
@@ -307,7 +337,7 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
     /**
      * Returns the set of abstract functions that this standard factory supports as a mapping of
      * identifier to proxy.
-     * 
+     *
      * @return a <code>Map</code> mapping <code>URI</code>s to <code>FunctionProxy</code>s
      */
     public static Map getStandardAbstractFunctions(String xacmlVersion) {
@@ -319,7 +349,7 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
      * A convenience method that returns a proxy containing newly created instances of
      * <code>BaseFunctionFactory</code>s that are correctly supersetted and contain the standard
      * functions and abstract functions. These factories allow adding support for new functions.
-     * 
+     *
      * @return a new proxy containing new factories supporting the standard functions
      */
     public static FunctionFactoryProxy getNewFactoryProxy() {
@@ -342,9 +372,9 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
     /**
      * Always throws an exception, since support for new functions may not be added to a standard
      * factory.
-     * 
+     *
      * @param function the <code>Function</code> to add to the factory
-     * 
+     *
      * @throws UnsupportedOperationException always
      */
     public void addFunction(Function function) throws IllegalArgumentException {
@@ -355,10 +385,10 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
     /**
      * Always throws an exception, since support for new functions may not be added to a standard
      * factory.
-     * 
+     *
      * @param proxy the <code>FunctionProxy</code> to add to the factory
      * @param identity the function's identifier
-     * 
+     *
      * @throws UnsupportedOperationException always
      */
     public void addAbstractFunction(FunctionProxy proxy, URI identity)

@@ -20,6 +20,7 @@ package org.wso2.balana;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.wso2.balana.advance.AdvanceTestV3;
+import org.wso2.balana.advance.XACML3HigherOrderFunctionTest;
 import org.wso2.balana.basic.TestFunctionV3;
 import org.wso2.balana.basic.BasicTestV3;
 import org.wso2.balana.basic.TestMultipleRequestV3;
@@ -51,6 +52,9 @@ public class BaseTestCase extends TestSuite {
         testSuite.addTestSuite(ConformanceTestV3.class);
         // test that has been written for jira issue
         testSuite.addTestSuite(AdvanceTestV3.class);
+
+        // Test case for XACML3 Higher Order Functions. (any-of, all-of and any-of-any)
+        testSuite.addTestSuite(XACML3HigherOrderFunctionTest.class);
         return testSuite;
     }
 }

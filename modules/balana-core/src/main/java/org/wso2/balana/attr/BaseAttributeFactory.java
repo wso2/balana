@@ -171,11 +171,13 @@ public class BaseAttributeFactory extends AttributeFactory {
      */
     public AttributeValue createValue(Node root, String type) throws UnknownIdentifierException,
             ParsingException {
+
+        AttributeValue attributeValue;
         AttributeProxy proxy = (AttributeProxy) (attributeMap.get(type));
 
         if (proxy != null) {
             try {
-                return proxy.getInstance(root);
+                attributeValue =  proxy.getInstance(root);
             } catch (Exception e) {
                 throw new ParsingException("couldn't create " + type
                         + " attribute based on DOM node");
@@ -184,6 +186,12 @@ public class BaseAttributeFactory extends AttributeFactory {
             throw new UnknownIdentifierException("Attributes of type " + type
                     + " aren't supported.");
         }
+
+        if (attributeValue == null) {
+            throw new ParsingException("Could not create " + type + " attribute based on DOM node");
+        }
+
+        return attributeValue;
     }
 
     /**

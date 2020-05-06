@@ -16,11 +16,32 @@
 
 package org.wso2.balana.finder.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.wso2.balana.*;
+import org.wso2.balana.AbstractPolicy;
+import org.wso2.balana.DOMHelper;
+import org.wso2.balana.MatchResult;
+import org.wso2.balana.Policy;
+import org.wso2.balana.PolicyMetaData;
+import org.wso2.balana.PolicyReference;
+import org.wso2.balana.PolicySet;
+import org.wso2.balana.VersionConstraints;
 import org.wso2.balana.combine.PolicyCombiningAlgorithm;
 import org.wso2.balana.combine.xacml2.DenyOverridesPolicyAlg;
 import org.wso2.balana.ctx.EvaluationCtx;
@@ -28,42 +49,34 @@ import org.wso2.balana.ctx.Status;
 import org.wso2.balana.finder.PolicyFinder;
 import org.wso2.balana.finder.PolicyFinderModule;
 import org.wso2.balana.finder.PolicyFinderResult;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.util.*;
+import org.wso2.balana.utils.Utils;
 
 /**
  * This is file based policy repository.  Policies can be inside the directory in a file system.
- * Then you can set directory location using "org.wso2.balana.PolicyDirectory" JAVA property   
+ * Then you can set directory location using "org.wso2.balana.PolicyDirectory" JAVA property
  */
-public class FileBasedPolicyFinderModule extends PolicyFinderModule{
+public class FileBasedPolicyFinderModule extends PolicyFinderModule {
 
     private PolicyFinder finder = null;
 
-    private Map<URI, AbstractPolicy> policies ;
+    private Map<URI, AbstractPolicy> policies;
 
-    private  Set<String> policyLocations;
+    private Set<String> policyLocations;
 
     private PolicyCombiningAlgorithm combiningAlg;
 
     /**
      * the logger we'll use for all messages
      */
-	private static Log log = LogFactory.getLog(FileBasedPolicyFinderModule.class);
+    private static final Log log = LogFactory.getLog(FileBasedPolicyFinderModule.class);
 
     public static final String POLICY_DIR_PROPERTY = "org.wso2.balana.PolicyDirectory";
 
     public FileBasedPolicyFinderModule() {
         policies = new HashMap<URI, AbstractPolicy>();
-        if(System.getProperty(POLICY_DIR_PROPERTY) != null){
+        if (System.getProperty(POLICY_DIR_PROPERTY) != null) {
             policyLocations = new HashSet<String>();
-            policyLocations.add(System.getProperty(POLICY_DIR_PROPERTY));            
+            policyLocations.add(System.getProperty(POLICY_DIR_PROPERTY));
         }
     }
 
@@ -82,13 +95,13 @@ public class FileBasedPolicyFinderModule extends PolicyFinderModule{
 
     @Override
     public PolicyFinderResult findPolicy(EvaluationCtx context) {
-        
+
         ArrayList<AbstractPolicy> selectedPolicies = new ArrayList<AbstractPolicy>();
         Set<Map.Entry<URI, AbstractPolicy>> entrySet = policies.entrySet();
 
         // iterate through all the policies we currently have loaded
         for (Map.Entry<URI, AbstractPolicy> entry : entrySet) {
-            
+
             AbstractPolicy policy = entry.getValue();
             MatchResult match = policy.match(context);
             int result = match.getResult();
@@ -105,7 +118,7 @@ public class FileBasedPolicyFinderModule extends PolicyFinderModule{
                     ArrayList<String> code = new ArrayList<String>();
                     code.add(Status.STATUS_PROCESSING_ERROR);
                     Status status = new Status(code, "too many applicable "
-                                               + "top-level policies");
+                            + "top-level policies");
                     return new PolicyFinderResult(status);
                 }
 
@@ -117,30 +130,30 @@ public class FileBasedPolicyFinderModule extends PolicyFinderModule{
         // no errors happened during the search, so now take the right
         // action based on how many policies we found
         switch (selectedPolicies.size()) {
-        case 0:
-            if(log.isDebugEnabled()){
-                log.debug("No matching XACML policy found");
-            }
-            return new PolicyFinderResult();
-        case 1:
-             return new PolicyFinderResult((selectedPolicies.get(0)));
-        default:
-            return new PolicyFinderResult(new PolicySet(null, combiningAlg, null, selectedPolicies));
+            case 0:
+                if (log.isDebugEnabled()) {
+                    log.debug("No matching XACML policy found");
+                }
+                return new PolicyFinderResult();
+            case 1:
+                return new PolicyFinderResult((selectedPolicies.get(0)));
+            default:
+                return new PolicyFinderResult(new PolicySet(null, combiningAlg, null, selectedPolicies));
         }
     }
 
     @Override
-    public PolicyFinderResult findPolicy(URI idReference, int type, VersionConstraints constraints, 
+    public PolicyFinderResult findPolicy(URI idReference, int type, VersionConstraints constraints,
                                          PolicyMetaData parentMetaData) {
 
         AbstractPolicy policy = policies.get(idReference);
-        if(policy != null){
+        if (policy != null) {
             if (type == PolicyReference.POLICY_REFERENCE) {
-                if (policy instanceof Policy){
+                if (policy instanceof Policy) {
                     return new PolicyFinderResult(policy);
                 }
             } else {
-                if (policy instanceof PolicySet){
+                if (policy instanceof PolicySet) {
                     return new PolicyFinderResult(policy);
                 }
             }
@@ -150,7 +163,7 @@ public class FileBasedPolicyFinderModule extends PolicyFinderModule{
         ArrayList<String> code = new ArrayList<String>();
         code.add(Status.STATUS_PROCESSING_ERROR);
         Status status = new Status(code,
-                                   "couldn't load referenced policy");
+                "couldn't load referenced policy");
         return new PolicyFinderResult(status);
     }
 
@@ -167,49 +180,51 @@ public class FileBasedPolicyFinderModule extends PolicyFinderModule{
     /**
      * Re-sets the policies known to this module to those contained in the
      * given files.
-     *
      */
-    public void loadPolicies() {
+    protected void loadPolicies() {
 
         policies.clear();
 
-        for(String policyLocation : policyLocations){
+        for (String policyLocation : policyLocations) {
 
             File file = new File(policyLocation);
-            if(!file.exists()){
+            if (!file.exists()) {
                 continue;
             }
 
-            if(file.isDirectory()){
+            if (file.isDirectory()) {
                 String[] files = file.list();
-                for(String policyFile : files){
-                    File fileLocation = new File(policyLocation + File.separator + policyFile);
-                    if(!fileLocation.isDirectory()){
-                        loadPolicy(policyLocation + File.separator + policyFile, finder);
+                if (files != null) {
+                    for (String policyFileLocation : files) {
+                        File policyFile = new File(policyLocation + File.separator + policyFileLocation);
+                        // we check for hidden files to avoid hidden OS files.
+                        if (!policyFile.isDirectory() && !policyFile.isHidden()) {
+                            loadPolicy(policyLocation + File.separator + policyFileLocation, finder);
+                        }
                     }
                 }
             } else {
-                loadPolicy(policyLocation, finder);    
+                loadPolicy(policyLocation, finder);
             }
         }
-    }    
+    }
 
     /**
      * Private helper that tries to load the given file-based policy, and
      * returns null if any error occurs.
      *
      * @param policyFile file path to policy
-     * @param finder policy finder
-     * @return  <code>AbstractPolicy</code>
+     * @param finder     policy finder
+     * @return org.w3c.dom.Element
      */
-    private AbstractPolicy loadPolicy(String policyFile, PolicyFinder finder) {
-
+    protected Element loadPolicy(String policyFile, PolicyFinder finder) {
+        Element root = null;
         AbstractPolicy policy = null;
         InputStream stream = null;
 
         try {
             // create the factory
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory factory = Utils.getSecuredDocumentBuilderFactory();
             factory.setIgnoringComments(true);
             factory.setNamespaceAware(true);
             factory.setValidating(false);
@@ -220,7 +235,7 @@ public class FileBasedPolicyFinderModule extends PolicyFinderModule{
             Document doc = db.parse(stream);
 
             // handle the policy, if it's a known type
-            Element root = doc.getDocumentElement();
+            root = doc.getDocumentElement();
             String name = DOMHelper.getLocalName(root);
 
             if (name.equals("Policy")) {
@@ -230,9 +245,9 @@ public class FileBasedPolicyFinderModule extends PolicyFinderModule{
             }
         } catch (Exception e) {
             // just only logs
-            log.error("Fail to load policy : " + policyFile , e);
+            log.error("Fail to load policy : " + policyFile, e);
         } finally {
-            if(stream != null){
+            if (stream != null) {
                 try {
                     stream.close();
                 } catch (IOException e) {
@@ -241,11 +256,11 @@ public class FileBasedPolicyFinderModule extends PolicyFinderModule{
             }
         }
 
-        if(policy != null){
+        if (policy != null) {
             policies.put(policy.getId(), policy);
         }
 
-        return policy;
+        return root;
     }
-    
+
 }

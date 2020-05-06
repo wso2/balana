@@ -37,6 +37,7 @@ package org.wso2.balana.finder;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.wso2.balana.attr.AttributeValue;
 import org.wso2.balana.ctx.EvaluationCtx;
 
 import org.wso2.balana.attr.BagAttribute;
@@ -79,7 +80,7 @@ public class AttributeFinder {
     private List<AttributeFinderModule> selectorModules;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(AttributeFinder.class);
+    private static final Log logger = LogFactory.getLog(AttributeFinder.class);
 
     /**
      * Default constructor.
@@ -142,11 +143,21 @@ public class AttributeFinder {
             URI category, EvaluationCtx context) {
         Iterator it = designatorModules.iterator();
 
+        // start with empty list of Attribute ValuesS
+        List<AttributeValue> attributeValues = new ArrayList<AttributeValue>();
+
         // go through each module in order
         while (it.hasNext()) {
             AttributeFinderModule module = (AttributeFinderModule) (it.next());
 
-            // see if the module supports this type
+            // see if the module supports this type, note: if supportedIds and supportedCategories are null
+            // it implies that the module will resolve any type attributes
+            if(module.getSupportedIds() != null && module.getSupportedCategories() != null){
+                if (!module.getSupportedCategories().contains(category.toString()) ||
+                        !module.getSupportedIds().contains(attributeId.toString())){
+                       continue;
+                }
+            }
 
             // see if the module can find an attribute value
             EvaluationResult result = module.findAttribute(attributeType, attributeId, issuer,
@@ -154,23 +165,34 @@ public class AttributeFinder {
 
             // if there was an error, we stop right away
             if (result.indeterminate()) {
-                logger.info("Error while trying to resolve values: "
+                logger.error("Error while trying to resolve values: "
                         + result.getStatus().getMessage());
                 return result;
             }
 
-            // if the result wasn't empty, then return the result
+            // if the result wasn't empty, add the found attributes to list of AttributeValues and continue iterating
             BagAttribute bag = (BagAttribute) (result.getAttributeValue());
-            if (!bag.isEmpty())
-                return result;
+            if (!bag.isEmpty()) {
+                Iterator iterator = bag.iterator();
+                while (iterator.hasNext()) {
+                    AttributeValue attr = (AttributeValue) (iterator.next());
+                    attributeValues.add(attr);
+                }
+            }
 
         }
 
-        // if we got here then there were no errors but there were also no
-        // matches, so we have to return an empty bag
-        logger.info("Failed to resolve any values for " + attributeId.toString());
+        // check whether we were able to find any attributes, if not return an empty bag
+        if (attributeValues.isEmpty()){
+            // if we got here then there were no errors but there were also no
+            // matches
+            if (logger.isDebugEnabled()) {
+                logger.debug("Failed to resolve any values for " + attributeId.toString());
+            }
 
-        return new EvaluationResult(BagAttribute.createEmptyBag(attributeType));
+        }
+
+        return new EvaluationResult(new BagAttribute(attributeType,attributeValues));
     }
 
     /**
@@ -188,7 +210,10 @@ public class AttributeFinder {
     public EvaluationResult findAttribute(String contextPath, URI attributeType,
                                           EvaluationCtx context, String xpathVersion) {
         Iterator it = selectorModules.iterator();
-       
+
+        // start with empty list of Attribute Values
+        List<AttributeValue> attributeValues = new ArrayList<AttributeValue>();
+
         // go through each module in order
         while (it.hasNext()) {
             AttributeFinderModule module = (AttributeFinderModule) (it.next());
@@ -199,22 +224,32 @@ public class AttributeFinder {
 
             // if there was an error, we stop right away
             if (result.indeterminate()) {
-                logger.info("Error while trying to resolve values: "
+                logger.error("Error while trying to resolve values: "
                         + result.getStatus().getMessage());
                 return result;
             }
 
-            // if the result wasn't empty, then return the result
+            // if the result wasn't empty, add the found attributes to list of AttributeValues and continue iterating
             BagAttribute bag = (BagAttribute) (result.getAttributeValue());
-            if (!bag.isEmpty())
-                return result;
+            if (!bag.isEmpty()) {
+                Iterator iterator = bag.iterator();
+                while (iterator.hasNext()) {
+                    AttributeValue attr = (AttributeValue) (iterator.next());
+                    attributeValues.add(attr);
+                }
+            }
         }
 
-        // if we got here then there were no errors but there were also no
-        // matches, so we have to return an empty bag
-        logger.info("Failed to resolve any values for " + contextPath);
+        // check whether we were able to find any attributes, if not return an empty bag
+        if (attributeValues.isEmpty()) {
+            // if we got here then there were no errors but there were also no
+            // matches
+            if (logger.isDebugEnabled()) {
+                logger.debug("Failed to resolve any values for " + contextPath);
+            }
+        }
 
-        return new EvaluationResult(BagAttribute.createEmptyBag(attributeType));
+        return new EvaluationResult(new BagAttribute(attributeType,attributeValues));
     }
 
     /**
@@ -236,6 +271,9 @@ public class AttributeFinder {
 
         Iterator it = selectorModules.iterator();
 
+        // start with empty list of Attribute Values
+        List<AttributeValue> attributeValues = new ArrayList<AttributeValue>();
+
         // go through each module in order
         while (it.hasNext()) {
             AttributeFinderModule module = (AttributeFinderModule) (it.next());
@@ -246,22 +284,32 @@ public class AttributeFinder {
 
             // if there was an error, we stop right away
             if (result.indeterminate()) {
-                logger.info("Error while trying to resolve values: "
+                logger.error("Error while trying to resolve values: "
                         + result.getStatus().getMessage());
                 return result;
             }
 
-            // if the result wasn't empty, then return the result
+            // if the result wasn't empty, add the found attributes to list of AttributeValues and continue iterating
             BagAttribute bag = (BagAttribute) (result.getAttributeValue());
-            if (!bag.isEmpty())
-                return result;
+            if (!bag.isEmpty()) {
+                Iterator iterator = bag.iterator();
+                while (iterator.hasNext()) {
+                    AttributeValue attr = (AttributeValue) (iterator.next());
+                    attributeValues.add(attr);
+                }
+            }
         }
 
-        // if we got here then there were no errors but there were also no
-        // matches, so we have to return an empty bag
-        logger.info("Failed to resolve any values for " + contextPath);
+        // check whether we were able to find any attributes, if not return an empty bag
+        if (attributeValues.isEmpty()) {
+            // if we got here then there were no errors but there were also no
+            // matches
+            if (logger.isDebugEnabled()) {
+                logger.debug("Failed to resolve any values for " + contextPath);
+            }
+        }
 
-        return new EvaluationResult(BagAttribute.createEmptyBag(attributeType));
+        return new EvaluationResult(new BagAttribute(attributeType,attributeValues));
     }
 
 }

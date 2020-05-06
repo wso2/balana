@@ -1,5 +1,6 @@
+#!/usr/bin/env bash
 BALANA_CLASSPATH=""
-for f in lib/*.jar
+for f in ../lib/*.jar
 do
   BALANA_CLASSPATH=$BALANA_CLASSPATH:$f
 done

@@ -119,7 +119,9 @@ public class Target extends AbstractTarget {
 
     @Override
     public String encode() {
-        return null; //TODO
+        StringBuilder sb = new StringBuilder();
+        encode(sb);
+        return sb.toString();
     }
 
     @Override

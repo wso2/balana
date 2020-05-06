@@ -57,7 +57,7 @@ public class ConformanceTestV2 extends TestCase {
     /**
      * the logger we'll use for all messages
      */
-	private static Log log = LogFactory.getLog(ConformanceTestV2.class);
+	private static final Log log = LogFactory.getLog(ConformanceTestV2.class);
 
     @Override
     public void setUp() throws Exception {

@@ -18,7 +18,8 @@
 
 package org.wso2.balana;
 
-import org.w3c.dom.Document;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wso2.balana.attr.AttributeFactory;
 import org.wso2.balana.combine.CombiningAlgFactory;
 import org.wso2.balana.cond.FunctionFactory;
@@ -29,11 +30,9 @@ import org.wso2.balana.finder.PolicyFinderModule;
 import org.wso2.balana.finder.impl.CurrentEnvModule;
 import org.wso2.balana.finder.impl.FileBasedPolicyFinderModule;
 import org.wso2.balana.finder.impl.SelectorModule;
+import org.wso2.balana.utils.Utils;
 
-
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -90,6 +89,11 @@ public class Balana {
      * One instance of Balana engine is created.
      */
     private static Balana balana;
+
+    /**
+     * Logger instance
+     */
+    private static final Log logger = LogFactory.getLog(Balana.class);
 
     /**
      * This constructor creates the Balana engine instance. First, it loads all configuration
@@ -208,9 +212,7 @@ public class Balana {
         }
 
         // init builder
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        dbf.setNamespaceAware(true);
-        this.builder = dbf;
+        this.builder = Utils.getSecuredDocumentBuilderFactory();
     }
 
     /**

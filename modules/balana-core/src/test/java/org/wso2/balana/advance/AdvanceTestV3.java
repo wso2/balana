@@ -49,7 +49,7 @@ public class AdvanceTestV3 extends TestCase {
     /**
      * the logger we'll use for all messages
      */
-	private static Log log = LogFactory.getLog(AdvanceTestV3.class);
+	private static final Log log = LogFactory.getLog(AdvanceTestV3.class);
 
     public void testAdvanceTest0001() throws Exception {
 

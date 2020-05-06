@@ -27,6 +27,7 @@ import org.wso2.balana.Balana;
 import org.wso2.balana.ParsingException;
 import org.wso2.balana.XACMLConstants;
 import org.wso2.balana.ctx.xacml3.RequestCtx;
+import org.wso2.balana.utils.Utils;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -47,7 +48,7 @@ public class RequestCtxFactory {
     /**
      *  the logger we'll use for all messages
      */
-    private static Log log = LogFactory.getLog(RequestCtxFactory.class);
+    private static final Log log = LogFactory.getLog(RequestCtxFactory.class);
 
     /**
      *  Returns instance of <code>AbstractRequestCtx</code> based one the XACML version.
@@ -166,16 +167,13 @@ public class RequestCtxFactory {
      */
     public Element getXacmlRequest(String request) throws ParsingException {
 
-        Document doc;
-        ByteArrayInputStream inputStream;
-
-        inputStream = new ByteArrayInputStream(request.getBytes());
-        DocumentBuilderFactory  builder = Balana.getInstance().getBuilder();
-
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(request.getBytes());
+        DocumentBuilderFactory  builder = Utils.getSecuredDocumentBuilderFactory();
         if(builder == null){
             throw  new ParsingException("DOM Builder can not be null");
         }
 
+        Document doc;
         try {
             doc = builder.newDocumentBuilder().parse(inputStream);
         } catch (Exception e) {

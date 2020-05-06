@@ -47,9 +47,7 @@ import org.wso2.balana.xacml3.AdviceExpression;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-
 import java.net.URI;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -107,7 +105,7 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
     private String envPolicyValue;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(AbstractPolicy.class);
+    private static final Log logger = LogFactory.getLog(AbstractPolicy.class);
 
     /**
      * Constructor used by <code>PolicyReference</code>, which supplies its own values for the
@@ -178,8 +176,14 @@ public abstract class AbstractPolicy  implements PolicyTreeElement{
         else
             this.version = version;
 
-        // FIXME: this needs to fill in the meta-data correctly
-        metaData = null;
+        String namespaceUri = XACMLConstants.XACML_3_0_IDENTIFIER;
+        if (target != null) {
+            if (target instanceof org.wso2.balana.xacml2.Target) {
+                namespaceUri = XACMLConstants.XACML_2_0_IDENTIFIER;
+            }
+        }
+
+        metaData = new PolicyMetaData(namespaceUri, defaultVersion);
 
         if (obligationExpressions == null)
             this.obligationExpressions = new HashSet<AbstractObligation>();

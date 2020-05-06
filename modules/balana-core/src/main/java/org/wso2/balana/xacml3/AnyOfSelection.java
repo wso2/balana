@@ -40,7 +40,7 @@ public class AnyOfSelection {
      */
     private List<AllOfSelection> allOfSelections;
 
-    private static Log logger = LogFactory.getLog(AnyOfSelection.class);
+    private static final Log logger = LogFactory.getLog(AnyOfSelection.class);
 
 
     /**
@@ -131,6 +131,10 @@ public class AnyOfSelection {
         }
     }
 
+    public List<AllOfSelection> getAllOfSelections() {
+        return allOfSelections;
+    }
+    
     /**
      * Encodes this <code>AnyOfSelection</code> into its XML form and writes this out to the provided
      * <code>StringBuilder<code>

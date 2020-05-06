@@ -81,7 +81,7 @@ public class ResourceFinder {
     private List<ResourceFinderModule> descendantModules;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(ResourceFinder.class);
+    private static final Log logger = LogFactory.getLog(ResourceFinder.class);
 
     /**
      * Default constructor.

@@ -43,7 +43,7 @@ public class MultiRequests {
      *
      * @param requestReferences <code>Set</code> of <code>RequestReference</code>
      */
-    private MultiRequests(Set<RequestReference> requestReferences) {
+    public MultiRequests(Set<RequestReference> requestReferences) {
         this.requestReferences = requestReferences;
     }
 

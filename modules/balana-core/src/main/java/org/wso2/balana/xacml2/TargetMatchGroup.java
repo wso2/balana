@@ -66,7 +66,7 @@ public class TargetMatchGroup {
     private int matchType;
 
     // the logger we'll use for all messages
-    private static Log logger = LogFactory.getLog(TargetMatchGroup.class);
+    private static final Log logger = LogFactory.getLog(TargetMatchGroup.class);
 
 
     /**
@@ -121,6 +121,11 @@ public class TargetMatchGroup {
      */
     public MatchResult match(EvaluationCtx context) {
         MatchResult result = null;
+        
+        if (matches.isEmpty()) {
+            // nothing in target, return match
+            return new MatchResult(MatchResult.MATCH);
+        }
 
         for (TargetMatch targetMatch : matches) {
             result = targetMatch.match(context);
