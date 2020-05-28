@@ -32,69 +32,67 @@ import java.util.*;
 public class StringCreationFunction extends FunctionBase {
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     *  Standard identifier for the string-from-boolean function.
      */
     public static final String NAME_STRING_FROM_BOOLEAN = FUNCTION_NS_3 + "string-from-boolean";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     *  Standard identifier for the string-from-double function.
      */
     public static final String NAME_STRING_FROM_DOUBLE= FUNCTION_NS_3 + "string-from-double";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     *  Standard identifier for the string-from-time function.
      */
     public static final String NAME_STRING_FROM_TIME = FUNCTION_NS_3 + "string-from-time";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     *  Standard identifier for the string-from-dateTime function.
      */
-    public static final String NAME_STRING_FROM_DATE_TIME = FUNCTION_NS_3 + "string-from-date";
+    public static final String NAME_STRING_FROM_DATE_TIME = FUNCTION_NS_3 + "string-from-dateTime";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     *  Standard identifier for the string-from-date function.
      */
-    public static final String NAME_STRING_FROM_DATE= FUNCTION_NS_3 + "dateTime-from-string";
+    public static final String NAME_STRING_FROM_DATE= FUNCTION_NS_3 + "string-from-date";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     *  Standard identifier for the string-from-integer function.
      */
     public static final String NAME_STRING_FROM_INTEGER = FUNCTION_NS_3 + "string-from-integer";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     *  Standard identifier for the string-from-anyURI function.
      */
     public static final String NAME_STRING_FROM_URI = FUNCTION_NS_3 + "string-from-anyURI";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     *  Standard identifier for the string-from-dayTimeDuration function.
      */
-    public static final String NAME_STRING_FROM_DAYTIME_DURATION = FUNCTION_NS_3 +
-                                                                    "string-from-dayTimeDuration";
+    public static final String NAME_STRING_FROM_DAYTIME_DURATION = FUNCTION_NS_3 + "string-from-dayTimeDuration";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     *  Standard identifier for the string-from-yearMonthDuration function.
      */
-    public static final String NAME_STRING_FROM_YEAR_MONTH_DURATION = FUNCTION_NS_3 +
-                                                                    "string-from-yearMonthDuration";
+    public static final String NAME_STRING_FROM_YEAR_MONTH_DURATION = FUNCTION_NS_3 + "string-from-yearMonthDuration";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     *  Standard identifier for the string-from-x500Name function.
      */
     public static final String NAME_STRING_FROM_X500NAME = FUNCTION_NS_3 + "string-from-x500Name";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     *  Standard identifier for the string-from-rfc822Name function.
      */
     public static final String NAME_STRING_FROM_RFC822NAME = FUNCTION_NS_3 + "string-from-rfc822Name";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     *  Standard identifier for the string-from-dnsName function.
      */
     public static final String NAME_STRING_FROM_DNS = FUNCTION_NS_3 + "string-from-dnsName";
 
     /**
-     *  Standard identifier for the String-from-boolean function.
+     *  Standard identifier for the string-from-ipAddress function.
      */
     public static final String NAME_STRING_FROM_IP_ADDRESS = FUNCTION_NS_3 + "string-from-ipAddress";
 
