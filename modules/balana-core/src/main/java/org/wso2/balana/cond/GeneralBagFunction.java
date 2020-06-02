@@ -278,13 +278,7 @@ public class GeneralBagFunction extends BagFunction {
         return new EvaluationResult(attrResult);
     }
 
-    @Override
-    public final boolean returnsBag() {
-
-        return getReturnsBag(getFunctionName());
-    }
-
-    /**
+     /**
      * Private class that is used for mapping each function to it set of parameters.
      */
     private static class BagParameters {
