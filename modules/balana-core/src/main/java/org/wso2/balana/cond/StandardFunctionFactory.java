@@ -154,6 +154,8 @@ public class StandardFunctionFactory extends BaseFunctionFactory {
         targetFunctions.addAll((new ComparisonFunctionCluster()).getSupportedFunctions());
         // add MatchFunction
         targetFunctions.addAll((new MatchFunctionCluster()).getSupportedFunctions());
+        // add 3.0 Comparison Functions
+        targetFunctions.addAll((new StringComparingFunctionCluster().getSupportedFunctions()));
 
         targetAbstractFunctions = new HashMap();            // TODO ??
     }

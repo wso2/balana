@@ -263,7 +263,7 @@ public class XACML3HigherOrderFunction implements Function {
 
         // The expression SHALL be evaluated as if the function named in the <Function> argument was applied
         // between every tuple of the cross product on all bags and the primitive values, and the results were
-        // combined using “urn:oasis:names:tc:xacml:1.0:function:or”
+        // combined using "urn:oasis:names:tc:xacml:1.0:function:or"
 
         EvaluationResult result = new EvaluationResult(BooleanAttribute.getInstance(false));
         if (!args.isEmpty()) {
