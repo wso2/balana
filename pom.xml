@@ -79,7 +79,7 @@
     </dependencyManagement>
 
     <properties>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <imp.pkg.version.javax.xml>[0.0.0,1.0.0)</imp.pkg.version.javax.xml>
         <exp.pkg.version.balana>${project.version}</exp.pkg.version.balana>
         <imp.pkg.version.balana>[1.2.0, 2.0.0)</imp.pkg.version.balana>
