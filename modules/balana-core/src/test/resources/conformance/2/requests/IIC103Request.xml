@@ -13,7 +13,7 @@
         <Attribute
               AttributeId="urn:oasis:names:tc:xacml:2.0:conformance-test:test-attr"
               DataType="http://www.w3.org/2001/XMLSchema#dateTime">
-            <AttributeValue>2002-03-22T08:23:47-05:00</AttributeValue>
+            <AttributeValue>2002-08-22T08:23:47-05:00</AttributeValue>
         </Attribute>
     </Subject>
     <Resource>

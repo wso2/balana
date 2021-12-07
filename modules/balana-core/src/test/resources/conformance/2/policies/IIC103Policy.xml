@@ -25,7 +25,7 @@
                       DataType="http://www.w3.org/TR/2002/WD-xquery-operators-20020816#yearMonthDuration">-P1Y2M</AttributeValue>
             </Apply>
             <AttributeValue
-                  DataType="http://www.w3.org/2001/XMLSchema#dateTime">2001-01-22T08:23:47-05:00</AttributeValue>
+                  DataType="http://www.w3.org/2001/XMLSchema#dateTime">2001-06-22T08:23:47-05:00</AttributeValue>
         
 </Apply></Condition>
     </Rule>
