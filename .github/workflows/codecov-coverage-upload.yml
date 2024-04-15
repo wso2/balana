@@ -1,0 +1,40 @@
+name: Upstream Master Coverage
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-and-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master branch of the upstream
+        uses: actions/checkout@v2
+        with:
+          ref: 'master'  # Ensure this is the branch name of the upstream master
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v2
+        with:
+          java-version: "8"
+          distribution: "adopt"
+
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2-
+      
+      - name: Run Maven install
+        run: mvn -B -U clean install
+
+      - name: Generate coverage report
+        run: mvn test jacoco:report
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+
