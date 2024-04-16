@@ -1,15 +1,10 @@
 coverage:
   status:
     project:
-      default:
+      default: 
         # basic
         target: auto #default
         threshold: 0%
-        base: auto 
-        flags: 
-          - unit
-        paths: 
-          - "src"
        # advanced settings
         branches: 
           - master
