@@ -1,16 +1,8 @@
 coverage:
-  status:
-    project:
-      default:
-        target: 50%
-        threshold: 0%
-        base: auto
-        flags:
-          - unit
-        paths:
-          - "src"
-        branches:
-          - master
-        if_ci_failed: error
-        informational: true
-        only_pulls: false
+    precision: 2
+    round: down
+    range: "60...80"
+    status:
+        project:
+            default:
+                target: 50
