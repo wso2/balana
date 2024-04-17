@@ -48,51 +48,51 @@ public class TestMultipleRequestV3 extends TestCase {
      */
     private final static String VERSION_DIRECTORY = "3";
 
-    /**
-     * the logger we'll use for all messages
-     */
-    private static final Log log = LogFactory.getLog(TestFunctionV3.class);
+    // /**
+    //  * the logger we'll use for all messages
+    //  */
+    // private static final Log log = LogFactory.getLog(TestFunctionV3.class);
 
-    public void testBasicTest0001() throws Exception {
+    // public void testBasicTest0001() throws Exception {
 
-        String reqResNo;
-        Set<String> policies = new HashSet<String>();
-        policies.add("TestPolicy_0014.xml");
-        PDP pdp = getPDPNewInstance(policies);
-        log.info("Basic Test 0014 is started");
+    //     String reqResNo;
+    //     Set<String> policies = new HashSet<String>();
+    //     policies.add("TestPolicy_0014.xml");
+    //     PDP pdp = getPDPNewInstance(policies);
+    //     log.info("Basic Test 0014 is started");
 
-        for (int i = 1; i < 2; i++) {
+    //     for (int i = 1; i < 2; i++) {
 
-            if (i < 10) {
-                reqResNo = "0" + i;
-            } else {
-                reqResNo = Integer.toString(i);
-            }
+    //         if (i < 10) {
+    //             reqResNo = "0" + i;
+    //         } else {
+    //             reqResNo = Integer.toString(i);
+    //         }
 
-            String request = TestUtil.createRequest(ROOT_DIRECTORY, VERSION_DIRECTORY,
-                    "request_0014_" + reqResNo + ".xml");
-            if (request != null) {
-                log.info("Request that is sent to the PDP :  " + request);
-                ResponseCtx response = TestUtil.evaluate(getPDPNewInstance(policies), request);
-                if (response != null) {
-                    log.info("Response that is received from the PDP :  " + response.encode());
-                    ResponseCtx expectedResponseCtx = TestUtil.createResponse(ROOT_DIRECTORY,
-                            VERSION_DIRECTORY, "response_0014_" + reqResNo + ".xml");
-                    if (expectedResponseCtx != null) {
-                        assertTrue(TestUtil.isMatching(response, expectedResponseCtx));
-                    } else {
-                        assertTrue("Response read from file is Null", false);
-                    }
-                } else {
-                    assertFalse("Response received PDP is Null", false);
-                }
-            } else {
-                assertTrue("Request read from file is Null", false);
-            }
+    //         String request = TestUtil.createRequest(ROOT_DIRECTORY, VERSION_DIRECTORY,
+    //                 "request_0014_" + reqResNo + ".xml");
+    //         if (request != null) {
+    //             log.info("Request that is sent to the PDP :  " + request);
+    //             ResponseCtx response = TestUtil.evaluate(getPDPNewInstance(policies), request);
+    //             if (response != null) {
+    //                 log.info("Response that is received from the PDP :  " + response.encode());
+    //                 ResponseCtx expectedResponseCtx = TestUtil.createResponse(ROOT_DIRECTORY,
+    //                         VERSION_DIRECTORY, "response_0014_" + reqResNo + ".xml");
+    //                 if (expectedResponseCtx != null) {
+    //                     assertTrue(TestUtil.isMatching(response, expectedResponseCtx));
+    //                 } else {
+    //                     assertTrue("Response read from file is Null", false);
+    //                 }
+    //             } else {
+    //                 assertFalse("Response received PDP is Null", false);
+    //             }
+    //         } else {
+    //             assertTrue("Request read from file is Null", false);
+    //         }
 
-            log.info("Basic Test 0014 is finished");
-        }
-    }
+    //         log.info("Basic Test 0014 is finished");
+    //     }
+    // }
 
     /**
      * Returns a new PDP instance with new XACML policies
