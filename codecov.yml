@@ -17,4 +17,4 @@ coverage:
         threshold: 0.1
     patch:
       default:
-        enabled: off
+        enabled: yes
