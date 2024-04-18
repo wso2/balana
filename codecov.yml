@@ -9,9 +9,9 @@ coverage:
     project:
       default:
         enabled: yes
-        target: 75%
-        threshold: 0.1
-        informational: true
+        threshold: null
+        target: auto
+        if_ci_failed: error: 
     patch:
       default:
         enabled: yes
