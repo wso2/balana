@@ -54,5 +54,6 @@ jobs:
         uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./fallback_coverage.txt  # Path to a minimal coverage file  
+          file: ./fallback_coverage.txt  # Path to a minimal coverage file
+          fail_ci_if_error: false
 
