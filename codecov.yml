@@ -8,7 +8,7 @@ coverage:
     # Learn more at http://docs.codecov.io/docs/codecov-yaml
     project:
       default:
-        enabled: yes
+        #enabled: yes
         threshold: null
         target: auto
         if_ci_failed: error
@@ -16,4 +16,4 @@ coverage:
         
     patch:
       default:
-        enabled: yes
+        #enabled: yes
