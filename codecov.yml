@@ -1,22 +1,18 @@
 codecov:
-  require_ci_to_pass: no
+  ignore:
+    - "master"
+  require_ci_to_pass: yes
   notify:
-    wait_for_ci: no
-    
-
+    wait_for_ci: yes
 coverage:
   status:
     # Learn more at http://docs.codecov.io/docs/codecov-yaml
     project:
       default:
-        #enabled: yes
+        enabled: yes
         threshold: null
         target: auto
         if_ci_failed: error
-        if_not_found: success
-        
     patch:
       default:
-        #enabled: yes
-        if_ci_failed: error
-        if_not_found: success
+        enabled: yes
