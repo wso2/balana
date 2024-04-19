@@ -1,7 +1,8 @@
 codecov:
-  require_ci_to_pass: yes
+  require_ci_to_pass: no
   notify:
-    wait_for_ci: yes
+    wait_for_ci: no
+    
 
 coverage:
   status:
@@ -17,3 +18,5 @@ coverage:
     patch:
       default:
         #enabled: yes
+        if_ci_failed: error
+        if_not_found: success
