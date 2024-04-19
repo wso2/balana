@@ -1,0 +1,13 @@
+TN:
+SF:example_file.js
+FN:1,(anonymous_1)
+FNDA:1,(anonymous_1)
+FNF:1
+FNH:1
+DA:1,1
+LF:1
+LH:1
+BRDA:1,0,0,1
+BRF:1
+BRH:1
+end_of_record
