@@ -10,7 +10,7 @@ coverage:
         enabled: yes
         threshold: null
         target: auto
-        #if_ci_failed: error
+        if_ci_failed: error
     patch:
       default:
         enabled: yes
