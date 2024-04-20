@@ -40,18 +40,18 @@ jobs:
         run: mvn clean install -U -B
 
       - name: Generate coverage report
-        if: github.event.pull_request.title != 'Comment unit test to check effect on code coverage'
+        if: github.event.pull_request.title != 'Skip_test'
         run: mvn test jacoco:report
         
       - name: Upload coverage reports to Codecov
-        if: github.event.pull_request.title != 'Comment unit test to check effect on code coverage'
+        if: github.event.pull_request.title != 'Skip_test'
         uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: maintest
 
       - name: Upload fallback coverage report to Codecov
-        if: github.event.pull_request.title == 'Comment unit test to check effect on code coverage'
+        if: github.event.pull_request.title == 'Skip_test'
         uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

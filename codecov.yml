@@ -8,6 +8,8 @@ coverage:
     project:
       default: false
       maintest:
+       flags:
+          - maintest
         #enabled: yes
         threshold: null
         target: auto
