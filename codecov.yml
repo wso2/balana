@@ -11,6 +11,10 @@ coverage:
         threshold: null
         target: auto
         #if_ci_failed: error
+      skiptest:
+        flags: skiptest
+        target: 70%  # Target coverage for frontend
+        informational: true
     patch:
       default:
         enabled: yes
