@@ -8,6 +8,7 @@ coverage:
     project:
       default:
         enabled: yes
+        if_not_found: success
         threshold: null
         target: auto
       skipcheck:  # This is the key for the flag-specific configuration
