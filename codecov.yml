@@ -2,18 +2,18 @@ codecov:
   require_ci_to_pass: yes
   notify:
     wait_for_ci: yes
+
 coverage:
   status:
-    # Learn more at http://docs.codecov.io/docs/codecov-yaml
     project:
       default:
         enabled: yes
         threshold: null
         target: auto
-        #if_ci_failed: error
-      skipcheck:
-        flags: skipcheck
-        target: 70%  # Target coverage for frontend
+      skipcheck:  # This is the key for the flag-specific configuration
+        flags:
+          - skipcheck  # Ensure flags are provided as a list
+        target: 70%
         informational: true
     patch:
       default:
