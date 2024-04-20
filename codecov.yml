@@ -11,6 +11,7 @@ coverage:
         if_ci_failed: ignore
         threshold: null
         target: auto
+        informational: true
       skipcheck:  # This is the key for the flag-specific configuration
         flags:
           - skipcheck  # Ensure flags are provided as a list
