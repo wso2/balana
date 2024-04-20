@@ -48,6 +48,7 @@ jobs:
         uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          flags: maintest
 
       - name: Upload fallback coverage report to Codecov
         if: github.event.pull_request.title == 'Comment unit test to check effect on code coverage'
