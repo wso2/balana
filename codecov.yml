@@ -2,8 +2,6 @@ codecov:
  require_ci_to_pass: yes
  notify:
    wait_for_ci: yes
-
-
 coverage:
  status:
    project: # checks the effect for the overall code coverage rate of the repository.
