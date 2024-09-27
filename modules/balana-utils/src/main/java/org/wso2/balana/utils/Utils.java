@@ -120,7 +120,7 @@ public class Utils {
     }
 
     /**
-     * Create DocumentBuilderFactory with the XXE prevention measurements
+     * Create TransformerFactory with the XXE prevention measurements
      * https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html#transformerfactory
      *
      * @param transformerFactoryClassName String
