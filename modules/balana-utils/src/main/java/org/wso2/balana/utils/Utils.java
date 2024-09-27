@@ -24,16 +24,20 @@ import org.apache.xerces.util.SecurityManager;
 import org.apache.xerces.impl.Constants;
 import org.w3c.dom.Document;
 
-import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.StringWriter;
+
+import static javax.xml.XMLConstants.ACCESS_EXTERNAL_DTD;
+import static javax.xml.XMLConstants.ACCESS_EXTERNAL_STYLESHEET;
+import static javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING;
 
 /**
  *
@@ -64,7 +68,7 @@ public class Utils {
         if(transformerFactoryClassName == null) {
             transformerFactoryClassName = "org.apache.xalan.processor.TransformerFactoryImpl";
         }
-        TransformerFactory transformerFactory = TransformerFactory.newInstance(transformerFactoryClassName, null);
+        TransformerFactory transformerFactory = getSecuredTransformerFactory(transformerFactoryClassName);
         Transformer transformer = transformerFactory.newTransformer();
         transformer.transform(domSource, result);
         return writer.toString().substring(writer.toString().indexOf('>') + 1);
@@ -101,7 +105,7 @@ public class Utils {
             dbf.setFeature(Constants.SAX_FEATURE_PREFIX + Constants.EXTERNAL_GENERAL_ENTITIES_FEATURE, false);
             dbf.setFeature(Constants.SAX_FEATURE_PREFIX + Constants.EXTERNAL_PARAMETER_ENTITIES_FEATURE, false);
             dbf.setFeature(Constants.XERCES_FEATURE_PREFIX + Constants.LOAD_EXTERNAL_DTD_FEATURE, false);
-            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            dbf.setFeature(FEATURE_SECURE_PROCESSING, true);
         } catch (ParserConfigurationException e) {
             logger.error(
                     "Failed to load XML Processor Feature " + Constants.EXTERNAL_GENERAL_ENTITIES_FEATURE + " or " +
@@ -114,8 +118,29 @@ public class Utils {
 
         return dbf;
     }
-    
-    
+
+    /**
+     * Create DocumentBuilderFactory with the XXE prevention measurements
+     * https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html#transformerfactory
+     *
+     * @param transformerFactoryClassName String
+     * @return TransformerFactory
+     */
+    public static TransformerFactory getSecuredTransformerFactory(String transformerFactoryClassName) {
+        TransformerFactory trfactory = TransformerFactory.
+                newInstance(transformerFactoryClassName, null);
+
+        try {
+            trfactory.setFeature(FEATURE_SECURE_PROCESSING, true);
+        } catch (TransformerConfigurationException e) {
+            logger.error("Failed to load XML Processor " +
+                    "Feature http://javax.xml.XMLConstants/feature/secure-processing for secure-processing.");
+        }
+        trfactory.setAttribute(ACCESS_EXTERNAL_DTD, "");
+        trfactory.setAttribute(ACCESS_EXTERNAL_STYLESHEET, "");
+        return trfactory;
+    }
+
 //    public static Element createElement(String xmlInput) {
 //
 //        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
