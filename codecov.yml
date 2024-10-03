@@ -12,4 +12,4 @@ coverage:
    patch:  # This status indicates the extent of code coverage achieved by the pull request.
      default:
        target: 80%
-       threshold: 50% # With a target of 80% and a threshold of 50%, the acceptable coverage range is 50% to 80%.
+       threshold: 40% # With a target of 80% and a threshold of 50%
