@@ -45,4 +45,4 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true # Optional: Specify if the CI build should fail when Codecov fails.
-
+          flags: unit
