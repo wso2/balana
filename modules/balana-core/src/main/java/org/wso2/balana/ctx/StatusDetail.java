@@ -169,9 +169,7 @@ public class StatusDetail {
 
         StringWriter sw = new StringWriter();
         try {
-            TransformerFactory factory = TransformerFactory.newInstance();
-            factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-            Transformer transformer = factory.newTransformer();
+            Transformer transformer = Utils.getSecuredTransformerFactory().newTransformer();
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.transform(new DOMSource(node), new StreamResult(sw));
