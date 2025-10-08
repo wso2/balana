@@ -21,8 +21,11 @@ package org.wso2.balana.basic;
 import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.wso2.balana.*;
 import org.wso2.balana.ctx.ResponseCtx;
+import org.wso2.balana.ctx.Status;
 import org.wso2.balana.finder.PolicyFinder;
 import org.wso2.balana.finder.PolicyFinderModule;
 import org.wso2.balana.finder.impl.FileBasedPolicyFinderModule;
@@ -31,6 +34,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  *  This XACML 3.0 basic polciy test. This would test a basic policy, basic policy with obligations and
@@ -294,6 +300,31 @@ public class BasicTestV3 extends TestCase {
                                                             pdpConfig.getResourceFinder(), true);
         return new PDP(pdpConfig);
 
+    }
+
+    public void testParsesSimpleStatusDetail() throws Exception {
+        String xml =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                        + "<Status>"
+                        + "  <StatusCode Value=\"test\">"
+                        + "  </StatusCode>"
+                        + "  <StatusMessage>Policy had a syntax issue</StatusMessage>"
+                        + "  <StatusDetail>"
+                        + "    <Problem>line=42; column=17</Problem>"
+                        + "  </StatusDetail>"
+                        + "</Status>";
+        Node root = parseRoot(xml);
+        Status status = Status.getInstance(root);
+        assertNotNull(status.getDetail().toString(), "StatusDetail should not be null");
+    }
+
+
+    private Node parseRoot(String xml) throws Exception {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = builder.parse(new java.io.ByteArrayInputStream(xml.getBytes("UTF-8")));
+        Node root = doc.getDocumentElement();
+        return root;
     }
 
 }
