@@ -29,8 +29,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.StringWriter;
@@ -49,6 +51,10 @@ public class Utils {
      * Defines XML Entity Expansion Limit
      */
     private static final int ENTITY_EXPANSION_LIMIT = 0;
+
+    //Secured transformer factory implementation
+    private static String JAVAX_TRANSFORMER_PROP_VAL =
+            "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl";
 
     /**
      * Convert Document element to a String object
@@ -127,4 +133,34 @@ public class Utils {
 //        StreamResult result =  new StreamResult(new StringWriter());
 //        transformer.transform(source, result);
 //    }
+
+    /**
+     * Create a secure process enabled TransformerFactory.
+     *
+     * @return Secured TransformerFactory which is stricly implemented via
+     * com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl
+     */
+    public static TransformerFactory getSecuredTransformerFactory() {
+
+        TransformerFactory transformerFactory;
+        try {
+            // Prevent XXE Attack by ensure using the correct factory class to create TrasformerFactory instance.
+            // This will instruct Java to use the version which supports using ACCESS_EXTERNAL_DTD argument.
+            transformerFactory = TransformerFactory.newInstance(JAVAX_TRANSFORMER_PROP_VAL, null);
+        } catch (TransformerFactoryConfigurationError e) {
+            logger.error("Failed to load default TransformerFactory", e);
+            // This part uses the default implementation of xalan.
+            transformerFactory = TransformerFactory.newInstance();
+        }
+
+        try {
+            transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        } catch (TransformerConfigurationException e) {
+            logger.error("Failed to load XML Processor Feature " + XMLConstants.FEATURE_SECURE_PROCESSING +
+                    " for secure-processing.");
+        }
+        transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+        transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+        return transformerFactory;
+    }
 }
